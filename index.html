@@ -2054,7 +2054,7 @@ function updateRoom(dt) {
 function updateWorld(dt) {
   const reg = regionAt(P.x, P.y);
   if (reg !== lastRegion) { showBanner(REGION_NAMES[reg]); updateChips(reg); lastRegion = reg; }
-  if (!fade.dir && P.inY < -.3) for (const d of DOORS) if (Math.abs(P.x - d.x) < .6 && P.y < d.y + .4) { enterRoom(d.room); return; }
+  if (!fade.dir && P.inY < -.3) for (const d of DOORS) if (Math.abs(P.x - d.x) < .6 && P.y < d.y + .4 && P.y > d.y - .2) { enterRoom(d.room); return; }
   // tall grass: rustle and sometimes a little friend pops out
   const tx = Math.floor(P.x), ty = Math.floor(P.y - .05), tk = key(tx, ty);
   if (gAt(tx, ty) === TALL && !P.ride) {
