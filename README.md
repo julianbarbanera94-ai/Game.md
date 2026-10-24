@@ -7,7 +7,7 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
 - **Browser:** open `index.html` on any phone, tablet or computer.
 
 ## How to play
-- Pick a friend (Mickey, Minnie, Donald, Goofy or Pluto). The others wander around the park.
+- Pick a friend (Mickey, Minnie, Donald, Daisy, Goofy or Pluto). The others wander around the park.
 - **Joystick** (or arrow keys / WASD) to walk. **B** (or X) to hop and spin.
 - **A** (or Z / Enter) to do things. A green **A** marker shows what's nearby:
   pick flowers in the garden, pop party balloons, talk to friends, ring Mickey's doorbell,
@@ -22,6 +22,7 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
   **Minnie's Bow-tique** (wear a bow or a hat, mirror, shop counter) and **Mickey's House** (fireplace, nap in bed, story books, snack table).
   Walk onto the doormat to go back out.
 - Walk through **tall grass** and little animals pop out (🐰🦋🐞🐸🐿️…). Collect ⭐ stars around the park.
+- 🗺️ opens the Town Map: the whole world, where you are, and where your friends are.
 - 🔄 changes character, 🔊 mutes. Progress counters are saved on the device.
 
 All art and sound are drawn/generated in code, with no external files.
