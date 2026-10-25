@@ -2,6 +2,7 @@ import { QUESTS, QUESTS_BY_ID } from '../data/quests.js';
 import { NULL_BUS } from '../core/events.js';
 import * as Inv from './inventory.js';
 import { getItem } from '../data/items.js';
+import { bagSlots } from './buildings.js';
 
 // Quest state per id: { status: locked|active|complete|claimed, progress: [n] }
 
@@ -58,9 +59,9 @@ export function claim(state, id, bus = NULL_BUS) {
   if (qs.status === 'claimed') return { ok: false, reason: 'Reward already claimed' };
   if (qs.status !== 'complete') return { ok: false, reason: 'Quest not complete yet' };
   const items = q.reward.items || {};
-  const fits = Inv.canAddAll(state.inventory, items);
-  if (!fits.ok) return { ok: false, reason: `${fits.reason} — make room to claim` };
-  for (const [item, qty] of Object.entries(items)) Inv.add(state.inventory, item, qty);
+  const fits = Inv.canAddAll(state.inventory, items, bagSlots(state));
+  if (!fits.ok) return { ok: false, reason: `${fits.reason === 'No free space' ? 'Your bag is full' : fits.reason} — make room to claim` };
+  for (const [item, qty] of Object.entries(items)) Inv.add(state.inventory, item, qty, bagSlots(state));
   state.coins += q.reward.coins || 0;
   qs.status = 'claimed';
   bus.emit('questClaimed', { id, reward: q.reward });
@@ -84,7 +85,7 @@ export function rewardText(reward) {
 
 // Wire quest progress to the gameplay event bus.
 export function attachQuests(getState, bus) {
-  for (const type of ['till', 'plant', 'water', 'harvest', 'sell', 'buy', 'unlock', 'talk', 'visit']) {
+  for (const type of ['till', 'plant', 'water', 'harvest', 'sell', 'buy', 'unlock', 'talk', 'visit', 'constructed', 'constructionStarted']) {
     bus.on(type, (payload) => handleEvent(getState(), type, payload, bus));
   }
 }

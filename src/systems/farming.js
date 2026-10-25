@@ -3,6 +3,7 @@ import { getItem } from '../data/items.js';
 import { PLOTS_BY_ID, PLOT_GROUPS } from '../data/world.js';
 import { NULL_BUS } from '../core/events.js';
 import * as Inv from './inventory.js';
+import { bagSlots, hasSprinklerCan } from './buildings.js';
 
 // Plot lifecycle: untilled -> tilled -> planted/growing (needs moisture) ->
 // ready -> harvested (back to tilled). All state lives in state.plots.
@@ -92,9 +93,21 @@ export function water(state, plotId, bus = NULL_BUS) {
   const a = getPlotAction(state, plotId);
   if (a.action !== 'water' || !a.ok) return { ok: false, reason: a.label };
   state.can.water -= 1;
-  state.plots[plotId].moistUntil = state.time + WATER_DURATION;
-  bus.emit('water', { plotId, crop: state.plots[plotId].crop });
-  return { ok: true };
+  const watered = [plotId];
+  if (hasSprinklerCan(state)) {
+    // Level-3 workshop can: also waters dry, planted neighbours in the same row.
+    const def = PLOTS_BY_ID[plotId];
+    for (const dx of [-1, 1]) {
+      const n = Object.values(PLOTS_BY_ID).find((p) => p.ty === def.ty && p.tx === def.tx + dx);
+      const np = n && state.plots[n.id];
+      if (np && isPlotAvailable(state, n.id) && np.crop && !isReady(np) && !isWet(state, np)) watered.push(n.id);
+    }
+  }
+  for (const id of watered) {
+    state.plots[id].moistUntil = state.time + WATER_DURATION;
+    bus.emit('water', { plotId: id, crop: state.plots[id].crop });
+  }
+  return { ok: true, watered };
 }
 
 export function harvest(state, plotId, bus = NULL_BUS) {
@@ -102,8 +115,8 @@ export function harvest(state, plotId, bus = NULL_BUS) {
   if (a.action !== 'harvest') return { ok: false, reason: a.label };
   const plot = state.plots[plotId];
   const crop = CROPS[plot.crop];
-  const added = Inv.add(state.inventory, crop.id, crop.yield);
-  if (!added.ok) return added; // bag full: crop stays in the ground
+  const added = Inv.add(state.inventory, crop.id, crop.yield, bagSlots(state));
+  if (!added.ok) return { ok: false, reason: added.reason === 'No free space' ? 'Your bag is full' : added.reason }; // crop stays in the ground
   plot.crop = null;
   plot.growth = 0;
   bus.emit('harvest', { plotId, crop: crop.id, qty: crop.yield });

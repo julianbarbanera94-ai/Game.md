@@ -61,4 +61,25 @@ export const QUESTS = [
   },
 ];
 
+QUESTS.push(
+  {
+    id: 'q_storage',
+    title: 'Storage Solutions',
+    giver: 'Workbench',
+    description: 'Use the building planner at the workbench to place a storage shed, then let the builders finish it.',
+    prereqs: ['q_restock'],
+    objectives: [{ type: 'constructed', id: 'storage_shed', count: 1, label: 'Build a storage shed' }],
+    reward: { coins: 40 },
+  },
+  {
+    id: 'q_home_improvements',
+    title: 'Home Improvements',
+    giver: 'Workbench',
+    description: 'Upgrade one of your farm buildings — the cottage, well, workshop or market stall.',
+    prereqs: ['q_room_to_grow'],
+    objectives: [{ type: 'constructionStarted', count: 1, label: 'Start a building upgrade' }],
+    reward: { coins: 60 },
+  },
+);
+
 export const QUESTS_BY_ID = Object.fromEntries(QUESTS.map((q) => [q.id, q]));

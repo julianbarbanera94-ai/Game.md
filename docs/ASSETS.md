@@ -70,6 +70,30 @@ icons at ≥128 px, multi-frame tool animations.
 - HUD icons in the v1 pack are flat; the HUD uses CSS panels, painted Phase 3 icons and two small inline SVG glyphs (journal, menu).
 - VFX (dirt, water, sparkle particles) are simple procedural particles pending Phase 10 effects art.
 
-## Phases 4–10
+## Phase 4 — Buildings & expansion (reference panels only)
+
+The pack README says the panels are **not** isolated sprites. They were cut out by
+`tools/import_assets.py --phase4` (cream background keyed out; level columns split at
+the label separators; upscaled 2× with Lanczos) and are marked
+`temporary-reference-derived`:
+
+| Keys | Source panel | Used for |
+|---|---|---|
+| `building4.{house,well,tool_shed,market_stall,storage_shed}_l{1,2,3}` | `01_building_upgrades/*` | Levels 2–3 of each building (level 1 keeps the sharper Phase 1 sprite); storage shed levels 1–3 |
+| `building4.construction_stage{1..5}` | `02_construction_stages` | Stages 1–4 shown while any building is under construction (stage 5 is a finished red barn, so it isn't used) |
+| `prop.{scarecrow,bench,flower_crate,berry_crate,hay_bales,lantern_post,trough}` | `05_decorations_and_props` | Placeable decorations |
+| `interior.{house,tool_shed,barn,coop}` | `03_building_interiors` | Cottage interior scene (3× upscale, visibly soft); the others are imported for later phases |
+
+Not used:
+- `07_npc_workers`: figures are about 25 px tall, far too small for the 84 px player.
+- `04_fences_walls_gates` and `06_terrain_expansion`: not needed for this milestone.
+- `08_animals_and_vehicles_reference`: belongs to Phases 5–6.
+
+**Production assets still required for Phase 4:** full-resolution transparent
+exports of every building level with a shared footprint/anchor, construction stages
+for non-barn buildings, a full-resolution cottage interior with separate furniture,
+and decoration sprites at ≥128 px.
+
+## Phases 5–10
 Not yet processed. A first look shows they contain reference boards and
 specifications (no isolated sprites), so each will need the same review.

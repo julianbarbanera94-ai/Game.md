@@ -43,15 +43,15 @@ export const GARDEN = { x0: 4.4, y0: 13.0, x1: 9.6, y1: 19.9, gate: [6.4, 7.6] }
 // Interactive and decorative world objects.
 // interact: id resolved by systems/interactions.js
 export const OBJECTS = [
-  { id: 'house', sprite: 'building.starter_house', x: 17.7, y: 8.4, w: 5.2, collider: [-2.3, -2.6, 2.4, -0.25],
+  { id: 'house', building: 'house', sprite: 'building.starter_house', x: 17.7, y: 8.4, w: 5.2, collider: [-2.3, -2.6, 2.4, -0.25],
     interact: 'house', interactPoint: [17.55, 8.55] },
   { id: 'mailbox', sprite: 'building.mailbox', x: 15.0, y: 9.1, w: 1.1, collider: [-0.2, -0.3, 0.2, 0], interact: 'mailbox' },
-  { id: 'well', sprite: 'building.well_building', x: 12.0, y: 9.6, w: 2.3, collider: [-0.85, -1.0, 0.85, -0.1], interact: 'well' },
+  { id: 'well', building: 'well', sprite: 'building.well_building', x: 12.0, y: 9.6, w: 2.3, collider: [-0.85, -1.0, 0.85, -0.1], interact: 'well' },
   { id: 'water_barrel', sprite: 'building.water_barrel', x: 11.2, y: 14.2, w: 1.15, collider: [-0.35, -0.4, 0.35, 0], interact: 'well' },
   { id: 'workbench', sprite: 'building.workbench', x: 22.4, y: 9.7, w: 2.5, collider: [-1.05, -0.8, 1.05, -0.1], interact: 'workbench' },
-  { id: 'tool_shed', sprite: 'building.tool_shed', x: 26.0, y: 9.9, w: 3.3, collider: [-1.45, -2.2, 1.45, -0.3],
+  { id: 'tool_shed', building: 'tool_shed', sprite: 'building.tool_shed', x: 26.0, y: 9.9, w: 3.3, collider: [-1.45, -2.2, 1.45, -0.3],
     interact: 'tool_shed', interactPoint: [26.0, 10.1] },
-  { id: 'market_stall', sprite: 'building.market_stall', x: 30.4, y: 10.9, w: 4.2, collider: [-1.95, -1.9, 1.95, -0.25],
+  { id: 'market_stall', building: 'market_stall', sprite: 'building.market_stall', x: 30.4, y: 10.9, w: 4.2, collider: [-1.95, -1.9, 1.95, -0.25],
     interact: 'market', interactPoint: [30.4, 11.2] },
   { id: 'village_sign', sprite: 'building.signpost', x: 32.4, y: 13.2, w: 1.3, collider: [-0.15, -0.3, 0.15, 0], interact: 'village_sign' },
   { id: 'road_block', sprite: 'foliage.fallen_log', x: 34.3, y: 12.3, w: 2.0, collider: [-1, -0.8, 1, 0], interact: 'road_block' },

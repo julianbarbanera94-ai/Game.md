@@ -339,6 +339,7 @@ def main():
     ap.add_argument("--phase1")
     ap.add_argument("--phase2")
     ap.add_argument("--phase3")
+    ap.add_argument("--phase4")
     args = ap.parse_args()
     mpath = os.path.join(OUT, "manifest.json")
     if os.path.exists(mpath):
@@ -350,12 +351,153 @@ def main():
         phase2(args.phase2)
     if args.phase3:
         phase3(args.phase3)
+    if args.phase4:
+        phase4(args.phase4)
     ensure(OUT)
     manifest["assets"] = dict(sorted(manifest["assets"].items()))
     with open(mpath, "w") as f:
         json.dump(manifest, f, indent=2)
         f.write("\n")
     print(f"wrote {len(manifest['assets'])} assets to {rel(mpath)}")
+
+
+
+# ---------------------------------------------------------------- phase 4 (derived)
+
+def components(im, min_area):
+    """Bounding boxes of opaque connected components larger than min_area."""
+    a = np.asarray(im)[..., 3] > 0
+    h, w = a.shape
+    seen = np.zeros((h, w), bool)
+    boxes = []
+    for y in range(h):
+        for x in range(w):
+            if a[y, x] and not seen[y, x]:
+                q = deque([(x, y)])
+                seen[y, x] = True
+                x0 = x1 = x
+                y0 = y1 = y
+                n = 0
+                while q:
+                    cx, cy = q.popleft()
+                    n += 1
+                    x0, x1, y0, y1 = min(x0, cx), max(x1, cx), min(y0, cy), max(y1, cy)
+                    for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                        if 0 <= nx < w and 0 <= ny < h and a[ny, nx] and not seen[ny, nx]:
+                            seen[ny, nx] = True
+                            q.append((nx, ny))
+                if n >= min_area:
+                    boxes.append((x0, y0, x1 + 1, y1 + 1, n))
+    return boxes
+
+
+def segment_panel(path, top, min_area, tol=48, upscale=1):
+    """Key out a reference panel's cream background below `top` and return
+    the large objects left-to-right (top-to-bottom within a row)."""
+    img = Image.open(path).convert("RGB")
+    body = img.crop((0, top, img.size[0], img.size[1]))
+    w, h = body.size
+    keyed = key_background(body, border_seeds(w, h, 2), tol)
+    boxes = components(keyed, min_area)
+    boxes.sort(key=lambda b: (round(b[1] / 40), b[0]))
+    out = []
+    for x0, y0, x1, y1, _ in boxes:
+        sprite = keyed.crop((x0, y0, x1, y1))
+        sprite = largest_component(sprite)
+        if upscale != 1:
+            sprite = sprite.resize((sprite.size[0] * upscale, sprite.size[1] * upscale), Image.LANCZOS)
+        out.append(sprite)
+    return out
+
+
+def level_columns(path, top):
+    """Split an upgrade panel into its level columns using the light 2-3px
+    separators between the "Level N" label cells, then isolate the largest
+    object in each column."""
+    img = Image.open(path).convert("RGB")
+    a = np.asarray(img).astype(int)
+    band = a[28:44]
+    lum = band.mean(axis=(0, 2))
+    cand = [x for x in range(5, a.shape[1] - 5) if lum[x] > lum.mean() + 12]
+    groups = []
+    for x in cand:
+        if groups and x - groups[-1][-1] <= 2:
+            groups[-1].append(x)
+        else:
+            groups.append([x])
+    cuts = [0] + [(g[0] + g[-1]) // 2 for g in groups if len(g) >= 2] + [img.size[0]]
+    out = []
+    for x0, x1 in zip(cuts, cuts[1:]):
+        col = img.crop((x0 + 2, top, x1 - 2, img.size[1]))
+        w, h = col.size
+        keyed = key_background(col, border_seeds(w, h, 2), 48)
+        out.append(trim(largest_component(keyed), 1))
+    return out
+
+
+P4_NOTE = ("TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). "
+           "Replace with a properly exported production sprite.")
+
+P4_BUILDINGS = {
+    "house": "house_player_home_levels_1_to_3.png",
+    "well": "well_levels_1_to_3.png",
+    "tool_shed": "tool_shed_workshop_levels_1_to_3.png",
+    "market_stall": "market_stall_levels_1_to_3.png",
+    "storage_shed": "storage_shed_levels_1_to_3.png",
+}
+
+
+def phase4(root, preview_dir=None):
+    d = ensure(os.path.join(OUT, "derived", "phase4"))
+    src = os.path.join(root, "01_building_upgrades")
+    for name, fn in P4_BUILDINGS.items():
+        sprites = [sp.resize((sp.size[0] * 2, sp.size[1] * 2), Image.LANCZOS) for sp in level_columns(os.path.join(src, fn), 46)]
+        if len(sprites) != 3:
+            raise SystemExit(f"{fn}: expected 3 building levels, found {len(sprites)}")
+        for lvl, sp in enumerate(sprites, 1):
+            dst = os.path.join(d, f"{name}_l{lvl}.png")
+            sp.save(dst, optimize=True)
+            register(f"building4.{name}_l{lvl}", dst, f"phase4/01_building_upgrades/{fn}",
+                     "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+    # construction stages: one merged strip -> split at the 4 emptiest columns
+    strip = segment_panel(os.path.join(root, "02_construction_stages", "barn_construction_stages.png"), 50, 3000, upscale=2)[0]
+    alpha = (np.asarray(strip)[..., 3] > 0).sum(0)
+    w = strip.size[0]
+    cuts = [0]
+    for k in range(1, 5):
+        lo, hi = int(w * (k / 5 - 0.06)), int(w * (k / 5 + 0.06))
+        cuts.append(lo + int(np.argmin(alpha[lo:hi])))
+    cuts.append(w)
+    for i, (x0, x1) in enumerate(zip(cuts, cuts[1:]), 1):
+        sp = trim(largest_component(strip.crop((x0, 0, x1, strip.size[1]))), 1)
+        dst = os.path.join(d, f"construction_stage{i}.png")
+        sp.save(dst, optimize=True)
+        register(f"building4.construction_stage{i}", dst, "phase4/02_construction_stages/barn_construction_stages.png",
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+    # decorative props: the panel's objects merge into groups, so named
+    # sub-rectangles are cut from the (2x) groups and re-isolated
+    groups = segment_panel(os.path.join(root, "05_decorations_and_props", "decorations_props.png"), 46, 500, upscale=2)
+    picks = {
+        "scarecrow": (3, (0, 0, 130, 176)),
+        "bench": (3, (0, 200, 130, 292)),
+        "hay_bales": (1, (0, 0, 202, 115)),
+        "trough": (1, (0, 120, 202, 212)),
+        "flower_crate": (2, (0, 0, 116, 122)),
+        "berry_crate": (2, (116, 0, 232, 122)),
+        "lantern_post": (4, (88, 0, 180, 128)),
+    }
+    for name, (gi, box) in picks.items():
+        sp = trim(largest_component(groups[gi].crop(box)), 1)
+        dst = os.path.join(d, f"prop_{name}.png")
+        sp.save(dst, optimize=True)
+        register(f"prop.{name}", dst, "phase4/05_decorations_and_props/decorations_props.png",
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+    interiors = segment_panel(os.path.join(root, "03_building_interiors", "top_down_building_interiors.png"), 48, 4000, upscale=3)
+    for i, name in enumerate(["house", "tool_shed", "barn", "coop"][: len(interiors)]):
+        dst = os.path.join(d, f"interior_{name}.png")
+        interiors[i].save(dst, optimize=True)
+        register(f"interior.{name}", dst, "phase4/03_building_interiors/top_down_building_interiors.png",
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 3x (Lanczos) — visibly soft.")
 
 
 if __name__ == "__main__":

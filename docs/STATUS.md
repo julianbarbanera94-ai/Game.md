@@ -1,5 +1,27 @@
 # Farmstead — Implementation Status
 
+## Milestone 2 — Phase 4: buildings & expansion
+
+| Feature | Where | Verified by |
+|---|---|---|
+| Building levels 1–3 for the cottage, well, workshop (tool shed), market stall and storage shed, each with a gameplay effect | `data/buildings.js`, `systems/buildings.js` | unit + e2e |
+| Effects: bag 16/24/32 slots; well auto-waters (north bed, then all plots) every 6:00 AM; can holds 10/25/40, and at level 3 waters 3 plots in a row; market +10%/+25% sell prices; shed stores 12/24/36 kinds of items | same | unit (each effect) + e2e (workshop) |
+| Construction over game time with stage sprites, a progress bar and "ready at" times; builders keep working while you sleep | `systems/buildings.js`, `render/renderer.js` | unit + e2e |
+| Building planner at the workbench (or workshop): upgrade preview (current → next sprite), cost, effect, lock reason | `ui/panels.js` | e2e + screenshots |
+| Placement mode for the storage shed and 7 decorations: ghost sprite, green/red footprint, blocked on paths, garden, creek, doors and colliders; E/A to place, Esc/Cancel to abort | `game.js` | e2e (valid spot, blocks movement) |
+| Storage shed: move items between bag and shed, validated both ways | `systems/storage.js` | unit + e2e |
+| Walk-in cottage interior (bed = sleep, door = leave) | `data/interiors.js` | e2e |
+| Quests: Storage Solutions, Home Improvements | `data/quests.js` | unit + e2e |
+| Save v2 + migration from v1 saves; corrupt building data is rejected | `systems/save.js` | unit |
+| Android APK: WebView wrapper (`android/`) built by GitHub Actions | `.github/workflows/android.yml` | see below |
+
+Tests: `npm test` **26/26** · `npm run test:e2e` **125/125** checks, no page errors.
+
+APK: this cloud environment can't reach `dl.google.com` (Android SDK and Google Maven), so the APK is built on GitHub Actions. Each push publishes `farmstead-debug.apk` to the `android-latest` pre-release.
+
+Known gaps: building art is low-resolution cut-outs (see `ASSETS.md`); there is only one interior; no barn/coop yet (they need livestock, Phase 5); no free terrain-expansion plots beyond the south bed; decorations can't be moved or sold back yet.
+
+
 ## Milestone 1 — Playable foundation (this branch)
 
 ### Starting audit

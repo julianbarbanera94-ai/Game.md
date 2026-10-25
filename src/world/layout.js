@@ -1,5 +1,8 @@
 import { TILE, WORLD_W } from '../config.js';
-import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, SCENERY } from '../data/world.js';
+import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, PATHS, SCENERY } from '../data/world.js';
+import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
+import { INTERIORS } from '../data/interiors.js';
+import { footprintRect } from '../systems/buildings.js';
 
 // Converts tile-space world data into runtime drawables + colliders.
 // A drawable: { sprite, x, y, w, h, src?, flip?, sortY }  (x,y = bottom-centre anchor, px)
@@ -22,7 +25,8 @@ export function buildWorld(assets) {
 
   for (const o of OBJECTS) {
     const { w, h } = spriteSize(assets, o.sprite, o.w);
-    const d = { id: o.id, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE };
+    // Buildings with levels resolve their sprite every frame from game state.
+    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE };
     (o.ground ? groundDrawables : drawables).push(d);
     if (o.collider) colliders.push(rectFrom(o.x, o.y, o.collider));
     if (o.interact) {
@@ -46,7 +50,7 @@ export function buildWorld(assets) {
   colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: WORLD_W, y1: cy1 });
 
   const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
-  return { drawables, groundDrawables, colliders, interactables, bounds };
+  return { drawables, groundDrawables, colliders, interactables, bounds, noBuild: noBuildZones() };
 }
 
 // Garden fence: horizontal rail pieces on top/bottom, post runs on the sides.
@@ -85,11 +89,59 @@ function buildFence(assets, drawables, colliders) {
   );
 }
 
+// Areas where nothing may be built: garden, creek/bridge, paths (px rects).
+function noBuildZones() {
+  const z = [
+    { x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
+    { x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
+  ];
+  for (const p of PATHS) {
+    const hw = (p.width / 2) * TILE;
+    z.push({
+      x0: Math.min(p.from[0], p.to[0]) * TILE - hw, y0: Math.min(p.from[1], p.to[1]) * TILE - hw,
+      x1: Math.max(p.from[0], p.to[0]) * TILE + hw, y1: Math.max(p.from[1], p.to[1]) * TILE + hw,
+    });
+  }
+  return z;
+}
+
+// Colliders for player-placed objects (px rects).
+export function placedColliders(state) {
+  return state.placed.map((p) => {
+    const r = footprintRect(p.type, p.x, p.y);
+    return { x0: r.x0 * TILE, y0: r.y0 * TILE, x1: r.x1 * TILE, y1: r.y1 * TILE };
+  });
+}
+
+// Runtime data for an interior scene (px, in the interior's own space).
+export function buildInterior(assets, id) {
+  const def = INTERIORS[id];
+  const e = assets.entry(def.sprite);
+  const w = def.widthTiles * TILE;
+  const h = e ? (w * e.height) / e.width : w;
+  const px = ([x, y]) => [x * w, y * h];
+  const rect = (r) => ({ x0: r[0] * w, y0: r[1] * h, x1: r[2] * w, y1: r[3] * h });
+  return {
+    id, def, w, h,
+    bounds: rect(def.bounds),
+    colliders: def.colliders.map(rect),
+    interactables: def.interactables.map((it) => {
+      const [x, y] = px(it.at);
+      return { id: `${id}_${it.kind}`, kind: it.kind, x, y };
+    }),
+    spawn: px(def.spawn),
+  };
+}
+
 // Every sprite key the world needs, for preloading.
 export function worldSpriteKeys() {
   return [
     ...OBJECTS.map((o) => o.sprite),
     ...SCENERY.map((s) => s[0]),
+    ...Object.values(BUILDINGS).flatMap((b) => b.levels.map((l) => l.sprite)),
+    ...CONSTRUCTION_STAGES,
+    ...Object.values(DECORATIONS).map((d) => d.sprite),
+    ...Object.values(INTERIORS).map((i) => i.sprite),
     'terrain.fence_horizontal_detailed',
     'building.fence_segment',
   ];

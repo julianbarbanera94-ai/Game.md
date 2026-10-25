@@ -58,6 +58,7 @@ async function boot() {
   document.getElementById('btn-bag').addEventListener('click', () => game.running && !game.uiOpen && game.panels.bag());
   document.getElementById('btn-journal').addEventListener('click', () => game.running && !game.uiOpen && game.panels.journal());
   document.getElementById('btn-menu').addEventListener('click', () => game.running && game.panels.menu());
+  document.getElementById('btn-cancel').addEventListener('click', () => game.cancelPlacement());
   document.addEventListener('visibilitychange', () => { if (document.hidden && game.running) game.autosave('hidden'); });
   window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
   window.addEventListener('keydown', () => sfx.unlock(), { once: true });

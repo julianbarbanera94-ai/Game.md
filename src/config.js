@@ -16,4 +16,4 @@ export const DAY_START_MINUTE = 6 * 60;
 export const MINUTES_PER_DAY = 24 * 60;
 
 export const SAVE_KEY = 'farmstead.save';
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;

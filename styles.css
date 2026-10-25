@@ -165,3 +165,23 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .claim { animation: none; }
   .toast, .backdrop { animation: none; }
 }
+
+/* building planner / storage */
+.cancel-place { position: absolute; left: 50%; bottom: 164px; transform: translateX(-50%); padding: 8px 16px; border-radius: 999px; border: 1px solid var(--warn); background: var(--panel); font-weight: 700; color: #ffe0c7; }
+.level-pics { display: flex; align-items: center; gap: 4px; flex: none; }
+.level-pics img { width: 56px; height: 56px; object-fit: contain; }
+.level-pics .arrow { font-weight: 800; color: #8a6a3c; }
+.building-row .row-main small + small { margin-top: 2px; }
+.status.building { color: #8a5a10; font-weight: 700; }
+.status.max { color: #3c7a2d; font-weight: 700; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.columns h3 { margin: 0 0 8px; font-size: 15px; }
+.row.compact img { width: 36px; height: 36px; }
+.row.compact .row-actions button { padding: 6px 8px; font-size: 12px; }
+.storage { padding: 14px 16px 16px; }
+.planner { padding: 14px 16px 16px; }
+@media (max-width: 560px) {
+  .columns { grid-template-columns: 1fr; }
+  .level-pics img { width: 40px; height: 40px; }
+  .row { flex-wrap: wrap; }
+}

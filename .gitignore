@@ -2,3 +2,8 @@ node_modules/
 test-results/
 .DS_Store
 __pycache__/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk

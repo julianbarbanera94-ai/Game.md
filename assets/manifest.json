@@ -133,6 +133,166 @@
       "status": "approved",
       "notes": ""
     },
+    "building4.construction_stage1": {
+      "file": "assets/derived/phase4/construction_stage1.png",
+      "width": 207,
+      "height": 252,
+      "source": "phase4/02_construction_stages/barn_construction_stages.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.construction_stage2": {
+      "file": "assets/derived/phase4/construction_stage2.png",
+      "width": 220,
+      "height": 278,
+      "source": "phase4/02_construction_stages/barn_construction_stages.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.construction_stage3": {
+      "file": "assets/derived/phase4/construction_stage3.png",
+      "width": 230,
+      "height": 288,
+      "source": "phase4/02_construction_stages/barn_construction_stages.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.construction_stage4": {
+      "file": "assets/derived/phase4/construction_stage4.png",
+      "width": 220,
+      "height": 288,
+      "source": "phase4/02_construction_stages/barn_construction_stages.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.construction_stage5": {
+      "file": "assets/derived/phase4/construction_stage5.png",
+      "width": 245,
+      "height": 290,
+      "source": "phase4/02_construction_stages/barn_construction_stages.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.house_l1": {
+      "file": "assets/derived/phase4/house_l1.png",
+      "width": 288,
+      "height": 324,
+      "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.house_l2": {
+      "file": "assets/derived/phase4/house_l2.png",
+      "width": 308,
+      "height": 320,
+      "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.house_l3": {
+      "file": "assets/derived/phase4/house_l3.png",
+      "width": 434,
+      "height": 334,
+      "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.market_stall_l1": {
+      "file": "assets/derived/phase4/market_stall_l1.png",
+      "width": 178,
+      "height": 212,
+      "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.market_stall_l2": {
+      "file": "assets/derived/phase4/market_stall_l2.png",
+      "width": 210,
+      "height": 230,
+      "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.market_stall_l3": {
+      "file": "assets/derived/phase4/market_stall_l3.png",
+      "width": 326,
+      "height": 274,
+      "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.storage_shed_l1": {
+      "file": "assets/derived/phase4/storage_shed_l1.png",
+      "width": 210,
+      "height": 220,
+      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.storage_shed_l2": {
+      "file": "assets/derived/phase4/storage_shed_l2.png",
+      "width": 230,
+      "height": 272,
+      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.storage_shed_l3": {
+      "file": "assets/derived/phase4/storage_shed_l3.png",
+      "width": 310,
+      "height": 270,
+      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.tool_shed_l1": {
+      "file": "assets/derived/phase4/tool_shed_l1.png",
+      "width": 210,
+      "height": 234,
+      "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.tool_shed_l2": {
+      "file": "assets/derived/phase4/tool_shed_l2.png",
+      "width": 240,
+      "height": 244,
+      "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.tool_shed_l3": {
+      "file": "assets/derived/phase4/tool_shed_l3.png",
+      "width": 340,
+      "height": 272,
+      "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.well_l1": {
+      "file": "assets/derived/phase4/well_l1.png",
+      "width": 166,
+      "height": 226,
+      "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.well_l2": {
+      "file": "assets/derived/phase4/well_l2.png",
+      "width": 212,
+      "height": 268,
+      "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "building4.well_l3": {
+      "file": "assets/derived/phase4/well_l3.png",
+      "width": 284,
+      "height": 284,
+      "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
     "foliage.bush_berries": {
       "file": "assets/phase1/foliage/bush_berries.png",
       "width": 245,
@@ -444,6 +604,38 @@
       "source": "phase3/06_farming_tools/farming_tools.png",
       "status": "temporary-reference-derived",
       "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "interior.barn": {
+      "file": "assets/derived/phase4/interior_barn.png",
+      "width": 513,
+      "height": 426,
+      "source": "phase4/03_building_interiors/top_down_building_interiors.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos) \u2014 visibly soft."
+    },
+    "interior.coop": {
+      "file": "assets/derived/phase4/interior_coop.png",
+      "width": 369,
+      "height": 423,
+      "source": "phase4/03_building_interiors/top_down_building_interiors.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos) \u2014 visibly soft."
+    },
+    "interior.house": {
+      "file": "assets/derived/phase4/interior_house.png",
+      "width": 423,
+      "height": 426,
+      "source": "phase4/03_building_interiors/top_down_building_interiors.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos) \u2014 visibly soft."
+    },
+    "interior.tool_shed": {
+      "file": "assets/derived/phase4/interior_tool_shed.png",
+      "width": 357,
+      "height": 420,
+      "source": "phase4/03_building_interiors/top_down_building_interiors.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos) \u2014 visibly soft."
     },
     "player.carry_action": {
       "file": "assets/phase2/player/carry_action.png",
@@ -1108,6 +1300,62 @@
       "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
       "status": "temporary-reference-derived",
       "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "prop.bench": {
+      "file": "assets/derived/phase4/prop_bench.png",
+      "width": 130,
+      "height": 92,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.berry_crate": {
+      "file": "assets/derived/phase4/prop_berry_crate.png",
+      "width": 116,
+      "height": 122,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.flower_crate": {
+      "file": "assets/derived/phase4/prop_flower_crate.png",
+      "width": 116,
+      "height": 122,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.hay_bales": {
+      "file": "assets/derived/phase4/prop_hay_bales.png",
+      "width": 202,
+      "height": 115,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.lantern_post": {
+      "file": "assets/derived/phase4/prop_lantern_post.png",
+      "width": 80,
+      "height": 128,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.scarecrow": {
+      "file": "assets/derived/phase4/prop_scarecrow.png",
+      "width": 116,
+      "height": 176,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
+    },
+    "prop.trough": {
+      "file": "assets/derived/phase4/prop_trough.png",
+      "width": 179,
+      "height": 92,
+      "source": "phase4/05_decorations_and_props/decorations_props.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos)."
     },
     "terrain.cobblestone_detailed": {
       "file": "assets/phase1/terrain/cobblestone_detailed.png",

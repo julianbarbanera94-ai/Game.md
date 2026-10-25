@@ -82,6 +82,27 @@ async function main() {
     await page.waitForTimeout(450);
   }
   const prompt = () => page.textContent('#prompt');
+  // From outside the cottage door: go in, sleep in the bed, come back out.
+  async function sleepInCottage(beforeLeaving) {
+    await face('up');
+    check((await prompt()).includes('cottage'), 'cottage door prompt');
+    await act();
+    await page.waitForTimeout(700);
+    check((await state()).player.scene === 'house', 'entered the cottage interior');
+    await route([[2.95, 7.6], [2.95, 6.34]]);
+    await face('left');
+    check((await prompt()).includes('Sleep'), 'bed prompt inside the cottage');
+    await act();
+    await page.click('.modal button.primary');
+    await page.waitForTimeout(1300);
+    if (beforeLeaving) await beforeLeaving();
+    await route([[4.05, 7.6]]);
+    await face('down');
+    check((await prompt()).includes('Leave'), 'exit prompt');
+    await act();
+    await page.waitForTimeout(700);
+    check((await state()).player.scene === 'farm', 'back outside');
+  }
   // Wait (up to 2 s) for a predicate on game state, so checks don't race the frame loop.
   const until = (fnSrc) => page.waitForFunction(fnSrc, null, { timeout: 2000 }).catch(() => {});
 
@@ -128,14 +149,11 @@ async function main() {
 
   // sleep through the night at the cottage
   await route([[7.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
-  await face('up');
-  check((await prompt()).includes('cottage'), 'cottage door prompt');
-  await act();
-  await page.click('.modal button.primary'); // Sleep until morning
-  await page.waitForTimeout(1200);
-  s = await state();
-  check(Math.floor(s.time / 1440) + 1 === 2 && s.time % 1440 >= 360 && s.time % 1440 < 375, 'slept until 6:00 AM on day 2');
-  check(Object.values(s.plots).filter((p) => p.crop === 'carrot' && p.growth >= 240).length === 4, 'carrots grew overnight');
+  await sleepInCottage(async () => {
+    s = await state();
+    check(Math.floor(s.time / 1440) + 1 === 2 && s.time % 1440 >= 360 && s.time % 1440 < 375, 'slept until 6:00 AM on day 2');
+    check(Object.values(s.plots).filter((p) => p.crop === 'carrot' && p.growth >= 240).length === 4, 'carrots grew overnight');
+  });
 
   await route([[17.6, 11.6], [7.0, 11.6], [7.0, 13.55]]);
   await walkTo(5.5, 13.55);
@@ -206,6 +224,79 @@ async function main() {
   check(upText.includes('250') && upText.includes('need'), 'garden expansion shows cost / insufficient coins');
   await page.keyboard.press('Escape');
 
+  // ---------------- Phase 4: buildings
+  // Test setup: grant coins so the upgrade flow can be exercised without
+  // farming for several in-game days.
+  await page.evaluate(() => { window.farmstead.state.coins += 2000; });
+  await route([[11.45, 17.65], [12.1, 17.65], [12.1, 11.6], [22.4, 11.6], [22.4, 10.3]]);
+  await face('up');
+  check((await prompt()).includes('Building planner'), 'workbench opens the building planner');
+  await act();
+  await page.waitForSelector('.planner');
+  await shot('planner');
+  await page.click('[data-upgrade-building="tool_shed"]');
+  await until('window.farmstead.state.buildings.tool_shed.job !== null');
+  s = await state();
+  check(s.buildings.tool_shed.job && s.buildings.tool_shed.job.toLevel === 2, 'workshop upgrade started');
+  await page.click('.tab:nth-child(2)');
+  await page.waitForTimeout(400);
+  await page.click('[data-place="storage_shed"]');
+  await page.waitForTimeout(100);
+  check(await page.isVisible('#btn-cancel'), 'placement mode active');
+  await route([[22.0, 11.6], [22.0, 15.2]]);
+  await face('down');
+  await page.waitForTimeout(100);
+  check((await prompt()).includes('Place Storage Shed'), 'valid spot for the storage shed');
+  await shot('placing-shed');
+  await act();
+  s = await state();
+  check(s.placed.length === 1 && s.placed[0].type === 'storage_shed' && s.placed[0].level === 0, 'storage shed under construction');
+  // the new shed blocks movement
+  await page.keyboard.down('ArrowDown');
+  await page.waitForTimeout(700);
+  await page.keyboard.up('ArrowDown');
+  check((await pos()).y < s.placed[0].y - 1.2, 'construction site blocks the player');
+  // decoration
+  await route([[22.0, 11.6], [22.4, 11.6], [22.4, 10.3]]);
+  await face('up');
+  await act();
+  await page.click('.tab:nth-child(2)');
+  await page.waitForTimeout(400);
+  await page.click('[data-place="scarecrow"]');
+  await route([[22.4, 11.6], [26.0, 11.6], [26.0, 15.2]]);
+  await face('down');
+  await page.waitForTimeout(100);
+  await act();
+  s = await state();
+  check(s.placed.some((p) => p.type === 'scarecrow' && p.level === 1), 'scarecrow placed instantly');
+  await shot('construction');
+
+  // sleep inside the cottage: builders finish overnight
+  await route([[26.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
+  await sleepInCottage(async () => {
+    await shot('interior');
+    s = await state();
+    check(s.buildings.tool_shed.level === 2 && s.can.capacity === 25, 'workshop finished overnight: can holds 25');
+    check(s.placed.find((p) => p.type === 'storage_shed').level === 1, 'storage shed finished overnight');
+    check(s.quests.q_storage.status === 'complete', 'Storage Solutions complete');
+    await page.keyboard.press('Enter');
+    await until('window.farmstead.state.quests.q_storage.status === "claimed"');
+  });
+
+  // use the storage shed
+  await route([[17.9, 11.6], [17.9, 18.8], [22.0, 18.8]]);
+  await face('up');
+  check((await prompt()).includes('storage shed'), 'storage shed prompt');
+  await act();
+  await page.waitForSelector('.storage');
+  await page.click('[data-store-all="seed_lettuce"]');
+  await page.waitForTimeout(400);
+  s = await state();
+  const shedRec = s.placed.find((p) => p.type === 'storage_shed');
+  check(shedRec.storage.seed_lettuce === 3 && !s.inventory.seed_lettuce, 'stored 3 lettuce seeds in the shed');
+  await shot('storage');
+  await page.keyboard.press('Escape');
+
   // manual save, reload, continue
   await page.keyboard.press('Escape');
   await page.click('[data-action="save"]');
@@ -213,7 +304,7 @@ async function main() {
   const before = await state();
   await page.reload();
   await page.waitForSelector('#title:not([hidden])');
-  check((await page.textContent('#save-info')).includes('Day 2'), 'title shows saved game');
+  check((await page.textContent('#save-info')).includes('Day 3'), 'title shows saved game');
   await page.click('#btn-continue');
   await page.waitForTimeout(300);
   const after = await state();
@@ -222,6 +313,8 @@ async function main() {
   check(JSON.stringify(after.plots) === JSON.stringify(before.plots), 'plots restored');
   check(JSON.stringify(after.quests) === JSON.stringify(before.quests), 'quests restored');
   check(Math.abs(after.player.x - before.player.x) < 1, 'player position restored');
+  check(JSON.stringify(after.buildings) === JSON.stringify(before.buildings), 'building levels restored');
+  check(JSON.stringify(after.placed) === JSON.stringify(before.placed), 'placed buildings and shed contents restored');
   await shot('after-reload');
 
   // night lighting check

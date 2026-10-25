@@ -1,6 +1,10 @@
 import { getItem } from '../data/items.js';
 import { QUESTS } from '../data/quests.js';
-import { shopEntries, upgradeStatus } from '../systems/economy.js';
+import { sellPrice, shopEntries, upgradeStatus } from '../systems/economy.js';
+import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
+import { jobProgress, placeableInfo, storageSlots, upgradeInfo, FIXED_BUILDINGS } from '../systems/buildings.js';
+import { formatClock } from '../systems/time.js';
+import { slotsUsed } from '../systems/inventory.js';
 import { rewardText } from '../systems/quests.js';
 import { el } from './hud.js';
 
@@ -86,13 +90,14 @@ export class Panels {
         rows = sellable.length
           ? sellable.map(([id, qty]) => {
             const item = getItem(id);
+            const price = sellPrice(s, id);
             return el('div', { class: 'row' },
               el('img', { src: game.assets.url(item.icon), alt: '' }),
-              el('div', { class: 'row-main' }, el('strong', {}, item.name), el('small', {}, `You have ${qty} · ${item.sellPrice} coins each`)),
+              el('div', { class: 'row-main' }, el('strong', {}, item.name), el('small', {}, `You have ${qty} · ${price} coins each`)),
               el('div', { class: 'row-actions' },
-                el('button', { 'data-sell': id, onclick: guarded(() => game.sell(id, 1)) }, `Sell 1 (+${item.sellPrice})`),
+                el('button', { 'data-sell': id, onclick: guarded(() => game.sell(id, 1)) }, `Sell 1 (+${price})`),
                 el('button', { class: 'primary', 'data-sell-all': id, onclick: guarded(() => game.sell(id, s.inventory[id] || 0)) },
-                  `Sell all (+${item.sellPrice * qty})`)));
+                  `Sell all (+${price * qty})`)));
           })
           : [el('p', { class: 'empty' }, 'You have no produce to sell yet. Harvest crops from your garden first.')];
       } else {
@@ -138,11 +143,107 @@ export class Panels {
     render();
   }
 
+  // ---- building planner: upgrade existing buildings, place new ones
+  planner(tab = 'upgrade') {
+    const game = this.game;
+    let current = tab;
+    const content = el('div', { class: 'planner' });
+    const img = (key) => el('img', { src: game.assets.url(key), alt: '' });
+    const statusLine = (info) => ({
+      locked: `Locked — requires: ${info.reason}`,
+      unaffordable: info.reason,
+      building: info.job ? `Under construction — ready at ${formatClock(info.job.end)} (${Math.round(jobProgress(info.job, game.state.time) * 100)}%)` : '',
+      max: 'Fully upgraded',
+      available: 'Ready to build',
+    }[info.state]);
+    const render = () => {
+      const s = game.state;
+      const tabs = el('div', { class: 'tabs', role: 'tablist' },
+        [['upgrade', 'Upgrade buildings'], ['build', 'Build & decorate']].map(([t, label]) => el('button', {
+          class: `tab${t === current ? ' active' : ''}`, role: 'tab', 'aria-selected': String(t === current),
+          onclick: () => { current = t; render(); },
+        }, label)));
+      let rows;
+      if (current === 'upgrade') {
+        const targets = [
+          ...FIXED_BUILDINGS.map((id) => ({ id })),
+          ...s.placed.filter((p) => p.kind === 'building').map((p) => ({ uid: p.uid })),
+        ];
+        rows = targets.map((t) => {
+          const info = upgradeInfo(s, t);
+          const lvl = info.rec.job ? info.rec.job.toLevel - 1 : info.rec.level;
+          const nextLevel = info.next ? lvl + 1 : null;
+          return el('div', { class: `row building-row ${info.state}` },
+            el('div', { class: 'level-pics' }, info.current ? img(info.current.sprite) : null,
+              info.next ? el('span', { class: 'arrow' }, '→') : null, info.next ? img(info.next.sprite) : null),
+            el('div', { class: 'row-main' },
+              el('strong', {}, `${info.def.name} · level ${Math.max(lvl, 0)}${nextLevel ? ` → ${nextLevel}` : ''}`),
+              el('small', {}, info.next ? info.next.effect : info.current.effect),
+              el('small', { class: `status ${info.state}` }, statusLine(info))),
+            el('div', { class: 'row-actions' },
+              info.next && info.state !== 'building'
+                ? el('button', { class: 'primary', 'data-upgrade-building': t.id || t.uid, disabled: info.state !== 'available', onclick: guarded(() => game.startUpgrade(t)) },
+                  `Upgrade (${info.next.cost})`)
+                : null));
+        });
+      } else {
+        const types = ['storage_shed', ...Object.keys(DECORATIONS)];
+        rows = types.map((type) => {
+          const info = placeableInfo(s, type);
+          const def = DECORATIONS[type] || BUILDINGS[type];
+          const sprite = DECORATIONS[type] ? def.sprite : def.levels[0].sprite;
+          const desc = DECORATIONS[type] ? 'Decoration' : `${def.levels[0].effect} Takes ${def.levels[0].buildMinutes / 60} hours to build.`;
+          return el('div', { class: `row ${info.state === 'locked' ? 'locked' : ''}` }, img(sprite),
+            el('div', { class: 'row-main' }, el('strong', {}, def.name), el('small', {}, desc),
+              info.state === 'locked' ? el('small', { class: 'status locked' }, `Locked — requires: ${info.reason}`) : null),
+            el('div', { class: 'row-actions' },
+              el('button', { class: 'primary', 'data-place': type, disabled: info.state !== 'available', onclick: guarded(() => game.startPlacement(type)) },
+                `Place (${info.cost})`)));
+        });
+      }
+      content.replaceChildren(tabs, el('div', { class: 'rows' }, rows),
+        el('div', { class: 'footer' }, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`));
+    };
+    this.show('Building Planner', content, { wide: true }).render = render;
+    render();
+  }
+
+  // ---- storage shed: move items between bag and shed
+  storage(uid) {
+    const game = this.game;
+    const content = el('div', { class: 'storage' });
+    const render = () => {
+      const s = game.state;
+      const shed = s.placed.find((p) => p.uid === uid);
+      if (!shed) return;
+      const list = (inv, move, verb, attr) => {
+        const entries = Object.entries(inv);
+        if (!entries.length) return [el('p', { class: 'empty' }, 'Empty')];
+        return entries.map(([id, qty]) => {
+          const item = getItem(id);
+          return el('div', { class: 'row compact' }, el('img', { src: game.assets.url(item.icon), alt: '' }),
+            el('div', { class: 'row-main' }, el('strong', {}, item.name), el('small', {}, `× ${qty}`)),
+            el('div', { class: 'row-actions' },
+              el('button', { onclick: guarded(() => move(id, 1)) }, `${verb} 1`),
+              el('button', { class: 'primary', [attr]: id, onclick: guarded(() => move(id, inv[id] || 0)) }, `${verb} all`)));
+        });
+      };
+      content.replaceChildren(
+        el('div', { class: 'columns' },
+          el('div', {}, el('h3', {}, `Bag (${slotsUsed(s.inventory)}/${game.bagSlots()})`),
+            el('div', { class: 'rows' }, list(s.inventory, (id, q) => game.storeItem(uid, id, q), 'Store', 'data-store-all'))),
+          el('div', {}, el('h3', {}, `Shed (${slotsUsed(shed.storage)}/${storageSlots(shed)})`),
+            el('div', { class: 'rows' }, list(shed.storage, (id, q) => game.takeItem(uid, id, q), 'Take', 'data-take-all')))));
+    };
+    this.show('Storage Shed', content, { wide: true, onClose: () => game.autosave('storage') }).render = render;
+    render();
+  }
+
   // ---- inventory
   bag() {
     const s = this.game.state;
     const entries = Object.entries(s.inventory);
-    const grid = el('div', { class: 'bag-grid' },
+    const grid = el('div', { class: 'bag-grid', 'aria-label': `${slotsUsed(s.inventory)} of ${this.game.bagSlots()} slots used` },
       entries.length
         ? entries.map(([id, qty]) => {
           const item = getItem(id);

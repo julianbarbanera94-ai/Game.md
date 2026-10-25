@@ -22,19 +22,10 @@ export const UPGRADES = {
     requires: { quest: 'q_market_day' },
     kind: 'land',
   },
-  wateringCan2: {
-    id: 'wateringCan2',
-    name: 'Large Watering Can',
-    description: 'Holds 25 waterings instead of 10.',
-    cost: 120,
-    requires: { quest: 'q_first_harvest' },
-    kind: 'tool',
-  },
 };
 
 export const STARTING_STATE = {
   coins: 60,
   inventory: { seed_carrot: 6 },
   canCapacity: 10,
-  upgradedCanCapacity: 25,
 };

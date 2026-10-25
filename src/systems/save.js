@@ -4,13 +4,36 @@ import { getItem } from '../data/items.js';
 import { createNewState } from './state.js';
 import { refreshAvailability } from './quests.js';
 import { applyUpgradeEffects } from './economy.js';
+import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
+import { applyLevelEffects, FIXED_BUILDINGS } from './buildings.js';
 
 // Versioned save model. Loading never trusts stored data: every field is
 // validated against a fresh state and unknown/invalid values are dropped.
 
+// MIGRATIONS[v] upgrades a version-v save to version v+1.
 const MIGRATIONS = {
-  // 1: (data) => data, // add migrations here when SAVE_VERSION increases
+  // v1 -> v2: buildings gained levels; the old "Large Watering Can" unlock
+  // becomes workshop (tool shed) level 2.
+  1: (data) => {
+    const out = { ...data, version: 2 };
+    out.buildings = { tool_shed: { level: data.unlocks?.wateringCan2 ? 2 : 1, job: null } };
+    out.placed = [];
+    if (out.unlocks) {
+      out.unlocks = { ...out.unlocks };
+      delete out.unlocks.wateringCan2;
+    }
+    return out;
+  },
 };
+
+function validJob(job, maxLevel) {
+  if (!job || typeof job !== 'object') return null;
+  const toLevel = Math.floor(num(job.toLevel, 0));
+  const start = num(job.start, 0);
+  const end = num(job.end, 0);
+  if (toLevel < 1 || toLevel > maxLevel || end < start) return null;
+  return { toLevel, start, end };
+}
 
 function num(v, fallback, min = 0, max = Number.MAX_SAFE_INTEGER) {
   return typeof v === 'number' && Number.isFinite(v) ? Math.min(max, Math.max(min, v)) : fallback;
@@ -38,6 +61,7 @@ export function deserialize(json) {
     s.player.x = num(data.player.x, s.player.x, 0, WORLD_W);
     s.player.y = num(data.player.y, s.player.y, 0, WORLD_H);
     if (['up', 'down', 'left', 'right'].includes(data.player.facing)) s.player.facing = data.player.facing;
+    if (data.player.scene === 'house') s.player.scene = 'house';
   }
   s.coins = Math.floor(num(data.coins, s.coins));
   if (data.inventory && typeof data.inventory === 'object') {
@@ -51,6 +75,42 @@ export function deserialize(json) {
   if (getItem(data.selectedSeed)?.category === 'seed') s.selectedSeed = data.selectedSeed;
   if (data.unlocks) for (const k of Object.keys(s.unlocks)) s.unlocks[k] = !!data.unlocks[k];
   for (const k of Object.keys(s.unlocks)) if (s.unlocks[k]) applyUpgradeEffects(s, k);
+  for (const id of FIXED_BUILDINGS) {
+    const b = data.buildings?.[id];
+    if (!b) continue;
+    const max = BUILDINGS[id].levels.length;
+    s.buildings[id].level = Math.floor(num(b.level, 1, 1, max));
+    s.buildings[id].job = validJob(b.job, max);
+    if (s.buildings[id].job && s.buildings[id].job.toLevel !== s.buildings[id].level + 1) s.buildings[id].job = null;
+  }
+  if (Array.isArray(data.placed)) {
+    for (const p of data.placed.slice(0, 200)) {
+      if (!p || typeof p !== 'object' || typeof p.uid !== 'string') continue;
+      const deco = DECORATIONS[p.type];
+      const bdef = BUILDINGS[p.type];
+      if (!deco && !bdef?.placeable) continue;
+      const rec = { uid: p.uid, kind: deco ? 'decor' : 'building', type: p.type, x: num(p.x, -1, 0, 1000), y: num(p.y, -1, 0, 1000) };
+      if (rec.x < 0 || rec.y < 0) continue;
+      if (deco) {
+        rec.level = 1;
+        rec.job = null;
+      } else {
+        const max = bdef.levels.length;
+        rec.level = Math.floor(num(p.level, 0, 0, max));
+        rec.job = validJob(p.job, max);
+        if (rec.level === 0 && !rec.job) continue;
+        rec.storage = {};
+        for (const [id, q] of Object.entries(p.storage || {})) {
+          const item = getItem(id);
+          const qty = Math.floor(num(q, 0, 0, item?.maxStack ?? 0));
+          if (item && qty > 0) rec.storage[id] = qty;
+        }
+      }
+      s.placed.push(rec);
+    }
+  }
+  s.nextUid = Math.floor(num(data.nextUid, s.placed.length + 1));
+  applyLevelEffects(s);
   if (data.can) s.can.water = Math.floor(num(data.can.water, s.can.water, 0, s.can.capacity));
   if (data.plots) {
     for (const [id, plot] of Object.entries(s.plots)) {

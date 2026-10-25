@@ -1,0 +1,50 @@
+name: Build Android APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  apk:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Build debug APK
+        run: gradle -p android assembleDebug --no-daemon
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk farmstead-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: farmstead-debug-apk
+          path: farmstead-debug.apk
+      - name: Publish to the "android-latest" pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: Farmstead test build (latest)
+          prerelease: true
+          files: farmstead-debug.apk
+          body: |
+            Debug build of Farmstead for testing. Built from ${{ github.ref_name }} @ ${{ github.sha }}.
+            Install: download farmstead-debug.apk on your Android phone, open it and allow "install unknown apps" when asked.

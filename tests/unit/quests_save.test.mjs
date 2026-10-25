@@ -54,13 +54,13 @@ test('claim is refused if reward items do not fit', () => {
   assert.equal(s.inventory.seed_lettuce, 98);
 });
 
-test('save round-trip preserves plots, inventory, quests and unlocks', () => {
+test('save round-trip preserves plots, inventory, quests and building levels', () => {
   const { s, bus } = setup();
   F.till(s, 'starter_5_14', bus);
   F.plant(s, 'starter_5_14', bus);
   F.water(s, 'starter_5_14', bus);
   advanceTime(s, 100);
-  s.unlocks.wateringCan2 = true;
+  s.buildings.tool_shed.level = 2;
   s.can.capacity = 25;
   s.can.water = 20;
   const loaded = deserialize(serialize(s));

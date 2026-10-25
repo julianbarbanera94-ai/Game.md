@@ -18,6 +18,10 @@ npm start            # http://localhost:8080
 | Bag / Journal / Menu | B / J / Esc | top-right buttons |
 | Claim a completed quest | Enter | **Claim** button in the tracker |
 
+## Android test build
+
+`android/` is a thin WebView wrapper that bundles the game files. GitHub Actions (`.github/workflows/android.yml`) runs the unit tests, builds a debug APK and attaches it to the **android-latest** pre-release on every push. To build locally with the Android SDK installed: `gradle -p android assembleDebug`.
+
 ## Test
 
 ```bash

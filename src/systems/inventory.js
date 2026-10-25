@@ -12,18 +12,18 @@ export function slotsUsed(inv) {
   return Object.values(inv).filter((q) => q > 0).length;
 }
 
-export function canAdd(inv, id, qty) {
+export function canAdd(inv, id, qty, slots = INVENTORY_SLOTS) {
   const item = getItem(id);
   if (!item) return { ok: false, reason: 'Unknown item' };
   if (!Number.isInteger(qty) || qty <= 0) return { ok: false, reason: 'Invalid quantity' };
   const have = count(inv, id);
-  if (have === 0 && slotsUsed(inv) >= INVENTORY_SLOTS) return { ok: false, reason: 'Your bag is full' };
+  if (have === 0 && slotsUsed(inv) >= slots) return { ok: false, reason: 'No free space' };
   if (have + qty > item.maxStack) return { ok: false, reason: `You can't carry more ${item.name}` };
   return { ok: true };
 }
 
-export function add(inv, id, qty) {
-  const check = canAdd(inv, id, qty);
+export function add(inv, id, qty, slots = INVENTORY_SLOTS) {
+  const check = canAdd(inv, id, qty, slots);
   if (!check.ok) return check;
   inv[id] = count(inv, id) + qty;
   return { ok: true };
@@ -44,10 +44,10 @@ export function remove(inv, id, qty) {
 }
 
 // Check that a whole bundle of items fits before granting any of it.
-export function canAddAll(inv, items) {
+export function canAddAll(inv, items, slots = INVENTORY_SLOTS) {
   const trial = { ...inv };
   for (const [id, qty] of Object.entries(items)) {
-    const r = add(trial, id, qty);
+    const r = add(trial, id, qty, slots);
     if (!r.ok) return r;
   }
   return { ok: true };

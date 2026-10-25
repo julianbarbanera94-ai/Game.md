@@ -48,14 +48,6 @@ test('upgrade purchase requires quest and coins, only once', () => {
   assert.equal(s.coins, 750);
 });
 
-test('watering can upgrade raises capacity', () => {
-  const s = createNewState();
-  s.coins = 500;
-  s.quests.q_first_harvest.status = 'claimed';
-  assert.ok(E.purchaseUpgrade(s, 'wateringCan2').ok);
-  assert.equal(s.can.capacity, 25);
-});
-
 test('inventory rejects bad quantities and full bags', () => {
   const inv = {};
   assert.equal(Inv.add(inv, 'carrot', -1).ok, false);

@@ -3,6 +3,8 @@ import { SHOP_STOCK, UPGRADES } from '../data/progression.js';
 import { QUESTS_BY_ID } from '../data/quests.js';
 import { NULL_BUS } from '../core/events.js';
 import * as Inv from './inventory.js';
+import { BUILDINGS } from '../data/buildings.js';
+import { bagSlots, buildingLevel, sellMultiplier } from './buildings.js';
 
 // Transactions validate everything first, then apply atomically.
 
@@ -10,6 +12,7 @@ export function isRequirementMet(state, req) {
   if (!req) return true;
   if (req.quest && state.quests[req.quest]?.status !== 'claimed') return false;
   if (req.unlock && !state.unlocks[req.unlock]) return false;
+  if (req.building && buildingLevel(state, req.building[0]) < req.building[1]) return false;
   return true;
 }
 
@@ -17,6 +20,7 @@ export function requirementText(req) {
   if (!req) return '';
   if (req.quest) return `Complete "${QUESTS_BY_ID[req.quest].title}"`;
   if (req.unlock === 'gardenExpansion') return 'Expand your garden';
+  if (req.building) return `${BUILDINGS[req.building[0]].name} level ${req.building[1]}`;
   return 'Locked';
 }
 
@@ -36,12 +40,19 @@ export function buy(state, itemId, qty, bus = NULL_BUS) {
   if (!isRequirementMet(state, entry.requires)) return { ok: false, reason: `Locked: ${requirementText(entry.requires)}` };
   const cost = item.buyPrice * qty;
   if (state.coins < cost) return { ok: false, reason: 'Not enough coins' };
-  const fits = Inv.canAdd(state.inventory, itemId, qty);
-  if (!fits.ok) return fits;
+  const fits = Inv.canAdd(state.inventory, itemId, qty, bagSlots(state));
+  if (!fits.ok) return fits.reason === 'No free space' ? { ok: false, reason: 'Your bag is full' } : fits;
   state.coins -= cost;
-  Inv.add(state.inventory, itemId, qty);
+  Inv.add(state.inventory, itemId, qty, bagSlots(state));
   bus.emit('buy', { item: itemId, category: item.category, qty, cost });
   return { ok: true, cost };
+}
+
+// Unit sell price including the market stall's level bonus.
+export function sellPrice(state, itemId) {
+  const item = getItem(itemId);
+  if (!item || item.sellPrice == null) return null;
+  return Math.round(item.sellPrice * sellMultiplier(state));
 }
 
 export function sell(state, itemId, qty, bus = NULL_BUS) {
@@ -49,7 +60,7 @@ export function sell(state, itemId, qty, bus = NULL_BUS) {
   if (!item || item.sellPrice == null) return { ok: false, reason: "The market doesn't buy that" };
   const can = Inv.canRemove(state.inventory, itemId, qty);
   if (!can.ok) return can;
-  const total = item.sellPrice * qty;
+  const total = sellPrice(state, itemId) * qty;
   Inv.remove(state.inventory, itemId, qty);
   state.coins += total;
   state.stats.earned += total;
@@ -76,10 +87,6 @@ export function purchaseUpgrade(state, id, bus = NULL_BUS) {
   return { ok: true };
 }
 
-// Effects that change other state when an unlock is gained.
-export function applyUpgradeEffects(state, id) {
-  if (id === 'wateringCan2') {
-    state.can.capacity = 25;
-    state.can.water = state.can.capacity;
-  }
-}
+// Effects that change other state when an unlock is gained (none yet; land
+// unlocks are read directly by the farming system).
+export function applyUpgradeEffects() {}
