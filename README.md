@@ -29,6 +29,9 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
 - **Game Station** 🎮 next to Mickey's House in the park, with five more games:
   👗 Dress Up (hats, glasses, bows, things to hold; 📸 takes a photo and the hat stays on in the park),
   🎨 Coloring, 🃏 Memory Match (3 pairs of friends), 🎵 Follow the Star (xylophone) and 🔢 Count with Me.
+- **Tap the screen** to walk somewhere, or tap a thing to walk over and use it (A still works too).
+- **Search & find** 🔍: the picture in the top-left corner is hidden somewhere in the area you're in. Walk onto it or tap it. Tap the picture for a pointing arrow. A new random thing (32 of them) hides each time.
+- **Dress up for real** in Minnie's Bow-tique (or the Game Station): drawn hats, glasses, bows and pearls, capes, tutus, vests and shoe colors, each in 7 colors, plus a 🎲 surprise outfit. Outfits stay on in the world.
 - Walk through **tall grass** and little animals pop out (🐰🦋🐞🐸🐿️…). Collect ⭐ stars around the park.
 - 🗺️ opens the Town Map: the whole world, where you are, and where your friends are.
 - 🔄 changes character, 🔊 mutes. Progress counters are saved on the device.
