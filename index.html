@@ -813,21 +813,39 @@ function resize() {
   const r = cv.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, 2);
   W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
   tp = Math.max(38, Math.min(72, Math.floor(Math.min(W, H) / 7.5)));
-  S = tp * dpr; sprites.clear(); chunks.clear();
+  S = tp * dpr; freeCaches();
 }
 window.addEventListener('resize', resize);
 
 // Static artwork is painted once into offscreen canvases at the current zoom.
+// Phones only allow so much canvas memory: when a new canvas can't get a context,
+// free every cache and try once more instead of crashing.
+function freeCanvas(cnv) { cnv.width = cnv.height = 0; }
+function freeCaches() {
+  for (const e of chunks.values()) freeCanvas(e.cnv);
+  for (const s of sprites.values()) freeCanvas(s.cnv);
+  chunks.clear(); sprites.clear();
+}
+function makeCanvas(w, h) {
+  for (let tries = 0; tries < 2; tries++) {
+    const cnv = document.createElement('canvas'); cnv.width = w; cnv.height = h;
+    const g = cnv.getContext('2d');
+    if (g) return { cnv, g };
+    freeCanvas(cnv); freeCaches();
+  }
+  return null;
+}
 function sprite(key, ox, oy, w, h, fn) {
   let s = sprites.get(key);
   if (!s) {
-    const cnv = document.createElement('canvas'); cnv.width = Math.max(1, Math.ceil(w * S)); cnv.height = Math.max(1, Math.ceil(h * S));
-    const g = cnv.getContext('2d'); g.scale(S, S); g.translate(ox, oy); LW = .04; fn(g);
-    s = { cnv, ox, oy, w, h }; sprites.set(key, s);
+    const m = makeCanvas(Math.max(1, Math.ceil(w * S)), Math.max(1, Math.ceil(h * S)));
+    if (!m) return null;
+    m.g.scale(S, S); m.g.translate(ox, oy); LW = .04; fn(m.g);
+    s = { cnv: m.cnv, ox, oy, w, h }; sprites.set(key, s);
   }
   return s;
 }
-const blit = (c, s, x, y) => c.drawImage(s.cnv, x - s.ox, y - s.oy, s.w, s.h);
+const blit = (c, s, x, y) => { if (s) c.drawImage(s.cnv, x - s.ox, y - s.oy, s.w, s.h); };
 
 /* ------------------------------------------------------------------ *
  *  Ground painting (cached in 8x8 tile chunks)
@@ -955,11 +973,12 @@ function paintGround(g, X0, Y0, X1, Y1) {
 function chunk(cx, cy) {
   const k = cx + ',' + cy; let e = chunks.get(k);
   if (e) return e;
-  const n = Math.ceil(CH * S), cnv = document.createElement('canvas'); cnv.width = n + PAD * 2; cnv.height = n + PAD * 2;
-  const g = cnv.getContext('2d'); g.translate(PAD, PAD); g.scale(n / CH, n / CH); g.translate(-cx * CH, -cy * CH);
+  while (chunks.size >= 10) { const old = chunks.keys().next().value; freeCanvas(chunks.get(old).cnv); chunks.delete(old); }
+  const n = Math.ceil(CH * tp * Math.min(dpr, 1.5)), m = makeCanvas(n + PAD * 2, n + PAD * 2);
+  if (!m) return null;
+  const g = m.g; g.translate(PAD, PAD); g.scale(n / CH, n / CH); g.translate(-cx * CH, -cy * CH);
   LW = .04; paintGround(g, cx * CH - 1, cy * CH - 1, cx * CH + CH, cy * CH + CH);
-  e = { cnv, n }; chunks.set(k, e);
-  if (chunks.size > 16) chunks.delete(chunks.keys().next().value);
+  e = { cnv: m.cnv, n }; chunks.set(k, e);
   return e;
 }
 
@@ -2182,7 +2201,7 @@ function openMini(id) {
   sizeMini(); mg.game.init(mg);
   $('#mg').classList.add('on'); dlg.style.display = 'none'; SFX.fanfare();
 }
-function closeMini() { mg.on = false; $('#mg').classList.remove('on'); SFX.hi(); if (mg.game.station) openStation(); else say('⭐ That was fun! Let’s play again soon!'); }
+function closeMini() { mg.on = false; $('#mg').classList.remove('on'); mgc.width = mgc.height = 0; SFX.hi(); if (mg.game.station) openStation(); else say('⭐ That was fun! Let’s play again soon!'); }
 function winMini() {
   mg.won = true; mg.wonT = 0; SFX.fanfare(); setTimeout(SFX.star, 500);
   mgBurst(mg.w / 2, mg.h * .35, 60, BALLOON_COLORS, 1.4);
@@ -2931,7 +2950,7 @@ function renderWorld(c) {
   const cxa = Math.floor(WX0 / CH), cxb = Math.floor((WX0 + WW - 1) / CH), cya = Math.floor(WY0 / CH), cyb = Math.floor((WY0 + WH - 1) / CH);
   for (let cy = Math.max(cya, Math.floor(vy0 / CH)); cy <= Math.min(cyb, Math.floor(vy1 / CH)); cy++)
     for (let cx = Math.max(cxa, Math.floor(vx0 / CH)); cx <= Math.min(cxb, Math.floor(vx1 / CH)); cx++) {
-      const e = chunk(cx, cy); c.drawImage(e.cnv, PAD, PAD, e.n, e.n, cx * CH, cy * CH, CH, CH);
+      const e = chunk(cx, cy); if (e) c.drawImage(e.cnv, PAD, PAD, e.n, e.n, cx * CH, cy * CH, CH, CH);
     }
   const tx0 = Math.max(WX0, vx0), ty0 = Math.max(WY0, vy0), tx1 = Math.min(WX0 + WW - 1, vx1), ty1 = Math.min(WY0 + WH - 1, vy1);
   drawWaterFx(c, tx0, ty0, tx1, ty1);
@@ -2981,7 +3000,7 @@ function renderWorld(c) {
   for (const b of balls) if (vis(b.x, b.y)) push(b.y, () => drawBall(c, b));
   for (const n of friends) if (vis(n.x, n.y)) push(n.y, () => drawChar(c, n.id, n.x, n.y, n.dir, n.anim, n.moving, .95, n.wave, n.hop > 0 ? Math.sin(n.hop / .5 * Math.PI) * .3 : 0));
   if (P && mode === 'play') push(P.ride ? 1e9 : P.y, () => { if (P.ride && P.ride.kind === 'sled') drawSled(c, P.x, P.y + .05); drawPlayer(c, playerLift()); });
-  items2.sort((a, b) => a.y - b.y); for (const it of items2) it.f();
+  items2.sort((a, b) => a.y - b.y); for (const it of items2) { try { it.f(); } catch (e) { report(e); } }
 
   drawParts(c, 'fx');
   for (const b of butterflies) if (vis(b.x, b.y)) (b.gull ? drawGull : drawButterfly)(c, b);
@@ -3053,7 +3072,7 @@ function buildMapImage() {
   return cnv;
 }
 function openMap() { if (mode !== 'play') return; mapOpen = true; $('#mapov').classList.add('on'); SFX.chime(); }
-function closeMap() { mapOpen = false; $('#mapov').classList.remove('on'); SFX.hi(); }
+function closeMap() { mapOpen = false; $('#mapov').classList.remove('on'); mapc.width = mapc.height = 0; SFX.hi(); }
 $('#btnMap').addEventListener('pointerdown', e => { ac(); if (mapOpen) closeMap(); else openMap(); e.preventDefault(); });
 $('#mapov').addEventListener('pointerdown', e => { closeMap(); e.preventDefault(); });
 function renderMap() {
@@ -3107,11 +3126,19 @@ function renderMenus() {
  *  Loop
  * ------------------------------------------------------------------ */
 let last = performance.now();
+// Keep the game running even if one part fails, and say what went wrong once.
+const reported = new Set();
+function report(e) {
+  const msg = (e && e.message) || String(e);
+  if (reported.has(msg)) return; reported.add(msg);
+  console.error(e); say('😮 Oops! ' + msg, 6);
+}
 function frame(now) {
-  const dt = Math.min(.05, (now - last) / 1000); last = now;
-  update(dt); render(); renderMenus();
-  if (mg.on) { updateMini(dt); renderMini(); }
   requestAnimationFrame(frame);
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  try { update(dt); } catch (e) { report(e); }
+  try { render(); renderMenus(); } catch (e) { report(e); for (let i = 0; i < 10; i++) ctx.restore(); }
+  if (mg.on) { try { updateMini(dt); renderMini(); } catch (e) { report(e); for (let i = 0; i < 10; i++) mgx.restore(); } }
 }
 load(); resize(); requestAnimationFrame(frame);
 window.__park = { drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
