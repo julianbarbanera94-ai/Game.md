@@ -25,6 +25,9 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
   🎈 Balloon Pop (park), 🐭 Peekaboo Pals (Clubhouse Hill), 🐚 Beach Catch (Sunny Beach),
   🥕 Feed the Animals (Minnie's Farm) and ⛄ Build a Snowman (Snowy Woods).
   There's no way to lose; finishing gives 3 ⭐ and a "Yay!". A = play again, B or ✖️ = back.
+- **Game Station** 🎮 next to Mickey's House in the park, with five more games:
+  👗 Dress Up (hats, glasses, bows, things to hold; 📸 takes a photo and the hat stays on in the park),
+  🎨 Coloring, 🃏 Memory Match (3 pairs of friends), 🎵 Follow the Star (xylophone) and 🔢 Count with Me.
 - Walk through **tall grass** and little animals pop out (🐰🦋🐞🐸🐿️…). Collect ⭐ stars around the park.
 - 🗺️ opens the Town Map: the whole world, where you are, and where your friends are.
 - 🔄 changes character, 🔊 mutes. Progress counters are saved on the device.
