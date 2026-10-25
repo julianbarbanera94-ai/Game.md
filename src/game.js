@@ -48,6 +48,7 @@ export class Game {
     this.playerMoving = false;
     this.action = null;
     this.target = null;
+    this.actionBuffer = 0; // seconds a tap on Action stays queued if it can't act yet
     this.activeTool = null;
     this.autosaveTimer = 0;
     this.stepTimer = 0;
@@ -152,6 +153,14 @@ export class Game {
 
     if (this.placement) this.updatePlacement();
     this.target = paused ? null : this.placement ? this.placementTarget() : this.resolveTarget();
+    // A tap that landed mid-action (or just before a target was in reach) is
+    // kept for a moment and fires as soon as it can, so players never need to
+    // hold or repeat the button.
+    if (paused) this.actionBuffer = 0;
+    else if (this.actionBuffer > 0) {
+      this.actionBuffer -= dt;
+      if (this.tryInteract()) this.actionBuffer = 0;
+    }
     this.effects.update(dt);
     this.camera.follow(p.x, p.y - 40, dt);
     this.hud.update();
@@ -192,7 +201,9 @@ export class Game {
     }
     if (this.uiOpen) return;
     if (this.placement && (code === 'KeyE' || code === 'Space' || code === 'Action')) this.confirmPlacement();
-    else if (code === 'KeyE' || code === 'Space' || code === 'Action') this.interact();
+    else if (code === 'KeyE' || code === 'Space' || code === 'Action') {
+      if (!this.tryInteract()) this.actionBuffer = 0.5;
+    }
     else if (code === 'KeyB' || code === 'KeyI') this.panels.bag();
     else if (code === 'KeyJ') this.panels.journal();
     else if (code === 'Enter') {
@@ -262,11 +273,13 @@ export class Game {
   }
 
   // ------------------------------------------------------------ actions
-  interact() {
+  // Returns true if the press was used (even if the game answered "can't").
+  tryInteract() {
     const t = this.target;
-    if (!t || this.action) return;
+    if (!t || this.action) return false;
     if (t.kind === 'plot') this.interactPlot(t);
     else this.interactObject(t.objectKind);
+    return true;
   }
 
   interactPlot(t) {
@@ -530,6 +543,7 @@ export class Game {
     const room = this.interior;
     this.camera.worldW = room ? room.w : WORLD_W;
     this.camera.worldH = room ? room.h : WORLD_H;
+    this.camera.setFit(room ? { w: room.w, h: room.h } : null);
   }
 
   transition(fn) {

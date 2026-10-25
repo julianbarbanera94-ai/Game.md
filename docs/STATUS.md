@@ -1,5 +1,19 @@
 # Farmstead — Implementation Status
 
+## Fix round: mobile controls (after first APK test)
+
+Reported on a phone, in landscape: (1) the cottage is blurry; (2) controls sit too high; (3) buttons only worked while A was held; (4) none of the pause-menu buttons worked.
+
+| Problem | Cause | Fix | Verified by |
+|---|---|---|---|
+| Menu / shop / hotbar buttons dead during play | Browsers only create a `click` for a single-finger tap. The left thumb is nearly always on the stick, so taps from the other thumb produced pointer events but no click (reproduced in emulated multi-touch) | `src/input/buttons.js` fires the click on pointerup and swallows the browser's own click, so a dialog it opens isn't closed again by that click | `npm run test:touch` (held-stick taps on menu, save, sound, resume, hotbar; single-finger menu stays open) |
+| A needed holding | A tap that arrived during the 0.4 s action animation, or just before a target was in reach, was dropped | Taps are buffered for 0.5 s and fire as soon as they can | `test:touch`: three quick taps on A till, plant and water a plot |
+| "New game" silently did nothing when a save existed | The Android WebView blocks `window.confirm()` | Replaced with an in-game dialog | `test:touch` |
+| Controls too high in landscape | Fixed 110 px offsets meant for portrait | Short-screen layout: stick and A hug the bottom corners, one quest shown, smaller hotbar and prompt | `test:touch` (positions and no overlap) |
+| Cottage blurry | The only source is a 141×142 px board panel, enlarged | Whole room now fits above the HUD at no more than 1.25× zoom (smaller is sharper), plus unsharp-masked enlargement. **Still soft: it needs a real export, see `docs/ART_REQUESTS.md`** | screenshots |
+
+Tests: `npm test` 26/26 · `npm run test:e2e` 125/125 · `npm run test:touch` 15/15.
+
 ## Milestone 2 — Phase 4: buildings & expansion
 
 | Feature | Where | Verified by |

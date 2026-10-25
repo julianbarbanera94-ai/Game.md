@@ -6,6 +6,7 @@ import { Renderer } from './render/renderer.js';
 import { Input } from './input/input.js';
 import { Sfx } from './audio/sfx.js';
 import { Game } from './game.js';
+import { installTapActivation } from './input/buttons.js';
 import { CROPS } from './data/crops.js';
 import { createNewState } from './systems/state.js';
 import { hasSave, loadGame, savePreview } from './systems/save.js';
@@ -42,6 +43,7 @@ async function boot() {
   const canvas = document.getElementById('game');
   const world = buildWorld(assets);
   const renderer = new Renderer(canvas, assets, world);
+  installTapActivation();
   const input = new Input();
   input.bindStick(document.getElementById('stick'), document.getElementById('knob'));
   const sfx = new Sfx(assets);
@@ -86,8 +88,11 @@ async function boot() {
     else info.textContent = r.reason;
   });
   btnNew.addEventListener('click', () => {
-    if (hasSave(storage) && !window.confirm('Start a new game? Your current save will be overwritten when the new game saves.')) return;
-    begin(createNewState(), true);
+    // In-game dialog: window.confirm() is suppressed inside Android WebViews.
+    if (!hasSave(storage)) return begin(createNewState(), true);
+    game.panels.dialog('Start a new game?',
+      'Your saved game will be overwritten as soon as the new game saves.',
+      [{ label: 'Keep my save' }, { label: 'Start new game', primary: true, action: () => begin(createNewState(), true) }]);
   });
 
   loading.hidden = true;

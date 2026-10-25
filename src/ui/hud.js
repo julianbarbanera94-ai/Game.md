@@ -64,7 +64,9 @@ export class Hud {
   }
 
   renderQuests(quests) {
-    const items = quests.slice(0, 3).map(({ def, state: qs }) => {
+    // Finished quests first, so a claim button is never hidden on small screens.
+    const ordered = [...quests].sort((a, b) => (b.state.status === 'complete') - (a.state.status === 'complete'));
+    const items = ordered.slice(0, 3).map(({ def, state: qs }) => {
       if (qs.status === 'complete') {
         return el('div', { class: 'quest complete' },
           el('div', { class: 'quest-title' }, `✔ ${def.title}`),

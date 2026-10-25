@@ -98,7 +98,7 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 }
 
 /* modal panels */
-#modal-root { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+#modal-root { position: fixed; inset: 0; pointer-events: none; z-index: 16; } /* above the title screen (15) */
 .backdrop { position: absolute; inset: 0; background: rgba(12, 18, 10, 0.45); display: grid; place-items: center; pointer-events: auto; padding: 12px; animation: fade-in 0.15s; }
 @keyframes fade-in { from { opacity: 0; } }
 .modal { width: min(440px, 100%); max-height: calc(100vh - 24px); overflow: auto; background: var(--parchment); color: var(--ink); border-radius: 18px; border: 3px solid #7b5530; box-shadow: 0 0 0 3px #d9b77e inset, 0 16px 40px rgba(0,0,0,0.45); }
@@ -184,4 +184,29 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .columns { grid-template-columns: 1fr; }
   .level-pics img { width: 40px; height: 40px; }
   .row { flex-wrap: wrap; }
+}
+
+/* Landscape phones: short screens. Controls hug the bottom corners and the
+   quest tracker shows a single quest so nothing overlaps the stick. */
+@media (max-height: 520px) {
+  #stick { bottom: max(12px, env(safe-area-inset-bottom)); width: 112px; height: 112px; }
+  #knob { width: 50px; height: 50px; margin: -25px 0 0 -25px; }
+  #btn-action { bottom: max(16px, env(safe-area-inset-bottom)); width: 76px; height: 76px; font-size: 26px; }
+  .hotbar { bottom: max(8px, env(safe-area-inset-bottom)); padding: 5px; gap: 5px; }
+  .slot { width: 46px; height: 46px; padding: 3px; }
+  .prompt { bottom: 72px; font-size: 13px; padding: 6px 14px 6px 6px; }
+  .prompt .key { width: 26px; height: 26px; }
+  .cancel-place { bottom: 112px; }
+  #toasts { top: 8px; bottom: auto; width: min(380px, 50vw); }
+  .toast { font-size: 12px; padding: 6px 12px; }
+  .quests { padding: 8px 10px; font-size: 11px; }
+  .quests .quest ~ .quest { display: none; }
+  .hud-left { width: min(210px, 36vw); gap: 6px; }
+  .clock { padding: 5px 10px; }
+  .coins { padding: 5px 12px; font-size: 17px; }
+  .round { width: 44px; height: 44px; }
+  .modal { max-height: calc(100vh - 16px); }
+  .modal-head { padding: 8px 14px; }
+  .menu button { padding: 9px; }
+  .menu { gap: 6px; padding-top: 10px; padding-bottom: 12px; }
 }

@@ -27,6 +27,7 @@ npm start            # http://localhost:8080
 ```bash
 npm test             # unit tests (node:test) for all gameplay systems
 npm run test:e2e     # Playwright playthrough of the full loop; screenshots in test-results/
+npm run test:touch   # emulated landscape phone, real multi-touch (held stick + taps)
 ```
 
 ## Architecture

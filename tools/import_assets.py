@@ -20,7 +20,7 @@ import sys
 from collections import deque
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets")
@@ -391,6 +391,16 @@ def components(im, min_area):
     return boxes
 
 
+def enlarge(sp, k):
+    """Lanczos enlargement followed by an unsharp mask that restores edge
+    contrast lost in the upscale (RGB only; alpha is kept as resampled)."""
+    big = sp.resize((sp.size[0] * k, sp.size[1] * k), Image.LANCZOS)
+    rgb = big.convert("RGB").filter(ImageFilter.UnsharpMask(radius=0.9 * k, percent=130, threshold=2))
+    out = rgb.convert("RGBA")
+    out.putalpha(big.getchannel("A"))
+    return out
+
+
 def segment_panel(path, top, min_area, tol=48, upscale=1):
     """Key out a reference panel's cream background below `top` and return
     the large objects left-to-right (top-to-bottom within a row)."""
@@ -405,7 +415,7 @@ def segment_panel(path, top, min_area, tol=48, upscale=1):
         sprite = keyed.crop((x0, y0, x1, y1))
         sprite = largest_component(sprite)
         if upscale != 1:
-            sprite = sprite.resize((sprite.size[0] * upscale, sprite.size[1] * upscale), Image.LANCZOS)
+            sprite = enlarge(sprite, upscale)
         out.append(sprite)
     return out
 
@@ -451,14 +461,14 @@ def phase4(root, preview_dir=None):
     d = ensure(os.path.join(OUT, "derived", "phase4"))
     src = os.path.join(root, "01_building_upgrades")
     for name, fn in P4_BUILDINGS.items():
-        sprites = [sp.resize((sp.size[0] * 2, sp.size[1] * 2), Image.LANCZOS) for sp in level_columns(os.path.join(src, fn), 46)]
+        sprites = [enlarge(sp, 2) for sp in level_columns(os.path.join(src, fn), 46)]
         if len(sprites) != 3:
             raise SystemExit(f"{fn}: expected 3 building levels, found {len(sprites)}")
         for lvl, sp in enumerate(sprites, 1):
             dst = os.path.join(d, f"{name}_l{lvl}.png")
             sp.save(dst, optimize=True)
             register(f"building4.{name}_l{lvl}", dst, f"phase4/01_building_upgrades/{fn}",
-                     "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+                     "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos + unsharp).")
     # construction stages: one merged strip -> split at the 4 emptiest columns
     strip = segment_panel(os.path.join(root, "02_construction_stages", "barn_construction_stages.png"), 50, 3000, upscale=2)[0]
     alpha = (np.asarray(strip)[..., 3] > 0).sum(0)
@@ -473,7 +483,7 @@ def phase4(root, preview_dir=None):
         dst = os.path.join(d, f"construction_stage{i}.png")
         sp.save(dst, optimize=True)
         register(f"building4.construction_stage{i}", dst, "phase4/02_construction_stages/barn_construction_stages.png",
-                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos + unsharp).")
     # decorative props: the panel's objects merge into groups, so named
     # sub-rectangles are cut from the (2x) groups and re-isolated
     groups = segment_panel(os.path.join(root, "05_decorations_and_props", "decorations_props.png"), 46, 500, upscale=2)
@@ -491,13 +501,13 @@ def phase4(root, preview_dir=None):
         dst = os.path.join(d, f"prop_{name}.png")
         sp.save(dst, optimize=True)
         register(f"prop.{name}", dst, "phase4/05_decorations_and_props/decorations_props.png",
-                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos).")
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 2x (Lanczos + unsharp).")
     interiors = segment_panel(os.path.join(root, "03_building_interiors", "top_down_building_interiors.png"), 48, 4000, upscale=3)
     for i, name in enumerate(["house", "tool_shed", "barn", "coop"][: len(interiors)]):
         dst = os.path.join(d, f"interior_{name}.png")
         interiors[i].save(dst, optimize=True)
         register(f"interior.{name}", dst, "phase4/03_building_interiors/top_down_building_interiors.png",
-                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 3x (Lanczos) — visibly soft.")
+                 "temporary-reference-derived", notes=P4_NOTE + " Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export.")
 
 
 if __name__ == "__main__":
