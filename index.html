@@ -140,9 +140,9 @@
   .bdots span { display: inline-block; width: 16px; height: 16px; margin: 0 5px; border-radius: 50%; background: #fff; animation: hop 1s infinite; }
   .bdots span:nth-child(2) { animation-delay: .15s; } .bdots span:nth-child(3) { animation-delay: .3s; }
   #hud { align-items: flex-start; gap: 8px; max-width: none; }
-  #findCard { pointer-events: auto; position: relative; width: 78px; height: 78px; border-radius: 18px; background: #fff; border: 4px solid #e8334f; box-shadow: 0 4px 0 rgba(0,0,0,.25); cursor: pointer; }
-  #findCard canvas { width: 100%; height: 100%; display: block; border-radius: 14px; }
-  #findCard .flabel { position: absolute; left: 50%; bottom: -13px; transform: translateX(-50%); background: #e8334f; color: #fff; font: 900 13px "Trebuchet MS", sans-serif; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  #findCard { pointer-events: auto; position: relative; width: 112px; height: 112px; aspect-ratio: 1; overflow: hidden; border-radius: 18px; background: #fff; border: 4px solid #e8334f; box-shadow: 0 4px 0 rgba(0,0,0,.25); cursor: pointer; }
+  #findCard canvas { width: 100%; height: 100%; display: block; background: linear-gradient(#f4fbff, #e6f2ff); }
+  #findCard .flabel { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; border-radius: 0; background: #e8334f; color: #fff; font: 900 13px "Trebuchet MS", sans-serif; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
   #findCard.pop { animation: bump .5s 2; }
   .hudcol { display: flex; flex-direction: column; gap: 6px; }
   #hud .chip { font-size: 20px; }
@@ -172,7 +172,7 @@
     #parade { width: auto; height: 34vh; }
     .press { font-size: 18px; padding: 5px 18px; }
     .mapbox { width: auto; height: 76vh; max-height: none; }
-    #findCard { width: 62px; height: 62px; } #hud .chip { font-size: 16px; }
+    #findCard { width: 88px; height: 88px; } #hud .chip { font-size: 16px; }
     #topbtns .tb { width: 44px; height: 44px; font-size: 22px; }
     #menu { padding-top: 56px; }
     #bookGrid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
@@ -187,7 +187,7 @@
   <div id="view">
     <canvas id="c"></canvas>
     <div id="hud" class="playonly">
-      <div id="findCard" aria-label="What to find"><canvas id="findC" width="128" height="128"></canvas><span class="flabel">🔍 Find</span></div>
+      <div id="findCard" aria-label="What to find"><canvas id="findC" width="220" height="220"></canvas><span class="flabel">🔍 Find</span></div>
       <div class="hudcol">
         <div class="chip" id="cStars">⭐ <span>0</span></div>
         <div class="chip quest off" id="cQuest">🤝 <span id="questE"></span></div>
@@ -3208,13 +3208,13 @@ function findThumb(f, size = 128) {
 function nextFind() {
   let i; do i = Math.floor(Math.random() * FIND_TARGETS.length); while (i === hunt.last && FIND_TARGETS.length > 1);
   hunt.last = i; hunt.cur = FIND_TARGETS[i]; hunt.t = 0; hunt.hint = 0;
-  const g = $('#findC').getContext('2d'); g.clearRect(0, 0, 128, 128); g.drawImage(findThumb(hunt.cur), 0, 0);
+  const g = $('#findC').getContext('2d'); g.clearRect(0, 0, 220, 220); g.drawImage(findThumb(hunt.cur, 220), 0, 0);
   $('#findCard').classList.remove('pop'); void $('#findCard').offsetWidth; $('#findCard').classList.add('pop');
   say(`🔍 Can you find the ${hunt.cur.name}? Look at the picture! ↖️`, 3.6);
 }
 function foundIt() {
   const f = hunt.cur; if (!f) return;
-  hunt.cur = null; $('#findC').getContext('2d').clearRect(0, 0, 128, 128);
+  hunt.cur = null; $('#findC').getContext('2d').clearRect(0, 0, 220, 220);
   addCount('finds', 'cFinds'); giveSticker(f.id); SFX.fanfare();
   for (let i = 0; i < 2; i++) setTimeout(() => addCount('stars', 'cStars'), 400 + i * 250);
   burst(P.x, P.y - 1, 30, BALLOON_COLORS, 'conf', 3.6, 1.2, 3.5); bubble(P, '🔍', -1.45, 1.6);
