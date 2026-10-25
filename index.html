@@ -824,6 +824,217 @@ function starPath(c, x, y, r, rot = 0, pts = 5) {
   c.closePath();
 }
 function emoji(c, e, x, y, size) { c.font = size + 'px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#000'; c.fillText(e, x, y); }
+/* ------------------------------------------------------------------ *
+ *  Animal art (drawn, no emoji). Frame: feet at 0,0, about 20 units tall.
+ * ------------------------------------------------------------------ */
+const ANIMAL_OF = { '🐮': 'cow', '🐄': 'cow', '🐷': 'pig', '🐑': 'sheep', '🐔': 'chicken', '🐥': 'chick', '🐣': 'chick', '🐴': 'horse', '🦀': 'crab', '🐧': 'penguin',
+  '🐰': 'bunny', '🦋': 'butterfly', '🐞': 'ladybug', '🐸': 'frog', '🐿️': 'squirrel', '🦔': 'hedgehog', '🐱': 'kitten', '🐢': 'turtle', '🐶': 'puppy', '🦆': 'duckling',
+  '🐵': 'monkey', '🐭': 'mouse', '🐻': 'bear', '🐟': 'fish', '🐠': 'fish2', '🐙': 'octopus' };
+const kindOf = e => ANIMAL_OF[e];
+function beady(c, x, y, r = 1) { ell(c, x, y, r, r * 1.18, INK); ell(c, x - r * .3, y - r * .4, r * .38, r * .38, '#fff'); }
+function blush(c, x, y) { ell(c, x, y, 1.1, .7, 'rgba(255,110,150,.45)'); }
+function legs(c, xs, top, col, w = 1.6) { for (const x of xs) { rr(c, x - w / 2, top, w, -top, .6); c.fillStyle = col; c.fill(); c.strokeStyle = OUT; c.lineWidth = LW; c.stroke(); } }
+const ANIMALS = {
+  cow(c, t) {
+    legs(c, [-5, -2, 2, 5], -4, '#fff'); for (const x of [-5, -2, 2, 5]) ell(c, x, -.4, .9, .5, '#5a4636');
+    ell(c, 0, -7.5, 8, 5.4, '#fff', OUT); ell(c, -3, -8.5, 2.4, 1.8, INK); ell(c, 4, -6.4, 1.8, 1.4, INK);
+    c.beginPath(); c.moveTo(7.6, -8); c.quadraticCurveTo(10.5, -7 + Math.sin(t * 4), 9.5, -4); c.strokeStyle = OUT; c.lineWidth = .7; c.stroke();
+    ell(c, -5.4, -17.5, 2, 1, '#fff', OUT); ell(c, 5.4, -17.5, 2, 1, '#fff', OUT);
+    poly(c, [[-3, -19.5], [-2.2, -22], [-1.4, -19.6]], '#ffe27a', OUT, .6); poly(c, [[3, -19.5], [2.2, -22], [1.4, -19.6]], '#ffe27a', OUT, .6);
+    ell(c, 0, -15.5, 5.6, 4.8, '#fff', OUT); ell(c, 2.4, -17.4, 1.6, 1.2, INK);
+    ell(c, 0, -12.5, 4.2, 2.6, '#ffc2d0', OUT); ell(c, -1.4, -12.6, .5, .4, '#c2607a'); ell(c, 1.4, -12.6, .5, .4, '#c2607a');
+    beady(c, -2.2, -16.2, .85); beady(c, 2.2, -16.2, .85);
+    ell(c, 0, -9.4, 1.1, 1.1, '#ffd23f', OUT);
+  },
+  pig(c, t) {
+    legs(c, [-4.5, -1.6, 1.6, 4.5], -3.6, '#ffb3c7');
+    ell(c, 0, -7, 7.6, 5.6, '#ffb3c7', OUT); ell(c, -2, -9, 3, 1.6, 'rgba(255,255,255,.35)');
+    c.beginPath(); c.arc(8, -8, 1.3, 0, Math.PI * 1.6); c.strokeStyle = OUT; c.lineWidth = .7; c.stroke();
+    poly(c, [[-4.6, -17.4], [-3.6, -20.6], [-1.8, -18.2]], '#ff8fab', OUT, .6); poly(c, [[4.6, -17.4], [3.6, -20.6], [1.8, -18.2]], '#ff8fab', OUT, .6);
+    ell(c, 0, -14.4, 5.6, 4.8, '#ffb3c7', OUT);
+    ell(c, 0, -12.6, 2.8, 2, '#ff8fab', OUT); ell(c, -.9, -12.6, .5, .7, '#c2607a'); ell(c, .9, -12.6, .5, .7, '#c2607a');
+    beady(c, -2.4, -15.6, .8); beady(c, 2.4, -15.6, .8); blush(c, -3.8, -13.2); blush(c, 3.8, -13.2);
+  },
+  sheep(c, t) {
+    legs(c, [-4, -1.4, 1.4, 4], -3.4, '#4a4a55', 1.3);
+    for (const [x, y, r] of [[-5, -7, 3], [-1.6, -9.4, 3.2], [2, -9.4, 3.2], [5, -7, 3], [0, -5.4, 3.4], [-3, -5, 2.8], [3, -5, 2.8]]) ell(c, x, y, r, r, '#fff', OUT);
+    for (const [x, y, r] of [[-5, -7, 3], [-1.6, -9.4, 3.2], [2, -9.4, 3.2], [5, -7, 3], [0, -5.4, 3.4], [-3, -5, 2.8], [3, -5, 2.8]]) ell(c, x, y, r * .85, r * .85, '#fff');
+    ell(c, -4.2, -14.2, 1.8, .9, '#4a4a55', OUT); ell(c, 4.2, -14.2, 1.8, .9, '#4a4a55', OUT);
+    ell(c, 0, -13.4, 3.6, 4.4, '#4a4a55', OUT);
+    for (const [x, y] of [[-1.6, -17.2], [0, -18], [1.6, -17.2]]) ell(c, x, y, 1.6, 1.4, '#fff', OUT);
+    ell(c, -1.4, -13.6, .9, 1, '#fff'); ell(c, 1.4, -13.6, .9, 1, '#fff'); ell(c, -1.3, -13.4, .5, .6, INK); ell(c, 1.5, -13.4, .5, .6, INK);
+    blush(c, -2.2, -11.6); blush(c, 2.2, -11.6);
+  },
+  chicken(c, t) {
+    for (const x of [-1.6, 1.6]) { line(c, x, -3, x, 0, '#ff9a2e', .7); line(c, x, 0, x - 1, 0, '#ff9a2e', .6); line(c, x, 0, x + 1, 0, '#ff9a2e', .6); }
+    poly(c, [[5, -9], [8.5, -13], [7.5, -8.4], [9, -9.6], [6.5, -6]], '#fff', OUT, .7);
+    ell(c, 0, -8, 6, 6, '#fff', OUT); ell(c, 2.6, -7.6, 3, 2.2, '#f0f0f0', OUT);
+    ell(c, -.4, -15, 4.4, 4.4, '#fff', OUT);
+    for (const [x, y] of [[-1.6, -19.4], [0, -20.2], [1.6, -19.6]]) ell(c, x, y, 1.2, 1.3, '#e8333d', OUT);
+    poly(c, [[-.9, -14.6], [.9, -14.6], [0, -12.6]], '#ffb21f', OUT, .6); ell(c, 0, -12, .8, 1.2, '#e8333d');
+    beady(c, -1.8, -15.8, .75); beady(c, 1.8, -15.8, .75);
+  },
+  chick(c, t) {
+    for (const x of [-1.4, 1.4]) { line(c, x, -2, x, 0, '#ff9a2e', .6); line(c, x - .8, 0, x + .8, 0, '#ff9a2e', .6); }
+    ell(c, 0, -6.4, 5.6, 5.4, '#ffe066', OUT); ell(c, -4.6, -6.4, 1.8, 1.2, '#ffd23f', OUT); ell(c, 4.6, -6.4, 1.8, 1.2, '#ffd23f', OUT);
+    ell(c, -1.8, -8.6, 2, 1.2, 'rgba(255,255,255,.4)');
+    ell(c, 0, -11.6, .8, 1.4, '#ffe066', OUT);
+    poly(c, [[-.9, -6.8], [.9, -6.8], [0, -5.2]], '#ff9a2e', OUT, .5);
+    beady(c, -1.9, -8, .75); beady(c, 1.9, -8, .75); blush(c, -3, -6.2); blush(c, 3, -6.2);
+  },
+  duckling(c, t) {
+    for (const x of [-1.6, 1.6]) ell(c, x, -.4, 1.6, .7, '#ff9a2e', OUT);
+    ell(c, 0, -5.4, 5.4, 4.6, '#ffe066', OUT); ell(c, 3.2, -5.6, 2.2, 1.6, '#ffd23f', OUT);
+    ell(c, -.6, -11.6, 4, 3.8, '#ffe066', OUT); ell(c, -1, -15.4, .8, 1.4, '#ffe066', OUT);
+    ell(c, -.6, -10.4, 2.6, 1.1, '#ff9a2e', OUT);
+    beady(c, -2.2, -12.4, .7); beady(c, 1, -12.4, .7); blush(c, -3.2, -10.8);
+  },
+  horse(c, t) {
+    legs(c, [-5, -2.6, 2.6, 5], -5, '#b5793d', 1.5); for (const x of [-5, -2.6, 2.6, 5]) ell(c, x, -.5, 1, .6, '#5a3a20');
+    c.beginPath(); c.moveTo(7, -9); c.quadraticCurveTo(10.5, -8 + Math.sin(t * 4), 9.6, -3.5); c.strokeStyle = '#5a3a20'; c.lineWidth = 1.6; c.stroke();
+    ell(c, 0, -8.4, 7.6, 4.8, '#b5793d', OUT);
+    for (let i = 0; i < 4; i++) ell(c, -1.6 + i * .5, -19 + i * 2.4, 1.5, 1.7, '#5a3a20', OUT);
+    poly(c, [[-6.2, -9], [-6.6, -18], [-2, -19], [-1.4, -9]], '#b5793d', OUT, .8);
+    poly(c, [[-5.6, -21.4], [-5.4, -23.8], [-4.2, -21.8]], '#b5793d', OUT, .6); poly(c, [[-2.8, -21.4], [-2.4, -23.8], [-1.6, -21.6]], '#b5793d', OUT, .6);
+    ell(c, -4.2, -18.8, 3.4, 3, '#b5793d', OUT); ell(c, -5.4, -15.6, 3, 2.4, '#d9a066', OUT);
+    ell(c, -6.6, -15.6, .45, .35, '#5a3a20'); ell(c, -4.4, -15.6, .45, .35, '#5a3a20');
+    ell(c, -4, -21.2, 1.6, 1, '#5a3a20');
+    beady(c, -5.6, -19.2, .7); beady(c, -2.8, -19.2, .7);
+  },
+  crab(c, t) {
+    for (const s of [-1, 1]) for (let i = 0; i < 3; i++) line(c, s * (3 + i), -2.6, s * (5 + i * 1.2), -.2, '#c8302a', .6);
+    for (const s of [-1, 1]) { line(c, s * 4.8, -5, s * 7.6, -8, '#e84a3a', 1); ell(c, s * 8.4, -9.4, 2.2, 1.8, '#ff5a4a', OUT); poly(c, [[s * 8.4, -9.6], [s * 10.6, -11], [s * 10.2, -9]], '#ffd0c8'); }
+    ell(c, 0, -4.4, 6, 3.8, '#ff5a4a', OUT); ell(c, -2, -5.6, 2.4, 1.2, 'rgba(255,255,255,.35)');
+    for (const s of [-1, 1]) { line(c, s * 1.6, -7.6, s * 2, -10, '#e84a3a', .6); ell(c, s * 2, -10.4, 1.2, 1.2, '#fff', OUT); ell(c, s * 2.1, -10.3, .55, .6, INK); }
+    c.beginPath(); c.arc(0, -4, 1.6, .2, Math.PI - .2); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke();
+  },
+  penguin(c, t) {
+    for (const x of [-1.8, 1.8]) ell(c, x, -.4, 1.8, .8, '#ff9a2e', OUT);
+    ell(c, -5, -7, 1.6, 4, INK, OUT); ell(c, 5, -7, 1.6, 4, INK, OUT);
+    ell(c, 0, -7.6, 5.4, 7.4, INK, OUT); ell(c, 0, -6.6, 3.8, 5.8, '#fff');
+    ell(c, 0, -13.6, 4.4, 4, INK, OUT); ell(c, -1.4, -13.4, 1.8, 2, '#fff'); ell(c, 1.4, -13.4, 1.8, 2, '#fff');
+    poly(c, [[-1, -12.2], [1, -12.2], [0, -10.6]], '#ff9a2e', OUT, .5);
+    ell(c, -1.3, -13.6, .6, .7, INK); ell(c, 1.3, -13.6, .6, .7, INK); blush(c, -2.6, -11.8); blush(c, 2.6, -11.8);
+  },
+  bunny(c, t) {
+    ell(c, 0, -5.6, 5, 5, '#fff', OUT); ell(c, -4.4, -4, 1.6, 1.4, '#fff', OUT); ell(c, -2.4, -.6, 1.8, 1, '#fff', OUT); ell(c, 2.4, -.6, 1.8, 1, '#fff', OUT);
+    for (const s of [-1, 1]) { c.save(); c.translate(s * 1.8, -15); c.rotate(s * .15 + Math.sin(t * 3 + s) * .06); ell(c, 0, -3.6, 1.6, 4.4, '#fff', OUT); ell(c, 0, -3.6, .8, 3.2, '#ffb3c7'); c.restore(); }
+    ell(c, 0, -12, 4.6, 4, '#fff', OUT);
+    beady(c, -1.8, -12.6, .75); beady(c, 1.8, -12.6, .75); ell(c, 0, -11, .7, .5, '#ff7a95');
+    c.beginPath(); c.moveTo(-.9, -10.2); c.quadraticCurveTo(0, -9.4, .9, -10.2); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke(); blush(c, -3, -10.8); blush(c, 3, -10.8);
+  },
+  butterfly(c, t) {
+    const f = Math.abs(Math.sin(t * 10)) * .7 + .3;
+    for (const s of [-1, 1]) { ell(c, s * 3.6 * f, -9, 3.6 * f + .3, 3.2, '#ff7ac2', OUT); ell(c, s * 2.6 * f, -5, 2.4 * f + .3, 2.2, '#b07cff', OUT); ell(c, s * 3.6 * f, -9, 1.2 * f, 1.1, '#fff'); }
+    ell(c, 0, -7, .9, 4, INK); line(c, -.3, -10.8, -1.6, -13, INK, .4); line(c, .3, -10.8, 1.6, -13, INK, .4);
+  },
+  ladybug(c, t) {
+    for (const s of [-1, 1]) for (let i = 0; i < 3; i++) line(c, s * 3.6, -2 - i * 1.4, s * 5.4, -1.4 - i * 1.6, INK, .5);
+    ell(c, 0, -3.8, 5, 4.2, '#e8333d', OUT); line(c, 0, -8, 0, -.2, INK, .6);
+    for (const [x, y] of [[-2.4, -5], [2.4, -5], [-2.6, -2.4], [2.6, -2.4], [0, -6.6]]) ell(c, x, y, .9, .9, INK);
+    ell(c, 0, -8.6, 2.6, 1.8, INK, OUT); ell(c, -1, -9, .5, .5, '#fff'); ell(c, 1, -9, .5, .5, '#fff');
+    ell(c, -1.6, -5.4, 1.4, .7, 'rgba(255,255,255,.4)');
+  },
+  frog(c, t) {
+    for (const s of [-1, 1]) ell(c, s * 4.6, -.8, 2.6, 1, '#4fb860', OUT);
+    ell(c, 0, -5, 6.4, 4.6, '#5fd17f', OUT); ell(c, 0, -3.6, 4, 2.6, '#c8f5c0');
+    for (const s of [-1, 1]) { ell(c, s * 2.8, -9.4, 2.2, 2.2, '#5fd17f', OUT); ell(c, s * 2.8, -9.6, 1.4, 1.4, '#fff'); ell(c, s * 2.9, -9.5, .8, .9, INK); }
+    c.beginPath(); c.arc(0, -6.4, 2.8, .25, Math.PI - .25); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke(); blush(c, -4, -5.8); blush(c, 4, -5.8);
+  },
+  squirrel(c, t) {
+    c.save(); c.translate(3.6, -6); c.rotate(Math.sin(t * 3) * .08);
+    c.beginPath(); c.moveTo(0, 4); c.bezierCurveTo(7, 3, 7, -9, 1.5, -11); c.bezierCurveTo(-1.5, -12, -2.5, -8, 0, -7); c.bezierCurveTo(3, -6, 2, 1, -1, 2); c.closePath();
+    c.fillStyle = '#c87a3c'; c.fill(); c.strokeStyle = OUT; c.lineWidth = LW; c.stroke(); c.restore();
+    ell(c, -1, -5.4, 4, 4.6, '#c87a3c', OUT); ell(c, -1, -4.6, 2.4, 3, '#f2d29b');
+    ell(c, -1, -11.6, 3.8, 3.4, '#c87a3c', OUT); ell(c, -3.6, -14.6, 1, 1.5, '#c87a3c', OUT); ell(c, 1.6, -14.6, 1, 1.5, '#c87a3c', OUT);
+    beady(c, -2.4, -12, .7); beady(c, .4, -12, .7); ell(c, -1, -10.4, .6, .45, INK);
+    ell(c, -1, -6.6, 1.2, 1.4, '#8a5a2b', OUT);
+  },
+  hedgehog(c, t) {
+    for (const x of [-2.6, 2.6]) ell(c, x, -.4, 1.4, .7, '#5a3a20');
+    c.beginPath(); for (let i = 0; i <= 12; i++) { const a = Math.PI * (1 + i / 12), r = i % 2 ? 6.4 : 8; c.lineTo(1 + Math.cos(a) * r, -3 + Math.sin(a) * r * .8); } c.lineTo(5, -3); c.closePath();
+    c.fillStyle = '#8a5a2b'; c.fill(); c.strokeStyle = OUT; c.lineWidth = LW; c.stroke();
+    ell(c, -3, -4.2, 3.6, 3, '#f2d29b', OUT); ell(c, -6.4, -3.8, .9, .8, INK);
+    beady(c, -3.4, -5.2, .65); blush(c, -2.2, -3.4);
+  },
+  kitten(c, t) {
+    c.beginPath(); c.moveTo(4, -3); c.quadraticCurveTo(9, -4, 8 + Math.sin(t * 3) * .8, -10); c.strokeStyle = OUT; c.lineWidth = 2.4; c.stroke(); c.strokeStyle = '#ffa94d'; c.lineWidth = 1.4; c.stroke();
+    ell(c, 0, -5.4, 5, 5, '#ffa94d', OUT); ell(c, 0, -4.4, 2.8, 3.4, '#fff1dc');
+    for (const x of [-2, 2]) ell(c, x, -.6, 1.6, 1, '#fff1dc', OUT);
+    poly(c, [[-4.6, -14], [-3.6, -18.4], [-1.2, -15.4]], '#ffa94d', OUT, .7); poly(c, [[4.6, -14], [3.6, -18.4], [1.2, -15.4]], '#ffa94d', OUT, .7);
+    poly(c, [[-3.8, -14.6], [-3.4, -16.8], [-2.2, -15.2]], '#ffb3c7'); poly(c, [[3.8, -14.6], [3.4, -16.8], [2.2, -15.2]], '#ffb3c7');
+    ell(c, 0, -12, 5, 4.4, '#ffa94d', OUT); for (const x of [-1.4, 0, 1.4]) line(c, x, -16.2, x, -15, '#e07a20', .6);
+    beady(c, -2, -12.6, .8); beady(c, 2, -12.6, .8); poly(c, [[-.6, -11], [.6, -11], [0, -10.3]], '#ff7a95');
+    for (const s of [-1, 1]) { line(c, s * 1.6, -10.6, s * 4.6, -11.2, OUT, .3); line(c, s * 1.6, -10.2, s * 4.6, -10, OUT, .3); }
+  },
+  puppy(c, t) {
+    c.save(); c.translate(4.4, -6); c.rotate(-.6 + Math.sin(t * 12) * .4); ell(c, 0, -2, 1, 2.6, '#fff4e0', OUT); c.restore();
+    ell(c, 0, -5.4, 5, 5, '#fff4e0', OUT); ell(c, 2, -6.6, 2, 1.8, '#c98d4e');
+    for (const x of [-2, 2]) ell(c, x, -.6, 1.6, 1, '#fff4e0', OUT);
+    ell(c, 0, -12, 5, 4.6, '#fff4e0', OUT); ell(c, 2.2, -13.4, 1.8, 1.6, '#c98d4e');
+    for (const s of [-1, 1]) { c.save(); c.translate(s * 4.4, -13.6); c.rotate(s * .25); ell(c, 0, 2, 1.6, 3.4, '#a0703c', OUT); c.restore(); }
+    ell(c, 0, -10.6, 2.6, 2, '#fff', OUT); ell(c, 0, -11.4, 1, .7, INK);
+    beady(c, -1.9, -13, .8); beady(c, 1.9, -13, .8); ell(c, .4, -9.2, .8, 1, '#ff7a95', OUT); blush(c, -3.4, -11); blush(c, 3.4, -11);
+    rr(c, -2.6, -8.2, 5.2, 1.2, .5); c.fillStyle = '#e8333d'; c.fill(); ell(c, 0, -6.8, .7, .7, '#ffd23f', OUT);
+  },
+  monkey(c, t) {
+    c.beginPath(); c.moveTo(4, -4); c.bezierCurveTo(9, -4, 9, -11, 6, -11); c.strokeStyle = OUT; c.lineWidth = 2.2; c.stroke(); c.strokeStyle = '#8a5a2b'; c.lineWidth = 1.2; c.stroke();
+    ell(c, 0, -5.4, 4.6, 5, '#8a5a2b', OUT); ell(c, 0, -4.6, 2.8, 3.2, '#e8c39a');
+    for (const x of [-2, 2]) ell(c, x, -.6, 1.6, 1, '#8a5a2b', OUT);
+    ell(c, -5, -12.4, 1.8, 1.8, '#e8c39a', OUT); ell(c, 5, -12.4, 1.8, 1.8, '#e8c39a', OUT);
+    ell(c, 0, -12.6, 4.8, 4.4, '#8a5a2b', OUT);
+    c.beginPath(); c.moveTo(0, -9); c.bezierCurveTo(-4, -9, -4, -12.6, -2.2, -14.4); c.bezierCurveTo(-1, -15.2, 0, -14, 0, -13.6); c.bezierCurveTo(0, -14, 1, -15.2, 2.2, -14.4); c.bezierCurveTo(4, -12.6, 4, -9, 0, -9); c.fillStyle = '#e8c39a'; c.fill(); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke();
+    beady(c, -1.4, -12.8, .7); beady(c, 1.4, -12.8, .7); ell(c, -.5, -11, .3, .25, INK); ell(c, .5, -11, .3, .25, INK);
+    c.beginPath(); c.arc(0, -10.6, 1.4, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke();
+  },
+  mouse(c, t) {
+    c.beginPath(); c.moveTo(4, -2); c.quadraticCurveTo(9, -1, 9, -6); c.strokeStyle = '#ff9ab0'; c.lineWidth = .8; c.stroke();
+    ell(c, 0, -4.6, 4.6, 4.4, '#b8b8c8', OUT); ell(c, 0, -3.8, 2.6, 2.8, '#e8e8f0');
+    for (const s of [-1, 1]) { ell(c, s * 3.6, -13.6, 3, 3, '#b8b8c8', OUT); ell(c, s * 3.6, -13.6, 1.9, 1.9, '#ffb3c7'); }
+    ell(c, 0, -10.4, 4.4, 3.8, '#b8b8c8', OUT);
+    beady(c, -1.6, -11, .75); beady(c, 1.6, -11, .75); ell(c, 0, -9, .8, .6, '#ff7a95', OUT); blush(c, -2.8, -9.4); blush(c, 2.8, -9.4);
+    for (const s of [-1, 1]) line(c, s * 1, -9, s * 4, -9.4, OUT, .3);
+  },
+  bear(c, t) {
+    ell(c, 0, -5.4, 5.4, 5.4, '#a0703c', OUT); ell(c, 0, -4.6, 3.2, 3.4, '#d9a066');
+    for (const x of [-2.4, 2.4]) ell(c, x, -.6, 1.8, 1.1, '#a0703c', OUT);
+    for (const s of [-1, 1]) { ell(c, s * 4, -16, 1.8, 1.8, '#a0703c', OUT); ell(c, s * 4, -16, 1, 1, '#d9a066'); }
+    ell(c, 0, -12.4, 5.2, 4.8, '#a0703c', OUT); ell(c, 0, -10.8, 2.6, 2, '#d9a066', OUT); ell(c, 0, -11.4, 1, .7, INK);
+    beady(c, -2, -13.2, .75); beady(c, 2, -13.2, .75); blush(c, -3.4, -11.2); blush(c, 3.4, -11.2);
+  },
+  turtle(c, t) {
+    for (const [x, y] of [[-4.4, -.6], [4.4, -.6], [-3, -1.6], [3, -1.6]]) ell(c, x, y, 1.6, 1, '#8fd36a', OUT);
+    ell(c, -6.2, -3.6, 2.4, 2.2, '#8fd36a', OUT); beady(c, -6.8, -4, .55); blush(c, -5.6, -2.8);
+    c.beginPath(); c.ellipse(.6, -2.4, 5.6, 4.6, 0, Math.PI, 0); c.closePath(); c.fillStyle = '#3fae4a'; c.fill(); c.strokeStyle = OUT; c.lineWidth = LW; c.stroke();
+    for (const [x, y] of [[.6, -4.6], [-2.4, -3.4], [3.6, -3.4]]) poly(c, [[x - 1.2, y], [x, y - 1.2], [x + 1.2, y], [x, y + 1.2]], '#7fd36a');
+    rr(c, -5, -2.6, 11.2, 1, .4); c.fillStyle = '#c8f0a0'; c.fill();
+  },
+  fish(c, t, col = '#ff9a2e') {
+    const w = Math.sin(t * 8) * .4;
+    poly(c, [[5, -6], [8.6, -9 + w], [8.6, -3 + w]], col, OUT, .7);
+    ell(c, 0, -6, 6, 4, col, OUT); ell(c, -1, -6, 3.4, 3.6, null, 'rgba(255,255,255,.6)'); c.lineWidth = .6; c.stroke();
+    poly(c, [[0, -10], [3, -11.4], [2.6, -9.4]], col, OUT, .6);
+    beady(c, -3.4, -7, .75); c.beginPath(); c.arc(-5, -5.4, .8, .3, 2); c.strokeStyle = OUT; c.lineWidth = .4; c.stroke();
+  },
+  fish2(c, t) { ANIMALS.fish(c, t, '#4fa3ff'); for (const x of [-1, 2]) line(c, x, -9.4, x, -2.6, '#fff', .8); },
+  octopus(c, t) {
+    for (let i = 0; i < 6; i++) { const x = -4 + i * 1.6, w = Math.sin(t * 4 + i) * .8; c.beginPath(); c.moveTo(x, -5); c.quadraticCurveTo(x + w, -2, x - w * .5, 0); c.strokeStyle = OUT; c.lineWidth = 2; c.stroke(); c.strokeStyle = '#b07cff'; c.lineWidth = 1.1; c.stroke(); }
+    ell(c, 0, -9, 5.2, 5.6, '#b07cff', OUT); ell(c, -1.8, -11.4, 1.6, 1.2, 'rgba(255,255,255,.4)');
+    beady(c, -1.8, -8.6, .8); beady(c, 1.8, -8.6, .8); blush(c, -3.2, -6.8); blush(c, 3.2, -6.8);
+    c.beginPath(); c.arc(0, -7, 1.1, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke();
+  }
+};
+// draw an animal with its feet at x,y and about h tall; face -1 flips it
+function drawAnimalAt(c, kind, x, y, h, t = 0, face = 1) {
+  const f = ANIMALS[kind]; if (!f) return;
+  const keep = LW; c.save(); c.translate(x, y); c.scale(face * h / 20, h / 20); LW = .9; f(c, t); LW = keep; c.restore();
+}
+function animalThumb(kind, size = 120) {
+  const cnv = document.createElement('canvas'); cnv.width = cnv.height = size; const g = cnv.getContext('2d');
+  if (g) drawAnimalAt(g, kind, size / 2, size * .88, size * .7, 0, 1);
+  return cnv;
+}
+
 function hash(x, y) { let h = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263); h = Math.imul(h ^ (h >>> 13), 1274126177); return (h ^ (h >>> 16)) >>> 0; }
 const rnd01 = (x, y, k = 0) => (hash(x * 7 + k, y * 13 - k) % 1000) / 1000;
 const pick = a => a[Math.floor(Math.random() * a.length)];
@@ -1526,7 +1737,7 @@ function drawCritter(c, k) {
   const hop = Math.abs(Math.sin(k.t * 7)) * .22, a = Math.min(1, k.life * 2, k.t * 4);
   c.globalAlpha = a;
   ell(c, k.x, k.y, .22, .07, 'rgba(0,0,0,.2)');
-  emoji(c, k.e, k.x, k.y - .3 - hop, .6);
+  const kd = kindOf(k.e); if (kd) drawAnimalAt(c, kd, k.x, k.y - hop, .62, k.t, k.vx < 0 ? -1 : 1); else emoji(c, k.e, k.x, k.y - .3 - hop, .6);
   c.globalAlpha = 1;
 }
 function drawButterfly(c, b) {
@@ -1725,7 +1936,8 @@ function drawPet(c, p) {
   c.save(); c.translate(p.x, p.y - .34 - hop);
   if (p.waddle) c.rotate(Math.sin(p.t * 9) * .15);
   if (p.crab && p.jump > 0) c.rotate(Math.sin(p.jump * 30) * .3);
-  emoji(c, p.e, 0, 0, p.e === '🐮' || p.e === '🐴' ? .78 : .62);
+  const kd = kindOf(p.e), big = p.e === '🐮' || p.e === '🐴';
+  if (kd) drawAnimalAt(c, kd, 0, .34, big ? 1 : p.crab ? .5 : .66, p.t, p.vx < 0 ? -1 : 1); else emoji(c, p.e, 0, 0, big ? .78 : .62);
   c.restore();
 }
 function drawBowtique(c) {
@@ -2465,7 +2677,7 @@ const MINI = {
       for (const it of m.items) {
         g.save(); g.globalAlpha = it.land ? 1 - it.land : it.bad ? Math.max(0, 1.2 - it.bad) : 1; g.translate(it.x, it.y); g.rotate(it.rot + Math.sin(it.wob * 40) * it.wob * .5);
         if (m.level > 1 && !it.bad && !it.fly && this.good(m, it.e) && !it.land) { g.globalAlpha *= .5 + Math.sin(m.t * 5) * .2; ell(g, 0, 0, m.u * .95, m.u * .95, '#fff6a8'); g.globalAlpha = 1; }
-        emoji(g, it.e, 0, 0, m.u * 1.3); g.restore();
+        if (kindOf(it.e)) drawAnimalAt(g, kindOf(it.e), 0, m.u * .55, m.u * 1.2, m.t); else emoji(g, it.e, 0, 0, m.u * 1.3); g.restore();
       }
       const x = m.bx, y = m.h * .84, u = m.u, k = m.level === 1 ? 1.35 : 1;
       g.strokeStyle = '#8a8f99'; g.lineWidth = 4; g.beginPath(); g.arc(x, y - u * .3, u * 1.2 * k, Math.PI, 0); g.stroke();
@@ -2514,7 +2726,7 @@ const MINI = {
       for (let i = 0; i < 6; i++) { g.fillStyle = '#fffaf0'; g.fillRect(i * m.w / 6 + 10, m.h * .52, 8, m.h * .08); } g.fillRect(0, m.h * .54, m.w, 6);
       const c = m.cur, bounce = c.happy > 0 ? Math.abs(Math.sin(m.t * 12)) * m.u * .4 : c.nib > 0 ? Math.abs(Math.sin(m.t * 20)) * m.u * .2 : Math.sin(m.t * 3) * m.u * .08;
       ell(g, m.w * .36, m.h * .56, m.u * 1.6, m.u * .35, 'rgba(0,0,0,.15)');
-      emoji(g, c.a, m.w * .36, m.h * .43 - bounce, m.u * 3.2);
+      drawAnimalAt(g, kindOf(c.a), m.w * .36, m.h * .56 - bounce, m.u * 3.6, m.t);
       if (c.happy > 0) { emoji(g, '💖', m.w * .36 + m.u * 1.4, m.h * .25 - (1.3 - c.happy) * m.u, m.u); emoji(g, '😋', m.w * .36 - m.u * 1.5, m.h * .28, m.u * .9); }
       else {
         const bx = m.w * (c.need > 1 ? .66 : .62), by = m.h * .2, bw = m.u * (c.need > 1 ? 2.3 : 1.05);
@@ -3149,7 +3361,7 @@ const PROPS = [
       const x = p.x, y = p.y;
       ell(c, x, y, .55, .3, '#2a8fd6', '#ffffff'); c.lineWidth = .08; c.stroke(); ell(c, x - .15, y - .08, .15, .06, 'rgba(255,255,255,.6)');
       line(c, x + .7, y + .2, x + .1, y - .9, '#8a5a2b', .05); line(c, x + .1, y - .9, x, y - (p.t > 0 ? .7 : .05), '#ddd', .015);
-      if (p.t > 0 && p.t < 1.6) emoji(c, '🐟', x, y - .9 - Math.sin((1.6 - p.t) * 2) * .3, .5);
+      if (p.t > 0 && p.t < 1.6) drawAnimalAt(c, 'fish', x, y - .75 - Math.sin((1.6 - p.t) * 2) * .3, .4, time);
     },
     act(p) { p.t = 2.2; SFX.splash(); setTimeout(SFX.chime, 300); say('🎣 You caught a fishy! Splash, back you go!'); } },
   { k: 'angel', name: 'snow angel spot', x: -33.5, y: 23, tiles: [], t: 0,
@@ -3330,7 +3542,7 @@ $('#settings').addEventListener('pointerdown', e => { if (e.target.id === 'setti
  * ------------------------------------------------------------------ */
 const STICKERS = [
   ...FIND_TARGETS.map(f => ({ id: f.id, img: f, name: f.name, page: 'find' })),
-  ...CRITTERS.map(([e, n]) => ({ id: 'c' + e, e, name: n.replace(/^A |!.*$/g, '').replace(/^little |^pretty |^tiny |^baby |^slow /, ''), page: 'grass' })),
+  ...CRITTERS.map(([e, n]) => ({ id: 'c' + e, e, kind: kindOf(e), name: n.replace(/^A |!.*$/g, '').replace(/^little |^pretty |^tiny |^baby |^slow /, ''), page: 'grass' })),
   ...ORDER.map(id => ({ id: 'p' + id, who: id, name: CHARS[id].name, page: 'pals' })),
   ...ORDER.map(id => ({ id: 'q' + id, e: QUESTS[id][0], who: id, name: `Helped ${CHARS[id].name}`, page: 'pals', gold: true })),
   ...Object.keys(MINI).filter(k => MINI[k].levels).map(k => ({ id: 'm' + k, e: '🏆', sub: MINI[k].icon, name: MINI[k].title.replace(/^\S+\s/, ''), page: 'games', gold: true }))
@@ -3353,13 +3565,14 @@ function portrait(id) {
   return (portraitCache[id] = c.toDataURL());
 }
 const thumbCache = {};
+const animalURL = k => thumbCache['a' + k] || (thumbCache['a' + k] = animalThumb(k, 120).toDataURL());
 const thumbURL = f => thumbCache[f.id] || (thumbCache[f.id] = findThumb(f, 120).toDataURL());
 function renderBook() {
   $('#bookTabs').innerHTML = PAGES.map(([k, t], i) => `<button class="btab${i === bookPage ? ' on' : ''}" data-i="${i}">${t}</button>`).join('');
   const list = STICKERS.filter(s => s.page === PAGES[bookPage][0]);
   $('#bookGrid').innerHTML = list.map(s => {
     const have = stickers.has(s.id);
-    const pic = s.img ? `<img class="thumb" src="${thumbURL(s.img)}" alt="">` : s.who && !s.e ? `<img src="${portrait(s.who)}" alt="">` : `<span class="se">${s.e}</span>${s.sub ? `<span class="ssub">${s.sub}</span>` : ''}${s.who && s.e ? `<img class="sface" src="${portrait(s.who)}" alt="">` : ''}`;
+    const pic = s.img ? `<img class="thumb" src="${thumbURL(s.img)}" alt="">` : s.kind ? `<img class="thumb" src="${animalURL(s.kind)}" alt="">` : s.who && !s.e ? `<img src="${portrait(s.who)}" alt="">` : `<span class="se">${s.e}</span>${s.sub ? `<span class="ssub">${s.sub}</span>` : ''}${s.who && s.e ? `<img class="sface" src="${portrait(s.who)}" alt="">` : ''}`;
     return `<div class="sticker${have ? ' got' : ''}${s.gold ? ' gold' : ''}">${have ? pic : '<span class="se">❔</span>'}<div class="sn">${have ? s.name : '?'}</div></div>`;
   }).join('');
   $('#bookCount').textContent = `${STICKERS.filter(s => stickers.has(s.id)).length} / ${STICKERS.length}`;
@@ -4104,7 +4317,7 @@ function frame(now) {
   if (mg.on) { try { updateMini(dt); renderMini(); } catch (e) { report(e); for (let i = 0; i < 10; i++) mgx.restore(); } }
 }
 load(); resize(); requestAnimationFrame(frame);
-window.__park = { PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
+window.__park = { ANIMALS, drawAnimalAt, enterRoom, exitRoom, get pets() { return pets; }, PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
 })();
 </script>
 </body>
