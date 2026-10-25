@@ -201,6 +201,7 @@
       <div id="menuBox">
         <div class="mgrid">
           <button class="mbtn" id="btnBook"><b>📒</b>Stickers</button>
+          <button class="mbtn" id="btnPet"><b>🐾</b>My pet</button>
           <button class="mbtn" id="btnSwap"><b>🔄</b>Change friend</button>
           <button class="mbtn" id="btnMute"><b>🔊</b>Sound on</button>
           <button class="mbtn" id="btnSet"><b>⚙️</b>Grown-ups</button>
@@ -838,9 +839,9 @@ const ANIMALS = {
   cow(c, t) {
     legs(c, [-5, -2, 2, 5], -4, '#fff'); for (const x of [-5, -2, 2, 5]) ell(c, x, -.4, .9, .5, '#5a4636');
     ell(c, 0, -7.5, 8, 5.4, '#fff', OUT); ell(c, -3, -8.5, 2.4, 1.8, INK); ell(c, 4, -6.4, 1.8, 1.4, INK);
-    c.beginPath(); c.moveTo(7.6, -8); c.quadraticCurveTo(10.5, -7 + Math.sin(t * 4), 9.5, -4); c.strokeStyle = OUT; c.lineWidth = .7; c.stroke();
+    c.beginPath(); c.moveTo(7.6, -8); c.quadraticCurveTo(10.5, -7 + Math.sin(t * 4), 9.5, -4); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
     ell(c, -5.4, -17.5, 2, 1, '#fff', OUT); ell(c, 5.4, -17.5, 2, 1, '#fff', OUT);
-    poly(c, [[-3, -19.5], [-2.2, -22], [-1.4, -19.6]], '#ffe27a', OUT, .6); poly(c, [[3, -19.5], [2.2, -22], [1.4, -19.6]], '#ffe27a', OUT, .6);
+    poly(c, [[-3, -19.5], [-2.2, -22], [-1.4, -19.6]], '#ffe27a', OUT); poly(c, [[3, -19.5], [2.2, -22], [1.4, -19.6]], '#ffe27a', OUT);
     ell(c, 0, -15.5, 5.6, 4.8, '#fff', OUT); ell(c, 2.4, -17.4, 1.6, 1.2, INK);
     ell(c, 0, -12.5, 4.2, 2.6, '#ffc2d0', OUT); ell(c, -1.4, -12.6, .5, .4, '#c2607a'); ell(c, 1.4, -12.6, .5, .4, '#c2607a');
     beady(c, -2.2, -16.2, .85); beady(c, 2.2, -16.2, .85);
@@ -849,8 +850,8 @@ const ANIMALS = {
   pig(c, t) {
     legs(c, [-4.5, -1.6, 1.6, 4.5], -3.6, '#ffb3c7');
     ell(c, 0, -7, 7.6, 5.6, '#ffb3c7', OUT); ell(c, -2, -9, 3, 1.6, 'rgba(255,255,255,.35)');
-    c.beginPath(); c.arc(8, -8, 1.3, 0, Math.PI * 1.6); c.strokeStyle = OUT; c.lineWidth = .7; c.stroke();
-    poly(c, [[-4.6, -17.4], [-3.6, -20.6], [-1.8, -18.2]], '#ff8fab', OUT, .6); poly(c, [[4.6, -17.4], [3.6, -20.6], [1.8, -18.2]], '#ff8fab', OUT, .6);
+    c.beginPath(); c.arc(8, -8, 1.3, 0, Math.PI * 1.6); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
+    poly(c, [[-4.6, -17.4], [-3.6, -20.6], [-1.8, -18.2]], '#ff8fab', OUT); poly(c, [[4.6, -17.4], [3.6, -20.6], [1.8, -18.2]], '#ff8fab', OUT);
     ell(c, 0, -14.4, 5.6, 4.8, '#ffb3c7', OUT);
     ell(c, 0, -12.6, 2.8, 2, '#ff8fab', OUT); ell(c, -.9, -12.6, .5, .7, '#c2607a'); ell(c, .9, -12.6, .5, .7, '#c2607a');
     beady(c, -2.4, -15.6, .8); beady(c, 2.4, -15.6, .8); blush(c, -3.8, -13.2); blush(c, 3.8, -13.2);
@@ -867,11 +868,11 @@ const ANIMALS = {
   },
   chicken(c, t) {
     for (const x of [-1.6, 1.6]) { line(c, x, -3, x, 0, '#ff9a2e', .7); line(c, x, 0, x - 1, 0, '#ff9a2e', .6); line(c, x, 0, x + 1, 0, '#ff9a2e', .6); }
-    poly(c, [[5, -9], [8.5, -13], [7.5, -8.4], [9, -9.6], [6.5, -6]], '#fff', OUT, .7);
+    poly(c, [[5, -9], [8.5, -13], [7.5, -8.4], [9, -9.6], [6.5, -6]], '#fff', OUT);
     ell(c, 0, -8, 6, 6, '#fff', OUT); ell(c, 2.6, -7.6, 3, 2.2, '#f0f0f0', OUT);
     ell(c, -.4, -15, 4.4, 4.4, '#fff', OUT);
     for (const [x, y] of [[-1.6, -19.4], [0, -20.2], [1.6, -19.6]]) ell(c, x, y, 1.2, 1.3, '#e8333d', OUT);
-    poly(c, [[-.9, -14.6], [.9, -14.6], [0, -12.6]], '#ffb21f', OUT, .6); ell(c, 0, -12, .8, 1.2, '#e8333d');
+    poly(c, [[-.9, -14.6], [.9, -14.6], [0, -12.6]], '#ffb21f', OUT); ell(c, 0, -12, .8, 1.2, '#e8333d');
     beady(c, -1.8, -15.8, .75); beady(c, 1.8, -15.8, .75);
   },
   chick(c, t) {
@@ -879,7 +880,7 @@ const ANIMALS = {
     ell(c, 0, -6.4, 5.6, 5.4, '#ffe066', OUT); ell(c, -4.6, -6.4, 1.8, 1.2, '#ffd23f', OUT); ell(c, 4.6, -6.4, 1.8, 1.2, '#ffd23f', OUT);
     ell(c, -1.8, -8.6, 2, 1.2, 'rgba(255,255,255,.4)');
     ell(c, 0, -11.6, .8, 1.4, '#ffe066', OUT);
-    poly(c, [[-.9, -6.8], [.9, -6.8], [0, -5.2]], '#ff9a2e', OUT, .5);
+    poly(c, [[-.9, -6.8], [.9, -6.8], [0, -5.2]], '#ff9a2e', OUT);
     beady(c, -1.9, -8, .75); beady(c, 1.9, -8, .75); blush(c, -3, -6.2); blush(c, 3, -6.2);
   },
   duckling(c, t) {
@@ -894,8 +895,8 @@ const ANIMALS = {
     c.beginPath(); c.moveTo(7, -9); c.quadraticCurveTo(10.5, -8 + Math.sin(t * 4), 9.6, -3.5); c.strokeStyle = '#5a3a20'; c.lineWidth = 1.6; c.stroke();
     ell(c, 0, -8.4, 7.6, 4.8, '#b5793d', OUT);
     for (let i = 0; i < 4; i++) ell(c, -1.6 + i * .5, -19 + i * 2.4, 1.5, 1.7, '#5a3a20', OUT);
-    poly(c, [[-6.2, -9], [-6.6, -18], [-2, -19], [-1.4, -9]], '#b5793d', OUT, .8);
-    poly(c, [[-5.6, -21.4], [-5.4, -23.8], [-4.2, -21.8]], '#b5793d', OUT, .6); poly(c, [[-2.8, -21.4], [-2.4, -23.8], [-1.6, -21.6]], '#b5793d', OUT, .6);
+    poly(c, [[-6.2, -9], [-6.6, -18], [-2, -19], [-1.4, -9]], '#b5793d', OUT);
+    poly(c, [[-5.6, -21.4], [-5.4, -23.8], [-4.2, -21.8]], '#b5793d', OUT); poly(c, [[-2.8, -21.4], [-2.4, -23.8], [-1.6, -21.6]], '#b5793d', OUT);
     ell(c, -4.2, -18.8, 3.4, 3, '#b5793d', OUT); ell(c, -5.4, -15.6, 3, 2.4, '#d9a066', OUT);
     ell(c, -6.6, -15.6, .45, .35, '#5a3a20'); ell(c, -4.4, -15.6, .45, .35, '#5a3a20');
     ell(c, -4, -21.2, 1.6, 1, '#5a3a20');
@@ -906,14 +907,14 @@ const ANIMALS = {
     for (const s of [-1, 1]) { line(c, s * 4.8, -5, s * 7.6, -8, '#e84a3a', 1); ell(c, s * 8.4, -9.4, 2.2, 1.8, '#ff5a4a', OUT); poly(c, [[s * 8.4, -9.6], [s * 10.6, -11], [s * 10.2, -9]], '#ffd0c8'); }
     ell(c, 0, -4.4, 6, 3.8, '#ff5a4a', OUT); ell(c, -2, -5.6, 2.4, 1.2, 'rgba(255,255,255,.35)');
     for (const s of [-1, 1]) { line(c, s * 1.6, -7.6, s * 2, -10, '#e84a3a', .6); ell(c, s * 2, -10.4, 1.2, 1.2, '#fff', OUT); ell(c, s * 2.1, -10.3, .55, .6, INK); }
-    c.beginPath(); c.arc(0, -4, 1.6, .2, Math.PI - .2); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke();
+    c.beginPath(); c.arc(0, -4, 1.6, .2, Math.PI - .2); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
   },
   penguin(c, t) {
     for (const x of [-1.8, 1.8]) ell(c, x, -.4, 1.8, .8, '#ff9a2e', OUT);
     ell(c, -5, -7, 1.6, 4, INK, OUT); ell(c, 5, -7, 1.6, 4, INK, OUT);
     ell(c, 0, -7.6, 5.4, 7.4, INK, OUT); ell(c, 0, -6.6, 3.8, 5.8, '#fff');
     ell(c, 0, -13.6, 4.4, 4, INK, OUT); ell(c, -1.4, -13.4, 1.8, 2, '#fff'); ell(c, 1.4, -13.4, 1.8, 2, '#fff');
-    poly(c, [[-1, -12.2], [1, -12.2], [0, -10.6]], '#ff9a2e', OUT, .5);
+    poly(c, [[-1, -12.2], [1, -12.2], [0, -10.6]], '#ff9a2e', OUT);
     ell(c, -1.3, -13.6, .6, .7, INK); ell(c, 1.3, -13.6, .6, .7, INK); blush(c, -2.6, -11.8); blush(c, 2.6, -11.8);
   },
   bunny(c, t) {
@@ -921,7 +922,7 @@ const ANIMALS = {
     for (const s of [-1, 1]) { c.save(); c.translate(s * 1.8, -15); c.rotate(s * .15 + Math.sin(t * 3 + s) * .06); ell(c, 0, -3.6, 1.6, 4.4, '#fff', OUT); ell(c, 0, -3.6, .8, 3.2, '#ffb3c7'); c.restore(); }
     ell(c, 0, -12, 4.6, 4, '#fff', OUT);
     beady(c, -1.8, -12.6, .75); beady(c, 1.8, -12.6, .75); ell(c, 0, -11, .7, .5, '#ff7a95');
-    c.beginPath(); c.moveTo(-.9, -10.2); c.quadraticCurveTo(0, -9.4, .9, -10.2); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke(); blush(c, -3, -10.8); blush(c, 3, -10.8);
+    c.beginPath(); c.moveTo(-.9, -10.2); c.quadraticCurveTo(0, -9.4, .9, -10.2); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke(); blush(c, -3, -10.8); blush(c, 3, -10.8);
   },
   butterfly(c, t) {
     const f = Math.abs(Math.sin(t * 10)) * .7 + .3;
@@ -939,7 +940,7 @@ const ANIMALS = {
     for (const s of [-1, 1]) ell(c, s * 4.6, -.8, 2.6, 1, '#4fb860', OUT);
     ell(c, 0, -5, 6.4, 4.6, '#5fd17f', OUT); ell(c, 0, -3.6, 4, 2.6, '#c8f5c0');
     for (const s of [-1, 1]) { ell(c, s * 2.8, -9.4, 2.2, 2.2, '#5fd17f', OUT); ell(c, s * 2.8, -9.6, 1.4, 1.4, '#fff'); ell(c, s * 2.9, -9.5, .8, .9, INK); }
-    c.beginPath(); c.arc(0, -6.4, 2.8, .25, Math.PI - .25); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke(); blush(c, -4, -5.8); blush(c, 4, -5.8);
+    c.beginPath(); c.arc(0, -6.4, 2.8, .25, Math.PI - .25); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke(); blush(c, -4, -5.8); blush(c, 4, -5.8);
   },
   squirrel(c, t) {
     c.save(); c.translate(3.6, -6); c.rotate(Math.sin(t * 3) * .08);
@@ -961,11 +962,11 @@ const ANIMALS = {
     c.beginPath(); c.moveTo(4, -3); c.quadraticCurveTo(9, -4, 8 + Math.sin(t * 3) * .8, -10); c.strokeStyle = OUT; c.lineWidth = 2.4; c.stroke(); c.strokeStyle = '#ffa94d'; c.lineWidth = 1.4; c.stroke();
     ell(c, 0, -5.4, 5, 5, '#ffa94d', OUT); ell(c, 0, -4.4, 2.8, 3.4, '#fff1dc');
     for (const x of [-2, 2]) ell(c, x, -.6, 1.6, 1, '#fff1dc', OUT);
-    poly(c, [[-4.6, -14], [-3.6, -18.4], [-1.2, -15.4]], '#ffa94d', OUT, .7); poly(c, [[4.6, -14], [3.6, -18.4], [1.2, -15.4]], '#ffa94d', OUT, .7);
+    poly(c, [[-4.6, -14], [-3.6, -18.4], [-1.2, -15.4]], '#ffa94d', OUT); poly(c, [[4.6, -14], [3.6, -18.4], [1.2, -15.4]], '#ffa94d', OUT);
     poly(c, [[-3.8, -14.6], [-3.4, -16.8], [-2.2, -15.2]], '#ffb3c7'); poly(c, [[3.8, -14.6], [3.4, -16.8], [2.2, -15.2]], '#ffb3c7');
     ell(c, 0, -12, 5, 4.4, '#ffa94d', OUT); for (const x of [-1.4, 0, 1.4]) line(c, x, -16.2, x, -15, '#e07a20', .6);
     beady(c, -2, -12.6, .8); beady(c, 2, -12.6, .8); poly(c, [[-.6, -11], [.6, -11], [0, -10.3]], '#ff7a95');
-    for (const s of [-1, 1]) { line(c, s * 1.6, -10.6, s * 4.6, -11.2, OUT, .3); line(c, s * 1.6, -10.2, s * 4.6, -10, OUT, .3); }
+    for (const s of [-1, 1]) { line(c, s * 1.6, -10.6, s * 4.6, -11.2, OUT); line(c, s * 1.6, -10.2, s * 4.6, -10, OUT); }
   },
   puppy(c, t) {
     c.save(); c.translate(4.4, -6); c.rotate(-.6 + Math.sin(t * 12) * .4); ell(c, 0, -2, 1, 2.6, '#fff4e0', OUT); c.restore();
@@ -983,17 +984,17 @@ const ANIMALS = {
     for (const x of [-2, 2]) ell(c, x, -.6, 1.6, 1, '#8a5a2b', OUT);
     ell(c, -5, -12.4, 1.8, 1.8, '#e8c39a', OUT); ell(c, 5, -12.4, 1.8, 1.8, '#e8c39a', OUT);
     ell(c, 0, -12.6, 4.8, 4.4, '#8a5a2b', OUT);
-    c.beginPath(); c.moveTo(0, -9); c.bezierCurveTo(-4, -9, -4, -12.6, -2.2, -14.4); c.bezierCurveTo(-1, -15.2, 0, -14, 0, -13.6); c.bezierCurveTo(0, -14, 1, -15.2, 2.2, -14.4); c.bezierCurveTo(4, -12.6, 4, -9, 0, -9); c.fillStyle = '#e8c39a'; c.fill(); c.strokeStyle = OUT; c.lineWidth = .6; c.stroke();
+    c.beginPath(); c.moveTo(0, -9); c.bezierCurveTo(-4, -9, -4, -12.6, -2.2, -14.4); c.bezierCurveTo(-1, -15.2, 0, -14, 0, -13.6); c.bezierCurveTo(0, -14, 1, -15.2, 2.2, -14.4); c.bezierCurveTo(4, -12.6, 4, -9, 0, -9); c.fillStyle = '#e8c39a'; c.fill(); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
     beady(c, -1.4, -12.8, .7); beady(c, 1.4, -12.8, .7); ell(c, -.5, -11, .3, .25, INK); ell(c, .5, -11, .3, .25, INK);
-    c.beginPath(); c.arc(0, -10.6, 1.4, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke();
+    c.beginPath(); c.arc(0, -10.6, 1.4, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
   },
   mouse(c, t) {
-    c.beginPath(); c.moveTo(4, -2); c.quadraticCurveTo(9, -1, 9, -6); c.strokeStyle = '#ff9ab0'; c.lineWidth = .8; c.stroke();
+    c.beginPath(); c.moveTo(4, -2); c.quadraticCurveTo(9, -1, 9, -6); c.strokeStyle = '#ff9ab0'; c.lineWidth = LW * .7; c.stroke();
     ell(c, 0, -4.6, 4.6, 4.4, '#b8b8c8', OUT); ell(c, 0, -3.8, 2.6, 2.8, '#e8e8f0');
     for (const s of [-1, 1]) { ell(c, s * 3.6, -13.6, 3, 3, '#b8b8c8', OUT); ell(c, s * 3.6, -13.6, 1.9, 1.9, '#ffb3c7'); }
     ell(c, 0, -10.4, 4.4, 3.8, '#b8b8c8', OUT);
     beady(c, -1.6, -11, .75); beady(c, 1.6, -11, .75); ell(c, 0, -9, .8, .6, '#ff7a95', OUT); blush(c, -2.8, -9.4); blush(c, 2.8, -9.4);
-    for (const s of [-1, 1]) line(c, s * 1, -9, s * 4, -9.4, OUT, .3);
+    for (const s of [-1, 1]) line(c, s * 1, -9, s * 4, -9.4, OUT);
   },
   bear(c, t) {
     ell(c, 0, -5.4, 5.4, 5.4, '#a0703c', OUT); ell(c, 0, -4.6, 3.2, 3.4, '#d9a066');
@@ -1011,23 +1012,25 @@ const ANIMALS = {
   },
   fish(c, t, col = '#ff9a2e') {
     const w = Math.sin(t * 8) * .4;
-    poly(c, [[5, -6], [8.6, -9 + w], [8.6, -3 + w]], col, OUT, .7);
-    ell(c, 0, -6, 6, 4, col, OUT); ell(c, -1, -6, 3.4, 3.6, null, 'rgba(255,255,255,.6)'); c.lineWidth = .6; c.stroke();
-    poly(c, [[0, -10], [3, -11.4], [2.6, -9.4]], col, OUT, .6);
-    beady(c, -3.4, -7, .75); c.beginPath(); c.arc(-5, -5.4, .8, .3, 2); c.strokeStyle = OUT; c.lineWidth = .4; c.stroke();
+    poly(c, [[5, -6], [8.6, -9 + w], [8.6, -3 + w]], col, OUT);
+    ell(c, 0, -6, 6, 4, col, OUT); ell(c, -1, -6, 3.4, 3.6, null, 'rgba(255,255,255,.6)'); c.lineWidth = LW * .7; c.stroke();
+    poly(c, [[0, -10], [3, -11.4], [2.6, -9.4]], col, OUT);
+    beady(c, -3.4, -7, .75); c.beginPath(); c.arc(-5, -5.4, .8, .3, 2); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
   },
   fish2(c, t) { ANIMALS.fish(c, t, '#4fa3ff'); for (const x of [-1, 2]) line(c, x, -9.4, x, -2.6, '#fff', .8); },
   octopus(c, t) {
     for (let i = 0; i < 6; i++) { const x = -4 + i * 1.6, w = Math.sin(t * 4 + i) * .8; c.beginPath(); c.moveTo(x, -5); c.quadraticCurveTo(x + w, -2, x - w * .5, 0); c.strokeStyle = OUT; c.lineWidth = 2; c.stroke(); c.strokeStyle = '#b07cff'; c.lineWidth = 1.1; c.stroke(); }
     ell(c, 0, -9, 5.2, 5.6, '#b07cff', OUT); ell(c, -1.8, -11.4, 1.6, 1.2, 'rgba(255,255,255,.4)');
     beady(c, -1.8, -8.6, .8); beady(c, 1.8, -8.6, .8); blush(c, -3.2, -6.8); blush(c, 3.2, -6.8);
-    c.beginPath(); c.arc(0, -7, 1.1, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = .5; c.stroke();
+    c.beginPath(); c.arc(0, -7, 1.1, .3, Math.PI - .3); c.strokeStyle = OUT; c.lineWidth = LW * .7; c.stroke();
   }
 };
 // draw an animal with its feet at x,y and about h tall; face -1 flips it
 function drawAnimalAt(c, kind, x, y, h, t = 0, face = 1) {
   const f = ANIMALS[kind]; if (!f) return;
-  const keep = LW; c.save(); c.translate(x, y); c.scale(face * h / 20, h / 20); LW = .9; f(c, t); LW = keep; c.restore();
+  const keep = LW; c.save(); c.translate(x, y); c.scale(face * h / 20, h / 20);
+  const px = Math.abs(c.getTransform().a) || 1; LW = Math.max(1.2, Math.min(.9 * px, 4.5)) / px;   // keep outlines a sensible pixel width at any size
+  f(c, t); LW = keep; c.restore();
 }
 function animalThumb(kind, size = 120) {
   const cnv = document.createElement('canvas'); cnv.width = cnv.height = size; const g = cnv.getContext('2d');
@@ -2330,6 +2333,8 @@ Object.assign(SFX, {
     else if (s === 'baa') { for (let i = 0; i < 5; i++) tone(420 + (i % 2) * 30, .1, 'sawtooth', .1, null, i * .08); }
     else if (s === 'cluck') { for (let i = 0; i < 3; i++) tone(750, .06, 'square', .1, 500, i * .1); }
     else if (s === 'neigh') { tone(600, .25, 'sawtooth', .1, 950); tone(950, .4, 'sawtooth', .1, 450, .25); }
+    else if (s === 'woof') { tone(420, .12, 'sawtooth', .14, 260); tone(400, .14, 'sawtooth', .14, 240, .2); }
+    else if (s === 'meow') tone(700, .45, 'triangle', .16, 520);
     else if (s === 'snip') { noise(.05, .4, 4000); noise(.05, .4, 4000, .15); }
     else { tone(1500, .07, 'sine', .2, 1900); tone(1500, .07, 'sine', .2, 1900, .12); }
   }
@@ -2864,7 +2869,7 @@ function openMini(id, level) {
   dlg.style.display = 'none'; SFX.fanfare();
 }
 let miniFrom = null;
-function closeMini() { mg.on = false; $('#mg').classList.remove('on'); mgc.width = mgc.height = 0; SFX.hi(); if (miniFrom === 'room') { miniFrom = null; say('👗 Looking good! Come back and dress up again!'); } else if (mg.game.station) openStation(); else if (mg.game.levels) openLevels(mg.id); else say('⭐ That was fun! Let’s play again soon!'); }
+function closeMini() { mg.on = false; $('#mg').classList.remove('on'); mgc.width = mgc.height = 0; SFX.hi(); if (miniFrom === 'room') { miniFrom = null; say('👗 Looking good! Come back and dress up again!'); } else if (mg.game.station) openStation(); else if (mg.game.levels) openLevels(mg.id); else if (mg.id === 'buddy' && buddy) { say(`🐾 Your ${buddyInfo()[1].toLowerCase()} loves you! 💖`); buddy.jump = .45; } else say('⭐ That was fun! Let’s play again soon!'); }
 function winMini() {
   mg.won = true; mg.wonT = 0; SFX.fanfare(); setTimeout(SFX.star, 500);
   if (mg.game.levels && mg.level === 3) giveSticker('m' + mg.id);
@@ -3456,6 +3461,7 @@ function openMenu() { menuOpen = true; $('#menu').classList.add('on'); $('#btnMe
 function closeMenu() { menuOpen = false; $('#menu').classList.remove('on'); }
 $('#btnMenu').addEventListener('pointerdown', e => { e.preventDefault(); ac(); menuOpen ? closeMenu() : openMenu(); });
 $('#menu').addEventListener('pointerdown', e => { if (e.target.id === 'menu') closeMenu(); });
+$('#btnPet').addEventListener('pointerdown', e => { e.preventDefault(); ac(); setTimeout(openPet, 0); });
 $('#menuBox').addEventListener('pointerdown', e => { const b = e.target.closest('.mbtn'); if (b && b.id !== 'btnMute') setTimeout(closeMenu, 0); });
 
 /* ------------------------------------------------------------------ *
@@ -3540,9 +3546,11 @@ $('#settings').addEventListener('pointerdown', e => { if (e.target.id === 'setti
 /* ------------------------------------------------------------------ *
  *  Sticker book
  * ------------------------------------------------------------------ */
+const BUDDY_KINDS = [['puppy', 'Puppy', 'woof', '🦴'], ['kitten', 'Kitty', 'meow', '🐟'], ['duckling', 'Duckling', 'quack', '🌽'], ['bunny', 'Bunny', 'peep', '🥕']];
 const STICKERS = [
   ...FIND_TARGETS.map(f => ({ id: f.id, img: f, name: f.name, page: 'find' })),
   ...CRITTERS.map(([e, n]) => ({ id: 'c' + e, e, kind: kindOf(e), name: n.replace(/^A |!.*$/g, '').replace(/^little |^pretty |^tiny |^baby |^slow /, ''), page: 'grass' })),
+  ...BUDDY_KINDS.map(([k, n]) => ({ id: 'b' + k, kind: k, name: `My ${n.toLowerCase()}`, page: 'pals' })),
   ...ORDER.map(id => ({ id: 'p' + id, who: id, name: CHARS[id].name, page: 'pals' })),
   ...ORDER.map(id => ({ id: 'q' + id, e: QUESTS[id][0], who: id, name: `Helped ${CHARS[id].name}`, page: 'pals', gold: true })),
   ...Object.keys(MINI).filter(k => MINI[k].levels).map(k => ({ id: 'm' + k, e: '🏆', sub: MINI[k].icon, name: MINI[k].title.replace(/^\S+\s/, ''), page: 'games', gold: true }))
@@ -3696,12 +3704,147 @@ function emoBurst(x, y, list, n, size = .42) {
   for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + (Math.random() - .5) * 2; parts.push({ x, y, vx: Math.cos(a) * 1.6, vy: Math.sin(a) * 2, g: 2.5, life: 1.3, max: 1.3, type: 'emo', e: list[i % list.length], size, rot: 0 }); }
 }
 
+/* ------------------------------------------------------------------ *
+ *  Pet buddy: a little friend that follows you everywhere
+ * ------------------------------------------------------------------ */
+const BUDDY_HATS = [null, 'party', 'bow', 'crown', 'flower'];
+const HAT_Y = { puppy: -17, kitten: -16.6, duckling: -15.4, bunny: -15.6 };
+let buddy = null;
+const petNudge = { t: 0, done: false };
+function makeBuddy(kind, hat = 0) { return { kind, hat, x: P ? P.x - .9 : 0, y: P ? P.y + .2 : 0, t: 0, face: 1, moving: false, jump: 0, think: 12, far: 0, room: undefined }; }
+try { const s = JSON.parse(localStorage.getItem('parkpals_buddy') || 'null'); if (s && BUDDY_KINDS.some(b => b[0] === s.kind)) buddy = makeBuddy(s.kind, s.hat || 0); } catch (e) {}
+function saveBuddy() { try { localStorage.setItem('parkpals_buddy', JSON.stringify(buddy ? { kind: buddy.kind, hat: buddy.hat } : null)); } catch (e) {} }
+const buddyInfo = (k = buddy && buddy.kind) => BUDDY_KINDS.find(b => b[0] === k);
+function buddySound(k) { const s = buddyInfo(k)[2]; if (s === 'quack') SFX.quack(); else SFX.animal(s); }
+function drawBuddyHat(c, kind, hat) { // animal units, on top of the head
+  const y = HAT_Y[kind], h = BUDDY_HATS[hat]; if (!h) return;
+  if (h === 'party') { poly(c, [[-2.6, y + .6], [2.6, y + .6], [0, y - 5.4]], '#4fa3ff', OUT); for (const [x, yy] of [[-1, y - .8], [.8, y - 2.2], [-.2, y - 3.6]]) ell(c, x, yy, .5, .5, '#ffd23f'); ell(c, 0, y - 5.6, 1, 1, '#ff7ac2', OUT); }
+  else if (h === 'bow') { poly(c, [[0, y], [-3.4, y - 2.2], [-3.4, y + 1.6]], '#ff4f9a', OUT); poly(c, [[0, y], [3.4, y - 2.2], [3.4, y + 1.6]], '#ff4f9a', OUT); ell(c, 0, y - .2, 1, 1, '#ff7ac2', OUT); }
+  else if (h === 'crown') { poly(c, [[-3, y + .6], [-3.2, y - 3], [-1.6, y - 1.4], [0, y - 3.8], [1.6, y - 1.4], [3.2, y - 3], [3, y + .6]], '#ffd23f', OUT); ell(c, 0, y - .6, .6, .6, '#e8333d'); for (const x of [-3.2, 0, 3.2]) ell(c, x, y - (x ? 3 : 3.8), .5, .5, '#fff'); }
+  else if (h === 'flower') { for (let i = 0; i < 5; i++) { const a = i / 5 * TAU; ell(c, 2 + Math.cos(a) * 1.3, y - .4 + Math.sin(a) * 1.3, 1, 1, '#fff', OUT); } ell(c, 2, y - .4, .8, .8, '#ffd23f'); }
+}
+function drawBuddyAt(c, kind, hat, x, y, h, t, face) {
+  drawAnimalAt(c, kind, x, y, h, t, face);
+  const keep = LW; c.save(); c.translate(x, y); c.scale(face * h / 20, h / 20);
+  const px = Math.abs(c.getTransform().a) || 1; LW = Math.max(1.2, Math.min(.9 * px, 4.5)) / px;
+  drawBuddyHat(c, kind, hat); LW = keep; c.restore();
+}
+function updateBuddy(dt) {
+  const b = buddy; if (!P) return;
+  if (!b) { if (!petNudge.done && (petNudge.t += dt) > 45 && !room && !quest && !mg.on && !menuOpen) { petNudge.done = true; $('#btnMenu').classList.add('new'); say('🐾 Psst! Tap ☰ and get a pet buddy!'); } return; }
+  b.t += dt; if (b.jump > 0) b.jump -= dt;
+  const D = DIRS[P.dir], tx = P.x - D.x * 1 + (D.y ? .75 : 0), ty = P.y - D.y * .9 + .15, dx = tx - b.x, dy = ty - b.y, d = Math.hypot(dx, dy);
+  if (b.room !== room || d > 12) { b.room = room; b.x = tx; b.y = ty; return; }   // came through a door
+  b.moving = d > .45;
+  if (b.moving) {
+    const sp = Math.min(5.5, 1.6 + d * 1.3) * dt, ox = b.x, oy = b.y;
+    moveEnt(b, dx / d * sp, dy / d * sp);
+    if (Math.abs(dx) > .1) b.face = dx < 0 ? -1 : 1;
+    b.far = (Math.hypot(b.x - ox, b.y - oy) < sp * .2 && d > 2.5) ? b.far + dt : 0;
+    if (b.far > 1.2) { sparkle(b.x, b.y - .3, '#fff'); b.x = tx; b.y = ty; b.far = 0; sparkle(b.x, b.y - .3, '#fff'); }  // stuck behind a fence? hop over
+  }
+  if ((b.think -= dt) <= 0) { b.think = 12 + Math.random() * 12; bubble(b, pick(['💖', '🎵', '😊', buddyInfo()[3]]), -1); }
+}
+function drawBuddy(c) {
+  const b = buddy; if (!b) return;
+  const hop = b.jump > 0 ? Math.sin(b.jump / .45 * Math.PI) * .35 : b.moving ? Math.abs(Math.sin(b.t * 10)) * .08 : 0;
+  ell(c, b.x, b.y, .24, .07, 'rgba(0,0,0,.2)');
+  drawBuddyAt(c, b.kind, b.hat, b.x, b.y - hop, .62, b.t, b.face);
+}
+function petBuddy() { buddy.jump = .45; buddySound(); burst(buddy.x, buddy.y - .8, 4, ['#ff6b8b'], 'heart', 1, 1, 1.5); setTimeout(() => { if (mode === 'play' && !mg.on) openMini('buddy'); }, 350); }
+function openPet() { miniFrom = null; openMini('buddy'); }
+
+MINI.buddy = {
+  title: '🐾 My Pet', hint: '👆 Look after your pet!', icon: '💖', goal: 5, winDelay: 1600,
+  init(m) { m.pick = !buddy; m.did = new Set(); m.anim = null; },
+  acts: ['feed', 'bath', 'fetch', 'cuddle', 'hat'],
+  lay(m) {
+    const land = m.w > m.h * 1.2, H = land ? Math.min(m.h * .4, m.w * .3) : Math.min(m.h * .34, m.w * .55);
+    const cx = m.w / 2, fy = land ? m.h * .68 : m.h * .66, br = Math.min(m.u * .85, m.w / 12), by = land ? m.h * .87 : m.h * .84;
+    const btns = this.acts.map((k, i) => ({ k, x: m.w / 2 + (i - 2) * br * 2.4, y: by, r: br }));
+    return { land, H, cx, fy, btns, swap: [m.w - br * 1.2, (land ? m.h * .3 : m.h * .2)], br };
+  },
+  pickLay(m) {
+    const land = m.w > m.h * 1.2, cols = land ? 4 : 2, cw = m.w / (cols + .4), ch = land ? m.h * .55 : m.h * .33;
+    return BUDDY_KINDS.map((b, i) => { const col = i % cols, row = Math.floor(i / cols); return { b, x: m.w / 2 + (col - (cols - 1) / 2) * cw, y: (land ? m.h * .6 : m.h * .4) + row * ch, s: Math.min(cw * .78, ch * .72, m.u * 3.4) }; });
+  },
+  update(m, dt) { if (m.anim && (m.anim.t += dt) > m.anim.dur) m.anim = null; },
+  draw(m, g) {
+    bg(g, '#dff4ff', '#bfe6ff', m.h * .66, '#9ee07a');
+    for (let i = 0; i < 3; i++) cloudPx(g, (i * 211 + m.t * 12) % (m.w + 120) - 60, m.h * (.12 + i * .07), m.u * .6);
+    if (m.pick) {
+      g.font = `900 ${Math.min(m.u * .7, m.w / 14)}px "Trebuchet MS", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.lineWidth = 7; g.strokeStyle = '#fff'; const ty = m.w > m.h * 1.2 ? m.h * .2 : m.h * .16; g.strokeText('Pick your pet!', m.w / 2, ty); g.fillStyle = '#2b2f55'; g.fillText('Pick your pet!', m.w / 2, ty);
+      for (const p of this.pickLay(m)) {
+        const bob = Math.abs(Math.sin(m.t * 3 + p.x)) * p.s * .04;
+        rbox(g, p.x - p.s * .62, p.y - p.s * .62, p.s * 1.24, p.s * 1.34, 22, 'rgba(255,255,255,.85)', '#3c4a7d', 4);
+        drawAnimalAt(g, p.b[0], p.x, p.y + p.s * .36 - bob, p.s * .8, m.t, 1); LW = 3;
+        g.font = `900 ${p.s * .16}px "Trebuchet MS", sans-serif`; g.fillStyle = '#2b2f55'; g.fillText(p.b[1], p.x, p.y + p.s * .56);
+      }
+      return;
+    }
+    const L = this.lay(m), A = m.anim, k = A && A.k, f = A ? A.t / A.dur : 0;
+    let x = L.cx, y = L.fy, face = 1, sx = 1, sy = 1, rot = 0;
+    if (k === 'feed' && A.t > .7) { const ch = Math.abs(Math.sin(A.t * 18)) * .06; sy = 1 - ch; sx = 1 + ch; }
+    if (k === 'bath') rot = Math.sin(A.t * 14) * .08;
+    if (k === 'cuddle') { const q = Math.sin(f * Math.PI); sy = 1 - q * .1; sx = 1 + q * .12; }
+    if (k === 'hat' || (k === 'feed' && A.t > 1.1)) y -= Math.sin(Math.min(1, (k === 'hat' ? f : (A.t - 1.1) / .3)) * Math.PI) * L.H * .15;
+    if (k === 'fetch') { const out = A.t < 1.3 ? Math.max(0, (A.t - .3) / 1) : Math.max(0, 1 - (A.t - 1.3) / 1); x += out * m.w * .38; face = A.t < 1.3 ? 1 : -1; y -= Math.abs(Math.sin(A.t * 12)) * L.H * .04 * (out > 0 && out < 1 ? 1 : 0); }
+    if (!A) y -= Math.abs(Math.sin(m.t * 2)) * L.H * .015;
+    ell(g, x, L.fy, L.H * .3, L.H * .06, 'rgba(0,0,0,.15)');
+    g.save(); g.translate(x, y); g.rotate(rot); g.scale(sx, sy); drawBuddyAt(g, buddy.kind, buddy.hat, 0, 0, L.H, m.t, face); g.restore(); LW = 3;
+    const mouth = [x, y - L.H * .5];
+    if (k === 'feed' && A.t < .75) { const q = A.t / .75, b0 = L.btns[0]; emoji(g, buddyInfo()[3], b0.x + (mouth[0] - b0.x) * q, b0.y + (mouth[1] - b0.y) * q - Math.sin(q * Math.PI) * L.H * .4, m.u * .9); }
+    if (k === 'feed' && A.t > .75 && A.t < 1.2) emoji(g, '😋', x + L.H * .42, y - L.H * .8, m.u * .8);
+    if (k === 'bath') {
+      rbox(g, x - L.H * .42, L.fy - L.H * .22, L.H * .84, L.H * .3, L.H * .12, '#7fc8ff', '#3c4a7d', 4);
+      for (let i = 0; i < 14; i++) { const a = i * 2.4 + A.t * 2, r = L.H * (.08 + (i % 3) * .03), bx = x + Math.cos(a) * L.H * (.25 + (i % 4) * .06), byy = y - L.H * (.2 + ((i * .13 + A.t * .4) % .8)); g.globalAlpha = Math.min(1, (A.dur - A.t) * 2); ell(g, bx, byy, r, r, 'rgba(255,255,255,.75)', '#9fd6ff'); g.lineWidth = 2; g.stroke(); g.globalAlpha = 1; }
+    }
+    if (k === 'fetch') {
+      let bx, byy; if (A.t < .5) { const q = A.t / .5; bx = L.cx + q * m.w * .42; byy = L.fy - L.H * .5 - Math.sin(q * Math.PI) * L.H * .6 + q * L.H * .45; }
+      else if (A.t < 1.3) { bx = L.cx + m.w * .42; byy = L.fy - L.H * .06; } else { bx = mouth[0] - L.H * .2; byy = mouth[1] + L.H * .1; }
+      ell(g, bx, byy, m.u * .32, m.u * .32, '#c8ff4a', OUT); g.beginPath(); g.arc(bx - m.u * .3, byy, m.u * .26, -1, 1); g.strokeStyle = '#fff'; g.lineWidth = 3; g.stroke();
+    }
+    if (k === 'cuddle') for (let i = 0; i < 5; i++) { const q = (f * 1.4 + i * .2) % 1; g.globalAlpha = 1 - q; emoji(g, '💖', x + (i - 2) * L.H * .18, y - L.H * (.6 + q * .5), m.u * .7); g.globalAlpha = 1; }
+    for (const b of L.btns) {
+      const ic = { feed: buddyInfo()[3], bath: '🛁', fetch: '🎾', cuddle: '🤗', hat: '🎩' }[b.k];
+      roundBtn(g, b.x, b.y, b.r, ic, true, !m.did.has(b.k) ? Math.sin(m.t * 5 + b.x) * .05 : 0);
+      if (m.did.has(b.k)) emoji(g, '💖', b.x + b.r * .7, b.y - b.r * .7, b.r * .55);
+    }
+    roundBtn(g, ...L.swap, L.br * .75, '🔄');
+  },
+  doAct(m, k) {
+    if (m.anim || m.won) return;
+    const L = this.lay(m);
+    m.anim = { k, t: 0, dur: { feed: 1.5, bath: 2.4, fetch: 2.4, cuddle: 1.6, hat: .6 }[k] };
+    if (k === 'feed') setTimeout(SFX.yum, 700);
+    if (k === 'bath') { SFX.splash(); setTimeout(SFX.pop, 900); setTimeout(SFX.pop, 1500); setTimeout(() => mgBurst(L.cx, L.fy - L.H * .5, 16, ['#9fd6ff', '#fff'], .7), 2200); }
+    if (k === 'fetch') { SFX.whoosh(); setTimeout(() => buddySound(), 1300); }
+    if (k === 'cuddle') { buddySound(); SFX.chime(); }
+    if (k === 'hat') { buddy.hat = (buddy.hat + 1) % BUDDY_HATS.length; saveBuddy(); SFX.boing(); mgBurst(L.cx, L.fy - L.H, 12, ['#ffd23f', '#ff7ac2', '#fff'], .6); }
+    if (!m.did.has(k)) { m.did.add(k); setTimeout(() => { if (mg.on && mg.id === 'buddy') mgPoint(); }, m.anim.dur * 1000); }
+  },
+  tap(m, x, y) {
+    if (m.pick) {
+      const p = this.pickLay(m).find(p => Math.abs(x - p.x) < p.s * .62 && Math.abs(y - p.y) < p.s * .7); if (!p) return;
+      buddy = makeBuddy(p.b[0], buddy ? buddy.hat : 0); saveBuddy(); buddySound(p.b[0]); m.pick = false; m.t = 2.6;
+      mgBurst(m.w / 2, m.h * .4, 30, BALLOON_COLORS, 1); giveSticker('b' + p.b[0]); return;
+    }
+    const L = this.lay(m);
+    if (Math.hypot(x - L.swap[0], y - L.swap[1]) < L.br) { m.pick = true; SFX.hi(); return; }
+    const b = L.btns.find(b => Math.hypot(x - b.x, y - b.y) < b.r * 1.2); if (b) { this.doAct(m, b.k); return; }
+    if (Math.abs(x - L.cx) < L.H * .4 && y < L.fy && y > L.fy - L.H) this.doAct(m, 'cuddle');
+  },
+  a(m) { if (m.pick) return; const k = this.acts.find(k => !m.did.has(k)) || pick(this.acts); this.doAct(m, k); },
+  hintAt(m) { if (m.pick) { const p = this.pickLay(m)[0]; return { x: p.x, y: p.y }; } const L = this.lay(m), b = L.btns.find(b => !m.did.has(b.k)); return b && !m.anim ? b : null; }
+};
 function findTarget() {
   const px = P.x, py = P.y - .3, d0 = DIRS[P.dir];
   let best = null, bs = 99;
   gatherTargets(px, py, t => {
     const dx = t.x - px, dy = t.y - py, d = Math.hypot(dx, dy); if (d > t.r) return;
     const facing = d > .01 ? (dx * d0.x + dy * d0.y) / d : 1;
+    if (t.k === 'buddy' && facing < .3) return;   // the pet only lights up A when you turn to it
     const s = d - facing * .35 + (t.k === 'water' ? .8 : 0);
     if (s < bs) { bs = s; best = t; }
   });
@@ -3714,6 +3857,7 @@ function targetAt(wx, wy) {
   return best;
 }
 function gatherTargets(px, py, consider) {
+  if (buddy) consider({ k: 'buddy', x: buddy.x, y: buddy.y - .3, my: buddy.y - 1.15, r: 1.2 });
   if (room) {
     for (const o of room.objects) consider({ k: 'room', o, x: o.tx, y: o.ty, my: o.my, r: o.r });
     if (room.npc) consider({ k: 'npc', o: room.npc, x: room.npc.x, y: room.npc.y - .4, my: room.npc.y - 1.55, r: 1.4 });
@@ -3775,6 +3919,7 @@ function act(t) {
   P.goal = null;
   switch (t.k) {
     case 'prop': t.o.act(t.o); break;
+    case 'buddy': petBuddy(); break;
     case 'qfind': finishQuest(); break;
     case 'room': roomAct(t.o); break;
     case 'npc': { const n = t.o; n.wave = 1.6; n.hop = .5; SFX.voice(n.id); burst(n.x, n.y - 1.1, 4, ['#ff6b8b'], 'heart', 1.2, 1, 1.5);
@@ -4036,7 +4181,7 @@ function update(dt) {
     cam.y = Math.max(0, Math.min(MH - vh, 14 + Math.sin(time * .05) * 8 - vh / 2));
     return;
   }
-  updatePlayer(dt);
+  updatePlayer(dt); updateBuddy(dt);
   if (room) updateRoom(dt); else updateWorld(dt);
   const t = camTarget(), k = Math.min(1, dt * 7); cam.x += (t.x - cam.x) * k; cam.y += (t.y - cam.y) * k;
 }
@@ -4170,6 +4315,7 @@ function renderWorld(c) {
   for (const k of critters) push(k.y, () => drawCritter(c, k));
   for (const b of balls) if (vis(b.x, b.y)) push(b.y, () => drawBall(c, b));
   for (const n of friends) if (vis(n.x, n.y)) push(n.y, () => drawChar(c, n.id, n.x, n.y, n.dir, n.anim, n.moving, .95, n.wave, n.hop > 0 ? Math.sin(n.hop / .5 * Math.PI) * .3 : 0));
+  if (buddy && mode === 'play') push(buddy.y, () => drawBuddy(c));
   if (P && mode === 'play') push(P.ride ? 1e9 : P.y, () => { if (P.ride && P.ride.kind === 'sled') drawSled(c, P.x, P.y + .05); drawPlayer(c, playerLift()); });
   items2.sort((a, b) => a.y - b.y); for (const it of items2) { try { it.f(); } catch (e) { report(e); } }
 
@@ -4195,6 +4341,7 @@ function renderRoom(c) {
   for (const o of r.objects) if (o.draw) list.push({ y: o.y, f: () => o.draw(c) });
   if (r.npc) { const n = r.npc; list.push({ y: n.y, f: () => drawChar(c, n.id, n.x, n.y, n.dir, n.anim, false, .95, n.wave, n.hop > 0 ? Math.sin(n.hop / .5 * Math.PI) * .3 : 0) }); }
   if (P) list.push({ y: P.y, f: () => drawPlayer(c, playerLift()) });
+  if (buddy) list.push({ y: buddy.y, f: () => drawBuddy(c) });
   list.sort((a, b) => a.y - b.y); list.forEach(it => it.f());
   drawParts(c, 'fx'); drawParts(c, 'smoke');
   if (r.nap > 0) { c.fillStyle = `rgba(20,20,70,${Math.min(.45, r.nap * .3)})`; c.fillRect(-1, -1, r.w + 2, r.h + 2); }
@@ -4309,7 +4456,7 @@ function report(e) {
 }
 function frame(now) {
   requestAnimationFrame(frame);
-  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  const dt = Math.max(0, Math.min(.05, (now - last) / 1000)); last = now;
   try { update(dt); } catch (e) { report(e); }
   try { updateMusic(); } catch (e) { report(e); }
   if (!booted && now - bootT > 700) { booted = true; $('#boot').classList.add('gone'); }
@@ -4317,7 +4464,7 @@ function frame(now) {
   if (mg.on) { try { updateMini(dt); renderMini(); } catch (e) { report(e); for (let i = 0; i < 10; i++) mgx.restore(); } }
 }
 load(); resize(); requestAnimationFrame(frame);
-window.__park = { ANIMALS, drawAnimalAt, enterRoom, exitRoom, get pets() { return pets; }, PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
+window.__park = { MINI, get buddy() { return buddy; }, ANIMALS, drawAnimalAt, enterRoom, exitRoom, get pets() { return pets; }, PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
 })();
 </script>
 </body>
