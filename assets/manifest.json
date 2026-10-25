@@ -1,0 +1,1401 @@
+{
+  "version": 1,
+  "assets": {
+    "audio.coin_pickup": {
+      "file": "assets/phase1/audio/coin_pickup.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "audio.footstep": {
+      "file": "assets/phase1/audio/footstep.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "audio.harvest": {
+      "file": "assets/phase1/audio/harvest.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "audio.plant_seed": {
+      "file": "assets/phase1/audio/plant_seed.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "audio.ui_click": {
+      "file": "assets/phase1/audio/ui_click.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "audio.watering": {
+      "file": "assets/phase1/audio/watering.wav",
+      "source": "phase1/assets/10_audio",
+      "status": "placeholder",
+      "notes": "Pack-supplied placeholder SFX; replace before release."
+    },
+    "building.chicken_coop": {
+      "file": "assets/phase1/buildings/chicken_coop.png",
+      "width": 325,
+      "height": 365,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 6 magenta-spill edge pixels."
+    },
+    "building.fence_segment": {
+      "file": "assets/phase1/buildings/fence_segment.png",
+      "width": 504,
+      "height": 187,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.mailbox": {
+      "file": "assets/phase1/buildings/mailbox.png",
+      "width": 230,
+      "height": 252,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.market_stall": {
+      "file": "assets/phase1/buildings/market_stall.png",
+      "width": 396,
+      "height": 289,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1 magenta-spill edge pixels."
+    },
+    "building.signpost": {
+      "file": "assets/phase1/buildings/signpost.png",
+      "width": 225,
+      "height": 252,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.small_barn": {
+      "file": "assets/phase1/buildings/small_barn.png",
+      "width": 426,
+      "height": 407,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.starter_house": {
+      "file": "assets/phase1/buildings/starter_house.png",
+      "width": 421,
+      "height": 401,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.tool_shed": {
+      "file": "assets/phase1/buildings/tool_shed.png",
+      "width": 315,
+      "height": 338,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.water_barrel": {
+      "file": "assets/phase1/buildings/water_barrel.png",
+      "width": 269,
+      "height": 258,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.well_building": {
+      "file": "assets/phase1/buildings/well_building.png",
+      "width": 283,
+      "height": 279,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.wooden_bridge": {
+      "file": "assets/phase1/buildings/wooden_bridge.png",
+      "width": 418,
+      "height": 275,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "building.workbench": {
+      "file": "assets/phase1/buildings/workbench.png",
+      "width": 334,
+      "height": 239,
+      "source": "phase1/assets/03_buildings (v2 detailed)",
+      "status": "approved",
+      "notes": ""
+    },
+    "foliage.bush_berries": {
+      "file": "assets/phase1/foliage/bush_berries.png",
+      "width": 245,
+      "height": 196,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1459 magenta-spill edge pixels."
+    },
+    "foliage.bush_flowering": {
+      "file": "assets/phase1/foliage/bush_flowering.png",
+      "width": 260,
+      "height": 197,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 2155 magenta-spill edge pixels."
+    },
+    "foliage.bush_green": {
+      "file": "assets/phase1/foliage/bush_green.png",
+      "width": 254,
+      "height": 198,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1017 magenta-spill edge pixels."
+    },
+    "foliage.bush_white_flowers": {
+      "file": "assets/phase1/foliage/bush_white_flowers.png",
+      "width": 264,
+      "height": 194,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1748 magenta-spill edge pixels."
+    },
+    "foliage.bush_yellow_flowers": {
+      "file": "assets/phase1/foliage/bush_yellow_flowers.png",
+      "width": 256,
+      "height": 190,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1428 magenta-spill edge pixels."
+    },
+    "foliage.fallen_log": {
+      "file": "assets/phase1/foliage/fallen_log.png",
+      "width": 306,
+      "height": 186,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1565 magenta-spill edge pixels."
+    },
+    "foliage.fern": {
+      "file": "assets/phase1/foliage/fern.png",
+      "width": 236,
+      "height": 188,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 2203 magenta-spill edge pixels."
+    },
+    "foliage.flower_patch": {
+      "file": "assets/phase1/foliage/flower_patch.png",
+      "width": 256,
+      "height": 157,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1089 magenta-spill edge pixels."
+    },
+    "foliage.flower_yellow": {
+      "file": "assets/phase1/foliage/flower_yellow.png",
+      "width": 242,
+      "height": 154,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1463 magenta-spill edge pixels."
+    },
+    "foliage.grass_tall": {
+      "file": "assets/phase1/foliage/grass_tall.png",
+      "width": 229,
+      "height": 182,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1628 magenta-spill edge pixels."
+    },
+    "foliage.mushrooms": {
+      "file": "assets/phase1/foliage/mushrooms.png",
+      "width": 229,
+      "height": 170,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 935 magenta-spill edge pixels."
+    },
+    "foliage.rock_cluster": {
+      "file": "assets/phase1/foliage/rock_cluster.png",
+      "width": 288,
+      "height": 223,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1311 magenta-spill edge pixels."
+    },
+    "foliage.rock_mossy": {
+      "file": "assets/phase1/foliage/rock_mossy.png",
+      "width": 297,
+      "height": 225,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1059 magenta-spill edge pixels."
+    },
+    "foliage.rock_small": {
+      "file": "assets/phase1/foliage/rock_small.png",
+      "width": 250,
+      "height": 197,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1030 magenta-spill edge pixels."
+    },
+    "foliage.tree_autumn": {
+      "file": "assets/phase1/foliage/tree_autumn.png",
+      "width": 279,
+      "height": 329,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 2050 magenta-spill edge pixels."
+    },
+    "foliage.tree_birch": {
+      "file": "assets/phase1/foliage/tree_birch.png",
+      "width": 267,
+      "height": 324,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1434 magenta-spill edge pixels."
+    },
+    "foliage.tree_blossom": {
+      "file": "assets/phase1/foliage/tree_blossom.png",
+      "width": 288,
+      "height": 330,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 4407 magenta-spill edge pixels."
+    },
+    "foliage.tree_oak": {
+      "file": "assets/phase1/foliage/tree_oak.png",
+      "width": 337,
+      "height": 339,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 2190 magenta-spill edge pixels."
+    },
+    "foliage.tree_pine": {
+      "file": "assets/phase1/foliage/tree_pine.png",
+      "width": 255,
+      "height": 344,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1796 magenta-spill edge pixels."
+    },
+    "foliage.tree_stump": {
+      "file": "assets/phase1/foliage/tree_stump.png",
+      "width": 261,
+      "height": 197,
+      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
+      "status": "approved",
+      "notes": "Cleaned 1231 magenta-spill edge pixels."
+    },
+    "icon.produce_carrot": {
+      "file": "assets/derived/phase3/icons/produce_carrot.png",
+      "width": 65,
+      "height": 50,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_corn": {
+      "file": "assets/derived/phase3/icons/produce_corn.png",
+      "width": 52,
+      "height": 55,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_lettuce": {
+      "file": "assets/derived/phase3/icons/produce_lettuce.png",
+      "width": 55,
+      "height": 53,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_potato": {
+      "file": "assets/derived/phase3/icons/produce_potato.png",
+      "width": 64,
+      "height": 52,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_pumpkin": {
+      "file": "assets/derived/phase3/icons/produce_pumpkin.png",
+      "width": 61,
+      "height": 51,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_strawberry": {
+      "file": "assets/derived/phase3/icons/produce_strawberry.png",
+      "width": 42,
+      "height": 48,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_tomato": {
+      "file": "assets/derived/phase3/icons/produce_tomato.png",
+      "width": 59,
+      "height": 57,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.produce_wheat": {
+      "file": "assets/derived/phase3/icons/produce_wheat.png",
+      "width": 45,
+      "height": 52,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_carrot": {
+      "file": "assets/derived/phase3/icons/seed_carrot.png",
+      "width": 80,
+      "height": 99,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_corn": {
+      "file": "assets/derived/phase3/icons/seed_corn.png",
+      "width": 81,
+      "height": 101,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_lettuce": {
+      "file": "assets/derived/phase3/icons/seed_lettuce.png",
+      "width": 82,
+      "height": 99,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_potato": {
+      "file": "assets/derived/phase3/icons/seed_potato.png",
+      "width": 81,
+      "height": 100,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_pumpkin": {
+      "file": "assets/derived/phase3/icons/seed_pumpkin.png",
+      "width": 84,
+      "height": 101,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_strawberry": {
+      "file": "assets/derived/phase3/icons/seed_strawberry.png",
+      "width": 82,
+      "height": 101,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_tomato": {
+      "file": "assets/derived/phase3/icons/seed_tomato.png",
+      "width": 81,
+      "height": 100,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.seed_wheat": {
+      "file": "assets/derived/phase3/icons/seed_wheat.png",
+      "width": 82,
+      "height": 101,
+      "source": "phase3/02_seed_items_reference/seed_items_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.tool_basket": {
+      "file": "assets/derived/phase3/icons/tool_basket.png",
+      "width": 67,
+      "height": 73,
+      "source": "phase3/06_farming_tools/farming_tools.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.tool_hoe": {
+      "file": "assets/derived/phase3/icons/tool_hoe.png",
+      "width": 70,
+      "height": 84,
+      "source": "phase3/06_farming_tools/farming_tools.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.tool_watering_can": {
+      "file": "assets/derived/phase3/icons/tool_watering_can.png",
+      "width": 78,
+      "height": 75,
+      "source": "phase3/06_farming_tools/farming_tools.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "player.carry_action": {
+      "file": "assets/phase2/player/carry_action.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 1682 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.harvest_action": {
+      "file": "assets/phase2/player/harvest_action.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 3147 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.hoe_action": {
+      "file": "assets/phase2/player/hoe_action.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 2425 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.idle_back": {
+      "file": "assets/phase2/player/idle_back.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 704 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.idle_front": {
+      "file": "assets/phase2/player/idle_front.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 784 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.idle_right": {
+      "file": "assets/phase2/player/idle_right.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 644 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.idle_right_alt": {
+      "file": "assets/phase2/player/idle_right_alt.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 648 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_back_1": {
+      "file": "assets/phase2/player/walk_back_1.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 578 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_back_2": {
+      "file": "assets/phase2/player/walk_back_2.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 627 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_front_1": {
+      "file": "assets/phase2/player/walk_front_1.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 729 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_front_2": {
+      "file": "assets/phase2/player/walk_front_2.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 716 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_left_1": {
+      "file": "assets/phase2/player/walk_left_1.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 787 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_left_2": {
+      "file": "assets/phase2/player/walk_left_2.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 787 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_right_1": {
+      "file": "assets/phase2/player/walk_right_1.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 728 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.walk_right_2": {
+      "file": "assets/phase2/player/walk_right_2.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 722 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "player.water_action": {
+      "file": "assets/phase2/player/water_action.png",
+      "width": 320,
+      "height": 320,
+      "source": "phase2/assets/characters/player",
+      "status": "approved",
+      "notes": "Cleaned 1969 magenta-spill edge pixels.",
+      "anchor": [
+        0.5,
+        0.95625
+      ]
+    },
+    "plot.carrot_growing1": {
+      "file": "assets/derived/phase3/plots/carrot_growing1.png",
+      "width": 78,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_growing2": {
+      "file": "assets/derived/phase3/plots/carrot_growing2.png",
+      "width": 80,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_mature": {
+      "file": "assets/derived/phase3/plots/carrot_mature.png",
+      "width": 84,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_planted": {
+      "file": "assets/derived/phase3/plots/carrot_planted.png",
+      "width": 78,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_ready": {
+      "file": "assets/derived/phase3/plots/carrot_ready.png",
+      "width": 84,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_ready_alt": {
+      "file": "assets/derived/phase3/plots/carrot_ready_alt.png",
+      "width": 83,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.carrot_sprout": {
+      "file": "assets/derived/phase3/plots/carrot_sprout.png",
+      "width": 76,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_growing1": {
+      "file": "assets/derived/phase3/plots/corn_growing1.png",
+      "width": 79,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_growing2": {
+      "file": "assets/derived/phase3/plots/corn_growing2.png",
+      "width": 80,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_mature": {
+      "file": "assets/derived/phase3/plots/corn_mature.png",
+      "width": 84,
+      "height": 75,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_planted": {
+      "file": "assets/derived/phase3/plots/corn_planted.png",
+      "width": 79,
+      "height": 75,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_ready": {
+      "file": "assets/derived/phase3/plots/corn_ready.png",
+      "width": 84,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_ready_alt": {
+      "file": "assets/derived/phase3/plots/corn_ready_alt.png",
+      "width": 84,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.corn_sprout": {
+      "file": "assets/derived/phase3/plots/corn_sprout.png",
+      "width": 79,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_growing1": {
+      "file": "assets/derived/phase3/plots/lettuce_growing1.png",
+      "width": 78,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_growing2": {
+      "file": "assets/derived/phase3/plots/lettuce_growing2.png",
+      "width": 81,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_mature": {
+      "file": "assets/derived/phase3/plots/lettuce_mature.png",
+      "width": 82,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_planted": {
+      "file": "assets/derived/phase3/plots/lettuce_planted.png",
+      "width": 79,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_ready": {
+      "file": "assets/derived/phase3/plots/lettuce_ready.png",
+      "width": 75,
+      "height": 69,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_ready_alt": {
+      "file": "assets/derived/phase3/plots/lettuce_ready_alt.png",
+      "width": 84,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.lettuce_sprout": {
+      "file": "assets/derived/phase3/plots/lettuce_sprout.png",
+      "width": 77,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_growing1": {
+      "file": "assets/derived/phase3/plots/potato_growing1.png",
+      "width": 77,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_growing2": {
+      "file": "assets/derived/phase3/plots/potato_growing2.png",
+      "width": 79,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_mature": {
+      "file": "assets/derived/phase3/plots/potato_mature.png",
+      "width": 84,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_planted": {
+      "file": "assets/derived/phase3/plots/potato_planted.png",
+      "width": 79,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_ready": {
+      "file": "assets/derived/phase3/plots/potato_ready.png",
+      "width": 84,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_ready_alt": {
+      "file": "assets/derived/phase3/plots/potato_ready_alt.png",
+      "width": 83,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.potato_sprout": {
+      "file": "assets/derived/phase3/plots/potato_sprout.png",
+      "width": 78,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_growing1": {
+      "file": "assets/derived/phase3/plots/pumpkin_growing1.png",
+      "width": 77,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_growing2": {
+      "file": "assets/derived/phase3/plots/pumpkin_growing2.png",
+      "width": 80,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_mature": {
+      "file": "assets/derived/phase3/plots/pumpkin_mature.png",
+      "width": 84,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_planted": {
+      "file": "assets/derived/phase3/plots/pumpkin_planted.png",
+      "width": 78,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_ready": {
+      "file": "assets/derived/phase3/plots/pumpkin_ready.png",
+      "width": 84,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_ready_alt": {
+      "file": "assets/derived/phase3/plots/pumpkin_ready_alt.png",
+      "width": 83,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.pumpkin_sprout": {
+      "file": "assets/derived/phase3/plots/pumpkin_sprout.png",
+      "width": 77,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.soil_dry": {
+      "file": "assets/derived/phase3/plots/soil_dry.png",
+      "width": 80,
+      "height": 75,
+      "source": "phase3/04_soil_and_crop_states/soil_variations.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.soil_harvested": {
+      "file": "assets/derived/phase3/plots/soil_harvested.png",
+      "width": 84,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.soil_tilled": {
+      "file": "assets/derived/phase3/plots/soil_tilled.png",
+      "width": 79,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_growing1": {
+      "file": "assets/derived/phase3/plots/strawberry_growing1.png",
+      "width": 81,
+      "height": 75,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_growing2": {
+      "file": "assets/derived/phase3/plots/strawberry_growing2.png",
+      "width": 82,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_mature": {
+      "file": "assets/derived/phase3/plots/strawberry_mature.png",
+      "width": 84,
+      "height": 77,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_planted": {
+      "file": "assets/derived/phase3/plots/strawberry_planted.png",
+      "width": 79,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_ready": {
+      "file": "assets/derived/phase3/plots/strawberry_ready.png",
+      "width": 84,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_ready_alt": {
+      "file": "assets/derived/phase3/plots/strawberry_ready_alt.png",
+      "width": 83,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.strawberry_sprout": {
+      "file": "assets/derived/phase3/plots/strawberry_sprout.png",
+      "width": 78,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_growing1": {
+      "file": "assets/derived/phase3/plots/tomato_growing1.png",
+      "width": 79,
+      "height": 69,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_growing2": {
+      "file": "assets/derived/phase3/plots/tomato_growing2.png",
+      "width": 80,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_mature": {
+      "file": "assets/derived/phase3/plots/tomato_mature.png",
+      "width": 84,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_planted": {
+      "file": "assets/derived/phase3/plots/tomato_planted.png",
+      "width": 78,
+      "height": 71,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_ready": {
+      "file": "assets/derived/phase3/plots/tomato_ready.png",
+      "width": 84,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_ready_alt": {
+      "file": "assets/derived/phase3/plots/tomato_ready_alt.png",
+      "width": 83,
+      "height": 69,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.tomato_sprout": {
+      "file": "assets/derived/phase3/plots/tomato_sprout.png",
+      "width": 78,
+      "height": 69,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_growing1": {
+      "file": "assets/derived/phase3/plots/wheat_growing1.png",
+      "width": 79,
+      "height": 70,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_growing2": {
+      "file": "assets/derived/phase3/plots/wheat_growing2.png",
+      "width": 81,
+      "height": 74,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_mature": {
+      "file": "assets/derived/phase3/plots/wheat_mature.png",
+      "width": 84,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_planted": {
+      "file": "assets/derived/phase3/plots/wheat_planted.png",
+      "width": 80,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_ready": {
+      "file": "assets/derived/phase3/plots/wheat_ready.png",
+      "width": 84,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_ready_alt": {
+      "file": "assets/derived/phase3/plots/wheat_ready_alt.png",
+      "width": 83,
+      "height": 73,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "plot.wheat_sprout": {
+      "file": "assets/derived/phase3/plots/wheat_sprout.png",
+      "width": 80,
+      "height": 72,
+      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "terrain.cobblestone_detailed": {
+      "file": "assets/phase1/terrain/cobblestone_detailed.png",
+      "width": 234,
+      "height": 237,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 556 magenta-spill edge pixels."
+    },
+    "terrain.dirt_detailed": {
+      "file": "assets/phase1/terrain/dirt_detailed.png",
+      "width": 215,
+      "height": 233,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 549 magenta-spill edge pixels."
+    },
+    "terrain.fence_gate_detailed": {
+      "file": "assets/phase1/terrain/fence_gate_detailed.png",
+      "width": 264,
+      "height": 163,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 514 magenta-spill edge pixels."
+    },
+    "terrain.fence_horizontal_detailed": {
+      "file": "assets/phase1/terrain/fence_horizontal_detailed.png",
+      "width": 264,
+      "height": 136,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 427 magenta-spill edge pixels."
+    },
+    "terrain.fence_vertical_detailed": {
+      "file": "assets/phase1/terrain/fence_vertical_detailed.png",
+      "width": 187,
+      "height": 192,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 395 magenta-spill edge pixels."
+    },
+    "terrain.flower_patch_tile": {
+      "file": "assets/phase1/terrain/flower_patch_tile.png",
+      "width": 224,
+      "height": 215,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 469 magenta-spill edge pixels."
+    },
+    "terrain.grass_detailed": {
+      "file": "assets/phase1/terrain/grass_detailed.png",
+      "width": 218,
+      "height": 235,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 420 magenta-spill edge pixels."
+    },
+    "terrain.grass_tuft_tile": {
+      "file": "assets/phase1/terrain/grass_tuft_tile.png",
+      "width": 222,
+      "height": 234,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 381 magenta-spill edge pixels."
+    },
+    "terrain.sand_path_detailed": {
+      "file": "assets/phase1/terrain/sand_path_detailed.png",
+      "width": 198,
+      "height": 238,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 326 magenta-spill edge pixels."
+    },
+    "terrain.shoreline": {
+      "file": "assets/phase1/terrain/shoreline.png",
+      "width": 215,
+      "height": 205,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 290 magenta-spill edge pixels."
+    },
+    "terrain.tilled_soil_detailed": {
+      "file": "assets/phase1/terrain/tilled_soil_detailed.png",
+      "width": 258,
+      "height": 233,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 768 magenta-spill edge pixels."
+    },
+    "terrain.water_pond_detailed": {
+      "file": "assets/phase1/terrain/water_pond_detailed.png",
+      "width": 274,
+      "height": 241,
+      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+      "status": "approved",
+      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 700 magenta-spill edge pixels."
+    },
+    "terrain2.autumn_tree": {
+      "file": "assets/phase2/terrain/autumn_tree.png",
+      "width": 227,
+      "height": 230,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 572 magenta-spill edge pixels."
+    },
+    "terrain2.barrel": {
+      "file": "assets/phase2/terrain/barrel.png",
+      "width": 204,
+      "height": 213,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 383 magenta-spill edge pixels."
+    },
+    "terrain2.berry_bush": {
+      "file": "assets/phase2/terrain/berry_bush.png",
+      "width": 220,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 452 magenta-spill edge pixels."
+    },
+    "terrain2.blossom_tree": {
+      "file": "assets/phase2/terrain/blossom_tree.png",
+      "width": 233,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 4484 magenta-spill edge pixels."
+    },
+    "terrain2.cliff_grass_edge": {
+      "file": "assets/phase2/terrain/cliff_grass_edge.png",
+      "width": 215,
+      "height": 234,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 614 magenta-spill edge pixels."
+    },
+    "terrain2.cobblestone_path": {
+      "file": "assets/phase2/terrain/cobblestone_path.png",
+      "width": 256,
+      "height": 236,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 620 magenta-spill edge pixels."
+    },
+    "terrain2.dirt_path": {
+      "file": "assets/phase2/terrain/dirt_path.png",
+      "width": 256,
+      "height": 233,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 678 magenta-spill edge pixels."
+    },
+    "terrain2.fence_corner": {
+      "file": "assets/phase2/terrain/fence_corner.png",
+      "width": 256,
+      "height": 192,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 509 magenta-spill edge pixels."
+    },
+    "terrain2.fence_straight": {
+      "file": "assets/phase2/terrain/fence_straight.png",
+      "width": 256,
+      "height": 204,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 473 magenta-spill edge pixels."
+    },
+    "terrain2.flower_patch": {
+      "file": "assets/phase2/terrain/flower_patch.png",
+      "width": 220,
+      "height": 215,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 526 magenta-spill edge pixels."
+    },
+    "terrain2.flowering_bush": {
+      "file": "assets/phase2/terrain/flowering_bush.png",
+      "width": 224,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 412 magenta-spill edge pixels."
+    },
+    "terrain2.grass_flower": {
+      "file": "assets/phase2/terrain/grass_flower.png",
+      "width": 218,
+      "height": 235,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 441 magenta-spill edge pixels."
+    },
+    "terrain2.oak_tree": {
+      "file": "assets/phase2/terrain/oak_tree.png",
+      "width": 236,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 478 magenta-spill edge pixels."
+    },
+    "terrain2.pine_tree": {
+      "file": "assets/phase2/terrain/pine_tree.png",
+      "width": 221,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 396 magenta-spill edge pixels."
+    },
+    "terrain2.pond_water": {
+      "file": "assets/phase2/terrain/pond_water.png",
+      "width": 243,
+      "height": 228,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 460 magenta-spill edge pixels."
+    },
+    "terrain2.rock_cluster": {
+      "file": "assets/phase2/terrain/rock_cluster.png",
+      "width": 235,
+      "height": 221,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 529 magenta-spill edge pixels."
+    },
+    "terrain2.sand_path": {
+      "file": "assets/phase2/terrain/sand_path.png",
+      "width": 248,
+      "height": 236,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 575 magenta-spill edge pixels."
+    },
+    "terrain2.shoreline_water": {
+      "file": "assets/phase2/terrain/shoreline_water.png",
+      "width": 255,
+      "height": 235,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 513 magenta-spill edge pixels."
+    },
+    "terrain2.tall_grass": {
+      "file": "assets/phase2/terrain/tall_grass.png",
+      "width": 253,
+      "height": 224,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 443 magenta-spill edge pixels."
+    },
+    "terrain2.tilled_soil_sprouts": {
+      "file": "assets/phase2/terrain/tilled_soil_sprouts.png",
+      "width": 244,
+      "height": 233,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 532 magenta-spill edge pixels."
+    },
+    "terrain2.tree_stump": {
+      "file": "assets/phase2/terrain/tree_stump.png",
+      "width": 221,
+      "height": 224,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 451 magenta-spill edge pixels."
+    },
+    "terrain2.wooden_bridge": {
+      "file": "assets/phase2/terrain/wooden_bridge.png",
+      "width": 242,
+      "height": 237,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 311 magenta-spill edge pixels."
+    },
+    "terrain2.wooden_crate": {
+      "file": "assets/phase2/terrain/wooden_crate.png",
+      "width": 224,
+      "height": 217,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 330 magenta-spill edge pixels."
+    },
+    "terrain2.wooden_gate": {
+      "file": "assets/phase2/terrain/wooden_gate.png",
+      "width": 244,
+      "height": 256,
+      "source": "phase2/assets/terrain/tiles",
+      "status": "approved",
+      "notes": "Cleaned 531 magenta-spill edge pixels."
+    }
+  }
+}

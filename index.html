@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#24361a">
+  <title>Farmstead</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="game" aria-label="Farmstead game world"></canvas>
+
+  <div id="hud" hidden>
+    <div class="hud-left">
+      <div class="panel clock"><span class="sun" aria-hidden="true"></span><div><strong id="clock-day">Day 1</strong><span id="clock-time"></span></div></div>
+      <div class="panel quests" id="quest-tracker" aria-live="polite"></div>
+    </div>
+    <div class="hud-right">
+      <div class="panel coins"><span class="coin" aria-hidden="true"></span><span id="coins">0</span></div>
+      <div class="hud-buttons">
+        <button id="btn-bag" class="round" aria-label="Bag (B)"><img src="assets/derived/phase3/icons/tool_basket.png" alt=""><span>Bag</span></button>
+        <button id="btn-journal" class="round" aria-label="Journal (J)"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11a3 3 0 0 1 3 3v15H8a3 3 0 0 1-3-3z" fill="#f1e2bd" stroke="#6b4a26" stroke-width="1.6"/><path d="M8 8h8M8 11.5h8M8 15h5" stroke="#8a6a3c" stroke-width="1.5" stroke-linecap="round"/></svg><span>Journal</span></button>
+        <button id="btn-menu" class="round" aria-label="Menu (Esc)"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" stroke="#f6ecd2" stroke-width="2.4" stroke-linecap="round"/></svg><span>Menu</span></button>
+      </div>
+    </div>
+    <div id="prompt" class="prompt" hidden></div>
+    <div id="hotbar" class="hotbar" role="toolbar" aria-label="Hotbar"></div>
+    <div id="toasts" aria-live="polite"></div>
+    <div id="touch">
+      <div id="stick" aria-label="Movement stick"><div id="knob"></div></div>
+      <button id="btn-action" aria-label="Action">A</button>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="fade"></div>
+
+  <div id="title" hidden>
+    <div class="title-card">
+      <h1>Farmstead</h1>
+      <p class="tagline">Grow · Harvest · Sell · Expand</p>
+      <button id="btn-continue" class="primary">Continue</button>
+      <button id="btn-new">New game</button>
+      <p id="save-info" class="muted"></p>
+    </div>
+  </div>
+
+  <div id="loading"><p>Loading Farmstead…</p><div class="bar"><div id="loading-bar"></div></div></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

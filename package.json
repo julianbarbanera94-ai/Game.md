@@ -1,0 +1,13 @@
+{
+  "name": "farmstead",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Farmstead — a top-down farming RPG (browser, no build step).",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/unit/*.test.mjs",
+    "test:e2e": "node tests/e2e/playthrough.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,362 @@
+#!/usr/bin/env python3
+"""Farmstead asset import pipeline.
+
+Copies approved runtime sprites out of the supplied phase packs into
+``assets/`` and derives temporary sprites from Phase 3 reference boards.
+Writes ``assets/manifest.json`` describing every runtime asset.
+
+Usage (paths point at extracted phase ZIPs, each in its own folder):
+
+    python3 -I tools/import_assets.py --phase1 <dir> --phase2 <dir> --phase3 <dir>
+
+Requires Pillow + numpy. Source packs are not committed; re-run this tool to
+regenerate the runtime assets if a pack is updated.
+"""
+import argparse
+import json
+import os
+import shutil
+import sys
+from collections import deque
+
+import numpy as np
+from PIL import Image
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "assets")
+
+manifest = {"version": 1, "assets": {}}
+
+
+def rel(p):
+    return os.path.relpath(p, ROOT).replace(os.sep, "/")
+
+
+def register(key, path, source, status, **extra):
+    im = Image.open(path)
+    entry = {"file": rel(path), "width": im.size[0], "height": im.size[1],
+             "source": source, "status": status}
+    entry.update(extra)
+    manifest["assets"][key] = entry
+
+
+def ensure(d):
+    os.makedirs(d, exist_ok=True)
+    return d
+
+
+# ---------------------------------------------------------------- cleanup
+
+def clean_spill(im):
+    """Recolour dark magenta/purple key spill on sprite edges to a neutral
+    shadow tone. Bright pinks (e.g. blossom petals) are left untouched."""
+    a = np.asarray(im.convert("RGBA")).astype(np.int32)
+    r, g, b, al = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+    lum = (r * 3 + g * 6 + b) // 10
+    purple = (al > 0) & (r - g > 20) & (b - g > 20) & (lum < 140)
+    # only near transparency (within 6px)
+    transparent = al == 0
+    near = np.zeros_like(transparent)
+    for dy in range(-6, 7, 2):
+        for dx in range(-6, 7, 2):
+            near |= np.roll(np.roll(transparent, dy, 0), dx, 1)
+    mask = purple & near
+    count = int(mask.sum())
+    if count:
+        shade = np.clip(lum * 0.55, 0, 255)
+        a[..., 0] = np.where(mask, shade * 0.85, r)
+        a[..., 1] = np.where(mask, shade * 1.0, g)
+        a[..., 2] = np.where(mask, shade * 0.55, b)
+    return Image.fromarray(a.astype(np.uint8), "RGBA"), count
+
+
+def trim(im, pad=2):
+    bb = im.getchannel("A").getbbox()
+    if not bb:
+        return im
+    x0, y0, x1, y1 = bb
+    return im.crop((max(0, x0 - pad), max(0, y0 - pad),
+                    min(im.size[0], x1 + pad), min(im.size[1], y1 + pad)))
+
+
+def key_background(im, seeds, tol):
+    """Flood-fill the background from seed points (colour distance <= tol from
+    the seed colour) and make it transparent. Returns RGBA image."""
+    rgb = np.asarray(im.convert("RGB")).astype(np.int32)
+    h, w, _ = rgb.shape
+    bg = np.zeros((h, w), bool)
+    for sx, sy in seeds:
+        if bg[sy, sx]:
+            continue
+        ref = rgb[sy, sx]
+        q = deque([(sx, sy)])
+        bg[sy, sx] = True
+        while q:
+            x, y = q.popleft()
+            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if 0 <= nx < w and 0 <= ny < h and not bg[ny, nx]:
+                    if np.abs(rgb[ny, nx] - ref).sum() <= tol:
+                        bg[ny, nx] = True
+                        q.append((nx, ny))
+    # soften: pixels bordering background get partial alpha
+    alpha = np.where(bg, 0, 255).astype(np.uint8)
+    edge = (~bg) & (np.roll(bg, 1, 0) | np.roll(bg, -1, 0) | np.roll(bg, 1, 1) | np.roll(bg, -1, 1))
+    alpha = np.where(edge, 170, alpha).astype(np.uint8)
+    out = np.dstack([rgb.astype(np.uint8), alpha])
+    return Image.fromarray(out, "RGBA")
+
+
+def largest_component(im):
+    """Keep only the largest opaque connected component (drops label text)."""
+    a = np.asarray(im)
+    op = a[..., 3] > 0
+    h, w = op.shape
+    labels = np.zeros((h, w), np.int32)
+    sizes = {}
+    cur = 0
+    for y in range(h):
+        for x in range(w):
+            if op[y, x] and not labels[y, x]:
+                cur += 1
+                q = deque([(x, y)])
+                labels[y, x] = cur
+                n = 0
+                while q:
+                    cx, cy = q.popleft()
+                    n += 1
+                    for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                        if 0 <= nx < w and 0 <= ny < h and op[ny, nx] and not labels[ny, nx]:
+                            labels[ny, nx] = cur
+                            q.append((nx, ny))
+                sizes[cur] = n
+    if not sizes:
+        return im
+    keep = max(sizes, key=sizes.get)
+    out = a.copy()
+    out[..., 3] = np.where(labels == keep, a[..., 3], 0)
+    return Image.fromarray(out, "RGBA")
+
+
+def border_seeds(w, h, step=6):
+    s = []
+    for x in range(0, w, step):
+        s += [(x, 0), (x, h - 1)]
+    for y in range(0, h, step):
+        s += [(0, y), (w - 1, y)]
+    return s
+
+
+# ---------------------------------------------------------------- phase 1
+
+P1_BUILDINGS = ["starter_house", "tool_shed", "market_stall", "well_building", "mailbox",
+                "signpost", "workbench", "water_barrel", "wooden_bridge", "fence_segment",
+                "chicken_coop", "small_barn"]
+P1_FOLIAGE = ["bush_berries", "bush_flowering", "bush_green", "bush_white_flowers",
+              "bush_yellow_flowers", "fallen_log", "fern", "flower_patch", "flower_yellow",
+              "grass_tall", "mushrooms", "rock_cluster", "rock_mossy", "rock_small",
+              "tree_autumn", "tree_birch", "tree_blossom", "tree_oak", "tree_pine", "tree_stump"]
+P1_TERRAIN = ["grass_detailed", "dirt_detailed", "sand_path_detailed", "water_pond_detailed",
+              "fence_horizontal_detailed", "fence_vertical_detailed", "fence_gate_detailed",
+              "shoreline", "cobblestone_detailed", "tilled_soil_detailed", "grass_tuft_tile",
+              "flower_patch_tile"]
+P1_AUDIO = ["coin_pickup", "footstep", "harvest", "plant_seed", "ui_click", "watering"]
+
+
+def import_sprite(src, dst, key, source, do_trim=True, **extra):
+    im = Image.open(src).convert("RGBA")
+    im, spill = clean_spill(im)
+    if do_trim:
+        im = trim(im)
+    im.save(dst, optimize=True)
+    notes = extra.pop("notes", "")
+    if spill:
+        notes = (notes + " " if notes else "") + f"Cleaned {spill} magenta-spill edge pixels."
+    register(key, dst, source, "approved", notes=notes, **extra)
+
+
+def phase1(root):
+    a = os.path.join(root, "assets")
+    d = ensure(os.path.join(OUT, "phase1", "buildings"))
+    for n in P1_BUILDINGS:
+        import_sprite(os.path.join(a, "03_buildings", n + ".png"), os.path.join(d, n + ".png"),
+                      "building." + n, "phase1/assets/03_buildings (v2 detailed)")
+    d = ensure(os.path.join(OUT, "phase1", "foliage"))
+    for n in P1_FOLIAGE:
+        import_sprite(os.path.join(a, "02_environment", "foliage", n + ".png"), os.path.join(d, n + ".png"),
+                      "foliage." + n, "phase1/assets/02_environment/foliage (v2 detailed)")
+    d = ensure(os.path.join(OUT, "phase1", "terrain"))
+    for n in P1_TERRAIN:
+        import_sprite(os.path.join(a, "01_terrain", "reference_tiles", n + ".png"), os.path.join(d, n + ".png"),
+                      "terrain." + n, "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
+                      notes="Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile.")
+    d = ensure(os.path.join(OUT, "phase1", "audio"))
+    for n in P1_AUDIO:
+        dst = os.path.join(d, n + ".wav")
+        shutil.copyfile(os.path.join(a, "10_audio", n + ".wav"), dst)
+        manifest["assets"]["audio." + n] = {"file": rel(dst), "source": "phase1/assets/10_audio",
+                                            "status": "placeholder",
+                                            "notes": "Pack-supplied placeholder SFX; replace before release."}
+
+
+# ---------------------------------------------------------------- phase 2
+
+P2_PLAYER = ["idle_front", "idle_back", "idle_right", "idle_right_alt", "walk_front_1", "walk_front_2",
+             "walk_back_1", "walk_back_2", "walk_left_1", "walk_left_2", "walk_right_1", "walk_right_2",
+             "hoe_action", "water_action", "harvest_action", "carry_action"]
+P2_TERRAIN = ["dirt_path", "sand_path", "pond_water", "shoreline_water", "grass_flower", "tall_grass",
+              "flower_patch", "fence_straight", "fence_corner", "wooden_gate", "wooden_crate", "barrel",
+              "berry_bush", "flowering_bush", "rock_cluster", "tree_stump", "oak_tree", "pine_tree",
+              "autumn_tree", "blossom_tree", "cliff_grass_edge", "wooden_bridge", "cobblestone_path",
+              "tilled_soil_sprouts"]
+
+
+def phase2(root):
+    base = root
+    sub = os.path.join(root, "Farmstead_Phase_2_Character_Terrain")
+    if os.path.isdir(sub):
+        base = sub
+    a = os.path.join(base, "assets")
+    d = ensure(os.path.join(OUT, "phase2", "player"))
+    for n in P2_PLAYER:
+        # Player frames keep their uniform 320x320 canvas so feet stay aligned.
+        import_sprite(os.path.join(a, "characters", "player", n + ".png"), os.path.join(d, n + ".png"),
+                      "player." + n, "phase2/assets/characters/player", do_trim=False,
+                      anchor=[0.5, 306 / 320])
+    d = ensure(os.path.join(OUT, "phase2", "terrain"))
+    for n in P2_TERRAIN:
+        import_sprite(os.path.join(a, "terrain", "tiles", n + ".png"), os.path.join(d, n + ".png"),
+                      "terrain2." + n, "phase2/assets/terrain/tiles")
+    ref = ensure(os.path.join(ROOT, "docs", "reference"))
+    im = Image.open(os.path.join(base, "source_sheets", "approved_starting_area_reference.png")).convert("RGB")
+    im.save(os.path.join(ref, "approved_starting_area_reference.jpg"), quality=88)
+
+
+# ---------------------------------------------------------------- phase 3 (derived)
+
+P3_CROPS = ["carrot", "tomato", "lettuce", "potato", "corn", "wheat", "pumpkin", "strawberry"]
+P3_ROWS = [(38, 107), (119, 186), (200, 270), (283, 353), (366, 439), (451, 522), (536, 605), (618, 689)]
+P3_STAGE_COLS = {"tilled": 0, "planted": 1, "sprout": 2, "growing1": 3, "growing2": 4,
+                 "mature": 5, "ready": 6, "ready_alt": 7, "harvested": 8}
+DERIVED_NOTE = ("TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). "
+                "Replace with properly exported production sprites.")
+
+
+def plot_mask(cell, size=None):
+    """Crop a plot cell to its stone-rimmed soil square and apply a rounded
+    rectangle alpha mask so no board background survives."""
+    a = np.asarray(cell.convert("RGB")).astype(np.int32)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    brown = (r > 50) & (r < 200) & (g < 140) & (b < 100) & (r > g + 12)
+    ys, xs = np.nonzero(brown)
+    # robust bbox: ignore stray pixels using percentiles
+    x0, x1 = np.percentile(xs, [0.5, 99.5]).astype(int)
+    y0, y1 = np.percentile(ys, [0.5, 99.5]).astype(int)
+    im = cell.convert("RGBA").crop((x0, y0, x1 + 1, y1 + 1))
+    if size:
+        im = im.resize(size, Image.LANCZOS)
+    w, h = im.size
+    mask = Image.new("L", (w * 4, h * 4), 0)
+    from PIL import ImageDraw
+    ImageDraw.Draw(mask).rounded_rectangle((2, 2, w * 4 - 3, h * 4 - 3), radius=int(min(w, h) * 4 * 0.14), fill=255)
+    im.putalpha(mask.resize((w, h), Image.LANCZOS))
+    return im
+
+
+def cut_cell(img, box):
+    return plot_mask(img.crop(box))
+
+
+def phase3(root):
+    grid = Image.open(os.path.join(root, "01_crop_growth_reference", "crop_growth_stages_all.png")).convert("RGB")
+    d = ensure(os.path.join(OUT, "derived", "phase3", "plots"))
+    x_start, x_end = 98, 838
+    cw = (x_end - x_start) / 9.0
+    for ri, crop in enumerate(P3_CROPS):
+        y0, y1 = P3_ROWS[ri]
+        for stage, ci in P3_STAGE_COLS.items():
+            if crop != "carrot" and stage in ("tilled", "harvested"):
+                continue
+            x0 = int(round(x_start + ci * cw)) - 3
+            box = (x0, y0 - 6, int(round(x0 + cw)) + 2, y1 + 6)
+            im = cut_cell(grid, box)
+            name = f"{crop}_{stage}" if stage not in ("tilled", "harvested") else f"soil_{stage}"
+            dst = os.path.join(d, name + ".png")
+            im.save(dst, optimize=True)
+            register("plot." + name, dst, "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+                     "temporary-reference-derived", notes=DERIVED_NOTE)
+    # untilled + wet soil from soil variations board (2 cols x 3 rows)
+    soil = Image.open(os.path.join(root, "04_soil_and_crop_states", "soil_variations.png")).convert("RGB")
+    sw, sh = soil.size
+    # Only "dry" is used (untilled plot). Resized to the crop-cell size so all
+    # plot states share one footprint (slight non-uniform scale, noted).
+    cells = {"dry": (23, 6, 136, 90)}
+    for name, box in cells.items():
+        im = plot_mask(soil.crop((box[0] - 4, box[1] - 4, box[2] + 4, box[3] + 4)), size=(80, 75))
+        dst = os.path.join(d, f"soil_{name}.png")
+        im.save(dst, optimize=True)
+        register(f"plot.soil_{name}", dst, "phase3/04_soil_and_crop_states/soil_variations.png",
+                 "temporary-reference-derived", notes=DERIVED_NOTE)
+    # produce icons from the left column of the growth grid (drop label text)
+    d = ensure(os.path.join(OUT, "derived", "phase3", "icons"))
+    for ri, crop in enumerate(P3_CROPS):
+        y0, y1 = P3_ROWS[ri]
+        cell = grid.crop((2, y0 - 6, 94, y1 - 10))
+        w, h = cell.size
+        im = trim(largest_component(key_background(cell, border_seeds(w, h, 3), 60)), 1)
+        dst = os.path.join(d, f"produce_{crop}.png")
+        im.save(dst, optimize=True)
+        register(f"icon.produce_{crop}", dst, "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
+                 "temporary-reference-derived", notes=DERIVED_NOTE)
+    # seed packets: 4 x 2 grid
+    seeds = Image.open(os.path.join(root, "02_seed_items_reference", "seed_items_all.png")).convert("RGB")
+    order = ["carrot", "tomato", "lettuce", "potato", "corn", "wheat", "pumpkin", "strawberry"]
+    for i, crop in enumerate(order):
+        cx, cy = i % 4, i // 4
+        box = (cx * 95 + 2, cy * 140 + 2, (cx + 1) * 95 - 2, cy * 140 + 108)
+        cell = seeds.crop(box)
+        w, h = cell.size
+        im = trim(largest_component(key_background(cell, border_seeds(w, h, 3), 50)), 1)
+        dst = os.path.join(d, f"seed_{crop}.png")
+        im.save(dst, optimize=True)
+        register(f"icon.seed_{crop}", dst, "phase3/02_seed_items_reference/seed_items_all.png",
+                 "temporary-reference-derived", notes=DERIVED_NOTE)
+    # tools: hoe, watering can, basket (full)
+    tools = Image.open(os.path.join(root, "06_farming_tools", "farming_tools.png")).convert("RGB")
+    tool_boxes = {"hoe": (4, 38, 82, 128), "watering_can": (88, 38, 172, 128),
+                  "basket": (92, 158, 176, 232)}
+    for name, box in tool_boxes.items():
+        cell = tools.crop(box)
+        w, h = cell.size
+        im = trim(largest_component(key_background(cell, border_seeds(w, h, 3), 50)), 1)
+        dst = os.path.join(d, f"tool_{name}.png")
+        im.save(dst, optimize=True)
+        register(f"icon.tool_{name}", dst, "phase3/06_farming_tools/farming_tools.png",
+                 "temporary-reference-derived", notes=DERIVED_NOTE)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--phase1")
+    ap.add_argument("--phase2")
+    ap.add_argument("--phase3")
+    args = ap.parse_args()
+    mpath = os.path.join(OUT, "manifest.json")
+    if os.path.exists(mpath):
+        with open(mpath) as f:
+            manifest["assets"].update(json.load(f).get("assets", {}))
+    if args.phase1:
+        phase1(args.phase1)
+    if args.phase2:
+        phase2(args.phase2)
+    if args.phase3:
+        phase3(args.phase3)
+    ensure(OUT)
+    manifest["assets"] = dict(sorted(manifest["assets"].items()))
+    with open(mpath, "w") as f:
+        json.dump(manifest, f, indent=2)
+        f.write("\n")
+    print(f"wrote {len(manifest['assets'])} assets to {rel(mpath)}")
+
+
+if __name__ == "__main__":
+    sys.exit(main())
