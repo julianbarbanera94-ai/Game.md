@@ -21,6 +21,7 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
 - **Go inside** by walking into the door: the **Clubhouse** (dance party rug, Clubhouse screen, piano, toy box, fridge, cuckoo clock),
   **Minnie's Bow-tique** (wear a bow or a hat, mirror, shop counter) and **Mickey's House** (fireplace, nap in bed, story books, snack table).
   Walk onto the doormat to go back out.
+- **Levels:** each tent game has 3 levels (⭐ easy, ⭐⭐ medium, ⭐⭐⭐ a little harder). Nothing is locked; the picker starts on the first level you haven't finished and shows ✅ for finished ones. After a win there is a **▶ Next** button. If a child hasn't tapped for a few seconds, a pointing finger shows what to tap.
 - **Mini games** 🎪: every area has a striped game tent. Press A at it to play (tap the screen, or use A to help):
   🎈 Balloon Pop (park), 🐭 Peekaboo Pals (Clubhouse Hill), 🐚 Beach Catch (Sunny Beach),
   🥕 Feed the Animals (Minnie's Farm) and ⛄ Build a Snowman (Snowy Woods).
