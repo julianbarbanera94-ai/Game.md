@@ -30,7 +30,9 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
   👗 Dress Up (hats, glasses, bows, things to hold; 📸 takes a photo and the hat stays on in the park),
   🎨 Coloring, 🃏 Memory Match (3 pairs of friends), 🎵 Follow the Star (xylophone) and 🔢 Count with Me.
 - **Tap the screen** to walk somewhere, or tap a thing to walk over and use it (A still works too).
-- **Search & find** 🔍: the picture in the top-left corner is hidden somewhere in the area you're in. Walk onto it or tap it. Tap the picture for a pointing arrow. A new random thing (32 of them) hides each time.
+- **Search & find** 🔍: the card in the top-left corner shows a drawing of something in the world (the windmill, the lighthouse, a tent…, 40 in all). Go and find it; it stays the same until you do. Tap the card for an arrow. Each find is a sticker.
+- **Little things to do:** swings, a bubble machine, a bench and a bird bath (park), a drum stage and a flower clock (Clubhouse Hill), a kite and a lifeguard tower (beach), a tractor and a wishing well (farm), a snow bell, ice fishing and a snow-angel spot (Snowy Woods).
+- The top bar shows only the find card, your stars, the map and a ☰ menu (stickers, change friend, sound, grown-up settings and all your counters).
 - **Dress up for real** in Minnie's Bow-tique (or the Game Station): drawn hats, glasses, bows and pearls, capes, tutus, vests and shoe colors, each in 7 colors, plus a 🎲 surprise outfit. Outfits stay on in the world.
 - **Music** 🎵: every area (and the buildings) has its own little tune. ⚙️ has sliders for music and sounds.
 - **Sticker book** 📒: finds, critters, friends, helping friends and 🏆 for finishing all three levels of a tent game all become stickers (58 to collect).
