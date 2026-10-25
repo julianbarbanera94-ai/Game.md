@@ -21,6 +21,10 @@ A top-down, Pokémon-style free-roam game for toddlers, starring Mickey and frie
 - **Go inside** by walking into the door: the **Clubhouse** (dance party rug, Clubhouse screen, piano, toy box, fridge, cuckoo clock),
   **Minnie's Bow-tique** (wear a bow or a hat, mirror, shop counter) and **Mickey's House** (fireplace, nap in bed, story books, snack table).
   Walk onto the doormat to go back out.
+- **Mini games** 🎪: every area has a striped game tent. Press A at it to play (tap the screen, or use A to help):
+  🎈 Balloon Pop (park), 🐭 Peekaboo Pals (Clubhouse Hill), 🐚 Beach Catch (Sunny Beach),
+  🥕 Feed the Animals (Minnie's Farm) and ⛄ Build a Snowman (Snowy Woods).
+  There's no way to lose; finishing gives 3 ⭐ and a "Yay!". A = play again, B or ✖️ = back.
 - Walk through **tall grass** and little animals pop out (🐰🦋🐞🐸🐿️…). Collect ⭐ stars around the park.
 - 🗺️ opens the Town Map: the whole world, where you are, and where your friends are.
 - 🔄 changes character, 🔊 mutes. Progress counters are saved on the device.
