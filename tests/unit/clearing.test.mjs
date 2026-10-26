@@ -44,6 +44,6 @@ test('cleared scenery survives save and load; bad entries are dropped', () => {
 
 test('version 3 saves load with nothing cleared', () => {
   const s = deserialize({ version: 3, coins: 12, buildings: {}, placed: [], animals: [] });
-  assert.equal(s.version, 6);
+  assert.equal(s.version, 7);
   assert.deepEqual(s.cleared, []);
 });

@@ -13,9 +13,9 @@ const COUNT_EVENTS = {
   till: 'till', plant: 'plant', water: 'water', harvest: 'harvest', sell: 'sell', buy: 'buy',
   constructed: 'constructed', constructionStarted: 'upgrades', buyAnimal: 'buyAnimal', collect: 'collect',
   feed: 'feed', pet: 'pet', deliver: 'deliver', talk: 'talk', visit: 'visit', roadOpened: 'roadOpened',
-  unlock: 'landUnlocks', questClaimed: 'questsClaimed',
+  unlock: 'landUnlocks', questClaimed: 'questsClaimed', buyVehicle: 'vehiclesBought', drive: 'driven', machineWork: 'machineWork',
 };
-const BY_QTY = new Set(['harvest', 'sell', 'buy', 'collect', 'feed']);
+const BY_QTY = new Set(['harvest', 'sell', 'buy', 'collect', 'feed', 'drive', 'machineWork']);
 
 export function attachProgress(getState, bus) {
   for (const [type, counter] of Object.entries(COUNT_EVENTS)) {

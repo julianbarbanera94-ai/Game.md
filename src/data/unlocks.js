@@ -24,5 +24,6 @@ export const UNLOCKS = [
   { id: 'friend', track: 'Community', name: 'A friend in the village', requires: { quest: 'q_good_neighbour' } },
   { id: 'level3', track: 'Community', name: 'Farm level 3', requires: { level: 3 } },
   { id: 'level5', track: 'Community', name: 'Farm level 5', requires: { level: 5 } },
-  { id: 'machinery', track: 'Buildings', name: 'Tractors and machinery', requires: { comingSoon: true }, note: 'A later update' },
+  { id: 'garage', track: 'Buildings', name: 'Garage (farm level 3)', requires: { placed: 'garage' } },
+  { id: 'machinery', track: 'Farming', name: 'Tractor and machinery', requires: { vehicle: true } },
 ];

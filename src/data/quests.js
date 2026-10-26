@@ -200,6 +200,55 @@ QUESTS.push(
   },
 );
 
+// Phase 6: machinery.
+QUESTS.push(
+  {
+    id: 'q_garage',
+    title: 'A Place for Machines',
+    giver: 'Workbench',
+    description: 'Reach farm level 3, then use the building planner to place a garage and let the builders finish it.',
+    prereqs: ['q_home_improvements'],
+    objectives: [{ type: 'constructed', id: 'garage', count: 1, label: 'Build a garage' }],
+    reward: { coins: 100 },
+  },
+  {
+    id: 'q_first_tractor',
+    title: 'Horsepower',
+    giver: 'Garage',
+    description: 'Open the garage and buy your first tractor. A tractor needs fuel: the garage sells it.',
+    prereqs: ['q_garage'],
+    objectives: [{ type: 'buyVehicle', count: 1, label: 'Buy a tractor' }],
+    reward: { coins: 100 },
+  },
+  {
+    id: 'q_first_drive',
+    title: 'Take It for a Spin',
+    giver: 'Garage',
+    description: 'Get in the tractor and drive it around the farm. W/S drive, A/D steer; F or the Get off button leaves.',
+    prereqs: ['q_first_tractor'],
+    objectives: [{ type: 'drive', count: 40, label: 'Drive 40 tiles' }],
+    reward: { coins: 80 },
+  },
+  {
+    id: 'q_plough_field',
+    title: 'Ploughing Day',
+    giver: 'Garage',
+    description: 'Buy a plough at the garage, attach it to the tractor and till plots by driving over them with the plough engaged (A / E).',
+    prereqs: ['q_first_drive'],
+    objectives: [{ type: 'machineWork', action: 'till', count: 6, label: 'Plough plots' }],
+    reward: { coins: 120 },
+  },
+  {
+    id: 'q_machine_harvest',
+    title: 'Bringing in the Harvest',
+    giver: 'Garage',
+    description: 'Fit the reaper (and a crop trailer if you like) and harvest ripe crops by machine.',
+    prereqs: ['q_plough_field'],
+    objectives: [{ type: 'machineWork', action: 'harvest', count: 8, label: 'Harvest by machine' }],
+    reward: { coins: 200 },
+  },
+);
+
 // Phase 8: kinds, optional side quests, a repeatable quest and seasonal quests.
 // optional: offered in the journal and started by the player (can be abandoned).
 // repeatDays: after claiming, offered again that many days later.
@@ -315,7 +364,8 @@ QUESTS.push(
 const KIND = {
   main: ['q_breaking_ground', 'q_first_harvest', 'q_market_day', 'q_room_to_grow', 'q_open_road', 'q_visit_village'],
   farming: ['q_restock', 'q_steady_supply', 'sq_green_thumb', 'sq_carrot_king', 'sq_market_regular'],
-  building: ['q_storage', 'q_home_improvements', 'q_coop', 'q_barn', 'sq_busy_builder'],
+  building: ['q_storage', 'q_home_improvements', 'q_coop', 'q_barn', 'sq_busy_builder', 'q_garage'],
+  machinery: ['q_first_tractor', 'q_first_drive', 'q_plough_field', 'q_machine_harvest'],
   livestock: ['q_first_hens', 'q_egg_money', 'q_fresh_milk', 'q_woolly'],
   relationship: ['q_meet_mara', 'q_good_neighbour', 'sq_meet_villagers'],
   delivery: ['q_first_delivery', 'sq_couriers_pride'],
@@ -323,7 +373,7 @@ const KIND = {
 };
 export const QUEST_KINDS = {
   main: 'Main story', farming: 'Farming', building: 'Building', livestock: 'Livestock',
-  relationship: 'Neighbours', delivery: 'Delivery', exploration: 'Exploration', seasonal: 'Seasonal',
+  relationship: 'Neighbours', delivery: 'Delivery', exploration: 'Exploration', seasonal: 'Seasonal', machinery: 'Machinery',
 };
 for (const q of QUESTS) {
   q.kind = Object.entries(KIND).find(([, ids]) => ids.includes(q.id))?.[0] || 'main';

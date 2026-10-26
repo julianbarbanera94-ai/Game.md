@@ -30,6 +30,9 @@ export function createNewState() {
     achievements: {}, // { id: { notified, claimed } }
     xp: 0, // experience; the farm level is derived from it
     seenUnlocks: [], // progression-tree entries already announced
+    vehicles: [], // tractors in the garage or the fields (systems/vehicles.js)
+    owned: { implements: [] }, // bought implements and trailers (ids)
+    driving: null, // uid of the vehicle the player is in
     nextUid: 1,
     quests: createQuestState(),
     stats: { earned: 0 },

@@ -245,7 +245,7 @@ test('save v6 keeps progression and migrates v5 without announcing old unlocks',
   P.addXp(s, 60, bus);
   P.claimAchievement(s, 'first_harvest', bus);
   const back = deserialize(serialize(s));
-  assert.equal(back.version, 6);
+  assert.equal(back.version, 7);
   assert.equal(back.xp, s.xp);
   assert.equal(back.counters.harvest, 7);
   assert.equal(back.achievements.first_harvest.claimed, true);
@@ -255,7 +255,7 @@ test('save v6 keeps progression and migrates v5 without announcing old unlocks',
 
   const v5 = deserialize({ version: 5, coins: 90, buildings: {}, placed: [], animals: [], cleared: [], relations: {}, orders: { day: 0, nextId: 1, list: [] }, shops: { day: 0, bought: {}, traded: {} },
     quests: { q_breaking_ground: { status: 'claimed', progress: [3, 3, 3] }, q_first_harvest: { status: 'claimed', progress: [3] }, q_market_day: { status: 'claimed', progress: [3] } } });
-  assert.equal(v5.version, 6);
+  assert.equal(v5.version, 7);
   assert.equal(v5.xp, 0);
   assert.ok(v5.seenUnlocks.includes('crop_potato'), 'already open, so not announced again');
   assert.equal(v5.quests.sq_green_thumb.status, 'available');

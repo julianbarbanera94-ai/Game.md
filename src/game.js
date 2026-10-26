@@ -16,6 +16,9 @@ import * as Storage from './systems/storage.js';
 import * as Animals from './systems/animals.js';
 import * as Clearing from './systems/clearing.js';
 import * as Progress from './systems/progress.js';
+import * as Vehicles from './systems/vehicles.js';
+import { groundFactor } from './systems/ground.js';
+import { VEHICLES, IMPLEMENTS } from './data/vehicles.js';
 import { activeEvent } from './systems/seasons.js';
 import { ACHIEVEMENTS_BY_ID } from './data/achievements.js';
 import { QUESTS_BY_ID } from './data/quests.js';
@@ -112,6 +115,11 @@ export class Game {
     this.bus.on('autoWatered', ({ count }) => this.hud.toast(`The well watered ${count} plot${count === 1 ? '' : 's'} this morning`));
   }
 
+  // The vehicle the player is sitting in, or null.
+  get drivingVehicle() {
+    return this.state?.driving ? Vehicles.findVehicle(this.state, this.state.driving) : null;
+  }
+
   // Current interior scene, or null when outdoors.
   get interior() {
     return this.state?.player.scene === 'house' ? this.interiors.house : null;
@@ -119,7 +127,7 @@ export class Game {
 
   // Static colliders plus everything the player has placed.
   refreshColliders() {
-    this.farmCollision = new CollisionWorld(this.world.bounds, [...this.world.colliders, ...placedColliders(this.state)]);
+    this.farmCollision = new CollisionWorld(this.world.bounds, [...this.world.colliders, ...placedColliders(this.state, this.placement?.moveUid)]);
   }
 
   get activeCollision() {
@@ -174,7 +182,9 @@ export class Game {
     }
 
     const p = this.state.player;
-    const mv = paused || this.action ? { x: 0, y: 0 } : this.input.moveVector();
+    const driven = this.drivingVehicle;
+    if (driven) this.updateDriving(dt, paused);
+    const mv = paused || this.action || driven ? { x: 0, y: 0 } : this.input.moveVector();
     this.playerMoving = Math.hypot(mv.x, mv.y) > 0.05;
     if (this.playerMoving) {
       if (Math.abs(mv.x) > Math.abs(mv.y) * 1.05) p.facing = mv.x > 0 ? 'right' : 'left';
@@ -200,7 +210,7 @@ export class Game {
       this.checkVillageVisit();
     }
     if (this.placement) this.updatePlacement();
-    this.target = paused ? null : this.placement ? this.placementTarget() : this.resolveTarget();
+    this.target = paused ? null : driven ? this.driveTarget() : this.placement ? this.placementTarget() : this.resolveTarget();
     // A tap that landed mid-action (or just before a target was in reach) is
     // kept for a moment and fires as soon as it can, so players never need to
     // hold or repeat the button.
@@ -263,6 +273,13 @@ export class Game {
       return;
     }
     if (this.uiOpen) return;
+    if (this.drivingVehicle) {
+      if (code === 'KeyF') this.exitVehicle();
+      else if (code === 'KeyE' || code === 'Space' || code === 'Action') this.toggleEngage();
+      else if (code === 'KeyJ') this.panels.journal();
+      else if (code === 'KeyB' || code === 'KeyI') this.panels.bag();
+      return;
+    }
     if (this.placement && (code === 'KeyE' || code === 'Space' || code === 'Action')) this.confirmPlacement();
     else if (code === 'KeyE' || code === 'Space' || code === 'Action') {
       if (!this.tryInteract()) this.actionBuffer = 0.5;
@@ -294,12 +311,17 @@ export class Game {
       }
     }
     const placed = this.state.placed
-      .filter((r) => r.type === 'storage_shed' || BUILDINGS[r.type]?.livestock)
-      .map((r) => (r.type === 'storage_shed'
+      .filter((r) => r.type === 'storage_shed' || r.type === 'garage' || BUILDINGS[r.type]?.livestock || r.kind === 'decor')
+      .map((r) => (r.kind === 'decor'
+        ? { id: r.uid, uid: r.uid, kind: 'decor', x: r.x * TILE, y: (r.y + 0.1) * TILE }
+        : r.type === 'garage'
+        ? { id: r.uid, uid: r.uid, kind: 'garage', x: r.x * TILE, y: (r.y + 0.15) * TILE }
+        : r.type === 'storage_shed'
         ? { id: r.uid, uid: r.uid, kind: 'storage', x: r.x * TILE, y: (r.y + 0.15) * TILE }
         : { id: r.uid, uid: r.uid, kind: 'livestock', x: r.x * TILE, y: (r.y + 0.75) * TILE }));
     const clearable = Clearing.clearables(this.state).map((c) => ({ kind: 'clear', uid: `scn${c.index}`, x: c.x * TILE, y: c.y * TILE + 6 }));
-    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables()]);
+    const wheels = this.state.vehicles.filter((v) => v.uid !== this.state.driving).map((v) => ({ kind: 'vehicle', uid: `veh:${v.uid}`, x: v.x, y: v.y + 10 }));
+    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables(), ...wheels]);
     const animal = this.nearestAnimal();
     if (animal && (!object || animal.dist <= object.dist)) return animal;
     return object;
@@ -379,6 +401,12 @@ export class Game {
     const npcDef = npcId ? NPCS[npcId] : null;
     const scn = kind === 'clear' ? Clearing.clearInfo(Number(String(uid).slice(3))) : null;
     const labels = {
+      decor: shed ? `${DECORATIONS[shed.type]?.name || 'Decoration'} — move or pick up` : 'Decoration',
+      garage: shed?.level >= 1 ? 'Open the garage' : `Garage under construction — ready ${shed?.job ? formatClock(shed.job.end) : ''}`,
+      vehicle: (() => {
+        const v = Vehicles.findVehicle(s, String(uid || '').split(':')[1]);
+        return v ? `${VEHICLES[v.type].name} — fuel ${Vehicles.fuelPct(v)}%, condition ${Math.round(v.condition)}%` : 'Vehicle';
+      })(),
       npc: npcDef ? `Talk to ${npcDef.name} (${npcDef.role})` : 'Talk',
       closed: npcDef ? `${npcDef.place} is closed — ${awayText(npcDef, s.time).replace(/^.*? is away — /, '')}` : 'Closed',
       notice_board: 'Read the notice board',
@@ -402,7 +430,7 @@ export class Game {
         return s.unlocks[up.id] ? `${up.name} (owned)` : `Expand: ${up.name} (${up.cost} coins)`;
       })(),
     };
-    const ok = kind === 'closed' ? false : kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
+    const ok = kind === 'closed' ? false : kind === 'garage' ? shed?.level >= 1 : kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
     return { objectKind: kind, x, y, label: labels[kind], ok };
   }
 
@@ -411,7 +439,8 @@ export class Game {
   tryInteract() {
     const t = this.target;
     if (!t || this.action) return false;
-    if (t.kind === 'plot') this.interactPlot(t);
+    if (t.kind === 'drive') this.toggleEngage();
+    else if (t.kind === 'plot') this.interactPlot(t);
     else if (t.kind === 'animal') this.interactAnimal(t);
     else this.interactObject(t.objectKind);
     return true;
@@ -526,12 +555,169 @@ export class Game {
         this.sfx.play('error');
         break;
       }
+      case 'decor': {
+        const rec = s.placed.find((r) => r.uid === this.target?.uid);
+        if (!rec) break;
+        const d = DECORATIONS[rec.type];
+        this.panels.dialog(d.name, `Move it somewhere else, or pick it up for ${Math.floor(d.cost / 2)} coins.`,
+          [{ label: 'Move it', primary: true, action: () => this.startMove(rec.uid) },
+            { label: `Pick up (+${Math.floor(d.cost / 2)})`, action: () => this.pickUp(rec.uid) }, { label: 'Leave it' }]);
+        break;
+      }
+      case 'garage':
+        if (this.target?.uid) this.panels.garage(this.target.uid);
+        break;
+      case 'vehicle':
+        this.panels.vehicle(String(this.target?.uid || '').split(':')[1]);
+        break;
       case 'notice_board':
         this.panels.board();
         break;
       default:
     }
   }
+
+  // ------------------------------------------------------------ vehicles
+  enterVehicle(uid) {
+    const v = Vehicles.findVehicle(this.state, uid);
+    if (!v) return;
+    this.panels.close(true);
+    this.state.driving = uid;
+    v.speed = 0;
+    this.state.player.x = v.x;
+    this.state.player.y = v.y;
+    this.driveDist = 0;
+    this.sfx.play('click');
+    this.hud.toast(v.fuel > 0 ? 'W / S drive · A / D steer · E use implement · F get off' : 'The tank is empty — get off and refuel', v.fuel > 0 ? 'info' : 'warn');
+  }
+
+  exitVehicle(force = false) {
+    const v = this.drivingVehicle;
+    if (!v) return;
+    if (!force && Math.abs(v.speed) > 40) {
+      this.hud.toast('Slow down before getting off', 'warn');
+      return;
+    }
+    v.engaged = false;
+    v.speed = 0;
+    // step out on the first free side
+    const half = { w: 13, h: 7 };
+    const side = VEHICLES[v.type].width / 2 + 26;
+    const perp = v.heading + Math.PI / 2;
+    const tries = [[perp, side], [perp + Math.PI, side], [v.heading + Math.PI, VEHICLES[v.type].length / 2 + 30], [v.heading, VEHICLES[v.type].length / 2 + 30]];
+    let spot = { x: v.x, y: v.y };
+    for (const [ang, d] of tries) {
+      const x = v.x + Math.cos(ang) * d;
+      const y = v.y + Math.sin(ang) * d;
+      if (!this.activeCollision.blocked({ x0: x - half.w, y0: y - half.h, x1: x + half.w, y1: y + half.h })) {
+        spot = { x, y };
+        break;
+      }
+    }
+    this.state.driving = null;
+    this.state.player.x = spot.x;
+    this.state.player.y = spot.y;
+    this.state.player.facing = 'down';
+    this.sfx.play('click');
+    this.autosave('vehicle');
+  }
+
+  toggleEngage() {
+    const v = this.drivingVehicle;
+    if (!v) return;
+    if (!v.mount.front) {
+      this.hud.toast('No implement fitted — park at the garage and attach one', 'warn');
+      this.sfx.play('error');
+      return;
+    }
+    v.engaged = !v.engaged;
+    this.hud.toast(v.engaged ? `${IMPLEMENTS[v.mount.front].name} working` : `${IMPLEMENTS[v.mount.front].name} stopped`, 'info');
+    this.sfx.play('click');
+  }
+
+  driveTarget() {
+    const v = this.drivingVehicle;
+    if (!v) return null;
+    if (!v.mount.front) return { kind: 'drive', ok: false, label: 'No implement fitted — attach one at the garage' };
+    const imp = IMPLEMENTS[v.mount.front];
+    return { kind: 'drive', ok: true, label: v.engaged ? `Stop the ${imp.name.toLowerCase()}` : `Start the ${imp.name.toLowerCase()}` };
+  }
+
+  updateDriving(dt, paused) {
+    const v = this.drivingVehicle;
+    if (!v) return;
+    const mv = paused ? { x: 0, y: 0 } : this.input.moveVector();
+    const tx = Math.floor(v.x / TILE);
+    const ty = Math.floor(v.y / TILE);
+    const plotHere = PLOT_AT.get(`${tx},${ty}`);
+    const soft = !!(plotHere && this.state.plots[plotHere.id]?.tilled);
+    const r = Vehicles.stepVehicle(v, { throttle: -mv.y, steer: mv.x }, dt, {
+      ground: groundFactor(v.x, v.y, soft),
+      blocked: (box) => this.activeCollision.blocked(box),
+    });
+    const p = this.state.player;
+    p.x = v.x;
+    p.y = v.y;
+    p.facing = Math.abs(Math.cos(v.heading)) > Math.abs(Math.sin(v.heading)) ? (Math.cos(v.heading) > 0 ? 'right' : 'left') : Math.sin(v.heading) > 0 ? 'down' : 'up';
+    this.playerMoving = false;
+    // distance driven becomes events (whole tiles), for quests and achievements
+    this.driveDist = (this.driveDist || 0) + r.moved / TILE;
+    if (this.driveDist >= 1) {
+      const tiles = Math.floor(this.driveDist);
+      this.driveDist -= tiles;
+      this.bus.emit('drive', { qty: tiles });
+    }
+    if (r.bump > 2) {
+      this.sfx.play('error');
+      this.effects.burst('dirt', v.x + Math.cos(v.heading) * 40, v.y + Math.sin(v.heading) * 40);
+    }
+    if (r.stalled && !this.stallWarned) {
+      this.stallWarned = true;
+      this.hud.toast('Out of fuel! Get off (F) and refuel', 'warn');
+    } else if (!r.stalled && v.fuel > 0) this.stallWarned = false;
+    if (v.fuel > 0 && v.fuel < Vehicles.tankSize(v) * 0.12 && !this.lowFuelWarned) {
+      this.lowFuelWarned = true;
+      this.hud.toast('Fuel is running low', 'warn');
+    } else if (v.fuel > Vehicles.tankSize(v) * 0.2) this.lowFuelWarned = false;
+    if (!paused) {
+      const w = Vehicles.work(this.state, v, this.bus);
+      if (w.count) {
+        this.hud.cache.quests = null;
+        this.workSfx = (this.workSfx || 0) - 1;
+        const fx = { till: 'dirt', plant: 'seed', water: 'water', harvest: 'harvest' }[w.action];
+        const a = Vehicles.workArea(v);
+        this.effects.burst(fx, a.cx, a.cy);
+        if (this.workSfx <= 0) {
+          this.sfx.play({ till: 'till', plant: 'plant', water: 'water', harvest: 'harvest' }[w.action]);
+          this.workSfx = 4;
+        }
+      }
+    }
+  }
+
+  // ---- garage and vehicle transactions (called by the panels)
+  vehicleResult(r, okText) {
+    if (r.ok) {
+      if (okText) this.hud.toast(typeof okText === 'function' ? okText(r) : okText, 'good');
+      this.sfx.play('coin');
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.hud.cache.quests = null;
+    this.panels.rerender();
+    return r;
+  }
+
+  buyVehicle(type) { return this.vehicleResult(Vehicles.buyVehicle(this.state, type, this.bus), `${VEHICLES[type].name} delivered to the garage`); }
+  buyImplement(id) { return this.vehicleResult(Vehicles.buyImplement(this.state, id, this.bus), `${IMPLEMENTS[id].name} bought`); }
+  refuelVehicle(uid, field = false) { return this.vehicleResult(field ? Vehicles.fieldRefuel(this.state, uid, this.bus) : Vehicles.refuel(this.state, uid, undefined, this.bus), (r) => `Added ${r.units} fuel for ${r.cost} coins`); }
+  repairVehicle(uid) { return this.vehicleResult(Vehicles.repair(this.state, uid, this.bus), (r) => `Repaired for ${r.cost} coins`); }
+  upgradeVehicle(uid) { return this.vehicleResult(Vehicles.upgradeVehicle(this.state, uid, this.bus), 'Upgrade fitted'); }
+  attachImplement(uid, id) { return this.vehicleResult(Vehicles.attach(this.state, uid, id), `${IMPLEMENTS[id].name} attached`); }
+  detachImplement(uid, slot) { return this.vehicleResult(Vehicles.detach(this.state, uid, slot), 'Detached'); }
+  unloadVehicle(uid) { return this.vehicleResult(Vehicles.unload(this.state, uid), (r) => `Unloaded ${r.moved} crops into your bag`); }
+  towVehicle(uid) { return this.vehicleResult(Vehicles.sendToGarage(this.state, uid), 'Towed back to the garage'); }
 
   openRoad() {
     const s = this.state;
@@ -882,6 +1068,10 @@ export class Game {
   }
 
   startPlacement(type) {
+    if (this.drivingVehicle) {
+      this.hud.toast('Get off the tractor first', 'warn');
+      return;
+    }
     const info = Buildings.placeableInfo(this.state, type);
     if (info.state !== 'available') {
       this.hud.toast(info.reason || 'Cannot build that', 'warn');
@@ -941,8 +1131,8 @@ export class Game {
     const r = { x0: rt.x0 * TILE, y0: rt.y0 * TILE, x1: rt.x1 * TILE, y1: rt.y1 * TILE };
     const pad = { x0: r.x0 - 6, y0: r.y0 - 6, x1: r.x1 + 6, y1: r.y1 + 6 };
     const b = this.world.bounds;
-    if (r.x0 < b.x0 || r.y0 < b.y0 + TILE || r.x1 > b.x1 || r.y1 > b.y1) {
-      return { ok: false, rects: [], text: 'Too close to the edge of the map — face another way or move' };
+    if (r.x0 < b.x0 || r.y0 < b.y0 || r.x1 > b.x1 || r.y1 > b.y1) {
+      return { ok: false, rects: [], text: 'That would hang over the edge of the map — move the other way' };
     }
     const hits = this.farmCollision.rects.filter((c) => overlaps(pad, c));
     if (hits.length) {
@@ -971,11 +1161,71 @@ export class Game {
   placementTarget() {
     const pl = this.placement;
     const name = (DECORATIONS[pl.type] || BUILDINGS[pl.type]).name;
+    if (pl.moveUid) return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Move ${name} here` : pl.check?.text || "Can't move it there" };
     const cost = Buildings.placeableInfo(this.state, pl.type).cost;
     return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Place ${name} (${cost} coins)` : pl.check?.text || "Can't build here — try another spot" };
   }
 
+  // Pick a finished building or a decoration up and put it somewhere else (free).
+  startMove(uid) {
+    const rec = this.state.placed.find((p) => p.uid === uid);
+    if (!rec) return;
+    if (this.drivingVehicle) {
+      this.hud.toast('Get off the tractor first', 'warn');
+      return;
+    }
+    if (rec.kind === 'building' && (rec.level < 1 || rec.job)) {
+      this.hud.toast('Wait until the builders have finished', 'warn');
+      return;
+    }
+    this.panels.close(true);
+    this.placement = { type: rec.type, x: rec.x, y: rec.y, valid: true, moveUid: uid };
+    this.refreshColliders();
+    this.updatePlacement();
+    document.getElementById('btn-cancel').hidden = false;
+    this.hud.toast('Walk to the new spot · E / A to move it here · Esc to cancel');
+  }
+
+  confirmMove() {
+    const pl = this.placement;
+    if (!pl.valid) {
+      this.hud.toast(pl.check?.text || "Can't move it there", 'warn');
+      this.sfx.play('error');
+      return;
+    }
+    const rec = this.state.placed.find((p) => p.uid === pl.moveUid);
+    if (rec) {
+      rec.x = Math.round(pl.x * 100) / 100;
+      rec.y = Math.round(pl.y * 100) / 100;
+    }
+    this.cancelPlacement();
+    this.actors.map.clear(); // animals come out inside the new pasture
+    this.refreshColliders();
+    this.effects.burst('dirt', pl.x * TILE, pl.y * TILE);
+    this.sfx.play('till');
+    this.hud.toast(`${(DECORATIONS[pl.type] || BUILDINGS[pl.type]).name} moved`, 'good');
+    this.autosave('move');
+  }
+
+  // Take a decoration back for half its price.
+  pickUp(uid) {
+    const i = this.state.placed.findIndex((p) => p.uid === uid && p.kind === 'decor');
+    if (i < 0) return;
+    const rec = this.state.placed[i];
+    const refund = Math.floor(DECORATIONS[rec.type].cost / 2);
+    this.state.placed.splice(i, 1);
+    this.state.coins += refund;
+    this.refreshColliders();
+    this.sfx.play('coin');
+    this.hud.toast(`${DECORATIONS[rec.type].name} picked up (+${refund} coins)`, 'good');
+    this.autosave('pickup');
+  }
+
   confirmPlacement() {
+    if (this.placement.moveUid) {
+      this.confirmMove();
+      return;
+    }
     const pl = this.placement;
     const r = Buildings.place(this.state, pl.type, pl.x, pl.y, (rect) => this.isBuildable(rect), this.bus);
     if (!r.ok) {
@@ -993,7 +1243,9 @@ export class Game {
   }
 
   cancelPlacement() {
+    const moved = this.placement?.moveUid;
     this.placement = null;
+    if (moved) this.refreshColliders();
     document.getElementById('btn-cancel').hidden = true;
   }
 

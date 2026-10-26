@@ -37,3 +37,9 @@
 - Portraits for the dialogue panel (the panel currently shows a coloured initial).
 - Dedicated village buildings: general store, smithy, carpenter, inn (currently farm sprites reused), market stall variants, notice board, fountain, dock.
 - Shop interiors (overhead) for the four shops.
+
+## Phase 6 (vehicles) art still needed
+
+- Overhead tractors (small and large), facing east, ~92x58 and ~116x72 px drawn size (supply 2-3x), plus the plough, seeder, sprayer, reaper (header), and a crop trailer, ideally as separate transparent PNGs with a shared hitch/mount point.
+- A garage building (exterior, ~3.8 tiles wide).
+- Optional: wheel/dust effects, exhaust puffs, fuel and repair icons.

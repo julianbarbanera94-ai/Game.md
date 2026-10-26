@@ -187,7 +187,7 @@ test('save v5 round-trips village state and migrates v4', () => {
   Orders.accept(s, offer.id);
   s.shops = { day: clock(s.time).day, bought: { seed_carrot: 4 }, traded: { carrot: 3 } };
   const back = deserialize(serialize(s));
-  assert.equal(back.version, 6);
+  assert.equal(back.version, 7);
   assert.equal(back.flags.roadOpen, true);
   assert.equal(back.relations.bram.points, 3);
   assert.equal(back.orders.list.find((o) => o.id === offer.id).status, 'accepted');
@@ -195,7 +195,7 @@ test('save v5 round-trips village state and migrates v4', () => {
   assert.deepEqual(back.shops.traded, { carrot: 3 });
 
   const v4 = deserialize({ version: 4, coins: 55, buildings: {}, placed: [], animals: [], cleared: [] });
-  assert.equal(v4.version, 6);
+  assert.equal(v4.version, 7);
   assert.deepEqual(v4.relations, {});
   assert.equal(v4.flags.roadOpen, false);
   assert.ok(v4.orders.list.length > 0, 'requests are generated on load');

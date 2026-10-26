@@ -167,10 +167,11 @@ function noBuildZones() {
 }
 
 // Colliders for player-placed objects (px rects).
-export function placedColliders(state) {
+export function placedColliders(state, excludeUid = null) {
   const px = (r) => ({ x0: r.x0 * TILE, y0: r.y0 * TILE, x1: r.x1 * TILE, y1: r.y1 * TILE });
   const out = [];
   for (const p of state.placed) {
+    if (p.uid === excludeUid) continue;
     out.push(px(footprintRect(p.type, p.x, p.y, p.level || 1)));
     // pasture fences appear once the building is finished
     if (p.kind === 'building' && p.level >= 1) out.push(...pastureColliders(p.type, p.x, p.y).map(px));

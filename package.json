@@ -11,7 +11,8 @@
     "test:touch": "node tests/e2e/touch.mjs",
     "test:clearing": "node tests/e2e/clearing.mjs && node tests/e2e/building_after_clearing.mjs",
     "test:village": "node tests/e2e/village.mjs",
-    "test:progression": "node tests/e2e/progression.mjs"
+    "test:progression": "node tests/e2e/progression.mjs",
+    "test:vehicles": "node tests/e2e/vehicles.mjs"
   },
   "engines": { "node": ">=18" }
 }

@@ -136,6 +136,24 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Tests: `tests/unit/progression.test.mjs` (13), `npm run test:progression` (50 checks through the real UI).
 - Not yet: machinery/vehicle unlocks (Phase 6), real artwork for quest icons and reward screens, seasonal decorations (only a colour grade today).
 
+## Phase 6: vehicles and machinery
+
+- **Garage** (placeable building, farm level 3, 500 coins): buy tractors, implements and a trailer; refuel (2 coins/unit), repair, fit engine upgrades (+speed, +tank), tow vehicles home. Holds 3 machines.
+- **Tractors**: Small (level 3, 1500) and Large (level 5, 4200, faster, 3 tiles wide). Arcade driving: W/S throttle and reverse, A/D steer (stick on touch), speed limits, slower on grass and soft soil, solid collisions (trees, buildings, creek), crash damage and wear.
+- **Fuel and condition**: tank empties while driving (and faster while working); empty means no movement, with a warning; a jerry can in the field costs 4/unit; worn machines slow down but never stall.
+- **Implements** (front): Plough (tills), Seeder (plants from your seeds), Sprayer (waters, no can), Reaper (harvests). **Crop trailer** (rear, 80 crops): the reaper fills it; unload into the bag at the tractor.
+- **Controls**: E / A toggles the implement; F or the Get off button leaves (only when nearly stopped); on touch the joystick is throttle + steering. HUD shows fuel, condition, speed, implement and trailer.
+- The garden is fenced, so machine work happens in the **North Field**.
+- **Quests** (A Place for Machines, Horsepower, Take It for a Spin, Ploughing Day, Bringing in the Harvest) and achievements (Gearhead, Mechanised) from real events.
+- **Save v7**: vehicles, mounts, cargo, owned implements (validated; you always load standing outside).
+- Vehicle artwork is **painted in code as stand-ins** (`src/render/vehicleArt.js`); sprites for tractors, implements and trailers are needed (see `docs/ART_REQUESTS.md`).
+- Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
+
+## Placing and moving buildings
+
+- Buildings can now be placed right up to the playable edge of the map (the old one-tile margin is gone); only a footprint hanging over the edge is refused.
+- **Move structures**: the Storage Shed, Coop/Barn and Garage panels have "Move this building" (free, finished buildings only); decorations offer Move or Pick up (refunds half). Animals come out inside the new pasture.
+
 ## Asset audit
 
 See `docs/audit/ASSET_AUDIT.md`: every image in the ten packs measured against resolution standards; the cottage interior was rebuilt from layers; remaining soft assets (buildings, animals, icons, decorations) need new exports.

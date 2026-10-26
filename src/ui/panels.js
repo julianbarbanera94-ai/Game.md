@@ -12,9 +12,16 @@ import { el } from './hud.js';
 import { guarded } from './guard.js';
 import { installVillagePanels } from './villagePanels.js';
 import { installJournalPanels } from './journalPanels.js';
+import { installVehiclePanels } from './vehiclePanels.js';
 
 // Full-screen / modal interfaces. Every panel closes with Esc, the close
 // button or a click on the backdrop, and returns control to gameplay.
+
+// A "Move building" row for panels of placed buildings.
+export function moveRow(game, uid) {
+  return el('div', { class: 'move-row' }, el('button', { 'data-move': uid, onclick: guarded(() => game.startMove(uid)) }, 'Move this building'),
+    el('small', {}, 'Free. Pick it up and put it somewhere else.'));
+}
 
 export class Panels {
   constructor(game) {
@@ -261,8 +268,9 @@ export class Panels {
         el('div', { class: 'live-buy' }, buys.length && herd.length >= cap ? el('small', { class: 'status locked' }, 'Full — upgrade this building at the workbench for more room.') : null, el('div', { class: 'live-buttons' }, buys)),
         el('div', { class: 'footer' }, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`));
     };
-    this.show(BUILDINGS[game.state.placed.find((p) => p.uid === uid)?.type]?.name || 'Livestock', content, { wide: true, onClose: () => game.autosave('livestock') }).render = render;
-    render();
+    const draw = () => { render(); content.append(moveRow(game, uid)); };
+    this.show(BUILDINGS[game.state.placed.find((p) => p.uid === uid)?.type]?.name || 'Livestock', content, { wide: true, onClose: () => game.autosave('livestock') }).render = draw;
+    draw();
   }
 
   // ---- storage shed: move items between bag and shed
@@ -292,8 +300,9 @@ export class Panels {
           el('div', {}, el('h3', {}, `Shed (${slotsUsed(shed.storage)}/${storageSlots(shed)})`),
             el('div', { class: 'rows' }, list(shed.storage, (id, q) => game.takeItem(uid, id, q), 'Take', 'data-take-all')))));
     };
-    this.show('Storage Shed', content, { wide: true, onClose: () => game.autosave('storage') }).render = render;
-    render();
+    const draw = () => { render(); content.append(moveRow(game, uid)); };
+    this.show('Storage Shed', content, { wide: true, onClose: () => game.autosave('storage') }).render = draw;
+    draw();
   }
 
   // ---- inventory
@@ -338,3 +347,4 @@ export class Panels {
 
 installVillagePanels(Panels);
 installJournalPanels(Panels);
+installVehiclePanels(Panels);

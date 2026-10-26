@@ -281,3 +281,27 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .journal .tabs button { padding: 5px 8px; }
   .jquest { padding: 8px 10px; }
 }
+
+.badge.kind-machinery { background: #f0b27a; }
+
+/* ---- vehicles (Phase 6) */
+.driving #quest-tracker { display: none; }
+.vehicle-hud { position: absolute; left: max(12px, env(safe-area-inset-left)); top: 84px; min-width: 190px; padding: 8px 12px; border-radius: 14px; background: var(--panel); border: 1px solid var(--panel-border); color: #fff4d6; font-size: 13px; pointer-events: none; display: flex; flex-direction: column; gap: 4px; z-index: 6; }
+.vehicle-hud .v-title { font-weight: 800; display: flex; justify-content: space-between; gap: 12px; }
+.vehicle-hud small { color: #d6c9a6; }
+.vehicle-hud .gauge .g-label { font-size: 12px; }
+.vehicle-hud .bar { height: 7px; margin-top: 2px; background: rgba(255,255,255,0.18); }
+.vehicle-hud .gauge.low .bar > span { background: linear-gradient(#f0866a, #d6452b); }
+.vehicle-hud .v-imp { font-size: 12px; color: #d6c9a6; }
+.vehicle-hud .v-imp.on { color: #b6f08c; font-weight: 700; }
+.exit-vehicle { top: auto; bottom: 150px; left: 50%; transform: translateX(-50%); }
+.vrow-stats { display: flex; flex-direction: column; gap: 3px; min-width: 130px; }
+.vrow-stats .bar { margin-top: 0; }
+.vbadge { font-size: 11px; color: #8a6a3a; }
+.move-row { margin-top: 12px; padding-top: 10px; border-top: 1px dashed #c9ac74; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.move-row small { color: #6b5638; }
+.garage, .vehicle-panel { padding: 12px 16px 16px; }
+.garage h3, .vehicle-panel h3 { margin: 12px 0 6px; font-size: 15px; }
+.vehicle-row .row-actions { flex-wrap: wrap; justify-content: flex-end; }
+.vehicle-row .bar.low > span { background: linear-gradient(#f0866a, #d6452b); }
+.vehicle-panel .actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }

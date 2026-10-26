@@ -10,6 +10,7 @@ import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
 import { buildGround } from './terrain.js';
+import { drawVehicle } from './vehicleArt.js';
 import { calendar, activeEvent } from '../systems/seasons.js';
 import { SEASON_TINT } from '../data/seasons.js';
 import { buildInteriorArt } from './interiorArt.js';
@@ -75,13 +76,14 @@ export class Renderer {
 
     // y-sorted sprites
     const items = [];
-    for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state)]) {
+    for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state, game.placement?.moveUid)]) {
       const d = d0.building ? this.resolveBuilding(game.state, d0) : d0;
       if (!d) continue;
       if (d.x + d.w / 2 < view.x0 || d.x - d.w / 2 > view.x1 || d.y < view.y0 || d.y - d.h > view.y1) continue;
       items.push(d);
     }
-    items.push({ player: true, sortY: game.state.player.y });
+    if (!game.state.driving) items.push({ player: true, sortY: game.state.player.y });
+    for (const v of game.state.vehicles) items.push({ vehicle: v, sortY: v.y + 14 });
     for (const ac of game.actors.list()) items.push({ animal: ac, sortY: ac.y });
     for (const n of game.npcs.list()) items.push({ npc: n, sortY: n.y });
     items.sort((a, b) => a.sortY - b.sortY);
@@ -89,6 +91,7 @@ export class Renderer {
       if (d.player) this.drawPlayer(g, game);
       else if (d.animal) this.drawAnimal(g, game, d.animal);
       else if (d.npc) this.drawNpc(g, game, d.npc);
+      else if (d.vehicle) this.drawVehicleItem(g, game, d.vehicle);
       else this.drawSprite(g, d);
     }
 
@@ -109,9 +112,10 @@ export class Renderer {
     return { ...d, sprite: look.sprite, w, h, progress: look.constructing ? look.progress : null, job: rec.job };
   }
 
-  placedDrawables(state) {
+  placedDrawables(state, hideUid = null) {
     const out = [];
     for (const p of state.placed) {
+      if (p.uid === hideUid) continue;
       const base = { uid: p.uid, x: p.x * TILE, y: p.y * TILE, sortY: p.y * TILE };
       if (p.kind === 'building') {
         out.push({ ...base, building: p.type, w: TILE * 3, h: TILE * 3 });
@@ -148,6 +152,15 @@ export class Renderer {
       g.fill();
       g.restore();
     }
+  }
+
+  drawVehicleItem(g, game, v) {
+    let driver = null;
+    if (game.state.driving === v.uid) {
+      const img = this.assets.get('player.idle_back');
+      if (img) driver = { img, scale: PLAYER_FRAME_SCALE * 0.6 };
+    }
+    drawVehicle(g, v, driver);
   }
 
   // Villager: the player sprite colour-shifted and scaled until NPC art exists.
@@ -317,8 +330,10 @@ export class Renderer {
     const pl = game.placement;
     if (!pl) return;
     const def = DECORATIONS[pl.type];
-    const sprite = def ? def.sprite : BUILDINGS[pl.type].levels[0].sprite;
-    const wT = def ? def.w : BUILDINGS[pl.type].levels[0].w;
+    const moving = pl.moveUid && game.state.placed.find((p) => p.uid === pl.moveUid);
+    const lvl = def ? null : BUILDINGS[pl.type].levels[Math.max(1, moving?.level || 1) - 1];
+    const sprite = def ? def.sprite : lvl.sprite;
+    const wT = def ? def.w : lvl.w;
     const img = this.assets.get(sprite);
     const fr = areaRect(pl.type, pl.x, pl.y);
     g.save();
@@ -526,6 +541,8 @@ export class Renderer {
     const lights = [[17.7 * TILE, 7.6 * TILE, 200], [game.state.player.x, game.state.player.y - 40, 120]];
     for (const p of game.state.placed) if (DECORATIONS[p.type]?.light) lights.push([p.x * TILE, (p.y - 1.2) * TILE, 150]);
     for (const d of this.world.drawables) if (d.light) lights.push([d.x, d.y - 1.2 * TILE, 150]);
+    const dv = game.drivingVehicle;
+    if (dv && dv.fuel > 0) lights.push([dv.x + Math.cos(dv.heading) * 110, dv.y + Math.sin(dv.heading) * 110, 190]);
     for (const [x, y, r] of lights) {
       const grad = g.createRadialGradient(x, y, 0, x, y, r);
       grad.addColorStop(0, `rgba(255,190,90,${dark * 0.28})`);

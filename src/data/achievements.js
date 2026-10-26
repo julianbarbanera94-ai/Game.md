@@ -16,6 +16,8 @@ export const ACHIEVEMENTS = [
   { id: 'chatterbox', track: 'Community', name: 'Chatterbox', text: 'Talk to villagers 10 times.', counter: 'talk', target: 10, reward: { coins: 40, xp: 30 } },
   { id: 'courier', track: 'Community', name: 'Reliable Courier', text: 'Complete 5 delivery requests.', counter: 'deliver', target: 5, reward: { coins: 120, xp: 70 } },
   { id: 'well_known', track: 'Community', name: 'Well Known', text: 'Reach 100 village reputation.', counter: 'reputation', target: 100, reward: { coins: 200, xp: 100 } },
+  { id: 'gearhead', track: 'Farming', name: 'Gearhead', text: 'Drive 500 tiles in your tractors.', counter: 'driven', target: 500, reward: { coins: 120, xp: 70 } },
+  { id: 'mechanised', track: 'Farming', name: 'Mechanised', text: 'Work 100 plots with machinery.', counter: 'machineWork', target: 100, reward: { coins: 200, xp: 100 } },
   { id: 'quest_keeper', track: 'Farming', name: 'Quest Keeper', text: 'Claim 10 quest rewards.', counter: 'questsClaimed', target: 10, reward: { coins: 100, xp: 60 } },
 ];
 export const ACHIEVEMENTS_BY_ID = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));

@@ -68,7 +68,7 @@ async function main() {
   check(await page.isVisible('[data-unlock="crop_carrot"].open'), 'carrots show as unlocked');
   check(await page.isVisible('[data-unlock="land_north"].shut'), 'the north field shows as locked, with its requirement');
   check((await page.textContent('[data-unlock="land_north"]')).includes('North Field'), 'the lock explains what is needed');
-  check((await page.textContent('[data-unlock="machinery"]')).toLowerCase().includes('later'), 'future content says so');
+  check((await page.textContent('[data-unlock="machinery"]')).includes('Buy a tractor'), 'machinery says what it needs');
   await shot('journal-progress');
   await closePanel();
 
@@ -240,7 +240,7 @@ async function main() {
   await page.click('#btn-continue');
   await page.waitForTimeout(800);
   s = await state();
-  check(s.version === 6 && s.xp === saved.xp, 'experience survives a reload');
+  check(s.version === 7 && s.xp === saved.xp, 'experience survives a reload');
   check(JSON.stringify(s.counters) === JSON.stringify(saved.counters), 'counters survive');
   check(s.achievements.first_harvest.claimed === true, 'claimed achievements stay claimed');
   check(s.unlocks.northField === true, 'the north field stays unlocked');

@@ -1,4 +1,6 @@
 import { calendar } from '../systems/seasons.js';
+import { VEHICLES, IMPLEMENTS } from '../data/vehicles.js';
+import { tankSize } from '../systems/vehicles.js';
 import { getItem } from '../data/items.js';
 import { clock, darkness, formatClock } from '../systems/time.js';
 import { trackedQuests, rewardText } from '../systems/quests.js';
@@ -61,8 +63,36 @@ export class Hud {
     const qsig = JSON.stringify(quests.map((q) => [q.def.id, q.state.status, q.state.progress]));
     this.set('quests', qsig, () => this.renderQuests(quests));
 
+    this.updateVehicle();
     const hsig = JSON.stringify([state.inventory, state.selectedSeed, state.can, this.game.activeTool]);
     this.set('hotbar', hsig, () => this.renderHotbar());
+  }
+
+  // Fuel, condition and speed while driving, plus the Get off button.
+  updateVehicle() {
+    const v = this.game.drivingVehicle;
+    const hud = document.getElementById('vehicle-hud');
+    const exit = document.getElementById('btn-exit-vehicle');
+    hud.hidden = !v;
+    exit.hidden = !v;
+    this.root.classList.toggle('driving', !!v);
+    if (!v) { this.cache.veh = null; return; }
+    const def = VEHICLES[v.type];
+    const fuel = Math.round((v.fuel / tankSize(v)) * 100);
+    const cond = Math.round(v.condition);
+    const kmh = Math.round((Math.abs(v.speed) / def.maxSpeed) * 30);
+    const sig = `${fuel}|${cond}|${kmh}|${v.mount.front}|${v.engaged}|${Object.values(v.cargo).reduce((n, q) => n + q, 0)}`;
+    this.set('veh', sig, () => {
+      const gauge = (label, pct, cls) => el('div', { class: `gauge ${cls}` }, el('span', { class: 'g-label' }, `${label} ${pct}%`), el('div', { class: 'bar' }, el('span', { style: `width:${pct}%` })));
+      const cap = v.mount.rear ? IMPLEMENTS[v.mount.rear].capacity : 0;
+      const used = Object.values(v.cargo).reduce((n, q) => n + q, 0);
+      hud.replaceChildren(
+        el('div', { class: 'v-title' }, def.name, el('small', {}, `${kmh} km/h`)),
+        gauge('Fuel', fuel, fuel < 15 ? 'low' : ''),
+        gauge('Condition', cond, cond < 30 ? 'low' : ''),
+        v.mount.front ? el('div', { class: `v-imp${v.engaged ? ' on' : ''}` }, `${IMPLEMENTS[v.mount.front].name}: ${v.engaged ? 'working' : 'stopped'}`) : null,
+        cap ? el('div', { class: 'v-imp' }, `Trailer ${used}/${cap}`) : null);
+    });
   }
 
   renderQuests(quests) {

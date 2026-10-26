@@ -91,6 +91,7 @@ async function boot() {
   document.getElementById('btn-journal').addEventListener('click', () => game.running && !game.uiOpen && game.panels.journal());
   document.getElementById('btn-menu').addEventListener('click', () => game.running && game.panels.menu());
   document.getElementById('btn-cancel').addEventListener('click', () => game.cancelPlacement());
+  document.getElementById('btn-exit-vehicle').addEventListener('click', () => game.exitVehicle());
   document.addEventListener('visibilitychange', () => { if (document.hidden && game.running) game.autosave('hidden'); });
   window.addEventListener('pagehide', () => { if (game.running) game.autosave('hidden'); });
   window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });

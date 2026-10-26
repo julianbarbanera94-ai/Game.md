@@ -17,6 +17,7 @@ export function isRequirementMet(state, req) {
   if (req.placed && !state.placed.some((p) => p.type === req.placed && p.level >= 1)) return false;
   if (req.flag && !state.flags[req.flag]) return false;
   if (req.level && levelOf(state) < req.level) return false;
+  if (req.vehicle && !state.vehicles?.length) return false;
   if (req.comingSoon) return false;
   return true;
 }
@@ -31,6 +32,7 @@ export function requirementText(req) {
   if (req.flag === 'roadOpen') return 'Open the road east';
   if (req.flag === 'visitedVillage') return 'Visit Willowmere village';
   if (req.level) return `Reach farm level ${req.level}`;
+  if (req.vehicle) return 'Buy a tractor at the garage';
   if (req.comingSoon) return 'Coming in a later update';
   return 'Locked';
 }

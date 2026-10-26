@@ -16,6 +16,8 @@ import { seedSeenUnlocks, checkAchievements } from './progress.js';
 import { applyUpgradeEffects } from './economy.js';
 import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
 import { SPECIES } from '../data/animals.js';
+import { VEHICLES, IMPLEMENTS, MAX_VEHICLES, UPGRADES as VEHICLE_UPGRADES } from '../data/vehicles.js';
+import { tankSize } from './vehicles.js';
 import { applyLevelEffects, FIXED_BUILDINGS } from './buildings.js';
 
 // Versioned save model. Loading never trusts stored data: every field is
@@ -45,6 +47,8 @@ MIGRATIONS[3] = (data) => ({ ...data, version: 4, cleared: [] });
 // and if they already cleared... nothing: the road starts closed.
 // v5 -> v6: progression. Counters start from zero, nothing is claimed, and every
 // unlock already open is marked as seen so loading does not announce old news.
+// v6 -> v7: vehicles. Old saves own no machinery.
+MIGRATIONS[6] = (data) => ({ ...data, version: 7, vehicles: [], owned: { implements: [] }, driving: null });
 MIGRATIONS[5] = (data) => ({ ...data, version: 6, counters: {}, achievements: {}, xp: 0 });
 MIGRATIONS[4] = (data) => ({ ...data, version: 5, relations: {}, orders: { day: 0, nextId: 1, list: [] }, shops: { day: 0, bought: {}, traded: {} } });
 
@@ -60,6 +64,8 @@ function validJob(job, maxLevel) {
 function num(v, fallback, min = 0, max = Number.MAX_SAFE_INTEGER) {
   return typeof v === 'number' && Number.isFinite(v) ? Math.min(max, Math.max(min, v)) : fallback;
 }
+
+const UPGRADE_COUNT = VEHICLE_UPGRADES.length;
 
 export function serialize(state) {
   return JSON.stringify({ ...state, version: SAVE_VERSION, savedAt: Date.now() });
@@ -193,6 +199,48 @@ export function deserialize(json) {
       const a = data.achievements[id];
       if (a && typeof a === 'object') s.achievements[id] = { notified: !!a.notified || !!a.claimed, claimed: !!a.claimed };
     }
+  }
+  // machinery: validate every vehicle, mount and cargo entry
+  if (data.owned && Array.isArray(data.owned.implements)) {
+    s.owned.implements = [...new Set(data.owned.implements.filter((id) => IMPLEMENTS[id]))];
+  }
+  if (Array.isArray(data.vehicles)) {
+    const uids = new Set();
+    const mounted = new Set();
+    for (const v of data.vehicles.slice(0, 20)) {
+      if (s.vehicles.length >= MAX_VEHICLES) break;
+      const def = v && VEHICLES[v.type];
+      if (!def || typeof v.uid !== 'string' || uids.has(v.uid)) continue;
+      uids.add(v.uid);
+      const rec = {
+        uid: v.uid.slice(0, 12), type: v.type, x: num(v.x, 0, 0, WORLD_W), y: num(v.y, 0, 0, WORLD_H), heading: num(v.heading, 0, -7, 7), speed: 0,
+        fuel: 0, condition: num(v.condition, 100, 0, 100), upgrade: Math.floor(num(v.upgrade, 0, 0, UPGRADE_COUNT)),
+        mount: { front: null, rear: null }, cargo: {}, engaged: false,
+      };
+      rec.fuel = num(v.fuel, 0, 0, tankSize(rec));
+      for (const slot of ['front', 'rear']) {
+        const id = v.mount?.[slot];
+        if (IMPLEMENTS[id]?.slot === slot && s.owned.implements.includes(id) && !mounted.has(id)) {
+          rec.mount[slot] = id;
+          mounted.add(id);
+        }
+      }
+      let room = rec.mount.rear ? IMPLEMENTS[rec.mount.rear].capacity : 0;
+      for (const [id, q] of Object.entries(v.cargo && typeof v.cargo === 'object' ? v.cargo : {})) {
+        const qty = Math.min(room, Math.floor(num(q, 0, 0, 999)));
+        if (getItem(id)?.category === 'crop' && qty > 0) {
+          rec.cargo[id] = qty;
+          room -= qty;
+        }
+      }
+      s.vehicles.push(rec);
+    }
+  }
+  // the game always loads you standing beside your vehicle, never inside it
+  const was = typeof data.driving === 'string' ? s.vehicles.find((v) => v.uid === data.driving) : null;
+  if (was && s.player.scene === 'farm') {
+    s.player.x = was.x + 50;
+    s.player.y = was.y;
   }
   s.flags.roadOpen = !!data.flags?.roadOpen;
   s.flags.visitedVillage = !!data.flags?.visitedVillage;

@@ -58,6 +58,15 @@ export const BUILDINGS = {
   // scale where the hens baked into the art match the real chicken sprites.
   // footprint = collision [w, h] in tiles above the anchor, per level.
   // pasture = fenced roaming area below the anchor (tiles), with a gate gap.
+  garage: {
+    id: 'garage',
+    name: 'Garage',
+    placeable: true,
+    footprint: [3.0, 1.8],
+    levels: [
+      { sprite: 'building4.tool_shed_l3', w: 3.8, footprint: [3.0, 1.8], cost: 500, buildMinutes: 360, requires: { level: 3 }, effect: 'Buy, fuel, repair and upgrade tractors and machinery.' },
+    ],
+  },
   chicken_coop: {
     id: 'chicken_coop',
     name: 'Chicken Coop',
