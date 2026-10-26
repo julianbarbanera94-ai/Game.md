@@ -44,6 +44,8 @@ async function main() {
 
   const shot = async (name) => page.screenshot({ path: path.join(outDir, `${String(++step).padStart(2, '0')}-${name}.png`) });
   const state = () => page.evaluate(() => JSON.parse(JSON.stringify(window.farmstead.state)));
+  // coins paid out for reaching farm levels (25 x level), so exact-coin checks stay exact
+  const levelCoins = (xp) => [40, 110, 210, 350, 540, 790, 1100, 1500, 2000].reduce((c, need, i) => c + (xp >= need ? 25 * (i + 2) : 0), 0);
   const pos = () => page.evaluate(() => ({ x: window.farmstead.state.player.x / 64, y: window.farmstead.state.player.y / 64 }));
 
   // Walk toward (tx, ty) in tiles by holding arrow keys; gives up after a timeout.
@@ -145,7 +147,7 @@ async function main() {
   await page.keyboard.press('Enter');
   await until('window.farmstead.state.quests.q_breaking_ground.status === "claimed"');
   s = await state();
-  check(s.coins === 75 && s.quests.q_first_harvest.status === 'active', 'reward claimed (+15) and next quest started');
+  check(s.coins === 75 + levelCoins(s.xp) && s.quests.q_first_harvest.status === 'active', 'reward claimed (+15) and next quest started');
 
   // sleep through the night at the cottage
   await route([[7.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
@@ -193,13 +195,13 @@ async function main() {
   await page.waitForTimeout(250);
   // rapid double click on a sell button must not oversell
   s = await state();
-  check(s.coins === 75 + 88 && !s.inventory.carrot, 'sold 4 carrots for 88 coins');
+  check(s.coins === 75 + 88 + levelCoins(s.xp) && !s.inventory.carrot, 'sold 4 carrots for 88 coins');
   check(s.quests.q_market_day.status === 'complete', 'Market Day complete');
   await page.keyboard.press('Escape');
   await page.keyboard.press('Enter');
   await until('window.farmstead.state.quests.q_market_day.status === "claimed"');
   s = await state();
-  check(s.coins === 188, 'Market Day reward (+25)');
+  check(s.coins === 188 + levelCoins(s.xp), 'Market Day reward (+25)');
   await act();
   await page.click('.tab:nth-child(2)');
   await page.waitForTimeout(100);
@@ -207,16 +209,17 @@ async function main() {
   await page.dblclick('[data-buy5="seed_carrot"]');
   await page.waitForTimeout(300);
   s = await state();
-  check(s.coins === 138 && s.inventory.seed_carrot === 6, `double-click bought exactly 5 seeds once (coins ${s.coins}, seeds ${s.inventory.seed_carrot})`);
+  check(s.coins === 138 + levelCoins(s.xp) && s.inventory.seed_carrot === 6, `double-click bought exactly 5 seeds once (coins ${s.coins}, seeds ${s.inventory.seed_carrot})`);
   await shot('market-buy');
   await page.keyboard.press('Escape');
   check(s.quests.q_restock.status === 'complete', 'Restock complete');
   await page.keyboard.press('Enter');
   await until('window.farmstead.state.quests.q_restock.status === "claimed"');
   s = await state();
-  check(s.coins === 148, `Restock reward (+10) (coins ${s.coins}, restock ${s.quests.q_restock.status})`);
+  check(s.coins === 148 + levelCoins(s.xp), `Restock reward (+10) (coins ${s.coins}, restock ${s.quests.q_restock.status})`);
 
-  // locked land shows its requirement; can't afford yet
+  // locked land shows its requirement; can't afford yet (level-up payouts may have made the player richer, so fix the purse)
+  await page.evaluate(() => { window.farmstead.state.coins = 148; });
   await route([[30.4, 11.6], [12.1, 11.6], [12.1, 17.65], [11.45, 17.65]]);
   await face('left');
   await act();
@@ -487,7 +490,7 @@ async function main() {
   await page.reload();
   await page.waitForSelector('#title:not([hidden])');
   const savedDay = Math.floor(before.time / 1440) + 1;
-  check((await page.textContent('#save-info')).includes(`Day ${savedDay}`), `title shows the saved game (Day ${savedDay})`);
+  check((await page.textContent("#save-info")).includes(`Day ${savedDay}`), `title shows the saved game (Day ${savedDay})`);
   await page.click('#btn-continue');
   await page.waitForTimeout(300);
   const after = await state();

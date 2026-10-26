@@ -15,6 +15,10 @@ import * as Buildings from './systems/buildings.js';
 import * as Storage from './systems/storage.js';
 import * as Animals from './systems/animals.js';
 import * as Clearing from './systems/clearing.js';
+import * as Progress from './systems/progress.js';
+import { activeEvent } from './systems/seasons.js';
+import { ACHIEVEMENTS_BY_ID } from './data/achievements.js';
+import { QUESTS_BY_ID } from './data/quests.js';
 import { SPECIES, productLabel } from './data/animals.js';
 import { AnimalActors } from './world/animalActors.js';
 import { NpcActors } from './world/npcActors.js';
@@ -25,6 +29,7 @@ import * as Shops from './systems/shops.js';
 import { awayText, presentNow } from './systems/npcs.js';
 import { ROAD_Y, VILLAGE_X0 } from './data/village.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
+import { UPGRADES } from './data/progression.js';
 import { Camera } from './world/camera.js';
 import { Effects } from './render/effects.js';
 import { Hud } from './ui/hud.js';
@@ -71,14 +76,29 @@ export class Game {
     this.input.interceptor = (e) => this.interceptKey(e);
     this.bus = new EventBus();
     Quests.attachQuests(() => this.state, this.bus);
+    Progress.attachProgress(() => this.state, this.bus);
+    this.lastProgressToast = 0;
+    this.bus.on('questProgress', ({ id, label, progress, count }) => {
+      if (progress >= count && QUESTS_BY_ID[id].objectives.every((o, i) => this.state.quests[id].progress[i] >= o.count)) return; // the completion toast covers it
+      const now = performance.now();
+      if (now - this.lastProgressToast < 1200 && progress < count) return; // do not spam on every harvest
+      this.lastProgressToast = now;
+      this.hud.toast(`${label}: ${progress}/${count}`, 'info');
+    });
+    this.bus.on('questAccepted', ({ id }) => this.hud.toast(`Quest accepted: ${QUESTS_BY_ID[id].title}`, 'info'));
+    this.bus.on('questMissed', ({ id }) => this.hud.toast(`The festival ended before you finished: ${QUESTS_BY_ID[id].title}`, 'warn'));
+    this.bus.on('unlocked', ({ name }) => { this.hud.toast(`Unlocked: ${name}`, 'quest'); this.sfx.play('quest'); });
+    this.bus.on('achievementReady', ({ name }) => { this.hud.toast(`Achievement: ${name} — claim it in the journal`, 'quest'); this.sfx.play('quest'); });
+    this.bus.on('levelUp', ({ level, coins }) => { this.hud.toast(`Farm level ${level}! +${coins} coins`, 'quest'); this.sfx.play('quest'); });
     this.bus.on('questComplete', ({ id }) => {
       const q = Quests.trackedQuests(this.state).find((t) => t.def.id === id);
       this.hud.toast(`Quest complete: ${q?.def.title ?? id} — claim your reward!`, 'quest');
       this.sfx.play('quest');
     });
     this.bus.on('questStarted', ({ id }) => {
-      const q = Quests.trackedQuests(this.state).find((t) => t.def.id === id);
-      if (q) this.hud.toast(`New quest: ${q.def.title}`, 'info');
+      const def = QUESTS_BY_ID[id];
+      if (def.optional) this.hud.toast(`Side quest available: ${def.title} (see the journal)`, 'info');
+      else if (def) this.hud.toast(`New quest: ${def.title}`, 'info');
     });
     this.bus.on('constructed', ({ id, level, uid }) => {
       if (DECORATIONS[id]) return;
@@ -120,6 +140,7 @@ export class Game {
     this.sfx.muted = state.settings.muted;
     this.running = true;
     this.placement = null;
+    this.lastEvent = activeEvent(state.time)?.id || null; // do not announce a festival that was already on
     this.applyCleared();
     this.applyWorldFlags();
     this.setCameraWorld();
@@ -189,6 +210,17 @@ export class Game {
       if (this.tryInteract()) this.actionBuffer = 0;
     }
     this.effects.update(dt);
+    this.progressTimer = (this.progressTimer || 0) + dt;
+    if (this.progressTimer > 0.8) {
+      this.progressTimer = 0;
+      Progress.checkUnlocks(this.state, this.bus);
+      Progress.checkAchievements(this.state, this.bus);
+      const ev = activeEvent(this.state.time);
+      if ((ev?.id || null) !== this.lastEvent) {
+        if (ev && this.lastEvent !== undefined) this.hud.toast(`${ev.name}! ${ev.blurb}`, 'quest');
+        this.lastEvent = ev?.id || null;
+      }
+    }
     this.camera.follow(p.x, p.y - 40, dt);
     this.hud.update();
 
@@ -257,7 +289,7 @@ export class Game {
       const def = PLOT_AT.get(`${Math.floor(x / TILE)},${Math.floor(y / TILE)}`);
       if (def) {
         const a = Farming.getPlotAction(this.state, def.id);
-        if (a.action === 'locked') return { kind: 'object', ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE) };
+        if (a.action === 'locked') return { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
         return { kind: 'plot', id: def.id, tx: def.tx, ty: def.ty, label: a.label, ok: a.ok, action: a.action };
       }
     }
@@ -365,7 +397,10 @@ export class Game {
       tool_shed: `Workshop — upgrades${building('tool_shed')}`,
       market: 'Open the market stall',
       village_sign: 'Read the signpost',
-      garden_sign: s.unlocks.gardenExpansion ? 'South garden bed (owned)' : 'Expand the garden',
+      garden_sign: (() => {
+        const up = UPGRADES[String(uid || 'unlock:gardenExpansion').split(':')[1]] || UPGRADES.gardenExpansion;
+        return s.unlocks[up.id] ? `${up.name} (owned)` : `Expand: ${up.name} (${up.cost} coins)`;
+      })(),
     };
     const ok = kind === 'closed' ? false : kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
     return { objectKind: kind, x, y, label: labels[kind], ok };
@@ -448,7 +483,10 @@ export class Game {
         this.panels.planner('upgrade');
         break;
       case 'garden_sign':
-        this.panels.upgrade('gardenExpansion', 'Garden Expansion');
+        {
+          const up = UPGRADES[String(this.target?.uid || 'unlock:gardenExpansion').split(':')[1]] || UPGRADES.gardenExpansion;
+          this.panels.upgrade(up.id, up.name);
+        }
         break;
       case 'workbench':
         this.panels.planner('upgrade');
@@ -675,14 +713,42 @@ export class Game {
     this.panels.rerender();
   }
 
+  acceptQuest(id) {
+    const r = Quests.accept(this.state, id, this.bus);
+    if (!r.ok) this.hud.toast(r.reason, 'warn');
+    this.hud.cache.quests = null;
+    this.panels.rerender();
+    return r;
+  }
+
+  abandonQuest(id) {
+    const r = Quests.abandon(this.state, id, this.bus);
+    this.hud.toast(r.ok ? 'Quest put down — you can pick it up again from the journal' : r.reason, r.ok ? 'info' : 'warn');
+    this.hud.cache.quests = null;
+    this.panels.rerender();
+    return r;
+  }
+
+  claimAchievement(id) {
+    const r = Progress.claimAchievement(this.state, id, this.bus);
+    if (r.ok) {
+      this.sfx.play('coin');
+      this.hud.toast(`${ACHIEVEMENTS_BY_ID[id].name}: +${r.reward.coins} coins, +${r.reward.xp} XP`, 'good');
+      this.autosave('achievement');
+    } else this.hud.toast(r.reason, 'warn');
+    this.panels.rerender();
+    return r;
+  }
+
   claimQuest(id) {
     const r = Quests.claim(this.state, id, this.bus);
     if (r.ok) {
       this.sfx.play('coin');
-      this.hud.toast(`Reward: ${Quests.rewardText(r.reward)}`, 'good');
+      this.hud.toast(`Reward: ${Quests.rewardText(r.reward)} · +${r.xp} XP`, 'good');
       this.autosave('quest');
     } else this.hud.toast(r.reason, 'warn');
     this.hud.cache.quests = null;
+    this.panels.rerender();
   }
 
   selectSlot(i) {

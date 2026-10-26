@@ -5,6 +5,7 @@ import { createPlot } from './farming.js';
 import { createQuestState, refreshAvailability } from './quests.js';
 import { createBuildingState } from './buildings.js';
 import { rollover as rolloverOrders } from './orders.js';
+import { seedSeenUnlocks } from './progress.js';
 
 // The complete persistent game state. Rendering-only data never lives here.
 export function createNewState() {
@@ -25,6 +26,10 @@ export function createNewState() {
     relations: {}, // villager friendship: { npcId: { points, lastTalkDay } }
     orders: { day: 0, nextId: 1, list: [] }, // delivery requests
     shops: { day: 0, bought: {}, traded: {} }, // today's village stock and demand
+    counters: {}, // lifetime event totals (harvests, sales...) for achievements
+    achievements: {}, // { id: { notified, claimed } }
+    xp: 0, // experience; the farm level is derived from it
+    seenUnlocks: [], // progression-tree entries already announced
     nextUid: 1,
     quests: createQuestState(),
     stats: { earned: 0 },
@@ -33,5 +38,6 @@ export function createNewState() {
   };
   refreshAvailability(state);
   rolloverOrders(state);
+  seedSeenUnlocks(state); // what is already open at the start is not news
   return state;
 }

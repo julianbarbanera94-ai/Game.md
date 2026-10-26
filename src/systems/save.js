@@ -9,6 +9,10 @@ import { createNewState } from './state.js';
 import { rollover as rolloverOrders } from './orders.js';
 import { rollover as rolloverShops } from './shops.js';
 import { refreshAvailability } from './quests.js';
+import { QUESTS_BY_ID } from '../data/quests.js';
+import { ACHIEVEMENTS_BY_ID } from '../data/achievements.js';
+import { UNLOCKS } from '../data/unlocks.js';
+import { seedSeenUnlocks, checkAchievements } from './progress.js';
 import { applyUpgradeEffects } from './economy.js';
 import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
 import { SPECIES } from '../data/animals.js';
@@ -39,6 +43,9 @@ MIGRATIONS[2] = (data) => ({ ...data, version: 3, animals: [] });
 MIGRATIONS[3] = (data) => ({ ...data, version: 4, cleared: [] });
 // v4 -> v5: the village. Old saves have no friendships, requests or shop history,
 // and if they already cleared... nothing: the road starts closed.
+// v5 -> v6: progression. Counters start from zero, nothing is claimed, and every
+// unlock already open is marked as seen so loading does not announce old news.
+MIGRATIONS[5] = (data) => ({ ...data, version: 6, counters: {}, achievements: {}, xp: 0 });
 MIGRATIONS[4] = (data) => ({ ...data, version: 5, relations: {}, orders: { day: 0, nextId: 1, list: [] }, shops: { day: 0, bought: {}, traded: {} } });
 
 function validJob(job, maxLevel) {
@@ -167,13 +174,26 @@ export function deserialize(json) {
   if (data.quests) {
     for (const [id, qs] of Object.entries(s.quests)) {
       const d = data.quests[id];
-      if (!d || !['locked', 'active', 'complete', 'claimed'].includes(d.status)) continue;
-      qs.status = d.status;
-      qs.progress = qs.progress.map((_, i) => Math.floor(num(d.progress?.[i], 0)));
+      if (!d || !['locked', 'available', 'active', 'complete', 'claimed'].includes(d.status)) continue;
+      const def = QUESTS_BY_ID[id];
+      qs.status = d.status === 'available' && !def.optional ? 'active' : d.status;
+      qs.progress = qs.progress.map((_, i) => Math.floor(num(d.progress?.[i], 0, 0, def.objectives[i].count)));
+      qs.readyDay = Math.floor(num(d.readyDay, 0));
+      qs.cycle = Math.floor(num(d.cycle, 0));
     }
   }
   s.stats.earned = num(data.stats?.earned, 0);
   s.flags.introSeen = !!data.flags?.introSeen;
+  s.xp = Math.floor(num(data.xp, 0, 0, 1e6));
+  if (data.counters && typeof data.counters === 'object') {
+    for (const [k, v] of Object.entries(data.counters)) if (/^[A-Za-z]{2,24}$/.test(k)) s.counters[k] = Math.floor(num(v, 0, 0, 1e9));
+  }
+  if (data.achievements && typeof data.achievements === 'object') {
+    for (const id of Object.keys(ACHIEVEMENTS_BY_ID)) {
+      const a = data.achievements[id];
+      if (a && typeof a === 'object') s.achievements[id] = { notified: !!a.notified || !!a.claimed, claimed: !!a.claimed };
+    }
+  }
   s.flags.roadOpen = !!data.flags?.roadOpen;
   s.flags.visitedVillage = !!data.flags?.visitedVillage;
   // villagers: friendship, requests and today's shop state
@@ -215,6 +235,10 @@ export function deserialize(json) {
   }
   s.settings.muted = !!data.settings?.muted;
   refreshAvailability(s);
+  if (Array.isArray(data.seenUnlocks)) s.seenUnlocks = data.seenUnlocks.filter((id) => UNLOCKS.some((u) => u.id === id));
+  else seedSeenUnlocks(s);
+  checkAchievements(s); // anything already earned is ready, without a fresh announcement
+  for (const rec of Object.values(s.achievements)) rec.notified = true;
   rolloverShops(s);
   rolloverOrders(s);
   return s;

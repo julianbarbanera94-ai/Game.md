@@ -16,6 +16,14 @@ export const SHOP_STOCK = [
 ];
 
 export const UPGRADES = {
+  northField: {
+    id: 'northField',
+    name: 'North Field',
+    description: 'Clear the old pasture beside the road: +8 crop plots north of the garden.',
+    cost: 600,
+    requires: { unlock: 'gardenExpansion' },
+    kind: 'land',
+  },
   gardenExpansion: {
     id: 'gardenExpansion',
     name: 'South Garden Bed',

@@ -11,6 +11,7 @@ import { rewardText } from '../systems/quests.js';
 import { el } from './hud.js';
 import { guarded } from './guard.js';
 import { installVillagePanels } from './villagePanels.js';
+import { installJournalPanels } from './journalPanels.js';
 
 // Full-screen / modal interfaces. Every panel closes with Esc, the close
 // button or a click on the backdrop, and returns control to gameplay.
@@ -312,25 +313,6 @@ export class Panels {
   }
 
   // ---- quest log
-  journal() {
-    const s = this.game.state;
-    const content = el('div', { class: 'journal' });
-    const render = () => {
-      const list = QUESTS.filter((q) => s.quests[q.id].status !== 'locked').map((q) => {
-        const qs = s.quests[q.id];
-        return el('div', { class: `jquest ${qs.status}` },
-          el('div', { class: 'jq-head' }, el('strong', {}, q.title), el('span', { class: 'badge' }, qs.status)),
-          el('p', {}, q.description),
-          el('ul', {}, q.objectives.map((o, i) => el('li', {}, `${o.label}: ${qs.progress[i]}/${o.count}`))),
-          el('small', {}, `Reward: ${rewardText(q.reward)} · From: ${q.giver}`),
-          qs.status === 'complete' ? el('button', { class: 'primary', onclick: guarded(() => { this.game.claimQuest(q.id); render(); }) }, 'Claim reward') : null);
-      });
-      content.replaceChildren(...list);
-    };
-    this.show('Journal', content, { wide: true }).render = render;
-    render();
-  }
-
   // ---- pause menu
   menu(status = null) {
     const g = this.game;
@@ -355,3 +337,4 @@ export class Panels {
 }
 
 installVillagePanels(Panels);
+installJournalPanels(Panels);

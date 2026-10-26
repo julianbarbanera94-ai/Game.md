@@ -6,6 +6,7 @@ import { bagSlots, sellMultiplier } from './buildings.js';
 import { isRequirementMet, requirementText } from './economy.js';
 import { clock } from './time.js';
 import { discount } from './relations.js';
+import { eventSellBonus } from './seasons.js';
 
 // Village commerce. Stock and demand reset every morning.
 //   General Store (Mara): limited daily stock of seeds and feed, friendship discount.
@@ -74,7 +75,7 @@ export function traderUnit(state, itemId, nth = 0) {
   rollover(state);
   const done = (state.shops.traded[itemId] || 0) + nth;
   const base = item.sellPrice * sellMultiplier(state);
-  const bonus = 1 + discount(state, 'tobias') * 0.5; // friends get a little extra
+  const bonus = 1 + discount(state, 'tobias') * 0.5 + eventSellBonus(state.time); // friends and festivals add a little
   return Math.round(done < TRADER_DAILY_DEMAND ? base * TRADER_PREMIUM * bonus : base * bonus);
 }
 

@@ -1,6 +1,7 @@
 import { CROPS, GROWTH_STAGES, WATER_DURATION } from '../data/crops.js';
 import { getItem } from '../data/items.js';
 import { PLOTS_BY_ID, PLOT_GROUPS } from '../data/world.js';
+import { UPGRADES } from '../data/progression.js';
 import { NULL_BUS } from '../core/events.js';
 import * as Inv from './inventory.js';
 import { bagSlots, hasSprinklerCan } from './buildings.js';
@@ -50,7 +51,8 @@ export function seedToPlant(state) {
 // Describe the contextual action for a plot without changing anything.
 export function getPlotAction(state, plotId) {
   if (!isPlotAvailable(state, plotId)) {
-    return { action: 'locked', label: 'Overgrown — expand the garden', ok: false };
+    const up = UPGRADES[PLOT_GROUPS[PLOTS_BY_ID[plotId].group].unlock];
+    return { action: 'locked', label: `Overgrown — ${up.name.toLowerCase()} (${up.cost} coins)`, ok: false, unlock: up.id };
   }
   const plot = state.plots[plotId];
   if (!plot.tilled) return { action: 'till', label: 'Till soil', ok: true, tool: 'hoe' };

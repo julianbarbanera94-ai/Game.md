@@ -27,10 +27,13 @@ export const BRIDGE = { x0: 16.9, x1: 18.9 };
 export const PLOT_GROUPS = {
   starter: { unlock: null },
   south: { unlock: 'gardenExpansion' },
+  north: { unlock: 'northField' },
 };
+// The north field (tiles) beside the road, north of the garden.
+export const NORTH_FIELD = { x0: 4.8, y0: 6.6, x1: 9.2, y1: 9.4 };
 
 export const PLOTS = [];
-for (const [group, rows] of [['starter', [14, 15]], ['south', [17, 18]]]) {
+for (const [group, rows] of [['starter', [14, 15]], ['south', [17, 18]], ['north', [7, 8]]]) {
   for (const row of rows) {
     for (let col = 5; col <= 8; col++) {
       PLOTS.push({ id: `${group}_${col}_${row}`, group, tx: col, ty: row });

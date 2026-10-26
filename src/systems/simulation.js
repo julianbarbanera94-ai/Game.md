@@ -3,6 +3,8 @@ import { minutesUntilMorning } from './time.js';
 import { morning, tickConstruction } from './buildings.js';
 import { tickAnimals } from './animals.js';
 import { rollover as rolloverOrders } from './orders.js';
+import { refreshAvailability } from './quests.js';
+import { checkUnlocks } from './progress.js';
 import { rollover as rolloverShops } from './shops.js';
 import { NULL_BUS } from '../core/events.js';
 
@@ -22,6 +24,8 @@ export function advanceTime(state, minutes, bus = NULL_BUS) {
       morning(state, bus);
       rolloverShops(state);
       rolloverOrders(state, bus);
+      refreshAvailability(state, bus); // festivals start and repeatable quests return
+      checkUnlocks(state, bus);
     }
   }
 }

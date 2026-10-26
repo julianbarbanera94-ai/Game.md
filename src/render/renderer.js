@@ -10,6 +10,8 @@ import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
 import { buildGround } from './terrain.js';
+import { calendar, activeEvent } from '../systems/seasons.js';
+import { SEASON_TINT } from '../data/seasons.js';
 import { buildInteriorArt } from './interiorArt.js';
 import { playerFrame, plotSpriteKey, untilledVariant, wetVariant } from './sprites.js';
 
@@ -505,6 +507,15 @@ export class Renderer {
   }
 
   drawLighting(g, game, cam) {
+    // gentle seasonal colour grade (and festival glow) under the night overlay
+    const evTint = activeEvent(game.state.time)?.tint;
+    for (const t of [SEASON_TINT[calendar(game.state.time).seasonIndex], evTint]) {
+      if (!t) continue;
+      g.save();
+      g.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},${t[3]})`;
+      g.fillRect(cam.x, cam.y, cam.viewW, cam.viewH);
+      g.restore();
+    }
     const dark = darkness(game.state.time);
     if (dark <= 0.01) return;
     g.save();

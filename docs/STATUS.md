@@ -123,6 +123,19 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Tests: `tests/unit/village.test.mjs` (schedules, friendship, shops, requests, quests, save), `npm run test:village` (43 checks: road, walking in, dialogue, buying, requests, trader, night, reload).
 - Not yet: shop interiors, villager gifts, seasonal stalls, NPC walking art, sound for the village.
 
+## Phase 8: quests, progression and unlocks
+
+- **Journal** (Journal button or J): Quests with Active / Available / Done filters, quest kinds (main story, farming, building, livestock, neighbours, delivery, exploration, seasonal), objective bars, accept / put down / claim; **Achievements** with progress bars and one-time claims; **Progress** (the unlock tree by track: Farming, Livestock, Buildings, Exploration, Community) with what each locked item needs.
+- **Optional side quests** are offered, not forced (accept, put down, claim). One repeatable quest returns every 3 days.
+- **Experience and farm levels** (10 levels): quests and achievements give XP, level-ups pay coins, level can gate unlocks.
+- **Achievements** (14) driven by real event counters, claimed once.
+- **Land**: a second purchasable field, the North Field (+8 plots, 600 coins, after the south bed). Locked plots say what they need.
+- **Notifications**: toasts for objective progress, quest accepted/complete, new unlocks (announced once), achievements, level-ups, festivals.
+- **Seasons** on the game clock (4 x 28 days, not real dates) with a light colour grade, and four festivals (Spring Festival, Summer Fair, Autumn Harvest, Winter Market): each starts a seasonal quest, lapses if unfinished, returns next year, and gives the trader +10% while it lasts.
+- **Save v6**: XP, counters, achievements, announced unlocks, quest repeat/season data; v5 saves migrate silently (nothing old is re-announced). All validated on load.
+- Tests: `tests/unit/progression.test.mjs` (13), `npm run test:progression` (50 checks through the real UI).
+- Not yet: machinery/vehicle unlocks (Phase 6), real artwork for quest icons and reward screens, seasonal decorations (only a colour grade today).
+
 ## Asset audit
 
 See `docs/audit/ASSET_AUDIT.md`: every image in the ten packs measured against resolution standards; the cottage interior was rebuilt from layers; remaining soft assets (buildings, animals, icons, decorations) need new exports.

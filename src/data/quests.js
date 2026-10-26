@@ -200,4 +200,137 @@ QUESTS.push(
   },
 );
 
+// Phase 8: kinds, optional side quests, a repeatable quest and seasonal quests.
+// optional: offered in the journal and started by the player (can be abandoned).
+// repeatDays: after claiming, offered again that many days later.
+// event: only available while that seasonal event (data/seasons.js) is on.
+QUESTS.push(
+  {
+    id: 'sq_green_thumb',
+    title: 'Green Thumb',
+    giver: 'Garden sign',
+    description: 'Practice makes perfect: harvest 15 crops.',
+    prereqs: ['q_first_harvest'],
+    optional: true,
+    objectives: [{ type: 'harvest', count: 15, label: 'Harvest crops' }],
+    reward: { coins: 45 },
+  },
+  {
+    id: 'sq_carrot_king',
+    title: 'Carrot King',
+    giver: 'Garden sign',
+    description: 'Show the valley what a carrot can be. Harvest 12 carrots.',
+    prereqs: ['q_first_harvest'],
+    optional: true,
+    objectives: [{ type: 'harvest', crop: 'carrot', count: 12, label: 'Harvest carrots' }],
+    reward: { items: { seed_pumpkin: 2 } },
+  },
+  {
+    id: 'sq_market_regular',
+    title: 'Market Regular',
+    giver: 'Market stall',
+    description: 'Keep the stalls stocked. Sell 15 pieces of produce. Offered again every few days.',
+    prereqs: ['q_market_day'],
+    repeatDays: 3,
+    objectives: [{ type: 'sell', count: 15, label: 'Sell produce' }],
+    reward: { coins: 60 },
+  },
+  {
+    id: 'sq_busy_builder',
+    title: 'Busy Builder',
+    giver: 'Workbench',
+    description: 'A growing farm never stops building. Finish or upgrade three buildings.',
+    prereqs: ['q_storage'],
+    optional: true,
+    objectives: [{ type: 'constructed', count: 3, label: 'Finish buildings' }],
+    reward: { coins: 100 },
+  },
+  {
+    id: 'sq_meet_villagers',
+    title: 'Meet the Neighbours',
+    giver: 'Willowmere',
+    description: 'Say hello to Bram, Odette and Wren as well.',
+    prereqs: ['q_meet_mara'],
+    optional: true,
+    objectives: [
+      { type: 'talk', id: 'bram', count: 1, label: 'Talk to Bram' },
+      { type: 'talk', id: 'odette', count: 1, label: 'Talk to Odette' },
+      { type: 'talk', id: 'wren', count: 1, label: 'Talk to Wren' },
+    ],
+    reward: { coins: 50 },
+  },
+  {
+    id: 'sq_couriers_pride',
+    title: "Courier's Pride",
+    giver: 'Notice board',
+    description: 'Complete three delivery requests from the notice board.',
+    prereqs: ['q_first_delivery'],
+    optional: true,
+    objectives: [{ type: 'deliver', count: 3, label: 'Deliver requests' }],
+    reward: { coins: 90 },
+  },
+  {
+    id: 'qe_spring_festival',
+    title: 'Spring Festival: Fresh Starts',
+    giver: 'Spring Festival',
+    description: 'The village is celebrating. Plant 15 seeds while the festival lasts.',
+    prereqs: [],
+    event: 'spring_festival',
+    objectives: [{ type: 'plant', count: 15, label: 'Plant seeds' }],
+    reward: { coins: 100 },
+  },
+  {
+    id: 'qe_summer_fair',
+    title: 'Summer Fair: Best of the Farm',
+    giver: 'Summer Fair',
+    description: 'Sell 20 pieces of produce at the fair.',
+    prereqs: [],
+    event: 'summer_fair',
+    objectives: [{ type: 'sell', count: 20, label: 'Sell produce' }],
+    reward: { coins: 120 },
+  },
+  {
+    id: 'qe_autumn_harvest',
+    title: 'Harvest Festival: Full Baskets',
+    giver: 'Harvest Festival',
+    description: 'Harvest 25 crops for the festival feast.',
+    prereqs: [],
+    event: 'autumn_harvest',
+    objectives: [{ type: 'harvest', count: 25, label: 'Harvest crops' }],
+    reward: { coins: 150 },
+  },
+  {
+    id: 'qe_winter_market',
+    title: 'Winter Market: Warm Deliveries',
+    giver: 'Winter Market',
+    description: 'The villagers need supplies. Complete two delivery requests.',
+    prereqs: [],
+    event: 'winter_market',
+    objectives: [{ type: 'deliver', count: 2, label: 'Deliver requests' }],
+    reward: { coins: 120 },
+  },
+);
+
+// Story and category labels for the journal, and experience for claiming.
+const KIND = {
+  main: ['q_breaking_ground', 'q_first_harvest', 'q_market_day', 'q_room_to_grow', 'q_open_road', 'q_visit_village'],
+  farming: ['q_restock', 'q_steady_supply', 'sq_green_thumb', 'sq_carrot_king', 'sq_market_regular'],
+  building: ['q_storage', 'q_home_improvements', 'q_coop', 'q_barn', 'sq_busy_builder'],
+  livestock: ['q_first_hens', 'q_egg_money', 'q_fresh_milk', 'q_woolly'],
+  relationship: ['q_meet_mara', 'q_good_neighbour', 'sq_meet_villagers'],
+  delivery: ['q_first_delivery', 'sq_couriers_pride'],
+  seasonal: ['qe_spring_festival', 'qe_summer_fair', 'qe_autumn_harvest', 'qe_winter_market'],
+};
+export const QUEST_KINDS = {
+  main: 'Main story', farming: 'Farming', building: 'Building', livestock: 'Livestock',
+  relationship: 'Neighbours', delivery: 'Delivery', exploration: 'Exploration', seasonal: 'Seasonal',
+};
+for (const q of QUESTS) {
+  q.kind = Object.entries(KIND).find(([, ids]) => ids.includes(q.id))?.[0] || 'main';
+  q.optional = !!q.optional;
+  q.xp = q.xp ?? (q.kind === 'main' ? 30 : q.kind === 'seasonal' ? 40 : 20);
+}
+// the walk to the village is exploration, not just story
+QUESTS.find((q) => q.id === 'q_visit_village').kind = 'exploration';
+
 export const QUESTS_BY_ID = Object.fromEntries(QUESTS.map((q) => [q.id, q]));

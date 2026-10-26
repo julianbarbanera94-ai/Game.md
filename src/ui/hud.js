@@ -1,3 +1,4 @@
+import { calendar } from '../systems/seasons.js';
 import { getItem } from '../data/items.js';
 import { clock, darkness, formatClock } from '../systems/time.js';
 import { trackedQuests, rewardText } from '../systems/quests.js';
@@ -42,7 +43,8 @@ export class Hud {
   update() {
     const { state, target } = this.game;
     const c = clock(state.time);
-    this.set('day', `Day ${c.day}`, (v) => (this.dayEl.textContent = v));
+    const cal = calendar(state.time);
+    this.set('day', `Day ${c.day} · ${cal.season}`, (v) => (this.dayEl.textContent = v));
     this.set('time', formatClock(state.time), (v) => (this.timeEl.textContent = v));
     this.set('night', darkness(state.time) > 0.4, (v) => this.sunEl.classList.toggle('moon', v));
     this.set('coins', state.coins, (v) => (this.coinsEl.textContent = v.toLocaleString()));

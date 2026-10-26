@@ -5,6 +5,7 @@ import { NULL_BUS } from '../core/events.js';
 import * as Inv from './inventory.js';
 import { BUILDINGS } from '../data/buildings.js';
 import { bagSlots, buildingLevel, sellMultiplier } from './buildings.js';
+import { levelOf } from './level.js';
 
 // Transactions validate everything first, then apply atomically.
 
@@ -14,6 +15,9 @@ export function isRequirementMet(state, req) {
   if (req.unlock && !state.unlocks[req.unlock]) return false;
   if (req.building && buildingLevel(state, req.building[0]) < req.building[1]) return false;
   if (req.placed && !state.placed.some((p) => p.type === req.placed && p.level >= 1)) return false;
+  if (req.flag && !state.flags[req.flag]) return false;
+  if (req.level && levelOf(state) < req.level) return false;
+  if (req.comingSoon) return false;
   return true;
 }
 
@@ -21,8 +25,13 @@ export function requirementText(req) {
   if (!req) return '';
   if (req.quest) return `Complete "${QUESTS_BY_ID[req.quest].title}"`;
   if (req.unlock === 'gardenExpansion') return 'Expand your garden';
+  if (req.unlock && UPGRADES[req.unlock]) return `Buy the ${UPGRADES[req.unlock].name} (${UPGRADES[req.unlock].cost} coins)`;
   if (req.building) return `${BUILDINGS[req.building[0]].name} level ${req.building[1]}`;
   if (req.placed) return `Build a ${BUILDINGS[req.placed].name.toLowerCase()}`;
+  if (req.flag === 'roadOpen') return 'Open the road east';
+  if (req.flag === 'visitedVillage') return 'Visit Willowmere village';
+  if (req.level) return `Reach farm level ${req.level}`;
+  if (req.comingSoon) return 'Coming in a later update';
   return 'Locked';
 }
 

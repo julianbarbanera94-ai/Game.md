@@ -1,6 +1,6 @@
 import { TILE, WORLD_W } from '../config.js';
 import { FOREST_WALL_X, ROAD_GATE, ROAD_Y, VILLAGE_X0 } from '../data/village.js';
-import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, PATHS, SCENERY } from '../data/world.js';
+import { BOUNDS, BRIDGE, CREEK, GARDEN, NORTH_FIELD, OBJECTS, PATHS, SCENERY } from '../data/world.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
 import { INTERIORS } from '../data/interiors.js';
 import { interiorSpriteKeys } from '../render/interiorArt.js';
@@ -153,6 +153,7 @@ function noBuildZones() {
     { name: 'the garden', x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
     { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
   ];
+  z.push({ name: 'the north field', x0: NORTH_FIELD.x0 * TILE, y0: NORTH_FIELD.y0 * TILE, x1: NORTH_FIELD.x1 * TILE, y1: NORTH_FIELD.y1 * TILE });
   z.push({ name: 'the village', x0: VILLAGE_X0 * TILE, y0: 0, x1: WORLD_W, y1: 28 * TILE });
   for (const p of PATHS) {
     const hw = (p.width / 2) * TILE;
