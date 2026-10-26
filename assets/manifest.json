@@ -1203,7 +1203,7 @@
       "height": 426,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
       "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export."
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.coop": {
       "file": "assets/derived/phase4/interior_coop.webp",
@@ -1211,7 +1211,7 @@
       "height": 423,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
       "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export."
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.house": {
       "file": "assets/derived/phase4/interior_house.webp",
@@ -1219,7 +1219,7 @@
       "height": 426,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
       "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export."
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.tool_shed": {
       "file": "assets/derived/phase4/interior_tool_shed.webp",
@@ -1227,7 +1227,7 @@
       "height": 420,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
       "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export."
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior_prop.barrel": {
       "file": "assets/derived/interior/barrel.webp",
@@ -2439,11 +2439,11 @@
     },
     "prop.sprinkler": {
       "file": "assets/derived/props/sprinkler.png",
-      "width": 256,
-      "height": 288,
-      "source": "tools/paint_sprinkler.mjs",
+      "width": 303,
+      "height": 211,
+      "source": "tools/paint_sprinkler.py",
       "status": "painted-in-code",
-      "notes": "No sprinkler art was supplied; painted in code to match the props. Replace with a hand-painted sprite (see docs/ART_REQUESTS.md)."
+      "notes": "Built from the game's painted rocks, soil, grass and flowers around a brass sprinkler shaded in code (normals, patina, scratches). No sprinkler art was supplied."
     }
   }
 }

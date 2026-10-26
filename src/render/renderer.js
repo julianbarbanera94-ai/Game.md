@@ -120,7 +120,9 @@ export class Renderer {
       const def = DECORATIONS[rec.type];
       if (!def?.range) continue;
       if (!morning && !((game.sprayUntil?.[rec.uid] || 0) > t)) continue;
-      const hx = rec.x * TILE, hy = rec.y * TILE - def.w * TILE * 0.68; // the spinning head
+      const e = this.assets.entry(def.sprite);
+      const h = e ? (def.w * TILE * e.height) / e.width : def.w * TILE;
+      const hx = rec.x * TILE, hy = rec.y * TILE - h * def.head; // the spinning head
       const R = def.range * TILE * 0.92;
       g.save();
       for (const jet of [0, Math.PI]) {

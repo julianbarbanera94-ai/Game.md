@@ -159,7 +159,7 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
   plots it will reach.
 - Spinning water jets run each morning (6:00-6:30) and whenever it waters a dry plot. It can be moved or
   picked up like other decorations, and it is saved with the farm.
-- The sprite is painted in code (`tools/paint_sprinkler.mjs`); a hand-painted one is on the art list.
+- The sprite (`tools/paint_sprinkler.py`) is built from the game's painted rocks, soil, grass and flowers around a brass head shaded with real lighting, patina and scratches; a fully hand-painted one is still welcome (art list).
 - Tests: `tests/unit/sprinklers.test.mjs` (4), `npm run test:sprinklers` (13 checks).
 - Rain and sprinklers now water at the start of every clock step, so a long skip (sleeping) grows crops
   that were dry when it began.

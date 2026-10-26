@@ -46,6 +46,6 @@
 
 ## Sprinkler (new)
 
-`prop.sprinkler` is painted in code as a stand-in (brass rotary sprinkler on a ring of stones). Wanted: a
+`prop.sprinkler` is built by `tools/paint_sprinkler.py` from the game's painted rocks, soil and plants with a code-shaded brass head. Still wanted: a
 hand-painted top-down sprite in the style of the other props, transparent PNG, about 300 x 340 px, anchored
 at the bottom centre, the spinning head about 60% up the image.

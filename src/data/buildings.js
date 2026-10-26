@@ -110,8 +110,8 @@ export const DECORATIONS = {
   // It may stand on the garden's walkways (never on a plot): one in the middle
   // of the garden covers both beds.
   sprinkler: {
-    id: 'sprinkler', name: 'Sprinkler', sprite: 'prop.sprinkler', w: 1.2, cost: 150, footprint: [0.4, 0.3],
-    requires: { level: 2 }, range: 2.4, inGarden: true,
+    id: 'sprinkler', name: 'Sprinkler', sprite: 'prop.sprinkler', w: 1.5, cost: 150, footprint: [0.4, 0.3],
+    requires: { level: 2 }, range: 2.4, inGarden: true, head: 0.86, // head height as a share of the sprite
     desc: 'Waters every planted plot around it (about 2 tiles each way), all day. On the path between the garden beds, near the middle, it covers both beds.',
   },
 };
