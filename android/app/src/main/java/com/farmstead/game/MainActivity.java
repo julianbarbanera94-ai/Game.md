@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
@@ -47,6 +49,18 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** Short vibrations for game feedback, as window.AndroidHaptics (Settings > Vibration). */
+    private class AndroidHaptics {
+        @JavascriptInterface
+        public void vibrate(int ms) {
+            Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            if (v == null || !v.hasVibrator()) return;
+            int len = Math.max(5, Math.min(ms, 400));
+            if (android.os.Build.VERSION.SDK_INT >= 26) v.vibrate(VibrationEffect.createOneShot(len, VibrationEffect.DEFAULT_AMPLITUDE));
+            else v.vibrate(len);
+        }
+    }
+
     private static final String START_URL = "https://appassets.androidplatform.net/assets/www/index.html";
     private WebView webView;
 
@@ -66,6 +80,7 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
         webView.addJavascriptInterface(new AndroidStorage(), "AndroidStorage");
+        webView.addJavascriptInterface(new AndroidHaptics(), "AndroidHaptics");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {

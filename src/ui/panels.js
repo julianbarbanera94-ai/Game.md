@@ -416,12 +416,18 @@ export class Panels {
       const choice = (key, options) => el('div', { class: 'seg', role: 'group' },
         options.map(([value, label]) => el('button', { class: st[key] === value ? 'active' : '', 'data-setting': key, 'data-value': String(value),
           'aria-pressed': String(st[key] === value), onclick: () => { g.changeSetting(key, value); render(); } }, label)));
-      const vol = el('input', { type: 'range', min: '0', max: '100', step: '5', value: String(Math.round(st.volume * 100)), 'data-setting': 'volume',
-        'aria-label': 'Sound volume', oninput: (e) => { g.changeSetting('volume', Number(e.target.value) / 100); volLabel.textContent = `${e.target.value}%`; } });
-      const volLabel = el('span', { class: 'muted' }, `${Math.round(st.volume * 100)}%`);
+      const slider = (key, label) => {
+        const out = el('span', { class: 'muted' }, `${Math.round(st[key] * 100)}%`);
+        const input = el('input', { type: 'range', min: '0', max: '100', step: '5', value: String(Math.round(st[key] * 100)), 'data-setting': key,
+          'aria-label': `${label} volume`,
+          oninput: (e) => { g.changeSetting(key, Number(e.target.value) / 100, false); out.textContent = `${e.target.value}%`; },
+          onchange: () => g.autosave('settings') }); // save once the slider is let go
+        return el('div', { class: 'set-row' }, el('strong', {}, label), el('div', { class: 'range' }, input, out));
+      };
       content.replaceChildren(
         el('div', { class: 'set-row' }, el('strong', {}, 'Sound'), choice('muted', [[false, 'On'], [true, 'Off']])),
-        el('div', { class: 'set-row' }, el('strong', {}, 'Volume'), el('div', { class: 'range' }, vol, volLabel)),
+        slider('music', 'Music'), slider('ambience', 'Ambience'), slider('volume', 'Effects'),
+        el('div', { class: 'set-row' }, el('strong', {}, 'Vibration'), choice('vibration', [[true, 'On'], [false, 'Off']])),
         el('div', { class: 'set-row' }, el('strong', {}, 'Camera'), choice('zoom', [['near', 'Close'], ['normal', 'Normal'], ['far', 'Far']])),
         el('div', { class: 'set-row' }, el('strong', {}, 'Touch controls'), choice('bigControls', [[false, 'Normal'], [true, 'Large']])),
         el('p', { class: 'muted' }, 'Settings are saved with your game. The game also saves itself every minute, when you sleep and when you leave.'),
@@ -433,12 +439,15 @@ export class Panels {
 
   controls() {
     this.dialog('Controls',
-      'Move: WASD / arrow keys, or the on-screen stick.\n\n' +
+      'Move: WASD / arrow keys, or the on-screen stick. Run: hold Shift, or push the stick to its edge.\n\n' +
       'Act / interact: E or Space, or the action button. The action adapts to what you face: till, plant, water, harvest, or use buildings.\n\n' +
       'Hotbar: 1–9 or tap a slot to choose which seeds to plant.\n\n' +
-      'B: bag · J: journal · M: map · Esc: pause menu · Enter: claim a completed quest.',
+      'B: bag · J: journal · M: map · Esc: pause menu · Enter: claim a completed quest.\n\n' +
+      'Tractor: W/S drive, A/D steer, E lowers the implement, F gets off.\n\n' +
+      'Gamepad: left stick or d-pad moves, A acts, B gets off / backs out, X bag, Y journal, View map, Start menu, LB/RB hotbar, RT runs. In menus the d-pad moves between buttons and A presses.',
       [{ label: 'Back', action: () => this.menu() }]);
   }
+
 }
 
 installVillagePanels(Panels);

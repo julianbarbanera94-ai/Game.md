@@ -119,3 +119,21 @@ trailer the Crop Trailer; the 4-furrow plough and the seeder are front implement
 hitch meets the tractor). The sprayer and reaper are not in the pack and are still painted in code
 (`src/render/vehicleArt.js`). Status `temporary-reference-derived`: ask for larger repaints (see
 `docs/ART_REQUESTS.md`). Unused in the pack: yellow tractor, green loader, UTV and other trailers.
+
+## Audio (assets/audio/)
+
+Original audio synthesised by `tools/make_audio.py` (numpy, Ogg Vorbis): `music_farm`, `music_village`,
+`ambience_farm`, `ambience_rain`, `engine_loop` and short cues (confirm, cancel, unlock, levelup, build, till,
+attach, door, moo, baa, cluck). Status `original-synthesized`: functional placeholders, free to ship. The six
+Phase 1 WAVs (coin, footstep, harvest, plant, click, watering) are still used.
+
+## Launch art (assets/brand/, launch/, Android mipmaps)
+
+Rendered by `tools/make_branding.mjs` in the game's renderer from existing hand-painted sprites (bridge planks,
+bushes, the cottage scene), then cut by `tools/make_icons.py`. `launch/` (not bundled) holds the 1024 icon
+master, the 512 store icon, the logo and 1920x1080 title/loading art.
+
+## WebP
+
+`tools/webp_assets.py` re-encoded sprites over 40 KB as lossless WebP (visible pixels verified identical) and
+pointed the manifest at them. The Android build bundles only files the manifest or code reference.

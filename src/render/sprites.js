@@ -13,7 +13,8 @@ const WALK = {
 };
 // Action poses are single frames drawn facing left; mirrored for right.
 // Planting reuses the kneeling harvest pose (no dedicated plant frame supplied).
-const ACTION = { till: 'player.hoe_action', water: 'player.water_action', harvest: 'player.harvest_action', plant: 'player.harvest_action' };
+// Collecting eggs, milk and wool uses the carry pose.
+const ACTION = { till: 'player.hoe_action', water: 'player.water_action', harvest: 'player.harvest_action', plant: 'player.harvest_action', carry: 'player.carry_action' };
 
 export const PLAYER_KEYS = [...new Set([...Object.values(IDLE), ...Object.values(WALK).flat(), ...Object.values(ACTION)])];
 

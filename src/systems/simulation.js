@@ -7,6 +7,7 @@ import { refreshAvailability } from './quests.js';
 import { checkUnlocks } from './progress.js';
 import { rollover as rolloverShops } from './shops.js';
 import { NULL_BUS } from '../core/events.js';
+import { rainTick } from './weather.js';
 
 // Advance the shared world clock. Everything time-based hangs off this.
 // The advance is split at each 6:00 AM so morning events (auto-watering)
@@ -20,6 +21,7 @@ export function advanceTime(state, minutes, bus = NULL_BUS) {
     state.time += step;
     minutes -= step;
     tickConstruction(state, bus);
+    rainTick(state, bus);
     if (step === toMorning) {
       morning(state, bus);
       rolloverShops(state);

@@ -40,7 +40,7 @@ export function createNewState() {
     quests: createQuestState(),
     stats: { earned: 0 },
     flags: { introSeen: false, roadOpen: false, visitedVillage: false },
-    settings: { muted: false, volume: 0.55, zoom: 'normal', bigControls: false },
+    settings: { muted: false, volume: 0.55, music: 0.45, ambience: 0.5, vibration: true, zoom: 'normal', bigControls: false },
   };
   refreshAvailability(state);
   rolloverOrders(state);

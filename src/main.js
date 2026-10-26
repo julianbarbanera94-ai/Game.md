@@ -94,7 +94,11 @@ async function boot() {
   document.getElementById('btn-menu').addEventListener('click', () => game.running && game.panels.menu());
   document.getElementById('btn-cancel').addEventListener('click', () => game.cancelPlacement());
   document.getElementById('btn-exit-vehicle').addEventListener('click', () => game.exitVehicle());
-  document.addEventListener('visibilitychange', () => { if (document.hidden && game.running) game.autosave('hidden'); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && game.running) game.autosave('hidden');
+    // no music or engine noise while the app is in the background
+    if (sfx.ctx) (document.hidden ? sfx.ctx.suspend() : sfx.ctx.resume()).catch(() => {});
+  });
   window.addEventListener('pagehide', () => { if (game.running) game.autosave('hidden'); });
   window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
   window.addEventListener('keydown', () => sfx.unlock(), { once: true });
@@ -140,6 +144,7 @@ async function boot() {
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
+    for (const code of input.pollGamepad()) game.handlePad(code);
     game.update(dt);
     if (game.state) renderer.render(game);
     requestAnimationFrame(frame);

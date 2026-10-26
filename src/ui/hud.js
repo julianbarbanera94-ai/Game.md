@@ -1,4 +1,5 @@
 import { calendar } from '../systems/seasons.js';
+import { isRaining, isSnowing } from '../systems/weather.js';
 import { VEHICLES, IMPLEMENTS } from '../data/vehicles.js';
 import { tankSize } from '../systems/vehicles.js';
 import { getItem } from '../data/items.js';
@@ -46,7 +47,8 @@ export class Hud {
     const { state, target } = this.game;
     const c = clock(state.time);
     const cal = calendar(state.time);
-    this.set('day', `Day ${c.day} · ${cal.season}`, (v) => (this.dayEl.textContent = v));
+    const sky = isRaining(state.time) ? ' · Rain' : isSnowing(state.time) ? ' · Snow' : '';
+    this.set('day', `Day ${c.day} · ${cal.season}${sky}`, (v) => (this.dayEl.textContent = v));
     this.set('time', formatClock(state.time), (v) => (this.timeEl.textContent = v));
     this.set('night', darkness(state.time) > 0.4, (v) => this.sunEl.classList.toggle('moon', v));
     this.set('coins', state.coins, (v) => (this.coinsEl.textContent = v.toLocaleString()));

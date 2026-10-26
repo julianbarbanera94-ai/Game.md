@@ -7,9 +7,29 @@ plugins {
 def webRoot = rootProject.projectDir.parentFile
 def webOut = layout.buildDirectory.dir('generated/webassets')
 
+// Only the assets the game uses go into the APK: every file in
+// assets/manifest.json plus files the page, styles and code name directly.
+// Unused pack images and source art stay out.
+def bundledAssets() {
+    def webRoot = rootProject.projectDir.parentFile
+    def keep = ['assets/manifest.json'] as Set
+    def manifest = new groovy.json.JsonSlurper().parse(new File(webRoot, 'assets/manifest.json'))
+    manifest.assets.each { k, v -> if (v.file) keep << v.file }
+    def named = ~/assets\/[\w.\/-]+\.(?:png|jpg|webp|wav|ogg|mp3|json)/
+    def texts = [new File(webRoot, 'index.html'), new File(webRoot, 'styles.css')]
+    new File(webRoot, 'src').eachFileRecurse(groovy.io.FileType.FILES) { texts << it }
+    texts.each { f -> (f.text =~ named).each { keep << it } }
+    return keep
+}
+
 tasks.register('copyWebGame', Copy) {
+    def keep = bundledAssets()
+    includeEmptyDirs = false
     from(webRoot) {
-        include 'index.html', 'styles.css', 'src/**', 'assets/**'
+        include 'index.html', 'styles.css', 'src/**'
+    }
+    from(webRoot) {
+        include { e -> e.directory ? e.relativePath.pathString.startsWith('assets') : keep.contains(e.relativePath.pathString) }
     }
     into webOut.map { it.dir('www') }
 }
@@ -22,8 +42,8 @@ android {
         applicationId 'com.farmstead.game'
         minSdk 24
         targetSdk 35
-        versionCode 2
-        versionName '0.2.0'
+        versionCode 3
+        versionName '0.3.0'
     }
 
     signingConfigs {

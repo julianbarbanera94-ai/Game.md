@@ -158,11 +158,14 @@ test('gifts: one per villager per day, favourites count more, only produce and a
 
 test('settings are saved and sanitised', () => {
   const s = createNewState();
-  s.settings = { muted: true, volume: 0.3, zoom: 'far', bigControls: true };
+  s.settings = { muted: true, volume: 0.3, music: 0.2, ambience: 0.9, vibration: false, zoom: 'far', bigControls: true };
   const back = deserialize(serialize(s));
-  assert.deepEqual(back.settings, { muted: true, volume: 0.3, zoom: 'far', bigControls: true });
-  const bad = deserialize({ ...JSON.parse(serialize(s)), settings: { muted: 'yes', volume: 7, zoom: 'giant', bigControls: 0 } });
+  assert.deepEqual(back.settings, { muted: true, volume: 0.3, music: 0.2, ambience: 0.9, vibration: false, zoom: 'far', bigControls: true });
+  const bad = deserialize({ ...JSON.parse(serialize(s)), settings: { muted: 'yes', volume: 7, music: -1, ambience: 'loud', vibration: 'no', zoom: 'giant', bigControls: 0 } });
   assert.equal(bad.settings.volume, 1);
+  assert.equal(bad.settings.music, 0);
+  assert.equal(bad.settings.ambience, 0.5);
+  assert.equal(bad.settings.vibration, true);
   assert.equal(bad.settings.zoom, 'normal');
   assert.equal(bad.settings.bigControls, false);
 });

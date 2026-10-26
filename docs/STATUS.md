@@ -149,6 +149,15 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
 
+## Phase 10: polish, animation and validation
+
+Full report: `docs/RELEASE_REPORT.md`. In short: original music, ambience and effects with separate volumes;
+rain and snow days (rain waters crops); celebration, construction, exhaust, feeding and petting effects;
+running; carry pose; gamepad support with menu navigation; vibration (native bridge on Android); logo,
+app icons, title and loading screens rendered from the game's own art; faster ground drawing; lossless
+WebP sprites and a slimmer APK. Tests: `tests/unit/weather.test.mjs`, `npm run test:polish` (29 checks).
+Not release-ready: real-device performance, NPC/vehicle art and composed audio are still to do.
+
 ## Phase 9: core gameplay integration
 
 Checked the whole loop against the Phase 9 hand-off and filled the gaps:

@@ -1,5 +1,5 @@
-// Keyboard + touch input. Produces a movement vector and edge-triggered
-// actions consumed once per frame by the game.
+// Keyboard, touch and gamepad input. Produces a movement vector, a run flag
+// and edge-triggered actions consumed once per frame by the game.
 const MOVE_KEYS = {
   ArrowUp: [0, -1], KeyW: [0, -1], ArrowDown: [0, 1], KeyS: [0, 1],
   ArrowLeft: [-1, 0], KeyA: [-1, 0], ArrowRight: [1, 0], KeyD: [1, 0],
@@ -10,6 +10,7 @@ export class Input {
     this.down = new Set();
     this.pressed = [];
     this.stick = { x: 0, y: 0 };
+    this.pad = { x: 0, y: 0, run: false, prev: [], connected: false };
     // interceptor(e) may handle a key immediately (e.g. closing a panel) and
     // return true to stop it from also being queued for the game loop.
     this.interceptor = null;
@@ -50,6 +51,7 @@ export class Input {
       if (e.pointerId !== id) return;
       id = null;
       this.stick = { x: 0, y: 0 };
+    this.pad = { x: 0, y: 0, run: false, prev: [], connected: false };
       knob.style.transform = '';
     };
     el.addEventListener('pointerup', end);
@@ -60,8 +62,41 @@ export class Input {
     this.pressed.push(code);
   }
 
+  // Gamepad (standard mapping): left stick / d-pad move, A act, B back, X bag,
+  // Y journal, View map, Start menu, LB/RB hotbar, RT or a stick pushed to the
+  // edge runs. Called once per frame; pressing turns into the same codes as keys.
+  pollGamepad() {
+    const pads = navigator.getGamepads ? [...navigator.getGamepads()].filter(Boolean) : [];
+    const gp = pads.find((g) => g.mapping === 'standard') || pads[0];
+    this.pad.connected = !!gp;
+    if (!gp) {
+      this.pad.x = this.pad.y = 0;
+      this.pad.run = false;
+      return [];
+    }
+    const btn = (i) => !!gp.buttons[i]?.pressed;
+    const dz = (v) => (Math.abs(v) < 0.25 ? 0 : v);
+    let x = dz(gp.axes[0] || 0), y = dz(gp.axes[1] || 0);
+    if (btn(14)) x = -1; if (btn(15)) x = 1; if (btn(12)) y = -1; if (btn(13)) y = 1;
+    this.pad.x = x;
+    this.pad.y = y;
+    this.pad.run = btn(7) || Math.hypot(gp.axes[0] || 0, gp.axes[1] || 0) > 0.95;
+    const CODES = { 0: 'PadA', 1: 'PadB', 2: 'KeyB', 3: 'KeyJ', 4: 'PadLB', 5: 'PadRB', 8: 'KeyM', 9: 'Escape', 12: 'PadUp', 13: 'PadDown', 14: 'PadLeft', 15: 'PadRight' };
+    const fresh = [];
+    gp.buttons.forEach((b, i) => {
+      if (b.pressed && !this.pad.prev[i] && CODES[i]) fresh.push(CODES[i]);
+      this.pad.prev[i] = b.pressed;
+    });
+    return fresh;
+  }
+
+  // Running: Shift, the gamepad's right trigger, or the touch stick pushed to its rim.
+  running() {
+    return this.down.has('ShiftLeft') || this.down.has('ShiftRight') || this.pad.run || Math.hypot(this.stick.x, this.stick.y) > 0.97;
+  }
+
   moveVector() {
-    let x = this.stick.x, y = this.stick.y;
+    let x = this.stick.x + this.pad.x, y = this.stick.y + this.pad.y;
     for (const code of this.down) {
       const v = MOVE_KEYS[code];
       if (v) { x += v[0]; y += v[1]; }

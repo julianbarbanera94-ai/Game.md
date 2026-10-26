@@ -74,7 +74,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d0": {
-      "file": "assets/redrawn/animal.cow_d0.png",
+      "file": "assets/redrawn/animal.cow_d0.webp",
       "width": 146,
       "height": 238,
       "source": "hires-export",
@@ -82,7 +82,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d1": {
-      "file": "assets/redrawn/animal.cow_d1.png",
+      "file": "assets/redrawn/animal.cow_d1.webp",
       "width": 129,
       "height": 235,
       "source": "hires-export",
@@ -90,7 +90,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d2": {
-      "file": "assets/redrawn/animal.cow_d2.png",
+      "file": "assets/redrawn/animal.cow_d2.webp",
       "width": 132,
       "height": 237,
       "source": "hires-export",
@@ -98,7 +98,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d3": {
-      "file": "assets/redrawn/animal.cow_d3.png",
+      "file": "assets/redrawn/animal.cow_d3.webp",
       "width": 128,
       "height": 238,
       "source": "hires-export",
@@ -106,7 +106,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d4": {
-      "file": "assets/redrawn/animal.cow_d4.png",
+      "file": "assets/redrawn/animal.cow_d4.webp",
       "width": 131,
       "height": 239,
       "source": "hires-export",
@@ -114,7 +114,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u0": {
-      "file": "assets/redrawn/animal.cow_u0.png",
+      "file": "assets/redrawn/animal.cow_u0.webp",
       "width": 120,
       "height": 235,
       "source": "hires-export",
@@ -122,7 +122,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u1": {
-      "file": "assets/redrawn/animal.cow_u1.png",
+      "file": "assets/redrawn/animal.cow_u1.webp",
       "width": 130,
       "height": 238,
       "source": "hires-export",
@@ -130,7 +130,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u2": {
-      "file": "assets/redrawn/animal.cow_u2.png",
+      "file": "assets/redrawn/animal.cow_u2.webp",
       "width": 133,
       "height": 240,
       "source": "hires-export",
@@ -138,7 +138,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u3": {
-      "file": "assets/redrawn/animal.cow_u3.png",
+      "file": "assets/redrawn/animal.cow_u3.webp",
       "width": 120,
       "height": 235,
       "source": "hires-export",
@@ -218,7 +218,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d0": {
-      "file": "assets/redrawn/animal.horse_d0.png",
+      "file": "assets/redrawn/animal.horse_d0.webp",
       "width": 115,
       "height": 293,
       "source": "hires-export",
@@ -226,7 +226,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d1": {
-      "file": "assets/redrawn/animal.horse_d1.png",
+      "file": "assets/redrawn/animal.horse_d1.webp",
       "width": 117,
       "height": 294,
       "source": "hires-export",
@@ -234,7 +234,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d2": {
-      "file": "assets/redrawn/animal.horse_d2.png",
+      "file": "assets/redrawn/animal.horse_d2.webp",
       "width": 117,
       "height": 296,
       "source": "hires-export",
@@ -242,7 +242,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d3": {
-      "file": "assets/redrawn/animal.horse_d3.png",
+      "file": "assets/redrawn/animal.horse_d3.webp",
       "width": 110,
       "height": 294,
       "source": "hires-export",
@@ -250,7 +250,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d4": {
-      "file": "assets/redrawn/animal.horse_d4.png",
+      "file": "assets/redrawn/animal.horse_d4.webp",
       "width": 107,
       "height": 294,
       "source": "hires-export",
@@ -258,7 +258,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u0": {
-      "file": "assets/redrawn/animal.horse_u0.png",
+      "file": "assets/redrawn/animal.horse_u0.webp",
       "width": 116,
       "height": 296,
       "source": "hires-export",
@@ -266,7 +266,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u1": {
-      "file": "assets/redrawn/animal.horse_u1.png",
+      "file": "assets/redrawn/animal.horse_u1.webp",
       "width": 135,
       "height": 297,
       "source": "hires-export",
@@ -274,7 +274,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u2": {
-      "file": "assets/redrawn/animal.horse_u2.png",
+      "file": "assets/redrawn/animal.horse_u2.webp",
       "width": 173,
       "height": 297,
       "source": "hires-export",
@@ -282,7 +282,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u3": {
-      "file": "assets/redrawn/animal.horse_u3.png",
+      "file": "assets/redrawn/animal.horse_u3.webp",
       "width": 132,
       "height": 298,
       "source": "hires-export",
@@ -362,7 +362,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d0": {
-      "file": "assets/redrawn/animal.sheep_d0.png",
+      "file": "assets/redrawn/animal.sheep_d0.webp",
       "width": 137,
       "height": 177,
       "source": "hires-export",
@@ -370,7 +370,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d1": {
-      "file": "assets/redrawn/animal.sheep_d1.png",
+      "file": "assets/redrawn/animal.sheep_d1.webp",
       "width": 129,
       "height": 181,
       "source": "hires-export",
@@ -378,7 +378,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d2": {
-      "file": "assets/redrawn/animal.sheep_d2.png",
+      "file": "assets/redrawn/animal.sheep_d2.webp",
       "width": 140,
       "height": 176,
       "source": "hires-export",
@@ -470,7 +470,7 @@
       "notes": "Pack-supplied placeholder SFX; replace before release."
     },
     "building.chicken_coop": {
-      "file": "assets/phase1/buildings/chicken_coop.png",
+      "file": "assets/phase1/buildings/chicken_coop.webp",
       "width": 325,
       "height": 365,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -478,7 +478,7 @@
       "notes": "Cleaned 6 magenta-spill edge pixels."
     },
     "building.fence_segment": {
-      "file": "assets/phase1/buildings/fence_segment.png",
+      "file": "assets/phase1/buildings/fence_segment.webp",
       "width": 504,
       "height": 187,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -486,7 +486,7 @@
       "notes": ""
     },
     "building.mailbox": {
-      "file": "assets/phase1/buildings/mailbox.png",
+      "file": "assets/phase1/buildings/mailbox.webp",
       "width": 230,
       "height": 252,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -494,7 +494,7 @@
       "notes": ""
     },
     "building.market_stall": {
-      "file": "assets/redrawn/building.market_stall.png",
+      "file": "assets/redrawn/building.market_stall.webp",
       "width": 768,
       "height": 561,
       "source": "hires-export",
@@ -502,7 +502,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.signpost": {
-      "file": "assets/phase1/buildings/signpost.png",
+      "file": "assets/phase1/buildings/signpost.webp",
       "width": 225,
       "height": 252,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -510,7 +510,7 @@
       "notes": ""
     },
     "building.small_barn": {
-      "file": "assets/phase1/buildings/small_barn.png",
+      "file": "assets/phase1/buildings/small_barn.webp",
       "width": 426,
       "height": 407,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -518,7 +518,7 @@
       "notes": ""
     },
     "building.starter_house": {
-      "file": "assets/redrawn/building.starter_house.png",
+      "file": "assets/redrawn/building.starter_house.webp",
       "width": 768,
       "height": 731,
       "source": "hires-export",
@@ -526,7 +526,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.tool_shed": {
-      "file": "assets/redrawn/building.tool_shed.png",
+      "file": "assets/redrawn/building.tool_shed.webp",
       "width": 593,
       "height": 636,
       "source": "hires-export",
@@ -534,7 +534,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.water_barrel": {
-      "file": "assets/phase1/buildings/water_barrel.png",
+      "file": "assets/phase1/buildings/water_barrel.webp",
       "width": 269,
       "height": 258,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -542,7 +542,7 @@
       "notes": ""
     },
     "building.well_building": {
-      "file": "assets/redrawn/building.well_building.png",
+      "file": "assets/redrawn/building.well_building.webp",
       "width": 412,
       "height": 406,
       "source": "hires-export",
@@ -550,7 +550,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.wooden_bridge": {
-      "file": "assets/phase1/buildings/wooden_bridge.png",
+      "file": "assets/phase1/buildings/wooden_bridge.webp",
       "width": 418,
       "height": 275,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -558,7 +558,7 @@
       "notes": ""
     },
     "building.workbench": {
-      "file": "assets/phase1/buildings/workbench.png",
+      "file": "assets/phase1/buildings/workbench.webp",
       "width": 334,
       "height": 239,
       "source": "phase1/assets/03_buildings (v2 detailed)",
@@ -566,7 +566,7 @@
       "notes": ""
     },
     "building4.barn_l1": {
-      "file": "assets/redrawn/building4.barn_l1.png",
+      "file": "assets/redrawn/building4.barn_l1.webp",
       "width": 534,
       "height": 624,
       "source": "hires-export",
@@ -574,7 +574,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.barn_l2": {
-      "file": "assets/redrawn/building4.barn_l2.png",
+      "file": "assets/redrawn/building4.barn_l2.webp",
       "width": 710,
       "height": 765,
       "source": "hires-export",
@@ -582,7 +582,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.barn_l3": {
-      "file": "assets/redrawn/building4.barn_l3.png",
+      "file": "assets/redrawn/building4.barn_l3.webp",
       "width": 768,
       "height": 604,
       "source": "hires-export",
@@ -590,7 +590,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l1": {
-      "file": "assets/redrawn/building4.chicken_coop_l1.png",
+      "file": "assets/redrawn/building4.chicken_coop_l1.webp",
       "width": 471,
       "height": 652,
       "source": "hires-export",
@@ -598,7 +598,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l2": {
-      "file": "assets/redrawn/building4.chicken_coop_l2.png",
+      "file": "assets/redrawn/building4.chicken_coop_l2.webp",
       "width": 708,
       "height": 722,
       "source": "hires-export",
@@ -606,7 +606,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l3": {
-      "file": "assets/redrawn/building4.chicken_coop_l3.png",
+      "file": "assets/redrawn/building4.chicken_coop_l3.webp",
       "width": 768,
       "height": 619,
       "source": "hires-export",
@@ -614,7 +614,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage1": {
-      "file": "assets/redrawn/building4.construction_stage1.png",
+      "file": "assets/redrawn/building4.construction_stage1.webp",
       "width": 636,
       "height": 768,
       "source": "hires-export",
@@ -622,7 +622,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage2": {
-      "file": "assets/redrawn/building4.construction_stage2.png",
+      "file": "assets/redrawn/building4.construction_stage2.webp",
       "width": 611,
       "height": 768,
       "source": "hires-export",
@@ -630,7 +630,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage3": {
-      "file": "assets/redrawn/building4.construction_stage3.png",
+      "file": "assets/redrawn/building4.construction_stage3.webp",
       "width": 618,
       "height": 768,
       "source": "hires-export",
@@ -638,7 +638,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage4": {
-      "file": "assets/redrawn/building4.construction_stage4.png",
+      "file": "assets/redrawn/building4.construction_stage4.webp",
       "width": 590,
       "height": 768,
       "source": "hires-export",
@@ -646,7 +646,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage5": {
-      "file": "assets/derived/phase4/construction_stage5.png",
+      "file": "assets/derived/phase4/construction_stage5.webp",
       "width": 245,
       "height": 290,
       "source": "phase4/02_construction_stages/barn_construction_stages.png",
@@ -654,7 +654,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.house_l1": {
-      "file": "assets/derived/phase4/house_l1.png",
+      "file": "assets/derived/phase4/house_l1.webp",
       "width": 288,
       "height": 324,
       "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
@@ -662,7 +662,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.house_l2": {
-      "file": "assets/redrawn/building4.house_l2.png",
+      "file": "assets/redrawn/building4.house_l2.webp",
       "width": 742,
       "height": 768,
       "source": "hires-export",
@@ -670,7 +670,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.house_l3": {
-      "file": "assets/redrawn/building4.house_l3.png",
+      "file": "assets/redrawn/building4.house_l3.webp",
       "width": 768,
       "height": 594,
       "source": "hires-export",
@@ -678,7 +678,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.market_stall_l1": {
-      "file": "assets/derived/phase4/market_stall_l1.png",
+      "file": "assets/derived/phase4/market_stall_l1.webp",
       "width": 178,
       "height": 212,
       "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
@@ -686,7 +686,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.market_stall_l2": {
-      "file": "assets/redrawn/building4.market_stall_l2.png",
+      "file": "assets/redrawn/building4.market_stall_l2.webp",
       "width": 702,
       "height": 768,
       "source": "hires-export",
@@ -694,7 +694,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.market_stall_l3": {
-      "file": "assets/redrawn/building4.market_stall_l3.png",
+      "file": "assets/redrawn/building4.market_stall_l3.webp",
       "width": 768,
       "height": 651,
       "source": "hires-export",
@@ -702,7 +702,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l1": {
-      "file": "assets/redrawn/building4.storage_shed_l1.png",
+      "file": "assets/redrawn/building4.storage_shed_l1.webp",
       "width": 531,
       "height": 559,
       "source": "hires-export",
@@ -710,7 +710,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l2": {
-      "file": "assets/redrawn/building4.storage_shed_l2.png",
+      "file": "assets/redrawn/building4.storage_shed_l2.webp",
       "width": 534,
       "height": 629,
       "source": "hires-export",
@@ -718,7 +718,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l3": {
-      "file": "assets/redrawn/building4.storage_shed_l3.png",
+      "file": "assets/redrawn/building4.storage_shed_l3.webp",
       "width": 650,
       "height": 566,
       "source": "hires-export",
@@ -726,7 +726,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.tool_shed_l1": {
-      "file": "assets/derived/phase4/tool_shed_l1.png",
+      "file": "assets/derived/phase4/tool_shed_l1.webp",
       "width": 210,
       "height": 234,
       "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
@@ -734,7 +734,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.tool_shed_l2": {
-      "file": "assets/redrawn/building4.tool_shed_l2.png",
+      "file": "assets/redrawn/building4.tool_shed_l2.webp",
       "width": 590,
       "height": 603,
       "source": "hires-export",
@@ -742,7 +742,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.tool_shed_l3": {
-      "file": "assets/redrawn/building4.tool_shed_l3.png",
+      "file": "assets/redrawn/building4.tool_shed_l3.webp",
       "width": 708,
       "height": 569,
       "source": "hires-export",
@@ -750,7 +750,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.well_l1": {
-      "file": "assets/derived/phase4/well_l1.png",
+      "file": "assets/derived/phase4/well_l1.webp",
       "width": 166,
       "height": 226,
       "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
@@ -758,7 +758,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.well_l2": {
-      "file": "assets/redrawn/building4.well_l2.png",
+      "file": "assets/redrawn/building4.well_l2.webp",
       "width": 414,
       "height": 523,
       "source": "hires-export",
@@ -766,7 +766,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.well_l3": {
-      "file": "assets/redrawn/building4.well_l3.png",
+      "file": "assets/redrawn/building4.well_l3.webp",
       "width": 532,
       "height": 534,
       "source": "hires-export",
@@ -774,7 +774,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.bush_berries": {
-      "file": "assets/phase1/foliage/bush_berries.png",
+      "file": "assets/phase1/foliage/bush_berries.webp",
       "width": 245,
       "height": 196,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -782,7 +782,7 @@
       "notes": "Cleaned 1459 magenta-spill edge pixels."
     },
     "foliage.bush_flowering": {
-      "file": "assets/phase1/foliage/bush_flowering.png",
+      "file": "assets/phase1/foliage/bush_flowering.webp",
       "width": 260,
       "height": 197,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -790,7 +790,7 @@
       "notes": "Cleaned 2155 magenta-spill edge pixels."
     },
     "foliage.bush_green": {
-      "file": "assets/phase1/foliage/bush_green.png",
+      "file": "assets/phase1/foliage/bush_green.webp",
       "width": 254,
       "height": 198,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -798,7 +798,7 @@
       "notes": "Cleaned 1017 magenta-spill edge pixels."
     },
     "foliage.bush_white_flowers": {
-      "file": "assets/phase1/foliage/bush_white_flowers.png",
+      "file": "assets/phase1/foliage/bush_white_flowers.webp",
       "width": 264,
       "height": 194,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -806,7 +806,7 @@
       "notes": "Cleaned 1748 magenta-spill edge pixels."
     },
     "foliage.bush_yellow_flowers": {
-      "file": "assets/phase1/foliage/bush_yellow_flowers.png",
+      "file": "assets/phase1/foliage/bush_yellow_flowers.webp",
       "width": 256,
       "height": 190,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -814,7 +814,7 @@
       "notes": "Cleaned 1428 magenta-spill edge pixels."
     },
     "foliage.fallen_log": {
-      "file": "assets/phase1/foliage/fallen_log.png",
+      "file": "assets/phase1/foliage/fallen_log.webp",
       "width": 306,
       "height": 186,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -822,7 +822,7 @@
       "notes": "Cleaned 1565 magenta-spill edge pixels."
     },
     "foliage.fern": {
-      "file": "assets/phase1/foliage/fern.png",
+      "file": "assets/phase1/foliage/fern.webp",
       "width": 236,
       "height": 188,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -830,7 +830,7 @@
       "notes": "Cleaned 2203 magenta-spill edge pixels."
     },
     "foliage.flower_patch": {
-      "file": "assets/phase1/foliage/flower_patch.png",
+      "file": "assets/phase1/foliage/flower_patch.webp",
       "width": 256,
       "height": 157,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -838,7 +838,7 @@
       "notes": "Cleaned 1089 magenta-spill edge pixels."
     },
     "foliage.flower_yellow": {
-      "file": "assets/phase1/foliage/flower_yellow.png",
+      "file": "assets/phase1/foliage/flower_yellow.webp",
       "width": 242,
       "height": 154,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -846,7 +846,7 @@
       "notes": "Cleaned 1463 magenta-spill edge pixels."
     },
     "foliage.grass_tall": {
-      "file": "assets/phase1/foliage/grass_tall.png",
+      "file": "assets/phase1/foliage/grass_tall.webp",
       "width": 229,
       "height": 182,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -854,7 +854,7 @@
       "notes": "Cleaned 1628 magenta-spill edge pixels."
     },
     "foliage.mushrooms": {
-      "file": "assets/phase1/foliage/mushrooms.png",
+      "file": "assets/phase1/foliage/mushrooms.webp",
       "width": 229,
       "height": 170,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -862,7 +862,7 @@
       "notes": "Cleaned 935 magenta-spill edge pixels."
     },
     "foliage.rock_cluster": {
-      "file": "assets/phase1/foliage/rock_cluster.png",
+      "file": "assets/phase1/foliage/rock_cluster.webp",
       "width": 288,
       "height": 223,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -870,7 +870,7 @@
       "notes": "Cleaned 1311 magenta-spill edge pixels."
     },
     "foliage.rock_mossy": {
-      "file": "assets/phase1/foliage/rock_mossy.png",
+      "file": "assets/phase1/foliage/rock_mossy.webp",
       "width": 297,
       "height": 225,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -878,7 +878,7 @@
       "notes": "Cleaned 1059 magenta-spill edge pixels."
     },
     "foliage.rock_small": {
-      "file": "assets/phase1/foliage/rock_small.png",
+      "file": "assets/phase1/foliage/rock_small.webp",
       "width": 250,
       "height": 197,
       "source": "phase1/assets/02_environment/foliage (v2 detailed)",
@@ -886,7 +886,7 @@
       "notes": "Cleaned 1030 magenta-spill edge pixels."
     },
     "foliage.tree_autumn": {
-      "file": "assets/redrawn/foliage.tree_autumn.png",
+      "file": "assets/redrawn/foliage.tree_autumn.webp",
       "width": 534,
       "height": 629,
       "source": "hires-export",
@@ -894,7 +894,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_birch": {
-      "file": "assets/redrawn/foliage.tree_birch.png",
+      "file": "assets/redrawn/foliage.tree_birch.webp",
       "width": 475,
       "height": 575,
       "source": "hires-export",
@@ -902,7 +902,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_blossom": {
-      "file": "assets/redrawn/foliage.tree_blossom.png",
+      "file": "assets/redrawn/foliage.tree_blossom.webp",
       "width": 475,
       "height": 538,
       "source": "hires-export",
@@ -910,7 +910,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_oak": {
-      "file": "assets/redrawn/foliage.tree_oak.png",
+      "file": "assets/redrawn/foliage.tree_oak.webp",
       "width": 593,
       "height": 596,
       "source": "hires-export",
@@ -918,7 +918,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_pine": {
-      "file": "assets/redrawn/foliage.tree_pine.png",
+      "file": "assets/redrawn/foliage.tree_pine.webp",
       "width": 475,
       "height": 639,
       "source": "hires-export",
@@ -926,7 +926,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_stump": {
-      "file": "assets/redrawn/foliage.tree_stump.png",
+      "file": "assets/redrawn/foliage.tree_stump.webp",
       "width": 238,
       "height": 180,
       "source": "hires-export",
@@ -934,7 +934,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_cattle": {
-      "file": "assets/redrawn/icon.feed_cattle.png",
+      "file": "assets/redrawn/icon.feed_cattle.webp",
       "width": 229,
       "height": 240,
       "source": "hires-export",
@@ -942,7 +942,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_chicken": {
-      "file": "assets/redrawn/icon.feed_chicken.png",
+      "file": "assets/redrawn/icon.feed_chicken.webp",
       "width": 240,
       "height": 236,
       "source": "hires-export",
@@ -950,7 +950,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_hay": {
-      "file": "assets/redrawn/icon.feed_hay.png",
+      "file": "assets/redrawn/icon.feed_hay.webp",
       "width": 219,
       "height": 238,
       "source": "hires-export",
@@ -958,7 +958,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_pig": {
-      "file": "assets/redrawn/icon.feed_pig.png",
+      "file": "assets/redrawn/icon.feed_pig.webp",
       "width": 217,
       "height": 240,
       "source": "hires-export",
@@ -966,7 +966,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_salt": {
-      "file": "assets/redrawn/icon.feed_salt.png",
+      "file": "assets/redrawn/icon.feed_salt.webp",
       "width": 240,
       "height": 240,
       "source": "hires-export",
@@ -974,7 +974,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_trough": {
-      "file": "assets/redrawn/icon.feed_trough.png",
+      "file": "assets/redrawn/icon.feed_trough.webp",
       "width": 238,
       "height": 188,
       "source": "hires-export",
@@ -982,7 +982,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_carrot": {
-      "file": "assets/redrawn/icon.produce_carrot.png",
+      "file": "assets/redrawn/icon.produce_carrot.webp",
       "width": 238,
       "height": 184,
       "source": "hires-export",
@@ -990,7 +990,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_corn": {
-      "file": "assets/redrawn/icon.produce_corn.png",
+      "file": "assets/redrawn/icon.produce_corn.webp",
       "width": 227,
       "height": 240,
       "source": "hires-export",
@@ -998,7 +998,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_lettuce": {
-      "file": "assets/redrawn/icon.produce_lettuce.png",
+      "file": "assets/redrawn/icon.produce_lettuce.webp",
       "width": 240,
       "height": 231,
       "source": "hires-export",
@@ -1006,7 +1006,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_potato": {
-      "file": "assets/redrawn/icon.produce_potato.png",
+      "file": "assets/redrawn/icon.produce_potato.webp",
       "width": 240,
       "height": 192,
       "source": "hires-export",
@@ -1014,7 +1014,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_pumpkin": {
-      "file": "assets/redrawn/icon.produce_pumpkin.png",
+      "file": "assets/redrawn/icon.produce_pumpkin.webp",
       "width": 240,
       "height": 199,
       "source": "hires-export",
@@ -1022,7 +1022,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_strawberry": {
-      "file": "assets/redrawn/icon.produce_strawberry.png",
+      "file": "assets/redrawn/icon.produce_strawberry.webp",
       "width": 210,
       "height": 240,
       "source": "hires-export",
@@ -1030,7 +1030,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_tomato": {
-      "file": "assets/redrawn/icon.produce_tomato.png",
+      "file": "assets/redrawn/icon.produce_tomato.webp",
       "width": 240,
       "height": 230,
       "source": "hires-export",
@@ -1038,7 +1038,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_wheat": {
-      "file": "assets/redrawn/icon.produce_wheat.png",
+      "file": "assets/redrawn/icon.produce_wheat.webp",
       "width": 205,
       "height": 240,
       "source": "hires-export",
@@ -1046,7 +1046,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_duck_egg": {
-      "file": "assets/redrawn/icon.product_duck_egg.png",
+      "file": "assets/redrawn/icon.product_duck_egg.webp",
       "width": 169,
       "height": 240,
       "source": "hires-export",
@@ -1054,7 +1054,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_egg": {
-      "file": "assets/redrawn/icon.product_egg.png",
+      "file": "assets/redrawn/icon.product_egg.webp",
       "width": 176,
       "height": 240,
       "source": "hires-export",
@@ -1062,7 +1062,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_feather": {
-      "file": "assets/redrawn/icon.product_feather.png",
+      "file": "assets/redrawn/icon.product_feather.webp",
       "width": 167,
       "height": 240,
       "source": "hires-export",
@@ -1070,7 +1070,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_leather": {
-      "file": "assets/redrawn/icon.product_leather.png",
+      "file": "assets/redrawn/icon.product_leather.webp",
       "width": 217,
       "height": 240,
       "source": "hires-export",
@@ -1078,7 +1078,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_manure": {
-      "file": "assets/redrawn/icon.product_manure.png",
+      "file": "assets/redrawn/icon.product_manure.webp",
       "width": 191,
       "height": 240,
       "source": "hires-export",
@@ -1086,7 +1086,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_milk": {
-      "file": "assets/redrawn/icon.product_milk.png",
+      "file": "assets/redrawn/icon.product_milk.webp",
       "width": 140,
       "height": 238,
       "source": "hires-export",
@@ -1094,7 +1094,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_pork": {
-      "file": "assets/redrawn/icon.product_pork.png",
+      "file": "assets/redrawn/icon.product_pork.webp",
       "width": 222,
       "height": 240,
       "source": "hires-export",
@@ -1102,7 +1102,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_wool": {
-      "file": "assets/redrawn/icon.product_wool.png",
+      "file": "assets/redrawn/icon.product_wool.webp",
       "width": 180,
       "height": 240,
       "source": "hires-export",
@@ -1110,7 +1110,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_carrot": {
-      "file": "assets/redrawn/icon.seed_carrot.png",
+      "file": "assets/redrawn/icon.seed_carrot.webp",
       "width": 194,
       "height": 238,
       "source": "hires-export",
@@ -1118,7 +1118,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_corn": {
-      "file": "assets/redrawn/icon.seed_corn.png",
+      "file": "assets/redrawn/icon.seed_corn.webp",
       "width": 192,
       "height": 239,
       "source": "hires-export",
@@ -1126,7 +1126,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_lettuce": {
-      "file": "assets/redrawn/icon.seed_lettuce.png",
+      "file": "assets/redrawn/icon.seed_lettuce.webp",
       "width": 198,
       "height": 238,
       "source": "hires-export",
@@ -1134,7 +1134,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_potato": {
-      "file": "assets/redrawn/icon.seed_potato.png",
+      "file": "assets/redrawn/icon.seed_potato.webp",
       "width": 193,
       "height": 239,
       "source": "hires-export",
@@ -1142,7 +1142,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_pumpkin": {
-      "file": "assets/redrawn/icon.seed_pumpkin.png",
+      "file": "assets/redrawn/icon.seed_pumpkin.webp",
       "width": 199,
       "height": 239,
       "source": "hires-export",
@@ -1150,7 +1150,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_strawberry": {
-      "file": "assets/redrawn/icon.seed_strawberry.png",
+      "file": "assets/redrawn/icon.seed_strawberry.webp",
       "width": 195,
       "height": 239,
       "source": "hires-export",
@@ -1158,7 +1158,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_tomato": {
-      "file": "assets/redrawn/icon.seed_tomato.png",
+      "file": "assets/redrawn/icon.seed_tomato.webp",
       "width": 193,
       "height": 238,
       "source": "hires-export",
@@ -1166,7 +1166,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_wheat": {
-      "file": "assets/redrawn/icon.seed_wheat.png",
+      "file": "assets/redrawn/icon.seed_wheat.webp",
       "width": 195,
       "height": 239,
       "source": "hires-export",
@@ -1174,7 +1174,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_basket": {
-      "file": "assets/redrawn/icon.tool_basket.png",
+      "file": "assets/redrawn/icon.tool_basket.webp",
       "width": 221,
       "height": 240,
       "source": "hires-export",
@@ -1182,7 +1182,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_hoe": {
-      "file": "assets/redrawn/icon.tool_hoe.png",
+      "file": "assets/redrawn/icon.tool_hoe.webp",
       "width": 197,
       "height": 238,
       "source": "hires-export",
@@ -1190,7 +1190,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_watering_can": {
-      "file": "assets/redrawn/icon.tool_watering_can.png",
+      "file": "assets/redrawn/icon.tool_watering_can.webp",
       "width": 240,
       "height": 231,
       "source": "hires-export",
@@ -1198,7 +1198,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "interior.barn": {
-      "file": "assets/derived/phase4/interior_barn.png",
+      "file": "assets/derived/phase4/interior_barn.webp",
       "width": 513,
       "height": 426,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
@@ -1206,7 +1206,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.coop": {
-      "file": "assets/derived/phase4/interior_coop.png",
+      "file": "assets/derived/phase4/interior_coop.webp",
       "width": 369,
       "height": 423,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
@@ -1214,7 +1214,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.house": {
-      "file": "assets/derived/phase4/interior_house.png",
+      "file": "assets/derived/phase4/interior_house.webp",
       "width": 423,
       "height": 426,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
@@ -1222,7 +1222,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior.tool_shed": {
-      "file": "assets/derived/phase4/interior_tool_shed.png",
+      "file": "assets/derived/phase4/interior_tool_shed.webp",
       "width": 357,
       "height": 420,
       "source": "phase4/03_building_interiors/top_down_building_interiors.png",
@@ -1230,7 +1230,7 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
     "interior_prop.barrel": {
-      "file": "assets/derived/interior/barrel.png",
+      "file": "assets/derived/interior/barrel.webp",
       "width": 148,
       "height": 189,
       "source": "assets/phase2/terrain/barrel.png",
@@ -1238,7 +1238,7 @@
       "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
     },
     "interior_prop.crate": {
-      "file": "assets/derived/interior/crate.png",
+      "file": "assets/derived/interior/crate.webp",
       "width": 172,
       "height": 193,
       "source": "assets/phase2/terrain/wooden_crate.png",
@@ -1246,7 +1246,7 @@
       "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
     },
     "interior_prop.water_barrel": {
-      "file": "assets/derived/interior/water_barrel.png",
+      "file": "assets/derived/interior/water_barrel.webp",
       "width": 144,
       "height": 199,
       "source": "assets/phase1/buildings/water_barrel.png",
@@ -1254,7 +1254,7 @@
       "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
     },
     "interior_prop.workbench": {
-      "file": "assets/derived/interior/workbench.png",
+      "file": "assets/derived/interior/workbench.webp",
       "width": 287,
       "height": 233,
       "source": "assets/phase1/buildings/workbench.png",
@@ -1262,7 +1262,7 @@
       "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
     },
     "player.carry_action": {
-      "file": "assets/phase2/player/carry_action.png",
+      "file": "assets/phase2/player/carry_action.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1274,7 +1274,7 @@
       ]
     },
     "player.harvest_action": {
-      "file": "assets/phase2/player/harvest_action.png",
+      "file": "assets/phase2/player/harvest_action.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1286,7 +1286,7 @@
       ]
     },
     "player.hoe_action": {
-      "file": "assets/phase2/player/hoe_action.png",
+      "file": "assets/phase2/player/hoe_action.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1298,7 +1298,7 @@
       ]
     },
     "player.idle_back": {
-      "file": "assets/phase2/player/idle_back.png",
+      "file": "assets/phase2/player/idle_back.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1310,7 +1310,7 @@
       ]
     },
     "player.idle_front": {
-      "file": "assets/phase2/player/idle_front.png",
+      "file": "assets/phase2/player/idle_front.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1322,7 +1322,7 @@
       ]
     },
     "player.idle_right": {
-      "file": "assets/phase2/player/idle_right.png",
+      "file": "assets/phase2/player/idle_right.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1334,7 +1334,7 @@
       ]
     },
     "player.idle_right_alt": {
-      "file": "assets/phase2/player/idle_right_alt.png",
+      "file": "assets/phase2/player/idle_right_alt.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1346,7 +1346,7 @@
       ]
     },
     "player.walk_back_1": {
-      "file": "assets/phase2/player/walk_back_1.png",
+      "file": "assets/phase2/player/walk_back_1.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1358,7 +1358,7 @@
       ]
     },
     "player.walk_back_2": {
-      "file": "assets/phase2/player/walk_back_2.png",
+      "file": "assets/phase2/player/walk_back_2.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1370,7 +1370,7 @@
       ]
     },
     "player.walk_front_1": {
-      "file": "assets/phase2/player/walk_front_1.png",
+      "file": "assets/phase2/player/walk_front_1.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1382,7 +1382,7 @@
       ]
     },
     "player.walk_front_2": {
-      "file": "assets/phase2/player/walk_front_2.png",
+      "file": "assets/phase2/player/walk_front_2.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1394,7 +1394,7 @@
       ]
     },
     "player.walk_left_1": {
-      "file": "assets/phase2/player/walk_left_1.png",
+      "file": "assets/phase2/player/walk_left_1.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1406,7 +1406,7 @@
       ]
     },
     "player.walk_left_2": {
-      "file": "assets/phase2/player/walk_left_2.png",
+      "file": "assets/phase2/player/walk_left_2.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1418,7 +1418,7 @@
       ]
     },
     "player.walk_right_1": {
-      "file": "assets/phase2/player/walk_right_1.png",
+      "file": "assets/phase2/player/walk_right_1.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1430,7 +1430,7 @@
       ]
     },
     "player.walk_right_2": {
-      "file": "assets/phase2/player/walk_right_2.png",
+      "file": "assets/phase2/player/walk_right_2.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1442,7 +1442,7 @@
       ]
     },
     "player.water_action": {
-      "file": "assets/phase2/player/water_action.png",
+      "file": "assets/phase2/player/water_action.webp",
       "width": 320,
       "height": 320,
       "source": "phase2/assets/characters/player",
@@ -1454,7 +1454,7 @@
       ]
     },
     "plot.carrot_growing1": {
-      "file": "assets/redrawn/plot.carrot_growing1.png",
+      "file": "assets/redrawn/plot.carrot_growing1.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1462,7 +1462,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_growing2": {
-      "file": "assets/redrawn/plot.carrot_growing2.png",
+      "file": "assets/redrawn/plot.carrot_growing2.webp",
       "width": 181,
       "height": 166,
       "source": "hires-export",
@@ -1470,7 +1470,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_mature": {
-      "file": "assets/redrawn/plot.carrot_mature.png",
+      "file": "assets/redrawn/plot.carrot_mature.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1478,7 +1478,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_planted": {
-      "file": "assets/redrawn/plot.carrot_planted.png",
+      "file": "assets/redrawn/plot.carrot_planted.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1486,7 +1486,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_ready": {
-      "file": "assets/redrawn/plot.carrot_ready.png",
+      "file": "assets/redrawn/plot.carrot_ready.webp",
       "width": 181,
       "height": 154,
       "source": "hires-export",
@@ -1494,7 +1494,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_ready_alt": {
-      "file": "assets/redrawn/plot.carrot_ready_alt.png",
+      "file": "assets/redrawn/plot.carrot_ready_alt.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1502,7 +1502,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_sprout": {
-      "file": "assets/redrawn/plot.carrot_sprout.png",
+      "file": "assets/redrawn/plot.carrot_sprout.webp",
       "width": 181,
       "height": 167,
       "source": "hires-export",
@@ -1510,7 +1510,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_growing1": {
-      "file": "assets/redrawn/plot.corn_growing1.png",
+      "file": "assets/redrawn/plot.corn_growing1.webp",
       "width": 181,
       "height": 168,
       "source": "hires-export",
@@ -1518,7 +1518,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_growing2": {
-      "file": "assets/redrawn/plot.corn_growing2.png",
+      "file": "assets/redrawn/plot.corn_growing2.webp",
       "width": 181,
       "height": 168,
       "source": "hires-export",
@@ -1526,7 +1526,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_mature": {
-      "file": "assets/redrawn/plot.corn_mature.png",
+      "file": "assets/redrawn/plot.corn_mature.webp",
       "width": 181,
       "height": 162,
       "source": "hires-export",
@@ -1534,7 +1534,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_planted": {
-      "file": "assets/redrawn/plot.corn_planted.png",
+      "file": "assets/redrawn/plot.corn_planted.webp",
       "width": 181,
       "height": 172,
       "source": "hires-export",
@@ -1542,7 +1542,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_ready": {
-      "file": "assets/redrawn/plot.corn_ready.png",
+      "file": "assets/redrawn/plot.corn_ready.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1550,7 +1550,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_ready_alt": {
-      "file": "assets/redrawn/plot.corn_ready_alt.png",
+      "file": "assets/redrawn/plot.corn_ready_alt.webp",
       "width": 181,
       "height": 158,
       "source": "hires-export",
@@ -1558,7 +1558,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_sprout": {
-      "file": "assets/redrawn/plot.corn_sprout.png",
+      "file": "assets/redrawn/plot.corn_sprout.webp",
       "width": 181,
       "height": 170,
       "source": "hires-export",
@@ -1566,7 +1566,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_growing1": {
-      "file": "assets/redrawn/plot.lettuce_growing1.png",
+      "file": "assets/redrawn/plot.lettuce_growing1.webp",
       "width": 181,
       "height": 163,
       "source": "hires-export",
@@ -1574,7 +1574,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_growing2": {
-      "file": "assets/redrawn/plot.lettuce_growing2.png",
+      "file": "assets/redrawn/plot.lettuce_growing2.webp",
       "width": 181,
       "height": 164,
       "source": "hires-export",
@@ -1582,7 +1582,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_mature": {
-      "file": "assets/redrawn/plot.lettuce_mature.png",
+      "file": "assets/redrawn/plot.lettuce_mature.webp",
       "width": 181,
       "height": 159,
       "source": "hires-export",
@@ -1590,7 +1590,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_planted": {
-      "file": "assets/redrawn/plot.lettuce_planted.png",
+      "file": "assets/redrawn/plot.lettuce_planted.webp",
       "width": 181,
       "height": 168,
       "source": "hires-export",
@@ -1598,7 +1598,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_ready": {
-      "file": "assets/redrawn/plot.lettuce_ready.png",
+      "file": "assets/redrawn/plot.lettuce_ready.webp",
       "width": 181,
       "height": 167,
       "source": "hires-export",
@@ -1606,7 +1606,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_ready_alt": {
-      "file": "assets/redrawn/plot.lettuce_ready_alt.png",
+      "file": "assets/redrawn/plot.lettuce_ready_alt.webp",
       "width": 181,
       "height": 156,
       "source": "hires-export",
@@ -1614,7 +1614,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_sprout": {
-      "file": "assets/redrawn/plot.lettuce_sprout.png",
+      "file": "assets/redrawn/plot.lettuce_sprout.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1622,7 +1622,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_growing1": {
-      "file": "assets/redrawn/plot.potato_growing1.png",
+      "file": "assets/redrawn/plot.potato_growing1.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1630,7 +1630,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_growing2": {
-      "file": "assets/redrawn/plot.potato_growing2.png",
+      "file": "assets/redrawn/plot.potato_growing2.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1638,7 +1638,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_mature": {
-      "file": "assets/redrawn/plot.potato_mature.png",
+      "file": "assets/redrawn/plot.potato_mature.webp",
       "width": 181,
       "height": 154,
       "source": "hires-export",
@@ -1646,7 +1646,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_planted": {
-      "file": "assets/redrawn/plot.potato_planted.png",
+      "file": "assets/redrawn/plot.potato_planted.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1654,7 +1654,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_ready": {
-      "file": "assets/redrawn/plot.potato_ready.png",
+      "file": "assets/redrawn/plot.potato_ready.webp",
       "width": 181,
       "height": 154,
       "source": "hires-export",
@@ -1662,7 +1662,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_ready_alt": {
-      "file": "assets/redrawn/plot.potato_ready_alt.png",
+      "file": "assets/redrawn/plot.potato_ready_alt.webp",
       "width": 181,
       "height": 158,
       "source": "hires-export",
@@ -1670,7 +1670,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_sprout": {
-      "file": "assets/redrawn/plot.potato_sprout.png",
+      "file": "assets/redrawn/plot.potato_sprout.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1678,7 +1678,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_growing1": {
-      "file": "assets/redrawn/plot.pumpkin_growing1.png",
+      "file": "assets/redrawn/plot.pumpkin_growing1.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1686,7 +1686,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_growing2": {
-      "file": "assets/redrawn/plot.pumpkin_growing2.png",
+      "file": "assets/redrawn/plot.pumpkin_growing2.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1694,7 +1694,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_mature": {
-      "file": "assets/redrawn/plot.pumpkin_mature.png",
+      "file": "assets/redrawn/plot.pumpkin_mature.webp",
       "width": 181,
       "height": 156,
       "source": "hires-export",
@@ -1702,7 +1702,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_planted": {
-      "file": "assets/redrawn/plot.pumpkin_planted.png",
+      "file": "assets/redrawn/plot.pumpkin_planted.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1710,7 +1710,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_ready": {
-      "file": "assets/redrawn/plot.pumpkin_ready.png",
+      "file": "assets/redrawn/plot.pumpkin_ready.webp",
       "width": 181,
       "height": 158,
       "source": "hires-export",
@@ -1718,7 +1718,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_ready_alt": {
-      "file": "assets/redrawn/plot.pumpkin_ready_alt.png",
+      "file": "assets/redrawn/plot.pumpkin_ready_alt.webp",
       "width": 181,
       "height": 158,
       "source": "hires-export",
@@ -1726,7 +1726,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_sprout": {
-      "file": "assets/redrawn/plot.pumpkin_sprout.png",
+      "file": "assets/redrawn/plot.pumpkin_sprout.webp",
       "width": 181,
       "height": 167,
       "source": "hires-export",
@@ -1734,7 +1734,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_dry": {
-      "file": "assets/redrawn/plot.soil_dry.png",
+      "file": "assets/redrawn/plot.soil_dry.webp",
       "width": 181,
       "height": 170,
       "source": "hires-export",
@@ -1742,7 +1742,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_harvested": {
-      "file": "assets/redrawn/plot.soil_harvested.png",
+      "file": "assets/redrawn/plot.soil_harvested.webp",
       "width": 181,
       "height": 156,
       "source": "hires-export",
@@ -1750,7 +1750,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_tilled": {
-      "file": "assets/redrawn/plot.soil_tilled.png",
+      "file": "assets/redrawn/plot.soil_tilled.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1758,7 +1758,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_growing1": {
-      "file": "assets/redrawn/plot.strawberry_growing1.png",
+      "file": "assets/redrawn/plot.strawberry_growing1.webp",
       "width": 181,
       "height": 168,
       "source": "hires-export",
@@ -1766,7 +1766,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_growing2": {
-      "file": "assets/redrawn/plot.strawberry_growing2.png",
+      "file": "assets/redrawn/plot.strawberry_growing2.webp",
       "width": 181,
       "height": 164,
       "source": "hires-export",
@@ -1774,7 +1774,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_mature": {
-      "file": "assets/redrawn/plot.strawberry_mature.png",
+      "file": "assets/redrawn/plot.strawberry_mature.webp",
       "width": 181,
       "height": 166,
       "source": "hires-export",
@@ -1782,7 +1782,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_planted": {
-      "file": "assets/redrawn/plot.strawberry_planted.png",
+      "file": "assets/redrawn/plot.strawberry_planted.webp",
       "width": 181,
       "height": 168,
       "source": "hires-export",
@@ -1790,7 +1790,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_ready": {
-      "file": "assets/redrawn/plot.strawberry_ready.png",
+      "file": "assets/redrawn/plot.strawberry_ready.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1798,7 +1798,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_ready_alt": {
-      "file": "assets/redrawn/plot.strawberry_ready_alt.png",
+      "file": "assets/redrawn/plot.strawberry_ready_alt.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1806,7 +1806,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_sprout": {
-      "file": "assets/redrawn/plot.strawberry_sprout.png",
+      "file": "assets/redrawn/plot.strawberry_sprout.webp",
       "width": 181,
       "height": 167,
       "source": "hires-export",
@@ -1814,7 +1814,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_growing1": {
-      "file": "assets/redrawn/plot.tomato_growing1.png",
+      "file": "assets/redrawn/plot.tomato_growing1.webp",
       "width": 181,
       "height": 159,
       "source": "hires-export",
@@ -1822,7 +1822,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_growing2": {
-      "file": "assets/redrawn/plot.tomato_growing2.png",
+      "file": "assets/redrawn/plot.tomato_growing2.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1830,7 +1830,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_mature": {
-      "file": "assets/redrawn/plot.tomato_mature.png",
+      "file": "assets/redrawn/plot.tomato_mature.webp",
       "width": 181,
       "height": 152,
       "source": "hires-export",
@@ -1838,7 +1838,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_planted": {
-      "file": "assets/redrawn/plot.tomato_planted.png",
+      "file": "assets/redrawn/plot.tomato_planted.webp",
       "width": 181,
       "height": 165,
       "source": "hires-export",
@@ -1846,7 +1846,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_ready": {
-      "file": "assets/redrawn/plot.tomato_ready.png",
+      "file": "assets/redrawn/plot.tomato_ready.webp",
       "width": 181,
       "height": 152,
       "source": "hires-export",
@@ -1854,7 +1854,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_ready_alt": {
-      "file": "assets/redrawn/plot.tomato_ready_alt.png",
+      "file": "assets/redrawn/plot.tomato_ready_alt.webp",
       "width": 181,
       "height": 151,
       "source": "hires-export",
@@ -1862,7 +1862,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_sprout": {
-      "file": "assets/redrawn/plot.tomato_sprout.png",
+      "file": "assets/redrawn/plot.tomato_sprout.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1870,7 +1870,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_growing1": {
-      "file": "assets/redrawn/plot.wheat_growing1.png",
+      "file": "assets/redrawn/plot.wheat_growing1.webp",
       "width": 181,
       "height": 161,
       "source": "hires-export",
@@ -1878,7 +1878,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_growing2": {
-      "file": "assets/redrawn/plot.wheat_growing2.png",
+      "file": "assets/redrawn/plot.wheat_growing2.webp",
       "width": 181,
       "height": 166,
       "source": "hires-export",
@@ -1886,7 +1886,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_mature": {
-      "file": "assets/redrawn/plot.wheat_mature.png",
+      "file": "assets/redrawn/plot.wheat_mature.webp",
       "width": 181,
       "height": 156,
       "source": "hires-export",
@@ -1894,7 +1894,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_planted": {
-      "file": "assets/redrawn/plot.wheat_planted.png",
+      "file": "assets/redrawn/plot.wheat_planted.webp",
       "width": 181,
       "height": 163,
       "source": "hires-export",
@@ -1902,7 +1902,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_ready": {
-      "file": "assets/redrawn/plot.wheat_ready.png",
+      "file": "assets/redrawn/plot.wheat_ready.webp",
       "width": 181,
       "height": 158,
       "source": "hires-export",
@@ -1910,7 +1910,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_ready_alt": {
-      "file": "assets/redrawn/plot.wheat_ready_alt.png",
+      "file": "assets/redrawn/plot.wheat_ready_alt.webp",
       "width": 181,
       "height": 160,
       "source": "hires-export",
@@ -1918,7 +1918,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_sprout": {
-      "file": "assets/redrawn/plot.wheat_sprout.png",
+      "file": "assets/redrawn/plot.wheat_sprout.webp",
       "width": 181,
       "height": 163,
       "source": "hires-export",
@@ -1926,7 +1926,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.bench": {
-      "file": "assets/redrawn/prop.bench.png",
+      "file": "assets/redrawn/prop.bench.webp",
       "width": 298,
       "height": 212,
       "source": "hires-export",
@@ -1934,7 +1934,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.berry_crate": {
-      "file": "assets/redrawn/prop.berry_crate.png",
+      "file": "assets/redrawn/prop.berry_crate.webp",
       "width": 181,
       "height": 188,
       "source": "hires-export",
@@ -1942,7 +1942,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.flower_crate": {
-      "file": "assets/redrawn/prop.flower_crate.png",
+      "file": "assets/redrawn/prop.flower_crate.webp",
       "width": 181,
       "height": 188,
       "source": "hires-export",
@@ -1950,7 +1950,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.hay_bales": {
-      "file": "assets/redrawn/prop.hay_bales.png",
+      "file": "assets/redrawn/prop.hay_bales.webp",
       "width": 297,
       "height": 171,
       "source": "hires-export",
@@ -1958,7 +1958,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.lantern_post": {
-      "file": "assets/redrawn/prop.lantern_post.png",
+      "file": "assets/redrawn/prop.lantern_post.webp",
       "width": 158,
       "height": 286,
       "source": "hires-export",
@@ -1966,7 +1966,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.scarecrow": {
-      "file": "assets/redrawn/prop.scarecrow.png",
+      "file": "assets/redrawn/prop.scarecrow.webp",
       "width": 229,
       "height": 361,
       "source": "hires-export",
@@ -1974,7 +1974,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.trough": {
-      "file": "assets/redrawn/prop.trough.png",
+      "file": "assets/redrawn/prop.trough.webp",
       "width": 288,
       "height": 155,
       "source": "hires-export",
@@ -1982,7 +1982,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.cobblestone_detailed": {
-      "file": "assets/redrawn/terrain.cobblestone_detailed.png",
+      "file": "assets/redrawn/terrain.cobblestone_detailed.webp",
       "width": 469,
       "height": 475,
       "source": "hires-export",
@@ -1990,7 +1990,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.dirt_detailed": {
-      "file": "assets/redrawn/terrain.dirt_detailed.png",
+      "file": "assets/redrawn/terrain.dirt_detailed.webp",
       "width": 439,
       "height": 475,
       "source": "hires-export",
@@ -1998,7 +1998,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.fence_gate_detailed": {
-      "file": "assets/phase1/terrain/fence_gate_detailed.png",
+      "file": "assets/phase1/terrain/fence_gate_detailed.webp",
       "width": 264,
       "height": 163,
       "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
@@ -2006,7 +2006,7 @@
       "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 514 magenta-spill edge pixels."
     },
     "terrain.fence_horizontal_detailed": {
-      "file": "assets/phase1/terrain/fence_horizontal_detailed.png",
+      "file": "assets/phase1/terrain/fence_horizontal_detailed.webp",
       "width": 264,
       "height": 136,
       "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
@@ -2014,7 +2014,7 @@
       "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 427 magenta-spill edge pixels."
     },
     "terrain.fence_vertical_detailed": {
-      "file": "assets/phase1/terrain/fence_vertical_detailed.png",
+      "file": "assets/phase1/terrain/fence_vertical_detailed.webp",
       "width": 187,
       "height": 192,
       "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
@@ -2022,7 +2022,7 @@
       "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 395 magenta-spill edge pixels."
     },
     "terrain.flower_patch_tile": {
-      "file": "assets/phase1/terrain/flower_patch_tile.png",
+      "file": "assets/phase1/terrain/flower_patch_tile.webp",
       "width": 224,
       "height": 215,
       "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
@@ -2030,7 +2030,7 @@
       "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 469 magenta-spill edge pixels."
     },
     "terrain.grass_detailed": {
-      "file": "assets/redrawn/terrain.grass_detailed.png",
+      "file": "assets/redrawn/terrain.grass_detailed.webp",
       "width": 441,
       "height": 475,
       "source": "hires-export",
@@ -2038,7 +2038,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.grass_tuft_tile": {
-      "file": "assets/redrawn/terrain.grass_tuft_tile.png",
+      "file": "assets/redrawn/terrain.grass_tuft_tile.webp",
       "width": 451,
       "height": 475,
       "source": "hires-export",
@@ -2046,7 +2046,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.sand_path_detailed": {
-      "file": "assets/redrawn/terrain.sand_path_detailed.png",
+      "file": "assets/redrawn/terrain.sand_path_detailed.webp",
       "width": 396,
       "height": 475,
       "source": "hires-export",
@@ -2054,7 +2054,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.shoreline": {
-      "file": "assets/redrawn/terrain.shoreline.png",
+      "file": "assets/redrawn/terrain.shoreline.webp",
       "width": 475,
       "height": 453,
       "source": "hires-export",
@@ -2062,7 +2062,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.tilled_soil_detailed": {
-      "file": "assets/redrawn/terrain.tilled_soil_detailed.png",
+      "file": "assets/redrawn/terrain.tilled_soil_detailed.webp",
       "width": 475,
       "height": 429,
       "source": "hires-export",
@@ -2070,7 +2070,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.water_pond_detailed": {
-      "file": "assets/redrawn/terrain.water_pond_detailed.png",
+      "file": "assets/redrawn/terrain.water_pond_detailed.webp",
       "width": 475,
       "height": 418,
       "source": "hires-export",
@@ -2078,7 +2078,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.autumn_tree": {
-      "file": "assets/phase2/terrain/autumn_tree.png",
+      "file": "assets/phase2/terrain/autumn_tree.webp",
       "width": 227,
       "height": 230,
       "source": "phase2/assets/terrain/tiles",
@@ -2086,7 +2086,7 @@
       "notes": "Cleaned 572 magenta-spill edge pixels."
     },
     "terrain2.barrel": {
-      "file": "assets/phase2/terrain/barrel.png",
+      "file": "assets/phase2/terrain/barrel.webp",
       "width": 204,
       "height": 213,
       "source": "phase2/assets/terrain/tiles",
@@ -2094,7 +2094,7 @@
       "notes": "Cleaned 383 magenta-spill edge pixels."
     },
     "terrain2.berry_bush": {
-      "file": "assets/phase2/terrain/berry_bush.png",
+      "file": "assets/phase2/terrain/berry_bush.webp",
       "width": 220,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2102,7 +2102,7 @@
       "notes": "Cleaned 452 magenta-spill edge pixels."
     },
     "terrain2.blossom_tree": {
-      "file": "assets/phase2/terrain/blossom_tree.png",
+      "file": "assets/phase2/terrain/blossom_tree.webp",
       "width": 233,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2110,7 +2110,7 @@
       "notes": "Cleaned 4484 magenta-spill edge pixels."
     },
     "terrain2.cliff_grass_edge": {
-      "file": "assets/redrawn/terrain2.cliff_grass_edge.png",
+      "file": "assets/redrawn/terrain2.cliff_grass_edge.webp",
       "width": 437,
       "height": 475,
       "source": "hires-export",
@@ -2118,7 +2118,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.cobblestone_path": {
-      "file": "assets/redrawn/terrain2.cobblestone_path.png",
+      "file": "assets/redrawn/terrain2.cobblestone_path.webp",
       "width": 475,
       "height": 438,
       "source": "hires-export",
@@ -2126,7 +2126,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.dirt_path": {
-      "file": "assets/redrawn/terrain2.dirt_path.png",
+      "file": "assets/redrawn/terrain2.dirt_path.webp",
       "width": 475,
       "height": 433,
       "source": "hires-export",
@@ -2134,7 +2134,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.fence_corner": {
-      "file": "assets/phase2/terrain/fence_corner.png",
+      "file": "assets/phase2/terrain/fence_corner.webp",
       "width": 256,
       "height": 192,
       "source": "phase2/assets/terrain/tiles",
@@ -2142,7 +2142,7 @@
       "notes": "Cleaned 509 magenta-spill edge pixels."
     },
     "terrain2.fence_straight": {
-      "file": "assets/phase2/terrain/fence_straight.png",
+      "file": "assets/phase2/terrain/fence_straight.webp",
       "width": 256,
       "height": 204,
       "source": "phase2/assets/terrain/tiles",
@@ -2150,7 +2150,7 @@
       "notes": "Cleaned 473 magenta-spill edge pixels."
     },
     "terrain2.flower_patch": {
-      "file": "assets/phase2/terrain/flower_patch.png",
+      "file": "assets/phase2/terrain/flower_patch.webp",
       "width": 220,
       "height": 215,
       "source": "phase2/assets/terrain/tiles",
@@ -2158,7 +2158,7 @@
       "notes": "Cleaned 526 magenta-spill edge pixels."
     },
     "terrain2.flowering_bush": {
-      "file": "assets/phase2/terrain/flowering_bush.png",
+      "file": "assets/phase2/terrain/flowering_bush.webp",
       "width": 224,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2166,7 +2166,7 @@
       "notes": "Cleaned 412 magenta-spill edge pixels."
     },
     "terrain2.grass_flower": {
-      "file": "assets/redrawn/terrain2.grass_flower.png",
+      "file": "assets/redrawn/terrain2.grass_flower.webp",
       "width": 441,
       "height": 475,
       "source": "hires-export",
@@ -2174,7 +2174,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.oak_tree": {
-      "file": "assets/phase2/terrain/oak_tree.png",
+      "file": "assets/phase2/terrain/oak_tree.webp",
       "width": 236,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2182,7 +2182,7 @@
       "notes": "Cleaned 478 magenta-spill edge pixels."
     },
     "terrain2.pine_tree": {
-      "file": "assets/phase2/terrain/pine_tree.png",
+      "file": "assets/phase2/terrain/pine_tree.webp",
       "width": 221,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2190,7 +2190,7 @@
       "notes": "Cleaned 396 magenta-spill edge pixels."
     },
     "terrain2.pond_water": {
-      "file": "assets/redrawn/terrain2.pond_water.png",
+      "file": "assets/redrawn/terrain2.pond_water.webp",
       "width": 475,
       "height": 446,
       "source": "hires-export",
@@ -2198,7 +2198,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.rock_cluster": {
-      "file": "assets/phase2/terrain/rock_cluster.png",
+      "file": "assets/phase2/terrain/rock_cluster.webp",
       "width": 235,
       "height": 221,
       "source": "phase2/assets/terrain/tiles",
@@ -2206,7 +2206,7 @@
       "notes": "Cleaned 529 magenta-spill edge pixels."
     },
     "terrain2.sand_path": {
-      "file": "assets/redrawn/terrain2.sand_path.png",
+      "file": "assets/redrawn/terrain2.sand_path.webp",
       "width": 475,
       "height": 452,
       "source": "hires-export",
@@ -2214,7 +2214,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.shoreline_water": {
-      "file": "assets/redrawn/terrain2.shoreline_water.png",
+      "file": "assets/redrawn/terrain2.shoreline_water.webp",
       "width": 475,
       "height": 438,
       "source": "hires-export",
@@ -2222,7 +2222,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tall_grass": {
-      "file": "assets/redrawn/terrain2.tall_grass.png",
+      "file": "assets/redrawn/terrain2.tall_grass.webp",
       "width": 475,
       "height": 421,
       "source": "hires-export",
@@ -2230,7 +2230,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tilled_soil_sprouts": {
-      "file": "assets/redrawn/terrain2.tilled_soil_sprouts.png",
+      "file": "assets/redrawn/terrain2.tilled_soil_sprouts.webp",
       "width": 475,
       "height": 454,
       "source": "hires-export",
@@ -2238,7 +2238,7 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tree_stump": {
-      "file": "assets/phase2/terrain/tree_stump.png",
+      "file": "assets/phase2/terrain/tree_stump.webp",
       "width": 221,
       "height": 224,
       "source": "phase2/assets/terrain/tiles",
@@ -2246,7 +2246,7 @@
       "notes": "Cleaned 451 magenta-spill edge pixels."
     },
     "terrain2.wooden_bridge": {
-      "file": "assets/phase2/terrain/wooden_bridge.png",
+      "file": "assets/phase2/terrain/wooden_bridge.webp",
       "width": 242,
       "height": 237,
       "source": "phase2/assets/terrain/tiles",
@@ -2254,7 +2254,7 @@
       "notes": "Cleaned 311 magenta-spill edge pixels."
     },
     "terrain2.wooden_crate": {
-      "file": "assets/phase2/terrain/wooden_crate.png",
+      "file": "assets/phase2/terrain/wooden_crate.webp",
       "width": 224,
       "height": 217,
       "source": "phase2/assets/terrain/tiles",
@@ -2262,7 +2262,7 @@
       "notes": "Cleaned 330 magenta-spill edge pixels."
     },
     "terrain2.wooden_gate": {
-      "file": "assets/phase2/terrain/wooden_gate.png",
+      "file": "assets/phase2/terrain/wooden_gate.webp",
       "width": 244,
       "height": 256,
       "source": "phase2/assets/terrain/tiles",
@@ -2286,7 +2286,7 @@
       "notes": "Native crop 76x80 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
     },
     "vehicle.seeder": {
-      "file": "assets/vehicles/seeder.png",
+      "file": "assets/vehicles/seeder.webp",
       "width": 144,
       "height": 144,
       "source": "Farmstead_Vehicle_Angles_Pack/seeder_S.png",
@@ -2294,7 +2294,7 @@
       "notes": "Native crop 72x72 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
     },
     "vehicle.tractor_large": {
-      "file": "assets/vehicles/tractor_large.png",
+      "file": "assets/vehicles/tractor_large.webp",
       "width": 138,
       "height": 166,
       "source": "Farmstead_Vehicle_Angles_Pack/tractor_blue_S.png",
@@ -2302,12 +2302,140 @@
       "notes": "Native crop 69x83 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
     },
     "vehicle.tractor_small": {
-      "file": "assets/vehicles/tractor_small.png",
+      "file": "assets/vehicles/tractor_small.webp",
       "width": 140,
       "height": 164,
       "source": "Farmstead_Vehicle_Angles_Pack/tractor_red_S.png",
       "status": "temporary-reference-derived",
       "notes": "Native crop 70x82 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
+    },
+    "audio.music_farm": {
+      "file": "assets/audio/music_farm.ogg",
+      "kind": "music",
+      "seconds": 45.71,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.music_village": {
+      "file": "assets/audio/music_village.ogg",
+      "kind": "music",
+      "seconds": 38.4,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.ambience_farm": {
+      "file": "assets/audio/ambience_farm.ogg",
+      "kind": "ambience",
+      "seconds": 34.0,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.ambience_rain": {
+      "file": "assets/audio/ambience_rain.ogg",
+      "kind": "ambience",
+      "seconds": 10.5,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.engine_loop": {
+      "file": "assets/audio/engine_loop.ogg",
+      "kind": "loop",
+      "seconds": 1.6,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.confirm": {
+      "file": "assets/audio/confirm.ogg",
+      "kind": "sfx",
+      "seconds": 0.68,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.cancel": {
+      "file": "assets/audio/cancel.ogg",
+      "kind": "sfx",
+      "seconds": 0.51,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.unlock": {
+      "file": "assets/audio/unlock.ogg",
+      "kind": "sfx",
+      "seconds": 1.05,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.levelup": {
+      "file": "assets/audio/levelup.ogg",
+      "kind": "sfx",
+      "seconds": 1.44,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.build": {
+      "file": "assets/audio/build.ogg",
+      "kind": "sfx",
+      "seconds": 0.9,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.till": {
+      "file": "assets/audio/till.ogg",
+      "kind": "sfx",
+      "seconds": 0.22,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.attach": {
+      "file": "assets/audio/attach.ogg",
+      "kind": "sfx",
+      "seconds": 0.35,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.moo": {
+      "file": "assets/audio/moo.ogg",
+      "kind": "sfx",
+      "seconds": 1.1,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.baa": {
+      "file": "assets/audio/baa.ogg",
+      "kind": "sfx",
+      "seconds": 0.7,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.cluck": {
+      "file": "assets/audio/cluck.ogg",
+      "kind": "sfx",
+      "seconds": 0.6,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
+    },
+    "audio.door": {
+      "file": "assets/audio/door.ogg",
+      "kind": "sfx",
+      "seconds": 0.5,
+      "source": "tools/make_audio.py",
+      "status": "original-synthesized",
+      "notes": "Original audio synthesised in code (numpy) and encoded to Ogg Vorbis; functional placeholder quality."
     }
   }
 }

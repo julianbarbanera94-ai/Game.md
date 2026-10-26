@@ -13,7 +13,8 @@
     "test:village": "node tests/e2e/village.mjs",
     "test:progression": "node tests/e2e/progression.mjs",
     "test:vehicles": "node tests/e2e/vehicles.mjs",
-    "test:integration": "node tests/e2e/integration.mjs"
+    "test:integration": "node tests/e2e/integration.mjs",
+    "test:polish": "node tests/e2e/polish.mjs"
   },
   "engines": {
     "node": ">=18"

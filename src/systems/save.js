@@ -283,6 +283,9 @@ export function deserialize(json) {
   }
   s.settings.muted = !!data.settings?.muted;
   s.settings.volume = num(data.settings?.volume, s.settings.volume, 0, 1);
+  s.settings.music = num(data.settings?.music, s.settings.music, 0, 1);
+  s.settings.ambience = num(data.settings?.ambience, s.settings.ambience, 0, 1);
+  if (typeof data.settings?.vibration === 'boolean') s.settings.vibration = data.settings.vibration;
   if (ZOOMS.includes(data.settings?.zoom)) s.settings.zoom = data.settings.zoom;
   s.settings.bigControls = !!data.settings?.bigControls;
   refreshAvailability(s);

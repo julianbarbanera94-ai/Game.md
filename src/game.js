@@ -20,6 +20,7 @@ import * as Vehicles from './systems/vehicles.js';
 import { groundFactor } from './systems/ground.js';
 import { VEHICLES, IMPLEMENTS } from './data/vehicles.js';
 import { activeEvent } from './systems/seasons.js';
+import { isRaining } from './systems/weather.js';
 import { ACHIEVEMENTS_BY_ID } from './data/achievements.js';
 import { QUESTS_BY_ID } from './data/quests.js';
 import { SPECIES, productLabel } from './data/animals.js';
@@ -34,6 +35,7 @@ import { ROAD_Y, VILLAGE_X0 } from './data/village.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
 import { UPGRADES } from './data/progression.js';
 import { Camera } from './world/camera.js';
+import { padMenu } from './input/gamepad.js';
 import { Effects } from './render/effects.js';
 import { Hud } from './ui/hud.js';
 import { Panels } from './ui/panels.js';
@@ -42,6 +44,9 @@ const FACING = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 const PLOT_AT = new Map(PLOTS.map((p) => [`${p.tx},${p.ty}`, p]));
 const FEET = { w: 13, h: 7 }; // half-size of the player's collision box (px)
 const ACTION_TIME = 0.38;
+const RUN_FACTOR = 1.55; // Shift, RT or the stick pushed to its rim
+const DIR_PAD = new Set(['PadUp', 'PadDown', 'PadLeft', 'PadRight']); // the d-pad moves (Input.moveVector)
+const ANIMAL_VOICE = { chicken: 'cluck', cow: 'moo', sheep: 'baa' };
 const ZOOM_FACTORS = { near: 0.82, normal: 1, far: 1.25 }; // Settings > Camera
 const AUTOSAVE_SECONDS = 60;
 const ROAD_CLEARING_COST = 150;
@@ -91,13 +96,30 @@ export class Game {
     });
     this.bus.on('questAccepted', ({ id }) => this.hud.toast(`Quest accepted: ${QUESTS_BY_ID[id].title}`, 'info'));
     this.bus.on('questMissed', ({ id }) => this.hud.toast(`The festival ended before you finished: ${QUESTS_BY_ID[id].title}`, 'warn'));
-    this.bus.on('unlocked', ({ name }) => { this.hud.toast(`Unlocked: ${name}`, 'quest'); this.sfx.play('quest'); });
+    this.bus.on('unlocked', ({ name }) => {
+      this.hud.toast(`Unlocked: ${name}`, 'quest');
+      this.sfx.play('unlock');
+      this.celebrate('#ffe27a');
+    });
     this.bus.on('achievementReady', ({ name }) => { this.hud.toast(`Achievement: ${name} — claim it in the journal`, 'quest'); this.sfx.play('quest'); });
-    this.bus.on('levelUp', ({ level, coins }) => { this.hud.toast(`Farm level ${level}! +${coins} coins`, 'quest'); this.sfx.play('quest'); });
+    this.bus.on('levelUp', ({ level, coins }) => {
+      this.hud.toast(`Farm level ${level}! +${coins} coins`, 'quest');
+      this.sfx.play('levelup');
+      this.celebrate('#7fe0ff');
+      this.vibrate([30, 40, 60]);
+    });
+    this.bus.on('constructionStarted', () => this.sfx.play('build'));
+    this.bus.on('rainWatered', () => {
+      const day = Math.floor(this.state.time / 1440);
+      if (this.rainToastDay === day || !this.running) return;
+      this.rainToastDay = day;
+      this.hud.toast('It is raining: the rain is watering your crops today');
+    });
     this.bus.on('questComplete', ({ id }) => {
       const q = Quests.trackedQuests(this.state).find((t) => t.def.id === id);
       this.hud.toast(`Quest complete: ${q?.def.title ?? id} — claim your reward!`, 'quest');
       this.sfx.play('quest');
+      this.effects.burst('sparkle', this.state.player.x, this.state.player.y - 60);
     });
     this.bus.on('questStarted', ({ id }) => {
       const def = QUESTS_BY_ID[id];
@@ -108,7 +130,12 @@ export class Game {
       if (DECORATIONS[id]) return;
       const name = BUILDINGS[id].name;
       this.hud.toast(level === 1 && uid ? `${name} finished!` : `${name} upgraded to level ${level}!`, 'good');
-      this.sfx.play('quest');
+      this.sfx.play('build');
+      const at = this.buildingPos(id, uid);
+      if (at) {
+        this.effects.burst('dust', at.x, at.y - 20);
+        this.effects.burst('sparkle', at.x, at.y - 90);
+      }
       this.refreshColliders();
       this.panels.rerender();
     });
@@ -164,6 +191,7 @@ export class Game {
 
   stop() {
     this.running = false;
+    this.sfx.setEngine(null);
     this.panels.close(true);
     document.getElementById('hud').hidden = true;
   }
@@ -190,13 +218,15 @@ export class Game {
     if (this.playerMoving) {
       if (Math.abs(mv.x) > Math.abs(mv.y) * 1.05) p.facing = mv.x > 0 ? 'right' : 'left';
       else p.facing = mv.y > 0 ? 'down' : 'up';
-      const next = this.activeCollision.move(p, FEET, mv.x * PLAYER_SPEED * dt, mv.y * PLAYER_SPEED * dt);
+      const run = this.input.running();
+      const speed = PLAYER_SPEED * (run ? RUN_FACTOR : 1);
+      const next = this.activeCollision.move(p, FEET, mv.x * speed * dt, mv.y * speed * dt);
       p.x = next.x;
       p.y = next.y;
-      this.animTime += dt;
+      this.animTime += dt * (run ? RUN_FACTOR : 1); // faster steps, same frames
       this.stepTimer -= dt;
       if (this.stepTimer <= 0) {
-        this.stepTimer = 0.32;
+        this.stepTimer = run ? 0.22 : 0.32;
         this.sfx.play('step');
       }
     } else {
@@ -234,9 +264,36 @@ export class Game {
     }
     this.camera.follow(p.x, p.y - 40, dt);
     this.hud.update();
+    this.updateAudio();
 
     this.autosaveTimer += dt;
     if (this.autosaveTimer > AUTOSAVE_SECONDS && !paused) this.autosave('timer');
+  }
+
+  // Gamepad buttons (see Input.pollGamepad). Menus are driven with the d-pad;
+  // in the world A acts, B gets off / cancels, LB/RB pick the hotbar slot.
+  handlePad(code) {
+    const title = document.querySelector('#title:not([hidden]) .title-card');
+    const modal = document.querySelector('#modal-root .modal') || (!this.running ? title : null);
+    if (modal) {
+      if (code === 'PadB' || code === 'Escape') {
+        if (this.uiOpen) this.panels.close();
+        return;
+      }
+      padMenu(modal, code);
+      return;
+    }
+    if (!this.running) return;
+    document.body.classList.remove('pad-nav');
+    if (code === 'PadA') this.input.press('Action');
+    else if (code === 'PadB') {
+      if (this.drivingVehicle) this.exitVehicle();
+      else if (this.placement) this.cancelPlacement();
+    } else if (code === 'PadLB' || code === 'PadRB') {
+      const n = this.hud.hotbarSlots().length;
+      const cur = this.hud.hotbarSlots().findIndex((sl) => (sl.kind === 'seed' ? !this.activeTool && sl.id === this.state.selectedSeed : sl.id === this.activeTool));
+      this.selectSlot(((cur < 0 ? 0 : cur) + (code === 'PadRB' ? 1 : n - 1)) % n);
+    } else if (!DIR_PAD.has(code)) this.input.press(code);
   }
 
   // Runs synchronously in the keydown handler, before the browser's default
@@ -463,7 +520,10 @@ export class Game {
     this.effects.burst(fx[0], cx, cy);
     this.sfx.play(fx[1]);
     this.activeTool = fx[2];
-    if (r.action === 'harvest') this.effects.text(`+${r.qty} ${CROPS[r.crop].name}`, cx, cy - 20, '#fff4c2');
+    if (r.action === 'harvest') {
+      this.effects.text(`+${r.qty} ${CROPS[r.crop].name}`, cx, cy - 20, '#fff4c2');
+      this.vibrate(15);
+    }
     if (r.action === 'plant' && !this.state.inventory[this.state.selectedSeed]) {
       const next = Farming.seedToPlant(this.state);
       if (next) this.state.selectedSeed = next;
@@ -590,7 +650,8 @@ export class Game {
     this.state.player.x = v.x;
     this.state.player.y = v.y;
     this.driveDist = 0;
-    this.sfx.play('click');
+    this.sfx.play('attach'); // engine catches
+    for (let i = 0; i < 3; i++) this.effects.burst('smoke', v.x - Math.cos(v.heading) * 30, v.y - Math.sin(v.heading) * 30 - 26);
     this.hud.toast(v.fuel > 0 ? 'W / S drive · A / D steer · E use implement · F get off' : 'The tank is empty — get off and refuel', v.fuel > 0 ? 'info' : 'warn');
   }
 
@@ -635,7 +696,7 @@ export class Game {
     }
     v.engaged = !v.engaged;
     this.hud.toast(v.engaged ? `${IMPLEMENTS[v.mount.front].name} working` : `${IMPLEMENTS[v.mount.front].name} stopped`, 'info');
-    this.sfx.play('click');
+    this.sfx.play('attach');
   }
 
   driveTarget() {
@@ -670,7 +731,15 @@ export class Game {
       this.driveDist -= tiles;
       this.bus.emit('drive', { qty: tiles });
     }
+    // exhaust puffs from the back of a running tractor
+    this.smokeTimer = (this.smokeTimer || 0) - dt;
+    if (v.fuel > 0 && !paused && this.smokeTimer <= 0) {
+      this.smokeTimer = 0.18 - Math.min(0.1, Math.abs(v.speed) / 1500);
+      const back = VEHICLES[v.type].length * 0.32;
+      this.effects.burst('smoke', v.x - Math.cos(v.heading) * back, v.y - Math.sin(v.heading) * back - 26);
+    }
     if (r.bump > 2) {
+      this.vibrate(40);
       this.sfx.play('error');
       this.effects.burst('dirt', v.x + Math.cos(v.heading) * 40, v.y + Math.sin(v.heading) * 40);
     }
@@ -717,8 +786,12 @@ export class Game {
   refuelVehicle(uid, field = false) { return this.vehicleResult(field ? Vehicles.fieldRefuel(this.state, uid, this.bus) : Vehicles.refuel(this.state, uid, undefined, this.bus), (r) => `Added ${r.units} fuel for ${r.cost} coins`); }
   repairVehicle(uid) { return this.vehicleResult(Vehicles.repair(this.state, uid, this.bus), (r) => `Repaired for ${r.cost} coins`); }
   upgradeVehicle(uid) { return this.vehicleResult(Vehicles.upgradeVehicle(this.state, uid, this.bus), 'Upgrade fitted'); }
-  attachImplement(uid, id) { return this.vehicleResult(Vehicles.attach(this.state, uid, id), `${IMPLEMENTS[id].name} attached`); }
-  detachImplement(uid, slot) { return this.vehicleResult(Vehicles.detach(this.state, uid, slot), 'Detached'); }
+  attachImplement(uid, id) { return this.clunk(this.vehicleResult(Vehicles.attach(this.state, uid, id), `${IMPLEMENTS[id].name} attached`)); }
+  detachImplement(uid, slot) { return this.clunk(this.vehicleResult(Vehicles.detach(this.state, uid, slot), 'Detached')); }
+  clunk(r) {
+    if (r.ok) this.sfx.play('attach');
+    return r;
+  }
   unloadVehicle(uid) { return this.vehicleResult(Vehicles.unload(this.state, uid), (r) => `Unloaded ${r.moved} crops into your bag`); }
   towVehicle(uid) { return this.vehicleResult(Vehicles.sendToGarage(this.state, uid), 'Towed back to the garage'); }
 
@@ -975,8 +1048,8 @@ export class Game {
     if (t.action === 'pet') {
       const r = Animals.pet(this.state, a.uid, this.bus);
       if (r.ok) {
-        this.sfx.play('click');
-        if (ac) this.effects.text('♥', ac.x, ac.y - SPECIES[a.species].drawHeight - 6, '#ff9fb2');
+        this.sfx.play(ANIMAL_VOICE[a.species] || 'click');
+        if (ac) this.effects.burst('heart', ac.x, ac.y - SPECIES[a.species].drawHeight + 10);
         this.hud.toast(`${a.name} loves the attention`);
       } else this.hud.toast(r.reason, 'warn');
       return;
@@ -989,7 +1062,8 @@ export class Game {
     const r = Animals.collect(this.state, uid, this.bus);
     if (r.ok) {
       this.sfx.play('harvest');
-      this.action = { kind: 'harvest', t: 0, dur: ACTION_TIME };
+      this.sfx.play(ANIMAL_VOICE[a0.species] || 'harvest');
+      this.action = { kind: 'carry', t: 0, dur: ACTION_TIME * 1.4 };
       if (ac) {
         this.effects.burst('harvest', ac.x, ac.y - 20);
         this.effects.text(`+${productLabel(a0.species, r.qty)}`, ac.x, ac.y - 50, '#fff4c2');
@@ -1019,6 +1093,12 @@ export class Game {
     const r = Animals.feedYard(this.state, homeUid, this.bus);
     if (r.ok) {
       this.sfx.play('plant');
+      const one = this.state.animals.find((x) => x.home === homeUid);
+      if (one) this.sfx.play(ANIMAL_VOICE[one.species]);
+      for (const a of this.state.animals) {
+        const ac = a.home === homeUid && this.actors.get(a.uid);
+        if (ac) this.effects.burst('feed', ac.x, ac.y - 6);
+      }
       this.hud.toast(`Fed ${r.fed} ${r.fed === 1 ? 'animal' : 'animals'}${r.short ? ` — out of feed for ${r.short}` : ''}`, 'good');
     } else {
       this.hud.toast(r.reason, 'warn');
@@ -1254,7 +1334,7 @@ export class Game {
     this.cancelPlacement();
     this.refreshColliders();
     this.effects.burst('dirt', pl.x * TILE, pl.y * TILE);
-    this.sfx.play('till');
+    this.sfx.play(DECORATIONS[pl.type] ? 'till' : 'build'); // hammering for buildings
     const name = (DECORATIONS[pl.type] || BUILDINGS[pl.type]).name;
     this.hud.toast(r.record.job ? `${name} construction started — ready at ${formatClock(r.record.job.end)}` : `${name} placed`, 'good');
     this.autosave('build');
@@ -1289,7 +1369,7 @@ export class Game {
   }
 
   enterInterior(id) {
-    this.sfx.play('click');
+    this.sfx.play('door');
     this.transition(() => {
       const room = this.interiors[id];
       this.state.player.scene = id;
@@ -1300,7 +1380,7 @@ export class Game {
   }
 
   leaveInterior() {
-    this.sfx.play('click');
+    this.sfx.play('door');
     this.transition(() => {
       const door = this.world.interactables.find((i) => i.kind === 'house');
       this.state.player.scene = 'farm';
@@ -1345,11 +1425,51 @@ export class Game {
     this.applySettings();
   }
 
+  // Stars and a ring around the player: unlocks and level-ups.
+  celebrate(color) {
+    const p = this.state.player;
+    this.effects.ring(p.x, p.y - 10, color);
+    this.effects.burst('sparkle', p.x, p.y - 60);
+  }
+
+  // Where a building stands (bottom centre, px): placed ones by uid, fixed ones from the map.
+  buildingPos(id, uid) {
+    if (uid) {
+      const rec = this.state.placed.find((p) => p.uid === uid);
+      return rec ? { x: rec.x * TILE, y: rec.y * TILE } : null;
+    }
+    const d = this.world.drawables.find((x) => x.building === id);
+    return d ? { x: d.x, y: d.y } : null;
+  }
+
+  // A short buzz on phones that support it (Settings > Vibration).
+  vibrate(pattern) {
+    if (!this.state?.settings.vibration) return;
+    try {
+      // the Android app has a native bridge (WebViews ignore navigator.vibrate)
+      if (window.AndroidHaptics) window.AndroidHaptics.vibrate(Array.isArray(pattern) ? pattern.reduce((a, b) => a + b, 0) : pattern);
+      else navigator.vibrate?.(pattern);
+    } catch { /* not supported */ }
+  }
+
+  // Music follows where you are, ambience follows the weather, the engine follows the throttle.
+  updateAudio() {
+    const s = this.state;
+    const indoors = !!this.interior;
+    this.sfx.setMusic(!indoors && s.player.x > VILLAGE_X0 * TILE ? 'music_village' : 'music_farm');
+    this.sfx.setAmbience(indoors ? null : isRaining(s.time) ? 'ambience_rain' : 'ambience_farm');
+    const v = this.drivingVehicle;
+    this.sfx.setEngine(v && v.fuel > 0 ? Math.min(1, Math.abs(v.speed) / Vehicles.topSpeed(v)) : null);
+  }
+
   // Sound, camera distance and touch-control size from state.settings.
   applySettings() {
     const st = this.state.settings;
     this.sfx.muted = st.muted;
     this.sfx.volume = st.volume;
+    this.sfx.musicVolume = st.music;
+    this.sfx.ambienceVolume = st.ambience;
+    this.sfx.apply();
     const zoom = ZOOM_FACTORS[st.zoom] || 1;
     document.body.classList.toggle('big-controls', !!st.bigControls);
     if (this.camera.zoom !== zoom) {
@@ -1359,10 +1479,10 @@ export class Game {
     }
   }
 
-  changeSetting(key, value) {
+  changeSetting(key, value, save = true) {
     this.state.settings[key] = value;
     this.applySettings();
-    this.autosave('settings');
+    if (save) this.autosave('settings');
   }
 
   // Go back to the last save (or its backup). Progress since then is lost.

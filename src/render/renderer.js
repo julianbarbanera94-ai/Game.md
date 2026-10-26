@@ -13,6 +13,7 @@ import { buildGround } from './terrain.js';
 import { drawVehicle } from './vehicleArt.js';
 import { calendar, activeEvent } from '../systems/seasons.js';
 import { SEASON_TINT } from '../data/seasons.js';
+import { isRaining, isSnowing } from '../systems/weather.js';
 import { buildInteriorArt } from './interiorArt.js';
 import { playerFrame, plotSpriteKey, untilledVariant, wetVariant } from './sprites.js';
 
@@ -67,8 +68,12 @@ export class Renderer {
     const view = { x0: cam.x - TILE * 3, y0: cam.y - TILE * 2, x1: cam.x + cam.viewW + TILE * 3, y1: cam.y + cam.viewH + TILE * 6 };
 
     if (this.ground) {
+      // The ground canvas is built near screen resolution, so plain bilinear
+      // filtering looks the same as 'high' and costs far less every frame.
       const r = this.groundRes;
+      g.imageSmoothingQuality = 'low';
       g.drawImage(this.ground, cam.x * r, cam.y * r, cam.viewW * r, cam.viewH * r, cam.x, cam.y, cam.viewW, cam.viewH);
+      g.imageSmoothingQuality = 'high';
     }
     this.drawWater(g, game.clockSeconds);
     this.drawPlots(g, game);
@@ -99,26 +104,80 @@ export class Renderer {
     this.drawTarget(g, game);
     game.effects.draw(g);
     this.drawLighting(g, game, cam);
+    this.drawWeather(g, game, cam);
   }
 
-  // The whole world, small, for the map screen: the painted ground, plots and
-  // every building and vehicle, at `pxW` device pixels across. No people.
-  renderMap(game, pxW) {
-    const k = pxW / WORLD_W;
+  // Rain streaks with splashes, or drifting snow, over the visible world.
+  drawWeather(g, game, cam) {
+    const rain = isRaining(game.state.time);
+    const snow = !rain && isSnowing(game.state.time);
+    if (!rain && !snow) return;
+    const t = game.clockSeconds;
+    g.save();
+    if (rain) {
+      g.fillStyle = 'rgba(38,55,76,0.24)'; // overcast
+      g.fillRect(cam.x, cam.y, cam.viewW, cam.viewH);
+      g.strokeStyle = 'rgba(215,232,255,0.6)';
+      g.lineWidth = 2;
+      g.beginPath();
+      const n = Math.round((cam.viewW * cam.viewH) / 6000);
+      for (let i = 0; i < n; i++) {
+        const fx = ((i * 7919) % 1000) / 1000, fy = ((i * 104729) % 1000) / 1000;
+        const x = cam.x + ((fx * cam.viewW + t * 90) % cam.viewW);
+        const y = cam.y + ((fy * cam.viewH + t * (620 + (i % 5) * 40)) % cam.viewH);
+        g.moveTo(x, y);
+        g.lineTo(x - 7, y + 26);
+      }
+      g.stroke();
+      // splashes on the ground
+      g.strokeStyle = 'rgba(220,235,255,0.5)';
+      g.lineWidth = 1.2;
+      for (let i = 0; i < n / 4; i++) {
+        const phase = (t * 1.7 + i * 0.37) % 1;
+        const fx = ((i * 4657) % 1000) / 1000, fy = ((i * 2971 + Math.floor(t * 1.7 + i * 0.37) * 131) % 1000) / 1000;
+        g.globalAlpha = 1 - phase;
+        g.beginPath();
+        g.ellipse(cam.x + fx * cam.viewW, cam.y + fy * cam.viewH, 2 + phase * 6, 1 + phase * 2.5, 0, 0, Math.PI * 2);
+        g.stroke();
+      }
+    } else {
+      g.fillStyle = 'rgba(255,255,255,0.85)';
+      const n = Math.round((cam.viewW * cam.viewH) / 14000);
+      for (let i = 0; i < n; i++) {
+        const fx = ((i * 7919) % 1000) / 1000, fy = ((i * 104729) % 1000) / 1000;
+        const x = cam.x + ((fx * cam.viewW + Math.sin(t * 0.8 + i) * 18 + t * 12) % cam.viewW);
+        const y = cam.y + ((fy * cam.viewH + t * (40 + (i % 4) * 10)) % cam.viewH);
+        g.beginPath();
+        g.arc(x, y, 1.5 + (i % 3), 0, Math.PI * 2);
+        g.fill();
+      }
+    }
+    g.restore();
+  }
+
+  // The world (or a part of it, `rect` in world px) drawn into a new canvas
+  // `pxW` device pixels wide: the painted ground, plots and every building and
+  // vehicle, no people. Used by the map screen and the launch-art tool.
+  renderMap(game, pxW, rect = { x0: 0, y0: 0, x1: WORLD_W, y1: WORLD_H }) {
+    const rw = rect.x1 - rect.x0, rh = rect.y1 - rect.y0;
+    const k = pxW / rw;
     const c = document.createElement('canvas');
-    c.width = Math.round(WORLD_W * k);
-    c.height = Math.round(WORLD_H * k);
+    c.width = Math.round(rw * k);
+    c.height = Math.round(rh * k);
     const g = c.getContext('2d');
     g.imageSmoothingEnabled = true;
     g.imageSmoothingQuality = 'high';
-    g.setTransform(k, 0, 0, k, 0, 0);
-    if (this.ground) g.drawImage(this.ground, 0, 0, WORLD_W, WORLD_H);
+    g.setTransform(k, 0, 0, k, -rect.x0 * k, -rect.y0 * k);
+    if (this.ground) {
+      const r = this.groundRes;
+      g.drawImage(this.ground, rect.x0 * r, rect.y0 * r, rw * r, rh * r, rect.x0, rect.y0, rw, rh);
+    }
     this.drawPlots(g, game);
     this.drawPastures(g, game);
     const items = [];
     for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state)]) {
       const d = d0.building ? this.resolveBuilding(game.state, d0) : d0;
-      if (d) items.push(d);
+      if (d && d.x + d.w / 2 > rect.x0 && d.x - d.w / 2 < rect.x1 && d.y > rect.y0 && d.y - d.h < rect.y1 + TILE * 4) items.push(d);
     }
     for (const v of game.state.vehicles) items.push({ vehicle: v, sortY: v.y + 14 });
     items.sort((a, b) => a.sortY - b.sortY);
