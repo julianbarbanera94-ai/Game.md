@@ -614,36 +614,36 @@
       "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage1": {
-      "file": "assets/redrawn/building4.construction_stage1.webp",
-      "width": 636,
-      "height": 768,
-      "source": "hires-export",
-      "status": "hires-upscaled",
-      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+      "file": "assets/derived/construction/stage1.png",
+      "width": 620,
+      "height": 371,
+      "source": "tools/paint_construction.py",
+      "status": "composited-from-game-art",
+      "notes": "Built from the game's crisp painted pieces (dirt, bridge-deck planks, log, barrels, crates, rocks); replaces the soft reference-board upscale."
     },
     "building4.construction_stage2": {
-      "file": "assets/redrawn/building4.construction_stage2.webp",
-      "width": 611,
-      "height": 768,
-      "source": "hires-export",
-      "status": "hires-upscaled",
-      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+      "file": "assets/derived/construction/stage2.png",
+      "width": 620,
+      "height": 371,
+      "source": "tools/paint_construction.py",
+      "status": "composited-from-game-art",
+      "notes": "Built from the game's crisp painted pieces (dirt, bridge-deck planks, log, barrels, crates, rocks); replaces the soft reference-board upscale."
     },
     "building4.construction_stage3": {
-      "file": "assets/redrawn/building4.construction_stage3.webp",
-      "width": 618,
-      "height": 768,
-      "source": "hires-export",
-      "status": "hires-upscaled",
-      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+      "file": "assets/derived/construction/stage3.png",
+      "width": 620,
+      "height": 561,
+      "source": "tools/paint_construction.py",
+      "status": "composited-from-game-art",
+      "notes": "Built from the game's crisp painted pieces (dirt, bridge-deck planks, log, barrels, crates, rocks); replaces the soft reference-board upscale."
     },
     "building4.construction_stage4": {
-      "file": "assets/redrawn/building4.construction_stage4.webp",
-      "width": 590,
-      "height": 768,
-      "source": "hires-export",
-      "status": "hires-upscaled",
-      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+      "file": "assets/derived/construction/stage4.png",
+      "width": 620,
+      "height": 561,
+      "source": "tools/paint_construction.py",
+      "status": "composited-from-game-art",
+      "notes": "Built from the game's crisp painted pieces (dirt, bridge-deck planks, log, barrels, crates, rocks); replaces the soft reference-board upscale."
     },
     "building4.construction_stage5": {
       "file": "assets/derived/phase4/construction_stage5.webp",

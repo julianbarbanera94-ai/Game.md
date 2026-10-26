@@ -137,3 +137,11 @@ master, the 512 store icon, the logo and 1920x1080 title/loading art.
 
 `tools/webp_assets.py` re-encoded sprites over 40 KB as lossless WebP (visible pixels verified identical) and
 pointed the manifest at them. The Android build bundles only files the manifest or code reference.
+
+## Construction sites (assets/derived/construction/)
+
+The four construction stages are built by `tools/paint_construction.py` from the game's crisp painted
+pieces (the dirt texture's clean centre, timber cut from the bridge-deck planks, the fallen log, water
+barrel, crates, barrel and rocks) instead of the soft reference-board upscales: 1 staked-out plot,
+2 plank floor and posts, 3 timber frame, 4 walls and roof boards with a ladder. Status
+`composited-from-game-art`.
