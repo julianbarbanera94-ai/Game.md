@@ -138,12 +138,13 @@ export function pastureFence(assets, type, x, y) {
 // Areas where nothing may be built: garden, creek/bridge, paths (px rects).
 function noBuildZones() {
   const z = [
-    { x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
-    { x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
+    { name: 'the garden', x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
+    { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
   ];
   for (const p of PATHS) {
     const hw = (p.width / 2) * TILE;
     z.push({
+      name: 'the path',
       x0: Math.min(p.from[0], p.to[0]) * TILE - hw, y0: Math.min(p.from[1], p.to[1]) * TILE - hw,
       x1: Math.max(p.from[0], p.to[0]) * TILE + hw, y1: Math.max(p.from[1], p.to[1]) * TILE + hw,
     });

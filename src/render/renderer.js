@@ -235,6 +235,14 @@ export class Renderer {
     g.lineWidth = 2;
     g.fillRect(fr.x0 * TILE, fr.y0 * TILE, (fr.x1 - fr.x0) * TILE, (fr.y1 - fr.y0) * TILE);
     g.strokeRect(fr.x0 * TILE, fr.y0 * TILE, (fr.x1 - fr.x0) * TILE, (fr.y1 - fr.y0) * TILE);
+    // outline whatever is in the way
+    g.strokeStyle = 'rgba(255,60,40,0.95)';
+    g.fillStyle = 'rgba(255,60,40,0.35)';
+    g.lineWidth = 3;
+    for (const c of pl.check?.rects || []) {
+      g.fillRect(c.x0, c.y0, c.x1 - c.x0, c.y1 - c.y0);
+      g.strokeRect(c.x0, c.y0, c.x1 - c.x0, c.y1 - c.y0);
+    }
     if (img) {
       g.globalAlpha = 0.65;
       const w = wT * TILE;

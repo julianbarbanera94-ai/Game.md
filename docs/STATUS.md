@@ -108,7 +108,7 @@ Known gaps: building art is low-resolution cut-outs (see `ASSETS.md`); there is 
 
 ## Clearing land
 
-Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map border can be cleared for coins (tree 60, boulder 40, stump 25, log 30, bush 20, barrel/crate 10): walk up, press A, confirm. The outer ring of trees stays. Placing a building on a blocked spot now says what is in the way. Saved as `cleared` (save v4, v3 saves migrate). Tests: `tests/unit/clearing.test.mjs`, `npm run test:clearing`.
+Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map border can be cleared for coins (tree 60, boulder 40, stump 25, log 30, bush 20, barrel/crate 10): walk up, press A, confirm. The outer ring of trees stays. Placing a building on a blocked spot says exactly why (edge of the map, path, garden, creek, a tree/rock to clear, a door too close, you standing in it), outlines the blocking objects in red, and slides to the nearest valid spot within ~2 tiles. Tests: `tests/e2e/building_after_clearing.mjs` clears scenery and builds a scarecrow, shed, coop and barn in the freed spots. Saved as `cleared` (save v4, v3 saves migrate). Tests: `tests/unit/clearing.test.mjs`, `npm run test:clearing`.
 
 ## Asset audit
 

@@ -683,38 +683,72 @@ export class Game {
     const cy = p.y / TILE + fy * dist - 0.3;
     pl.x = Math.round((cx - (rel.x0 + rel.x1) / 2) * 4) / 4;
     pl.y = Math.round((cy - (rel.y0 + rel.y1) / 2) * 4) / 4;
-    const area = Buildings.areaRect(pl.type, pl.x, pl.y);
-    pl.valid = this.isBuildable(area);
-    pl.blocker = pl.valid ? null : this.blockingScenery(area);
+    pl.check = this.buildCheck(Buildings.areaRect(pl.type, pl.x, pl.y));
+    // Near miss: slide to the closest spot that works (within ~2 tiles) so a
+    // few pixels of overlap never makes the player hunt for the exact tile.
+    if (!pl.check.ok) {
+      const snap = this.nearestBuildable(pl.type, pl.x, pl.y);
+      if (snap) {
+        pl.x = snap.x;
+        pl.y = snap.y;
+        pl.check = snap.check;
+      }
+    }
+    pl.valid = pl.check.ok;
   }
 
-  // A clearable tree, bush or rock inside the area (px of the scenery's base box).
-  blockingScenery(rt) {
-    const r = { x0: rt.x0 * TILE - 20, y0: rt.y0 * TILE - 20, x1: rt.x1 * TILE + 20, y1: rt.y1 * TILE + 20 };
-    return Clearing.clearables(this.state).find((c) => c.x * TILE > r.x0 && c.x * TILE < r.x1 && c.y * TILE > r.y0 && c.y * TILE < r.y1) || null;
+  nearestBuildable(type, x, y, reach = 2) {
+    const offsets = [];
+    for (let dx = -reach; dx <= reach; dx += 0.25) for (let dy = -reach; dy <= reach; dy += 0.25) offsets.push([dx, dy, dx * dx + dy * dy]);
+    offsets.sort((a, b) => a[2] - b[2]);
+    for (const [dx, dy, d2] of offsets) {
+      if (d2 > reach * reach) break;
+      const check = this.buildCheck(Buildings.areaRect(type, x + dx, y + dy));
+      if (check.ok) return { x: x + dx, y: y + dy, check };
+    }
+    return null;
   }
 
-  // A footprint (tile rect) is buildable if it is inside the bounds and clear
-  // of colliders, no-build zones (garden, creek, paths), doors and the player.
-  isBuildable(rt) {
+  // Why a footprint (tile rect) can't be built on, or { ok: true }. It must be
+  // inside the bounds and clear of colliders, no-build zones (garden, creek,
+  // paths), doors and the player. `rects` are the offending things in px, so
+  // the renderer can outline them; `text` is shown to the player.
+  buildCheck(rt) {
     const r = { x0: rt.x0 * TILE, y0: rt.y0 * TILE, x1: rt.x1 * TILE, y1: rt.y1 * TILE };
     const pad = { x0: r.x0 - 6, y0: r.y0 - 6, x1: r.x1 + 6, y1: r.y1 + 6 };
     const b = this.world.bounds;
-    if (r.x0 < b.x0 || r.y0 < b.y0 + TILE || r.x1 > b.x1 || r.y1 > b.y1) return false;
-    if (this.farmCollision.rects.some((c) => overlaps(pad, c))) return false;
-    if (this.world.noBuild.some((z) => overlaps(r, z))) return false;
+    if (r.x0 < b.x0 || r.y0 < b.y0 + TILE || r.x1 > b.x1 || r.y1 > b.y1) {
+      return { ok: false, rects: [], text: 'Too close to the edge of the map — face another way or move' };
+    }
+    const hits = this.farmCollision.rects.filter((c) => overlaps(pad, c));
+    if (hits.length) {
+      const owner = (c) => [...this.world.scenery.entries()].find(([, sc]) => !sc.gone && sc.collider === c);
+      const clearable = hits.map((c) => { const o = owner(c); return o && Clearing.clearInfo(o[0]); }).find(Boolean);
+      const text = clearable ? `A ${clearable.name} is in the way — cancel and clear it first` : 'Something is in the way — try another spot';
+      return { ok: false, rects: hits, text };
+    }
+    const zones = this.world.noBuild.filter((z) => overlaps(r, z));
+    if (zones.length) return { ok: false, rects: [], text: `Can't build on ${zones[0].name} — try another spot` };
     const near = (x, y) => x > r.x0 - TILE * 0.7 && x < r.x1 + TILE * 0.7 && y > r.y0 - TILE * 0.5 && y < r.y1 + TILE * 0.9;
-    if (this.world.interactables.some((it) => near(it.x, it.y))) return false;
+    if (this.world.interactables.some((it) => near(it.x, it.y))) {
+      return { ok: false, rects: [], text: 'Too close to a door, sign or well — leave it some room' };
+    }
     const p = this.state.player;
-    if (overlaps(r, { x0: p.x - 16, y0: p.y - 10, x1: p.x + 16, y1: p.y + 6 })) return false;
-    return true;
+    if (overlaps(r, { x0: p.x - 16, y0: p.y - 10, x1: p.x + 16, y1: p.y + 6 })) {
+      return { ok: false, rects: [], text: "You're standing in the way — step back" };
+    }
+    return { ok: true, rects: [], text: '' };
+  }
+
+  isBuildable(rt) {
+    return this.buildCheck(rt).ok;
   }
 
   placementTarget() {
     const pl = this.placement;
     const name = (DECORATIONS[pl.type] || BUILDINGS[pl.type]).name;
     const cost = Buildings.placeableInfo(this.state, pl.type).cost;
-    return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Place ${name} (${cost} coins)` : pl.blocker ? `A ${pl.blocker.name} is in the way — cancel and clear it first` : "Can't build here — try another spot" };
+    return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Place ${name} (${cost} coins)` : pl.check?.text || "Can't build here — try another spot" };
   }
 
   confirmPlacement() {
