@@ -98,3 +98,13 @@ and decoration sprites at ≥128 px.
 ## Phases 5–10
 Not yet processed. A first look shows they contain reference boards and
 specifications (no isolated sprites), so each will need the same review.
+
+## High-resolution exports (assets/redrawn/)
+
+201 sprites (buildings, trees, decorations, animals, crops, icons, ground textures) are replaced by the
+`Farmstead_High_Res_01…07` exports, imported with `tools/import_redrawn.py --upscaled`. They are
+**high-resolution exports of the previous sprites**, not newly painted art (the packs say so): edges and
+outlines are crisper, but fine detail the old art never had is still missing. Margins are trimmed and
+buildings are capped at 768 px (trees 640 px) to keep phone memory in check. Manifest status:
+`hires-upscaled`. Replace them with painted art (status `redrawn`) when it exists; the old derived sprites
+are still under `assets/derived/` and `assets/phase*/`.

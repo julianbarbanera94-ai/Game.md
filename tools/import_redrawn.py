@@ -11,12 +11,15 @@ see docs/ART_SIZES.csv). For every file the tool:
   3. checks the object is big enough: long edge >= min-ratio x the target size
      in docs/ART_SIZES.csv (default 0.5, the brief's "minimum acceptable"),
   4. checks the detail is real: the image must not be a smooth enlargement
-     (effective detail >= min-ratio x target),
+     (effective detail >= min-ratio x target). With --upscaled this check is
+     skipped on purpose (the pack is a known high-resolution export of existing
+     art) and the sprites are marked "hires-upscaled", not "redrawn",
   5. downsizes (never enlarges) anything larger than the target, with no sharpening,
   6. saves it to assets/redrawn/<key>.png and points the manifest at it.
 
 Files that fail a check are reported and left out; the old sprite stays in use.
-Nothing is enlarged and nothing is sharpened.
+Nothing is enlarged and nothing is sharpened. Sprites larger than a sensible
+on-screen size are downsized (buildings 768 px, trees 640 px) to save memory.
 """
 import argparse
 import csv
@@ -76,12 +79,18 @@ def prepare(path):
     return im.crop(box), None
 
 
-def check(im, target, min_ratio):
+# Long-edge caps (px): bigger than this is wasted memory on a phone screen.
+CAPS = {"1 Buildings": 768, "2 Trees": 640}
+
+
+def check(im, target, min_ratio, upscaled=False):
     tw, th, _ = target
     w, h = im.size
     ratio = max(w / tw, h / th)
     if ratio < min_ratio:
         return f"too small: object is {w}x{h}, needs about {tw}x{th} (at least {round(min_ratio * 100)}% of that)"
+    if upscaled:
+        return None
     f, _ = audit.effective_factor(im)
     if f >= 2.0 and max(w, h) / f < min_ratio * max(tw, th):
         return f"looks like an enlargement (real detail ~{round(max(w, h) / f)} px of {max(w, h)}); needs more genuine detail"
@@ -94,6 +103,7 @@ def main():
     ap.add_argument("--root", default=ROOT, help="game repo root (default: this repo)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--min-ratio", type=float, default=0.5)
+    ap.add_argument("--upscaled", action="store_true", help="accept known high-resolution exports of existing art (skips the enlargement check)")
     args = ap.parse_args()
     root = args.root
     targets = load_targets(root)
@@ -114,12 +124,14 @@ def main():
                 unknown.append(fn)
                 continue
             im, err = prepare(path)
-            err = err or check(im, targets[key], args.min_ratio)
+            err = err or check(im, targets[key], args.min_ratio, args.upscaled)
             if err:
                 rejected.append((key, err))
                 continue
-            tw, th, _ = targets[key]
+            tw, th, group = targets[key]
             scale = min(1.0, tw / im.size[0], th / im.size[1])
+            if group in CAPS:
+                scale = min(scale, CAPS[group] / max(im.size))
             if scale < 1.0:
                 im = im.resize((round(im.size[0] * scale), round(im.size[1] * scale)), Image.LANCZOS)
             accepted.append((key, im))
@@ -139,8 +151,10 @@ def main():
         dst = os.path.join(outdir, f"{key}.png")
         im.save(dst, optimize=True)
         entry = {"file": os.path.relpath(dst, root).replace(os.sep, "/"), "width": im.size[0], "height": im.size[1],
-                 "source": "redrawn", "status": "redrawn",
-                 "notes": "Redrawn sprite supplied by the project owner; trimmed and (if larger than target) downsized, not enlarged or sharpened."}
+                 "source": "hires-export" if args.upscaled else "redrawn", "status": "hires-upscaled" if args.upscaled else "redrawn",
+                 "notes": ("High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail)"
+                           if args.upscaled else "Redrawn sprite supplied by the project owner")
+                 + "; margins trimmed, downsized only if larger than needed."}
         manifest["assets"][key] = entry
         index[key] = entry
     with open(mpath, "w") as f:

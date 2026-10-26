@@ -2,436 +2,436 @@
   "version": 1,
   "assets": {
     "animal.chicken_d0": {
-      "file": "assets/derived/phase5/chicken_d0.png",
-      "width": 99,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.chicken_d0.png",
+      "width": 77,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_d1": {
-      "file": "assets/derived/phase5/chicken_d1.png",
-      "width": 96,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.chicken_d1.png",
+      "width": 75,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_d2": {
-      "file": "assets/derived/phase5/chicken_d2.png",
-      "width": 102,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.chicken_d2.png",
+      "width": 79,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_d3": {
-      "file": "assets/derived/phase5/chicken_d3.png",
-      "width": 96,
-      "height": 153,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.chicken_d3.png",
+      "width": 76,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_d4": {
-      "file": "assets/derived/phase5/chicken_d4.png",
-      "width": 96,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.chicken_d4.png",
+      "width": 75,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_u0": {
-      "file": "assets/derived/phase5/chicken_u0.png",
-      "width": 93,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.chicken_u0.png",
+      "width": 72,
+      "height": 119,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_u1": {
-      "file": "assets/derived/phase5/chicken_u1.png",
-      "width": 108,
-      "height": 159,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.chicken_u1.png",
+      "width": 82,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_u2": {
-      "file": "assets/derived/phase5/chicken_u2.png",
-      "width": 108,
-      "height": 159,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.chicken_u2.png",
+      "width": 82,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.chicken_u3": {
-      "file": "assets/derived/phase5/chicken_u3.png",
-      "width": 105,
-      "height": 156,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.chicken_u3.png",
+      "width": 81,
+      "height": 119,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d0": {
-      "file": "assets/derived/phase5/cow_d0.png",
-      "width": 141,
-      "height": 234,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.cow_d0.png",
+      "width": 146,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d1": {
-      "file": "assets/derived/phase5/cow_d1.png",
-      "width": 123,
-      "height": 231,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.cow_d1.png",
+      "width": 129,
+      "height": 235,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d2": {
-      "file": "assets/derived/phase5/cow_d2.png",
-      "width": 126,
-      "height": 228,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.cow_d2.png",
+      "width": 132,
+      "height": 237,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d3": {
-      "file": "assets/derived/phase5/cow_d3.png",
-      "width": 120,
-      "height": 228,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.cow_d3.png",
+      "width": 128,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_d4": {
-      "file": "assets/derived/phase5/cow_d4.png",
-      "width": 123,
-      "height": 228,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.cow_d4.png",
+      "width": 131,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u0": {
-      "file": "assets/derived/phase5/cow_u0.png",
-      "width": 114,
-      "height": 231,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.cow_u0.png",
+      "width": 120,
+      "height": 235,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u1": {
-      "file": "assets/derived/phase5/cow_u1.png",
-      "width": 117,
-      "height": 219,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.cow_u1.png",
+      "width": 130,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u2": {
-      "file": "assets/derived/phase5/cow_u2.png",
-      "width": 123,
-      "height": 225,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.cow_u2.png",
+      "width": 133,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.cow_u3": {
-      "file": "assets/derived/phase5/cow_u3.png",
-      "width": 114,
-      "height": 231,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.cow_u3.png",
+      "width": 120,
+      "height": 235,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_d0": {
-      "file": "assets/derived/phase5/duck_d0.png",
-      "width": 114,
-      "height": 198,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.duck_d0.png",
+      "width": 70,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_d1": {
-      "file": "assets/derived/phase5/duck_d1.png",
-      "width": 123,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.duck_d1.png",
+      "width": 74,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_d2": {
-      "file": "assets/derived/phase5/duck_d2.png",
-      "width": 114,
-      "height": 198,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.duck_d2.png",
+      "width": 70,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_d3": {
-      "file": "assets/derived/phase5/duck_d3.png",
-      "width": 114,
-      "height": 198,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.duck_d3.png",
+      "width": 70,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_d4": {
-      "file": "assets/derived/phase5/duck_d4.png",
-      "width": 111,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.duck_d4.png",
+      "width": 67,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_u0": {
-      "file": "assets/derived/phase5/duck_u0.png",
-      "width": 105,
-      "height": 195,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.duck_u0.png",
+      "width": 65,
+      "height": 119,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_u1": {
-      "file": "assets/derived/phase5/duck_u1.png",
-      "width": 108,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.duck_u1.png",
+      "width": 65,
+      "height": 119,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_u2": {
-      "file": "assets/derived/phase5/duck_u2.png",
-      "width": 108,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.duck_u2.png",
+      "width": 65,
+      "height": 119,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.duck_u3": {
-      "file": "assets/derived/phase5/duck_u3.png",
-      "width": 102,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.duck_u3.png",
+      "width": 62,
+      "height": 120,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d0": {
-      "file": "assets/derived/phase5/horse_d0.png",
-      "width": 126,
-      "height": 327,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.horse_d0.png",
+      "width": 115,
+      "height": 293,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d1": {
-      "file": "assets/derived/phase5/horse_d1.png",
-      "width": 129,
-      "height": 324,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.horse_d1.png",
+      "width": 117,
+      "height": 294,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d2": {
-      "file": "assets/derived/phase5/horse_d2.png",
-      "width": 120,
-      "height": 312,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.horse_d2.png",
+      "width": 117,
+      "height": 296,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d3": {
-      "file": "assets/derived/phase5/horse_d3.png",
-      "width": 117,
-      "height": 324,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.horse_d3.png",
+      "width": 110,
+      "height": 294,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_d4": {
-      "file": "assets/derived/phase5/horse_d4.png",
-      "width": 114,
-      "height": 318,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.horse_d4.png",
+      "width": 107,
+      "height": 294,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u0": {
-      "file": "assets/derived/phase5/horse_u0.png",
-      "width": 114,
-      "height": 300,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.horse_u0.png",
+      "width": 116,
+      "height": 296,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u1": {
-      "file": "assets/derived/phase5/horse_u1.png",
-      "width": 132,
-      "height": 291,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.horse_u1.png",
+      "width": 135,
+      "height": 297,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u2": {
-      "file": "assets/derived/phase5/horse_u2.png",
-      "width": 159,
-      "height": 276,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.horse_u2.png",
+      "width": 173,
+      "height": 297,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.horse_u3": {
-      "file": "assets/derived/phase5/horse_u3.png",
-      "width": 123,
-      "height": 282,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.horse_u3.png",
+      "width": 132,
+      "height": 298,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_d0": {
-      "file": "assets/derived/phase5/pig_d0.png",
-      "width": 126,
-      "height": 207,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.pig_d0.png",
+      "width": 110,
+      "height": 177,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_d1": {
-      "file": "assets/derived/phase5/pig_d1.png",
-      "width": 120,
-      "height": 213,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.pig_d1.png",
+      "width": 101,
+      "height": 178,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_d2": {
-      "file": "assets/derived/phase5/pig_d2.png",
-      "width": 114,
-      "height": 213,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.pig_d2.png",
+      "width": 97,
+      "height": 179,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_d3": {
-      "file": "assets/derived/phase5/pig_d3.png",
-      "width": 135,
-      "height": 207,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.pig_d3.png",
+      "width": 116,
+      "height": 178,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_d4": {
-      "file": "assets/derived/phase5/pig_d4.png",
-      "width": 117,
-      "height": 207,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.pig_d4.png",
+      "width": 104,
+      "height": 177,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_u0": {
-      "file": "assets/derived/phase5/pig_u0.png",
-      "width": 114,
-      "height": 201,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.pig_u0.png",
+      "width": 104,
+      "height": 176,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_u1": {
-      "file": "assets/derived/phase5/pig_u1.png",
-      "width": 105,
-      "height": 192,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.pig_u1.png",
+      "width": 99,
+      "height": 177,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_u2": {
-      "file": "assets/derived/phase5/pig_u2.png",
-      "width": 108,
-      "height": 192,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.pig_u2.png",
+      "width": 103,
+      "height": 176,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.pig_u3": {
-      "file": "assets/derived/phase5/pig_u3.png",
-      "width": 108,
-      "height": 192,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.pig_u3.png",
+      "width": 101,
+      "height": 176,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d0": {
-      "file": "assets/derived/phase5/sheep_d0.png",
-      "width": 135,
-      "height": 174,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.sheep_d0.png",
+      "width": 137,
+      "height": 177,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d1": {
-      "file": "assets/derived/phase5/sheep_d1.png",
-      "width": 123,
-      "height": 174,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.sheep_d1.png",
+      "width": 129,
+      "height": 181,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d2": {
-      "file": "assets/derived/phase5/sheep_d2.png",
-      "width": 132,
-      "height": 171,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.sheep_d2.png",
+      "width": 140,
+      "height": 176,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d3": {
-      "file": "assets/derived/phase5/sheep_d3.png",
-      "width": 111,
-      "height": 165,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.sheep_d3.png",
+      "width": 123,
+      "height": 179,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_d4": {
-      "file": "assets/derived/phase5/sheep_d4.png",
-      "width": 120,
-      "height": 171,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+      "file": "assets/redrawn/animal.sheep_d4.png",
+      "width": 128,
+      "height": 179,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_u0": {
-      "file": "assets/derived/phase5/sheep_u0.png",
+      "file": "assets/redrawn/animal.sheep_u0.png",
       "width": 105,
-      "height": 183,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "height": 180,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_u1": {
-      "file": "assets/derived/phase5/sheep_u1.png",
-      "width": 120,
+      "file": "assets/redrawn/animal.sheep_u1.png",
+      "width": 124,
       "height": 177,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_u2": {
-      "file": "assets/derived/phase5/sheep_u2.png",
+      "file": "assets/redrawn/animal.sheep_u2.png",
       "width": 111,
-      "height": 180,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "height": 181,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "animal.sheep_u3": {
-      "file": "assets/derived/phase5/sheep_u3.png",
-      "width": 120,
-      "height": 180,
-      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+      "file": "assets/redrawn/animal.sheep_u3.png",
+      "width": 122,
+      "height": 179,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "audio.coin_pickup": {
       "file": "assets/phase1/audio/coin_pickup.wav",
@@ -494,12 +494,12 @@
       "notes": ""
     },
     "building.market_stall": {
-      "file": "assets/phase1/buildings/market_stall.png",
-      "width": 396,
-      "height": 289,
-      "source": "phase1/assets/03_buildings (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 1 magenta-spill edge pixels."
+      "file": "assets/redrawn/building.market_stall.png",
+      "width": 768,
+      "height": 561,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.signpost": {
       "file": "assets/phase1/buildings/signpost.png",
@@ -518,20 +518,20 @@
       "notes": ""
     },
     "building.starter_house": {
-      "file": "assets/phase1/buildings/starter_house.png",
-      "width": 421,
-      "height": 401,
-      "source": "phase1/assets/03_buildings (v2 detailed)",
-      "status": "approved",
-      "notes": ""
+      "file": "assets/redrawn/building.starter_house.png",
+      "width": 768,
+      "height": 731,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.tool_shed": {
-      "file": "assets/phase1/buildings/tool_shed.png",
-      "width": 315,
-      "height": 338,
-      "source": "phase1/assets/03_buildings (v2 detailed)",
-      "status": "approved",
-      "notes": ""
+      "file": "assets/redrawn/building.tool_shed.png",
+      "width": 593,
+      "height": 636,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.water_barrel": {
       "file": "assets/phase1/buildings/water_barrel.png",
@@ -542,12 +542,12 @@
       "notes": ""
     },
     "building.well_building": {
-      "file": "assets/phase1/buildings/well_building.png",
-      "width": 283,
-      "height": 279,
-      "source": "phase1/assets/03_buildings (v2 detailed)",
-      "status": "approved",
-      "notes": ""
+      "file": "assets/redrawn/building.well_building.png",
+      "width": 412,
+      "height": 406,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building.wooden_bridge": {
       "file": "assets/phase1/buildings/wooden_bridge.png",
@@ -566,84 +566,84 @@
       "notes": ""
     },
     "building4.barn_l1": {
-      "file": "assets/derived/phase4/barn_l1.png",
-      "width": 236,
-      "height": 276,
-      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.barn_l1.png",
+      "width": 534,
+      "height": 624,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.barn_l2": {
-      "file": "assets/derived/phase4/barn_l2.png",
-      "width": 310,
-      "height": 336,
-      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.barn_l2.png",
+      "width": 710,
+      "height": 765,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.barn_l3": {
-      "file": "assets/derived/phase4/barn_l3.png",
-      "width": 430,
-      "height": 338,
-      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.barn_l3.png",
+      "width": 768,
+      "height": 604,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l1": {
-      "file": "assets/derived/phase4/chicken_coop_l1.png",
-      "width": 202,
-      "height": 278,
-      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.chicken_coop_l1.png",
+      "width": 471,
+      "height": 652,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l2": {
-      "file": "assets/derived/phase4/chicken_coop_l2.png",
-      "width": 300,
-      "height": 306,
-      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.chicken_coop_l2.png",
+      "width": 708,
+      "height": 722,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.chicken_coop_l3": {
-      "file": "assets/derived/phase4/chicken_coop_l3.png",
-      "width": 422,
-      "height": 340,
-      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.chicken_coop_l3.png",
+      "width": 768,
+      "height": 619,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage1": {
-      "file": "assets/derived/phase4/construction_stage1.png",
-      "width": 207,
-      "height": 252,
-      "source": "phase4/02_construction_stages/barn_construction_stages.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.construction_stage1.png",
+      "width": 636,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage2": {
-      "file": "assets/derived/phase4/construction_stage2.png",
-      "width": 220,
-      "height": 278,
-      "source": "phase4/02_construction_stages/barn_construction_stages.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.construction_stage2.png",
+      "width": 611,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage3": {
-      "file": "assets/derived/phase4/construction_stage3.png",
-      "width": 230,
-      "height": 288,
-      "source": "phase4/02_construction_stages/barn_construction_stages.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.construction_stage3.png",
+      "width": 618,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage4": {
-      "file": "assets/derived/phase4/construction_stage4.png",
-      "width": 220,
-      "height": 288,
-      "source": "phase4/02_construction_stages/barn_construction_stages.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.construction_stage4.png",
+      "width": 590,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.construction_stage5": {
       "file": "assets/derived/phase4/construction_stage5.png",
@@ -662,20 +662,20 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.house_l2": {
-      "file": "assets/derived/phase4/house_l2.png",
-      "width": 308,
-      "height": 320,
-      "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.house_l2.png",
+      "width": 742,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.house_l3": {
-      "file": "assets/derived/phase4/house_l3.png",
-      "width": 434,
-      "height": 334,
-      "source": "phase4/01_building_upgrades/house_player_home_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.house_l3.png",
+      "width": 768,
+      "height": 594,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.market_stall_l1": {
       "file": "assets/derived/phase4/market_stall_l1.png",
@@ -686,44 +686,44 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.market_stall_l2": {
-      "file": "assets/derived/phase4/market_stall_l2.png",
-      "width": 210,
-      "height": 230,
-      "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.market_stall_l2.png",
+      "width": 702,
+      "height": 768,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.market_stall_l3": {
-      "file": "assets/derived/phase4/market_stall_l3.png",
-      "width": 326,
-      "height": 274,
-      "source": "phase4/01_building_upgrades/market_stall_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.market_stall_l3.png",
+      "width": 768,
+      "height": 651,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l1": {
-      "file": "assets/derived/phase4/storage_shed_l1.png",
-      "width": 210,
-      "height": 220,
-      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.storage_shed_l1.png",
+      "width": 531,
+      "height": 559,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l2": {
-      "file": "assets/derived/phase4/storage_shed_l2.png",
-      "width": 230,
-      "height": 272,
-      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.storage_shed_l2.png",
+      "width": 534,
+      "height": 629,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.storage_shed_l3": {
-      "file": "assets/derived/phase4/storage_shed_l3.png",
-      "width": 310,
-      "height": 270,
-      "source": "phase4/01_building_upgrades/storage_shed_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.storage_shed_l3.png",
+      "width": 650,
+      "height": 566,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.tool_shed_l1": {
       "file": "assets/derived/phase4/tool_shed_l1.png",
@@ -734,20 +734,20 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.tool_shed_l2": {
-      "file": "assets/derived/phase4/tool_shed_l2.png",
-      "width": 240,
-      "height": 244,
-      "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.tool_shed_l2.png",
+      "width": 590,
+      "height": 603,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.tool_shed_l3": {
-      "file": "assets/derived/phase4/tool_shed_l3.png",
-      "width": 340,
-      "height": 272,
-      "source": "phase4/01_building_upgrades/tool_shed_workshop_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.tool_shed_l3.png",
+      "width": 708,
+      "height": 569,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.well_l1": {
       "file": "assets/derived/phase4/well_l1.png",
@@ -758,20 +758,20 @@
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.well_l2": {
-      "file": "assets/derived/phase4/well_l2.png",
-      "width": 212,
-      "height": 268,
-      "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.well_l2.png",
+      "width": 414,
+      "height": 523,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "building4.well_l3": {
-      "file": "assets/derived/phase4/well_l3.png",
-      "width": 284,
-      "height": 284,
-      "source": "phase4/01_building_upgrades/well_levels_1_to_3.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/building4.well_l3.png",
+      "width": 532,
+      "height": 534,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.bush_berries": {
       "file": "assets/phase1/foliage/bush_berries.png",
@@ -886,316 +886,316 @@
       "notes": "Cleaned 1030 magenta-spill edge pixels."
     },
     "foliage.tree_autumn": {
-      "file": "assets/phase1/foliage/tree_autumn.png",
-      "width": 279,
-      "height": 329,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 2050 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_autumn.png",
+      "width": 534,
+      "height": 629,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_birch": {
-      "file": "assets/phase1/foliage/tree_birch.png",
-      "width": 267,
-      "height": 324,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 1434 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_birch.png",
+      "width": 475,
+      "height": 575,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_blossom": {
-      "file": "assets/phase1/foliage/tree_blossom.png",
-      "width": 288,
-      "height": 330,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 4407 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_blossom.png",
+      "width": 475,
+      "height": 538,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_oak": {
-      "file": "assets/phase1/foliage/tree_oak.png",
-      "width": 337,
-      "height": 339,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 2190 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_oak.png",
+      "width": 593,
+      "height": 596,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_pine": {
-      "file": "assets/phase1/foliage/tree_pine.png",
-      "width": 255,
-      "height": 344,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 1796 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_pine.png",
+      "width": 475,
+      "height": 639,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "foliage.tree_stump": {
-      "file": "assets/phase1/foliage/tree_stump.png",
-      "width": 261,
-      "height": 197,
-      "source": "phase1/assets/02_environment/foliage (v2 detailed)",
-      "status": "approved",
-      "notes": "Cleaned 1231 magenta-spill edge pixels."
+      "file": "assets/redrawn/foliage.tree_stump.png",
+      "width": 238,
+      "height": 180,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_cattle": {
-      "file": "assets/derived/phase5/feed_cattle.png",
-      "width": 180,
-      "height": 189,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_cattle.png",
+      "width": 229,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_chicken": {
-      "file": "assets/derived/phase5/feed_chicken.png",
-      "width": 183,
-      "height": 180,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_chicken.png",
+      "width": 240,
+      "height": 236,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_hay": {
-      "file": "assets/derived/phase5/feed_hay.png",
-      "width": 186,
-      "height": 204,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_hay.png",
+      "width": 219,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_pig": {
-      "file": "assets/derived/phase5/feed_pig.png",
-      "width": 186,
-      "height": 204,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_pig.png",
+      "width": 217,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_salt": {
-      "file": "assets/derived/phase5/feed_salt.png",
-      "width": 162,
-      "height": 162,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_salt.png",
+      "width": 240,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.feed_trough": {
-      "file": "assets/derived/phase5/feed_trough.png",
-      "width": 240,
-      "height": 189,
-      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.feed_trough.png",
+      "width": 238,
+      "height": 188,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_carrot": {
-      "file": "assets/derived/phase3/icons/produce_carrot.png",
-      "width": 65,
-      "height": 50,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_carrot.png",
+      "width": 238,
+      "height": 184,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_corn": {
-      "file": "assets/derived/phase3/icons/produce_corn.png",
-      "width": 52,
-      "height": 55,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_corn.png",
+      "width": 227,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_lettuce": {
-      "file": "assets/derived/phase3/icons/produce_lettuce.png",
-      "width": 55,
-      "height": 53,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_lettuce.png",
+      "width": 240,
+      "height": 231,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_potato": {
-      "file": "assets/derived/phase3/icons/produce_potato.png",
-      "width": 64,
-      "height": 52,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_potato.png",
+      "width": 240,
+      "height": 192,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_pumpkin": {
-      "file": "assets/derived/phase3/icons/produce_pumpkin.png",
-      "width": 61,
-      "height": 51,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_pumpkin.png",
+      "width": 240,
+      "height": 199,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_strawberry": {
-      "file": "assets/derived/phase3/icons/produce_strawberry.png",
-      "width": 42,
-      "height": 48,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_strawberry.png",
+      "width": 210,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_tomato": {
-      "file": "assets/derived/phase3/icons/produce_tomato.png",
-      "width": 59,
-      "height": 57,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_tomato.png",
+      "width": 240,
+      "height": 230,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.produce_wheat": {
-      "file": "assets/derived/phase3/icons/produce_wheat.png",
-      "width": 45,
-      "height": 52,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.produce_wheat.png",
+      "width": 205,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_duck_egg": {
-      "file": "assets/derived/phase5/product_duck_egg.png",
-      "width": 111,
-      "height": 159,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_duck_egg.png",
+      "width": 169,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_egg": {
-      "file": "assets/derived/phase5/product_egg.png",
-      "width": 114,
-      "height": 156,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_egg.png",
+      "width": 176,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_feather": {
-      "file": "assets/derived/phase5/product_feather.png",
-      "width": 120,
-      "height": 174,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_feather.png",
+      "width": 167,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_leather": {
-      "file": "assets/derived/phase5/product_leather.png",
-      "width": 138,
-      "height": 153,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_leather.png",
+      "width": 217,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_manure": {
-      "file": "assets/derived/phase5/product_manure.png",
-      "width": 147,
-      "height": 186,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_manure.png",
+      "width": 191,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_milk": {
-      "file": "assets/derived/phase5/product_milk.png",
-      "width": 111,
-      "height": 192,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_milk.png",
+      "width": 140,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_pork": {
-      "file": "assets/derived/phase5/product_pork.png",
-      "width": 144,
-      "height": 156,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_pork.png",
+      "width": 222,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.product_wool": {
-      "file": "assets/derived/phase5/product_wool.png",
-      "width": 132,
-      "height": 177,
-      "source": "phase5/05_animal_products/animal_products_items.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+      "file": "assets/redrawn/icon.product_wool.png",
+      "width": 180,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_carrot": {
-      "file": "assets/derived/phase3/icons/seed_carrot.png",
-      "width": 80,
-      "height": 99,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_carrot.png",
+      "width": 194,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_corn": {
-      "file": "assets/derived/phase3/icons/seed_corn.png",
-      "width": 81,
-      "height": 101,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_corn.png",
+      "width": 192,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_lettuce": {
-      "file": "assets/derived/phase3/icons/seed_lettuce.png",
-      "width": 82,
-      "height": 99,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_lettuce.png",
+      "width": 198,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_potato": {
-      "file": "assets/derived/phase3/icons/seed_potato.png",
-      "width": 81,
-      "height": 100,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_potato.png",
+      "width": 193,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_pumpkin": {
-      "file": "assets/derived/phase3/icons/seed_pumpkin.png",
-      "width": 84,
-      "height": 101,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_pumpkin.png",
+      "width": 199,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_strawberry": {
-      "file": "assets/derived/phase3/icons/seed_strawberry.png",
-      "width": 82,
-      "height": 101,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_strawberry.png",
+      "width": 195,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_tomato": {
-      "file": "assets/derived/phase3/icons/seed_tomato.png",
-      "width": 81,
-      "height": 100,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_tomato.png",
+      "width": 193,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.seed_wheat": {
-      "file": "assets/derived/phase3/icons/seed_wheat.png",
-      "width": 82,
-      "height": 101,
-      "source": "phase3/02_seed_items_reference/seed_items_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.seed_wheat.png",
+      "width": 195,
+      "height": 239,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_basket": {
-      "file": "assets/derived/phase3/icons/tool_basket.png",
-      "width": 67,
-      "height": 73,
-      "source": "phase3/06_farming_tools/farming_tools.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.tool_basket.png",
+      "width": 221,
+      "height": 240,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_hoe": {
-      "file": "assets/derived/phase3/icons/tool_hoe.png",
-      "width": 70,
-      "height": 84,
-      "source": "phase3/06_farming_tools/farming_tools.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.tool_hoe.png",
+      "width": 197,
+      "height": 238,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "icon.tool_watering_can": {
-      "file": "assets/derived/phase3/icons/tool_watering_can.png",
-      "width": 78,
-      "height": 75,
-      "source": "phase3/06_farming_tools/farming_tools.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/icon.tool_watering_can.png",
+      "width": 240,
+      "height": 231,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "interior.barn": {
       "file": "assets/derived/phase4/interior_barn.png",
@@ -1454,548 +1454,548 @@
       ]
     },
     "plot.carrot_growing1": {
-      "file": "assets/derived/phase3/plots/carrot_growing1.png",
-      "width": 78,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_growing1.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_growing2": {
-      "file": "assets/derived/phase3/plots/carrot_growing2.png",
-      "width": 80,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_growing2.png",
+      "width": 181,
+      "height": 166,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_mature": {
-      "file": "assets/derived/phase3/plots/carrot_mature.png",
-      "width": 84,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_mature.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_planted": {
-      "file": "assets/derived/phase3/plots/carrot_planted.png",
-      "width": 78,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_planted.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_ready": {
-      "file": "assets/derived/phase3/plots/carrot_ready.png",
-      "width": 84,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_ready.png",
+      "width": 181,
+      "height": 154,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_ready_alt": {
-      "file": "assets/derived/phase3/plots/carrot_ready_alt.png",
-      "width": 83,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_ready_alt.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.carrot_sprout": {
-      "file": "assets/derived/phase3/plots/carrot_sprout.png",
-      "width": 76,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.carrot_sprout.png",
+      "width": 181,
+      "height": 167,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_growing1": {
-      "file": "assets/derived/phase3/plots/corn_growing1.png",
-      "width": 79,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_growing1.png",
+      "width": 181,
+      "height": 168,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_growing2": {
-      "file": "assets/derived/phase3/plots/corn_growing2.png",
-      "width": 80,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_growing2.png",
+      "width": 181,
+      "height": 168,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_mature": {
-      "file": "assets/derived/phase3/plots/corn_mature.png",
-      "width": 84,
-      "height": 75,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_mature.png",
+      "width": 181,
+      "height": 162,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_planted": {
-      "file": "assets/derived/phase3/plots/corn_planted.png",
-      "width": 79,
-      "height": 75,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_planted.png",
+      "width": 181,
+      "height": 172,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_ready": {
-      "file": "assets/derived/phase3/plots/corn_ready.png",
-      "width": 84,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_ready.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_ready_alt": {
-      "file": "assets/derived/phase3/plots/corn_ready_alt.png",
-      "width": 84,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_ready_alt.png",
+      "width": 181,
+      "height": 158,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.corn_sprout": {
-      "file": "assets/derived/phase3/plots/corn_sprout.png",
-      "width": 79,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.corn_sprout.png",
+      "width": 181,
+      "height": 170,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_growing1": {
-      "file": "assets/derived/phase3/plots/lettuce_growing1.png",
-      "width": 78,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_growing1.png",
+      "width": 181,
+      "height": 163,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_growing2": {
-      "file": "assets/derived/phase3/plots/lettuce_growing2.png",
-      "width": 81,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_growing2.png",
+      "width": 181,
+      "height": 164,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_mature": {
-      "file": "assets/derived/phase3/plots/lettuce_mature.png",
-      "width": 82,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_mature.png",
+      "width": 181,
+      "height": 159,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_planted": {
-      "file": "assets/derived/phase3/plots/lettuce_planted.png",
-      "width": 79,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_planted.png",
+      "width": 181,
+      "height": 168,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_ready": {
-      "file": "assets/derived/phase3/plots/lettuce_ready.png",
-      "width": 75,
-      "height": 69,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_ready.png",
+      "width": 181,
+      "height": 167,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_ready_alt": {
-      "file": "assets/derived/phase3/plots/lettuce_ready_alt.png",
-      "width": 84,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_ready_alt.png",
+      "width": 181,
+      "height": 156,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.lettuce_sprout": {
-      "file": "assets/derived/phase3/plots/lettuce_sprout.png",
-      "width": 77,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.lettuce_sprout.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_growing1": {
-      "file": "assets/derived/phase3/plots/potato_growing1.png",
-      "width": 77,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_growing1.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_growing2": {
-      "file": "assets/derived/phase3/plots/potato_growing2.png",
-      "width": 79,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_growing2.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_mature": {
-      "file": "assets/derived/phase3/plots/potato_mature.png",
-      "width": 84,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_mature.png",
+      "width": 181,
+      "height": 154,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_planted": {
-      "file": "assets/derived/phase3/plots/potato_planted.png",
-      "width": 79,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_planted.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_ready": {
-      "file": "assets/derived/phase3/plots/potato_ready.png",
-      "width": 84,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_ready.png",
+      "width": 181,
+      "height": 154,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_ready_alt": {
-      "file": "assets/derived/phase3/plots/potato_ready_alt.png",
-      "width": 83,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_ready_alt.png",
+      "width": 181,
+      "height": 158,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.potato_sprout": {
-      "file": "assets/derived/phase3/plots/potato_sprout.png",
-      "width": 78,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.potato_sprout.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_growing1": {
-      "file": "assets/derived/phase3/plots/pumpkin_growing1.png",
-      "width": 77,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_growing1.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_growing2": {
-      "file": "assets/derived/phase3/plots/pumpkin_growing2.png",
-      "width": 80,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_growing2.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_mature": {
-      "file": "assets/derived/phase3/plots/pumpkin_mature.png",
-      "width": 84,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_mature.png",
+      "width": 181,
+      "height": 156,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_planted": {
-      "file": "assets/derived/phase3/plots/pumpkin_planted.png",
-      "width": 78,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_planted.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_ready": {
-      "file": "assets/derived/phase3/plots/pumpkin_ready.png",
-      "width": 84,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_ready.png",
+      "width": 181,
+      "height": 158,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_ready_alt": {
-      "file": "assets/derived/phase3/plots/pumpkin_ready_alt.png",
-      "width": 83,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_ready_alt.png",
+      "width": 181,
+      "height": 158,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.pumpkin_sprout": {
-      "file": "assets/derived/phase3/plots/pumpkin_sprout.png",
-      "width": 77,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.pumpkin_sprout.png",
+      "width": 181,
+      "height": 167,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_dry": {
-      "file": "assets/derived/phase3/plots/soil_dry.png",
-      "width": 80,
-      "height": 75,
-      "source": "phase3/04_soil_and_crop_states/soil_variations.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.soil_dry.png",
+      "width": 181,
+      "height": 170,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_harvested": {
-      "file": "assets/derived/phase3/plots/soil_harvested.png",
-      "width": 84,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.soil_harvested.png",
+      "width": 181,
+      "height": 156,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.soil_tilled": {
-      "file": "assets/derived/phase3/plots/soil_tilled.png",
-      "width": 79,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.soil_tilled.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_growing1": {
-      "file": "assets/derived/phase3/plots/strawberry_growing1.png",
-      "width": 81,
-      "height": 75,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_growing1.png",
+      "width": 181,
+      "height": 168,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_growing2": {
-      "file": "assets/derived/phase3/plots/strawberry_growing2.png",
-      "width": 82,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_growing2.png",
+      "width": 181,
+      "height": 164,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_mature": {
-      "file": "assets/derived/phase3/plots/strawberry_mature.png",
-      "width": 84,
-      "height": 77,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_mature.png",
+      "width": 181,
+      "height": 166,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_planted": {
-      "file": "assets/derived/phase3/plots/strawberry_planted.png",
-      "width": 79,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_planted.png",
+      "width": 181,
+      "height": 168,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_ready": {
-      "file": "assets/derived/phase3/plots/strawberry_ready.png",
-      "width": 84,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_ready.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_ready_alt": {
-      "file": "assets/derived/phase3/plots/strawberry_ready_alt.png",
-      "width": 83,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_ready_alt.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.strawberry_sprout": {
-      "file": "assets/derived/phase3/plots/strawberry_sprout.png",
-      "width": 78,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.strawberry_sprout.png",
+      "width": 181,
+      "height": 167,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_growing1": {
-      "file": "assets/derived/phase3/plots/tomato_growing1.png",
-      "width": 79,
-      "height": 69,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_growing1.png",
+      "width": 181,
+      "height": 159,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_growing2": {
-      "file": "assets/derived/phase3/plots/tomato_growing2.png",
-      "width": 80,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_growing2.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_mature": {
-      "file": "assets/derived/phase3/plots/tomato_mature.png",
-      "width": 84,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_mature.png",
+      "width": 181,
+      "height": 152,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_planted": {
-      "file": "assets/derived/phase3/plots/tomato_planted.png",
-      "width": 78,
-      "height": 71,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_planted.png",
+      "width": 181,
+      "height": 165,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_ready": {
-      "file": "assets/derived/phase3/plots/tomato_ready.png",
-      "width": 84,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_ready.png",
+      "width": 181,
+      "height": 152,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_ready_alt": {
-      "file": "assets/derived/phase3/plots/tomato_ready_alt.png",
-      "width": 83,
-      "height": 69,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_ready_alt.png",
+      "width": 181,
+      "height": 151,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.tomato_sprout": {
-      "file": "assets/derived/phase3/plots/tomato_sprout.png",
-      "width": 78,
-      "height": 69,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.tomato_sprout.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_growing1": {
-      "file": "assets/derived/phase3/plots/wheat_growing1.png",
-      "width": 79,
-      "height": 70,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_growing1.png",
+      "width": 181,
+      "height": 161,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_growing2": {
-      "file": "assets/derived/phase3/plots/wheat_growing2.png",
-      "width": 81,
-      "height": 74,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_growing2.png",
+      "width": 181,
+      "height": 166,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_mature": {
-      "file": "assets/derived/phase3/plots/wheat_mature.png",
-      "width": 84,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_mature.png",
+      "width": 181,
+      "height": 156,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_planted": {
-      "file": "assets/derived/phase3/plots/wheat_planted.png",
-      "width": 80,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_planted.png",
+      "width": 181,
+      "height": 163,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_ready": {
-      "file": "assets/derived/phase3/plots/wheat_ready.png",
-      "width": 84,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_ready.png",
+      "width": 181,
+      "height": 158,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_ready_alt": {
-      "file": "assets/derived/phase3/plots/wheat_ready_alt.png",
-      "width": 83,
-      "height": 73,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_ready_alt.png",
+      "width": 181,
+      "height": 160,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "plot.wheat_sprout": {
-      "file": "assets/derived/phase3/plots/wheat_sprout.png",
-      "width": 80,
-      "height": 72,
-      "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+      "file": "assets/redrawn/plot.wheat_sprout.png",
+      "width": 181,
+      "height": 163,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.bench": {
-      "file": "assets/derived/phase4/prop_bench.png",
-      "width": 130,
-      "height": 92,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.bench.png",
+      "width": 298,
+      "height": 212,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.berry_crate": {
-      "file": "assets/derived/phase4/prop_berry_crate.png",
-      "width": 116,
-      "height": 122,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.berry_crate.png",
+      "width": 181,
+      "height": 188,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.flower_crate": {
-      "file": "assets/derived/phase4/prop_flower_crate.png",
-      "width": 116,
-      "height": 122,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.flower_crate.png",
+      "width": 181,
+      "height": 188,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.hay_bales": {
-      "file": "assets/derived/phase4/prop_hay_bales.png",
-      "width": 202,
-      "height": 115,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.hay_bales.png",
+      "width": 297,
+      "height": 171,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.lantern_post": {
-      "file": "assets/derived/phase4/prop_lantern_post.png",
-      "width": 80,
-      "height": 128,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.lantern_post.png",
+      "width": 158,
+      "height": 286,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.scarecrow": {
-      "file": "assets/derived/phase4/prop_scarecrow.png",
-      "width": 116,
-      "height": 176,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.scarecrow.png",
+      "width": 229,
+      "height": 361,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "prop.trough": {
-      "file": "assets/derived/phase4/prop_trough.png",
-      "width": 179,
-      "height": 92,
-      "source": "phase4/05_decorations_and_props/decorations_props.png",
-      "status": "temporary-reference-derived",
-      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+      "file": "assets/redrawn/prop.trough.png",
+      "width": 288,
+      "height": 155,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.cobblestone_detailed": {
-      "file": "assets/phase1/terrain/cobblestone_detailed.png",
-      "width": 234,
-      "height": 237,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 556 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.cobblestone_detailed.png",
+      "width": 469,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.dirt_detailed": {
-      "file": "assets/phase1/terrain/dirt_detailed.png",
-      "width": 215,
-      "height": 233,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 549 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.dirt_detailed.png",
+      "width": 439,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.fence_gate_detailed": {
       "file": "assets/phase1/terrain/fence_gate_detailed.png",
@@ -2030,52 +2030,52 @@
       "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 469 magenta-spill edge pixels."
     },
     "terrain.grass_detailed": {
-      "file": "assets/phase1/terrain/grass_detailed.png",
-      "width": 218,
-      "height": 235,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 420 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.grass_detailed.png",
+      "width": 441,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.grass_tuft_tile": {
-      "file": "assets/phase1/terrain/grass_tuft_tile.png",
-      "width": 222,
-      "height": 234,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 381 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.grass_tuft_tile.png",
+      "width": 451,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.sand_path_detailed": {
-      "file": "assets/phase1/terrain/sand_path_detailed.png",
-      "width": 198,
-      "height": 238,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 326 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.sand_path_detailed.png",
+      "width": 396,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.shoreline": {
-      "file": "assets/phase1/terrain/shoreline.png",
-      "width": 215,
-      "height": 205,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 290 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.shoreline.png",
+      "width": 475,
+      "height": 453,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.tilled_soil_detailed": {
-      "file": "assets/phase1/terrain/tilled_soil_detailed.png",
-      "width": 258,
-      "height": 233,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 768 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.tilled_soil_detailed.png",
+      "width": 475,
+      "height": 429,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain.water_pond_detailed": {
-      "file": "assets/phase1/terrain/water_pond_detailed.png",
-      "width": 274,
-      "height": 241,
-      "source": "phase1/assets/01_terrain/reference_tiles (v2 detailed)",
-      "status": "approved",
-      "notes": "Illustrative tile vignette with ragged edges; used as a texture stamp source, not a seamless tile. Cleaned 700 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain.water_pond_detailed.png",
+      "width": 475,
+      "height": 418,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.autumn_tree": {
       "file": "assets/phase2/terrain/autumn_tree.png",
@@ -2110,28 +2110,28 @@
       "notes": "Cleaned 4484 magenta-spill edge pixels."
     },
     "terrain2.cliff_grass_edge": {
-      "file": "assets/phase2/terrain/cliff_grass_edge.png",
-      "width": 215,
-      "height": 234,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 614 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.cliff_grass_edge.png",
+      "width": 437,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.cobblestone_path": {
-      "file": "assets/phase2/terrain/cobblestone_path.png",
-      "width": 256,
-      "height": 236,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 620 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.cobblestone_path.png",
+      "width": 475,
+      "height": 438,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.dirt_path": {
-      "file": "assets/phase2/terrain/dirt_path.png",
-      "width": 256,
-      "height": 233,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 678 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.dirt_path.png",
+      "width": 475,
+      "height": 433,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.fence_corner": {
       "file": "assets/phase2/terrain/fence_corner.png",
@@ -2166,12 +2166,12 @@
       "notes": "Cleaned 412 magenta-spill edge pixels."
     },
     "terrain2.grass_flower": {
-      "file": "assets/phase2/terrain/grass_flower.png",
-      "width": 218,
-      "height": 235,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 441 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.grass_flower.png",
+      "width": 441,
+      "height": 475,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.oak_tree": {
       "file": "assets/phase2/terrain/oak_tree.png",
@@ -2190,12 +2190,12 @@
       "notes": "Cleaned 396 magenta-spill edge pixels."
     },
     "terrain2.pond_water": {
-      "file": "assets/phase2/terrain/pond_water.png",
-      "width": 243,
-      "height": 228,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 460 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.pond_water.png",
+      "width": 475,
+      "height": 446,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.rock_cluster": {
       "file": "assets/phase2/terrain/rock_cluster.png",
@@ -2206,36 +2206,36 @@
       "notes": "Cleaned 529 magenta-spill edge pixels."
     },
     "terrain2.sand_path": {
-      "file": "assets/phase2/terrain/sand_path.png",
-      "width": 248,
-      "height": 236,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 575 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.sand_path.png",
+      "width": 475,
+      "height": 452,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.shoreline_water": {
-      "file": "assets/phase2/terrain/shoreline_water.png",
-      "width": 255,
-      "height": 235,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 513 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.shoreline_water.png",
+      "width": 475,
+      "height": 438,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tall_grass": {
-      "file": "assets/phase2/terrain/tall_grass.png",
-      "width": 253,
-      "height": 224,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 443 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.tall_grass.png",
+      "width": 475,
+      "height": 421,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tilled_soil_sprouts": {
-      "file": "assets/phase2/terrain/tilled_soil_sprouts.png",
-      "width": 244,
-      "height": 233,
-      "source": "phase2/assets/terrain/tiles",
-      "status": "approved",
-      "notes": "Cleaned 532 magenta-spill edge pixels."
+      "file": "assets/redrawn/terrain2.tilled_soil_sprouts.png",
+      "width": 475,
+      "height": 454,
+      "source": "hires-export",
+      "status": "hires-upscaled",
+      "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
     },
     "terrain2.tree_stump": {
       "file": "assets/phase2/terrain/tree_stump.png",
