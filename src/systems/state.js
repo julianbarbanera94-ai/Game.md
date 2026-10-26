@@ -20,6 +20,7 @@ export function createNewState() {
     buildings: createBuildingState(),
     placed: [],
     animals: [],
+    cleared: [], // SCENERY indices removed by the player
     nextUid: 1,
     quests: createQuestState(),
     stats: { earned: 0 },

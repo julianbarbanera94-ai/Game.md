@@ -106,6 +106,10 @@ Known gaps: building art is low-resolution cut-outs (see `ASSETS.md`); there is 
 ### Recommended next phase
 **Phase 4 — Buildings & expansion.** It builds on the upgrade/land system that now exists (cottage, well, tool shed and market stall upgrade levels, plus construction stages). It also needs production sprites, because Phase 4 contains reference boards only. In parallel, request isolated crop sprites to replace the temporary Phase 3 slices.
 
+## Clearing land
+
+Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map border can be cleared for coins (tree 60, boulder 40, stump 25, log 30, bush 20, barrel/crate 10): walk up, press A, confirm. The outer ring of trees stays. Placing a building on a blocked spot now says what is in the way. Saved as `cleared` (save v4, v3 saves migrate). Tests: `tests/unit/clearing.test.mjs`, `npm run test:clearing`.
+
 ## Asset audit
 
 See `docs/audit/ASSET_AUDIT.md`: every image in the ten packs measured against resolution standards; the cottage interior was rebuilt from layers; remaining soft assets (buildings, animals, icons, decorations) need new exports.

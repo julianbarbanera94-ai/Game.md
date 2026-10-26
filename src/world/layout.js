@@ -37,10 +37,17 @@ export function buildWorld(assets) {
     }
   }
 
+  const scenery = new Map(); // SCENERY index -> { drawable, collider }, so clearing can remove them
   SCENERY.forEach(([sprite, x, y, wt, r], i) => {
     const { w, h } = spriteSize(assets, sprite, wt);
-    drawables.push({ sprite, x: x * TILE, y: y * TILE, w, h, sortY: y * TILE, flip: i % 3 === 1 });
-    if (r > 0) colliders.push(rectFrom(x, y, [-r, -r * 0.9, r, 0]));
+    const drawable = { sprite, x: x * TILE, y: y * TILE, w, h, sortY: y * TILE, flip: i % 3 === 1 };
+    drawables.push(drawable);
+    let collider = null;
+    if (r > 0) {
+      collider = rectFrom(x, y, [-r, -r * 0.9, r, 0]);
+      colliders.push(collider);
+    }
+    scenery.set(i, { drawable, collider });
   });
 
   buildFence(assets, drawables, colliders);
@@ -52,7 +59,7 @@ export function buildWorld(assets) {
   colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: WORLD_W, y1: cy1 });
 
   const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
-  return { drawables, groundDrawables, colliders, interactables, bounds, noBuild: noBuildZones() };
+  return { drawables, groundDrawables, colliders, interactables, bounds, scenery, noBuild: noBuildZones() };
 }
 
 // Garden fence: horizontal rail pieces on top/bottom, post runs on the sides.

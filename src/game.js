@@ -14,6 +14,7 @@ import { buildInterior, placedColliders } from './world/layout.js';
 import * as Buildings from './systems/buildings.js';
 import * as Storage from './systems/storage.js';
 import * as Animals from './systems/animals.js';
+import * as Clearing from './systems/clearing.js';
 import { SPECIES, productLabel } from './data/animals.js';
 import { AnimalActors } from './world/animalActors.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
@@ -110,7 +111,7 @@ export class Game {
     this.sfx.muted = state.settings.muted;
     this.running = true;
     this.placement = null;
-    this.refreshColliders();
+    this.applyCleared();
     this.setCameraWorld();
     this.camera.follow(state.player.x, state.player.y - 40, 0, true);
     this.hud.cache = {};
@@ -246,7 +247,8 @@ export class Game {
       .map((r) => (r.type === 'storage_shed'
         ? { id: r.uid, uid: r.uid, kind: 'storage', x: r.x * TILE, y: (r.y + 0.15) * TILE }
         : { id: r.uid, uid: r.uid, kind: 'livestock', x: r.x * TILE, y: (r.y + 0.75) * TILE }));
-    const object = this.nearestInteractable([...this.world.interactables, ...placed]);
+    const clearable = Clearing.clearables(this.state).map((c) => ({ kind: 'clear', uid: `scn${c.index}`, x: c.x * TILE, y: c.y * TILE + 6 }));
+    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable]);
     const animal = this.nearestAnimal();
     if (animal && (!object || animal.dist <= object.dist)) return animal;
     return object;
@@ -304,7 +306,9 @@ export class Game {
     const building = (id) => s.buildings[id]?.job ? ' (builders at work)' : '';
     const shed = uid && s.placed.find((r) => r.uid === uid);
     const barnRec = shed && BUILDINGS[shed.type]?.livestock ? shed : null;
+    const scn = kind === 'clear' ? Clearing.clearInfo(Number(String(uid).slice(3))) : null;
     const labels = {
+      clear: scn ? `Clear ${scn.name} (${scn.cost} coins)` : 'Clear',
       livestock: barnRec?.level >= 1
         ? `Open ${BUILDINGS[barnRec.type].name.toLowerCase()} (${Animals.animalsAt(s, barnRec.uid).length}/${Animals.capacity(barnRec)} animals)`
         : `${barnRec ? BUILDINGS[barnRec.type].name : 'Building'} under construction — ready ${barnRec?.job ? formatClock(barnRec.job.end) : ''}`,
@@ -321,7 +325,7 @@ export class Game {
       road_block: 'Inspect the fallen tree',
       garden_sign: s.unlocks.gardenExpansion ? 'South garden bed (owned)' : 'Expand the garden',
     };
-    const ok = kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
+    const ok = kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
     return { objectKind: kind, x, y, label: labels[kind], ok };
   }
 
@@ -410,11 +414,54 @@ export class Game {
       case 'village_sign':
         this.panels.dialog('Signpost', '→ Willowmere Village\n\nA note is nailed to the post: "Road closed for repairs after the storm. The village will reopen soon."');
         break;
+      case 'clear': {
+        const index = Number(String(this.target?.uid).slice(3));
+        const info = Clearing.clearInfo(index);
+        if (!info) break;
+        this.panels.dialog(`Clear the ${info.name}?`,
+          `Clearing it costs ${info.cost} coins and frees the space for a building. It can't be undone. You have ${s.coins} coins.`,
+          [{ label: `Clear it (${info.cost} coins)`, primary: true, action: () => this.clearScenery(index) }, { label: 'Leave it' }]);
+        break;
+      }
       case 'road_block':
         this.panels.dialog('Fallen Tree', 'A storm-felled trunk blocks the road to Willowmere. It will be cleared once the village opens in a later update.');
         break;
       default:
     }
+  }
+
+  clearScenery(index) {
+    const r = Clearing.clear(this.state, index, this.bus);
+    if (!r.ok) {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+      return;
+    }
+    this.applyCleared();
+    this.effects.burst('dirt', r.info.x * TILE, r.info.y * TILE - 20);
+    this.sfx.play('till');
+    this.hud.toast(`Cleared the ${r.info.name}`, 'good');
+    this.autosave('clear');
+  }
+
+  // Make the world's drawables and colliders match state.cleared (also used to
+  // restore scenery when a different save or a new game starts).
+  applyCleared() {
+    const w = this.world;
+    const cleared = new Set(this.state.cleared);
+    for (const [i, sc] of w.scenery) {
+      const gone = cleared.has(i);
+      if (gone === !!sc.gone) continue;
+      sc.gone = gone;
+      const list = (arr, item) => {
+        const at = arr.indexOf(item);
+        if (gone && at >= 0) arr.splice(at, 1);
+        else if (!gone && at < 0) arr.push(item);
+      };
+      list(w.drawables, sc.drawable);
+      if (sc.collider) list(w.colliders, sc.collider);
+    }
+    this.refreshColliders();
   }
 
   mailText() {
@@ -636,7 +683,15 @@ export class Game {
     const cy = p.y / TILE + fy * dist - 0.3;
     pl.x = Math.round((cx - (rel.x0 + rel.x1) / 2) * 4) / 4;
     pl.y = Math.round((cy - (rel.y0 + rel.y1) / 2) * 4) / 4;
-    pl.valid = this.isBuildable(Buildings.areaRect(pl.type, pl.x, pl.y));
+    const area = Buildings.areaRect(pl.type, pl.x, pl.y);
+    pl.valid = this.isBuildable(area);
+    pl.blocker = pl.valid ? null : this.blockingScenery(area);
+  }
+
+  // A clearable tree, bush or rock inside the area (px of the scenery's base box).
+  blockingScenery(rt) {
+    const r = { x0: rt.x0 * TILE - 20, y0: rt.y0 * TILE - 20, x1: rt.x1 * TILE + 20, y1: rt.y1 * TILE + 20 };
+    return Clearing.clearables(this.state).find((c) => c.x * TILE > r.x0 && c.x * TILE < r.x1 && c.y * TILE > r.y0 && c.y * TILE < r.y1) || null;
   }
 
   // A footprint (tile rect) is buildable if it is inside the bounds and clear
@@ -659,7 +714,7 @@ export class Game {
     const pl = this.placement;
     const name = (DECORATIONS[pl.type] || BUILDINGS[pl.type]).name;
     const cost = Buildings.placeableInfo(this.state, pl.type).cost;
-    return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Place ${name} (${cost} coins)` : "Can't build here — try another spot" };
+    return { kind: 'placement', ok: pl.valid, label: pl.valid ? `Place ${name} (${cost} coins)` : pl.blocker ? `A ${pl.blocker.name} is in the way — cancel and clear it first` : "Can't build here — try another spot" };
   }
 
   confirmPlacement() {

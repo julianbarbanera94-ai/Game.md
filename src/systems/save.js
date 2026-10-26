@@ -1,3 +1,4 @@
+import { clearInfo } from './clearing.js';
 import { SAVE_KEY, SAVE_VERSION, WORLD_W, WORLD_H } from '../config.js';
 import { CROPS } from '../data/crops.js';
 import { getItem } from '../data/items.js';
@@ -29,6 +30,8 @@ const MIGRATIONS = {
 
 // v2 -> v3: livestock arrived; old saves simply have no animals.
 MIGRATIONS[2] = (data) => ({ ...data, version: 3, animals: [] });
+// v3 -> v4: scenery can be cleared; old saves have cleared nothing.
+MIGRATIONS[3] = (data) => ({ ...data, version: 4, cleared: [] });
 
 function validJob(job, maxLevel) {
   if (!job || typeof job !== 'object') return null;
@@ -112,6 +115,9 @@ export function deserialize(json) {
       }
       s.placed.push(rec);
     }
+  }
+  if (Array.isArray(data.cleared)) {
+    s.cleared = [...new Set(data.cleared.slice(0, 500).filter((i) => Number.isInteger(i) && clearInfo(i)))];
   }
   // Livestock: drop anything whose species or home building no longer exists.
   if (Array.isArray(data.animals)) {

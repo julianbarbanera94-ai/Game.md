@@ -116,7 +116,7 @@ test('decorations place instantly and persist', () => {
 test('version 1 saves migrate: large watering can becomes workshop level 2', () => {
   const v1 = { version: 1, time: 500, coins: 77, unlocks: { gardenExpansion: true, wateringCan2: true }, can: { water: 20, capacity: 25 } };
   const s = deserialize(v1);
-  assert.equal(s.version, 3);
+  assert.equal(s.version, 4);
   assert.equal(B.buildingLevel(s, 'tool_shed'), 2);
   assert.equal(s.can.capacity, 25);
   assert.equal(s.can.water, 20);
