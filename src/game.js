@@ -41,7 +41,7 @@ export class Game {
     this.onQuit = onQuit;
     this.camera = new Camera(WORLD_W, WORLD_H);
     this.farmCollision = new CollisionWorld(world.bounds, world.colliders);
-    this.interiors = { house: buildInterior(assets, 'house') };
+    this.interiors = { house: buildInterior('house') };
     this.placement = null; // { type, x, y, valid } while placing a building
     this.actors = new AnimalActors();
     this.effects = new Effects();

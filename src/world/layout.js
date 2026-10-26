@@ -2,6 +2,7 @@ import { TILE, WORLD_W } from '../config.js';
 import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, PATHS, SCENERY } from '../data/world.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
 import { INTERIORS } from '../data/interiors.js';
+import { interiorSpriteKeys } from '../render/interiorArt.js';
 import { footprintRect } from '../systems/buildings.js';
 import { pastureColliders, pastureOf } from '../systems/pasture.js';
 
@@ -156,17 +157,18 @@ export function placedColliders(state) {
 }
 
 // Runtime data for an interior scene (px, in the interior's own space).
-export function buildInterior(assets, id) {
+export function buildInterior(id) {
   const def = INTERIORS[id];
-  const e = assets.entry(def.sprite);
   const w = def.widthTiles * TILE;
-  const h = e ? (w * e.height) / e.width : w;
-  const px = ([x, y]) => [x * w, y * h];
-  const rect = (r) => ({ x0: r[0] * w, y0: r[1] * h, x1: r[2] * w, y1: r[3] * h });
+  const h = def.heightTiles * TILE;
+  const px = ([x, y]) => [x * TILE, y * TILE];
+  const rect = (r) => ({ x0: r[0] * TILE, y0: r[1] * TILE, x1: r[2] * TILE, y1: r[3] * TILE });
+  const { back, side, front } = def.wall;
   return {
     id, def, w, h,
-    bounds: rect(def.bounds),
-    colliders: def.colliders.map(rect),
+    // feet stay just below the back wall and above the front wall
+    bounds: rect([side + 0.15, back + 0.35, def.widthTiles - side - 0.15, def.heightTiles - front + 0.05]),
+    colliders: def.pieces.map((p) => rect(p.foot)),
     interactables: def.interactables.map((it) => {
       const [x, y] = px(it.at);
       return { id: `${id}_${it.kind}`, kind: it.kind, x, y };
@@ -183,7 +185,7 @@ export function worldSpriteKeys() {
     ...Object.values(BUILDINGS).flatMap((b) => b.levels.map((l) => l.sprite)),
     ...CONSTRUCTION_STAGES,
     ...Object.values(DECORATIONS).map((d) => d.sprite),
-    ...Object.values(INTERIORS).map((i) => i.sprite),
+    ...Object.values(INTERIORS).flatMap(interiorSpriteKeys),
     'terrain.fence_horizontal_detailed',
     'building.fence_segment',
   ];

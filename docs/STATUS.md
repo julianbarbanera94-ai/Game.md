@@ -52,7 +52,7 @@ Tests: `npm test` 27/27 · `npm run test:e2e` 125/125 · `npm run test:touch` 23
 | Building planner at the workbench (or workshop): upgrade preview (current → next sprite), cost, effect, lock reason | `ui/panels.js` | e2e + screenshots |
 | Placement mode for the storage shed and 7 decorations: ghost sprite, green/red footprint, blocked on paths, garden, creek, doors and colliders; E/A to place, Esc/Cancel to abort | `game.js` | e2e (valid spot, blocks movement) |
 | Storage shed: move items between bag and shed, validated both ways | `systems/storage.js` | unit + e2e |
-| Walk-in cottage interior (bed = sleep, door = leave) | `data/interiors.js` | e2e |
+| Walk-in cottage interior built from crisp layers (bed = sleep, door = leave) | `data/interiors.js`, `render/interiorArt.js` | e2e, screenshots in `audit/` |
 | Quests: Storage Solutions, Home Improvements | `data/quests.js` | unit + e2e |
 | Save v2 + migration from v1 saves; corrupt building data is rejected | `systems/save.js` | unit |
 | Android APK: WebView wrapper (`android/`) built by GitHub Actions | `.github/workflows/android.yml` | see below |
@@ -105,3 +105,7 @@ Known gaps: building art is low-resolution cut-outs (see `ASSETS.md`); there is 
 
 ### Recommended next phase
 **Phase 4 — Buildings & expansion.** It builds on the upgrade/land system that now exists (cottage, well, tool shed and market stall upgrade levels, plus construction stages). It also needs production sprites, because Phase 4 contains reference boards only. In parallel, request isolated crop sprites to replace the temporary Phase 3 slices.
+
+## Asset audit
+
+See `docs/audit/ASSET_AUDIT.md`: every image in the ten packs measured against resolution standards; the cottage interior was rebuilt from layers; remaining soft assets (buildings, animals, icons, decorations) need new exports.

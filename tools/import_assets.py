@@ -341,6 +341,7 @@ def main():
     ap.add_argument("--phase3")
     ap.add_argument("--phase4")
     ap.add_argument("--phase5")
+    ap.add_argument("--interior", action="store_true", help="derive indoor props from already-imported crisp sprites")
     args = ap.parse_args()
     mpath = os.path.join(OUT, "manifest.json")
     if os.path.exists(mpath):
@@ -356,6 +357,8 @@ def main():
         phase4(args.phase4)
     if args.phase5:
         phase5(args.phase5)
+    if args.interior:
+        interior_props()
     ensure(OUT)
     manifest["assets"] = dict(sorted(manifest["assets"].items()))
     with open(mpath, "w") as f:
@@ -586,6 +589,46 @@ def phase5(root):
     icons("06_animal_food_and_supplies/animal_food_supplies.png", 30,
           ["chicken", "cattle", "hay", "pig", "salt", "trough"], "feed",
           "phase5/06_animal_food_and_supplies/animal_food_supplies.png")
+
+
+
+# ---------------------------------------------------------------- interior props
+
+# Crisp Phase 1/2 props reused indoors. Their painted grass bases are removed
+# (pure keying of green pixels; no resampling) so they sit on a wooden floor.
+INTERIOR_PROPS = {
+    "barrel": "assets/phase2/terrain/barrel.png",
+    "crate": "assets/phase2/terrain/wooden_crate.png",
+    "water_barrel": "assets/phase1/buildings/water_barrel.png",
+    "workbench": "assets/phase1/buildings/workbench.png",
+}
+
+
+def degrass(im):
+    a = np.asarray(im.convert("RGBA")).astype(int)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    # green and yellow-green grass (wood and iron are red-dominant or grey)
+    green = ((g > r + 8) & (g > b + 12)) | ((g >= r - 10) & (g > b + 28))
+    # pale sand and pebbles painted around the base (bottom band only, so
+    # light wood higher up is untouched)
+    lum = (r * 3 + g * 6 + b) / 10
+    base = np.zeros_like(green)
+    base[int(a.shape[0] * 0.8):] = True
+    sand = base & (lum > 130) & (g > r - 45) & (r - b > 20) & (g > 105)
+    out = a.copy()
+    out[..., 3] = np.where(green | sand, 0, a[..., 3])
+    return trim(largest_component(Image.fromarray(out.astype(np.uint8), "RGBA")), 2)
+
+
+def interior_props():
+    root = os.path.dirname(OUT)
+    d = ensure(os.path.join(OUT, "derived", "interior"))
+    for name, src in INTERIOR_PROPS.items():
+        sp = degrass(Image.open(os.path.join(root, src)))
+        dst = os.path.join(d, f"{name}.png")
+        sp.save(dst, optimize=True)
+        register(f"interior_prop.{name}", dst, src, "approved",
+                 notes="Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling).")
 
 
 if __name__ == "__main__":

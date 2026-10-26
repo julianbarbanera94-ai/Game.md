@@ -10,6 +10,7 @@ import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
 import { buildGround } from './terrain.js';
+import { buildInteriorArt } from './interiorArt.js';
 import { playerFrame, plotSpriteKey, untilledVariant, wetVariant } from './sprites.js';
 
 // Draw order: ground layer -> plots -> y-sorted sprites (objects, scenery,
@@ -245,17 +246,44 @@ export class Renderer {
 
   renderInterior(g, game) {
     const room = game.interior;
-    const img = this.assets.get(room.def.sprite);
-    g.fillStyle = 'rgba(0,0,0,0.5)';
-    g.fillRect(-20, -20, room.w + 40, room.h + 40);
-    if (img) g.drawImage(img, 0, 0, room.w, room.h);
-    this.drawPlayer(g, game);
+    // paint the room at the current device resolution (rounded up to 0.5x
+    // steps so small resizes reuse the cache)
+    const res = Math.min(3, Math.max(1, Math.ceil(game.camera.scale * this.dpr * 2) / 2));
+    if (!this.interiorArt || this.interiorArt.id !== room.id || this.interiorArt.res !== res) {
+      this.interiorArt = { id: room.id, ...buildInteriorArt(room.def, this.assets, res) };
+    }
+    const art = this.interiorArt;
+    g.drawImage(art.base, 0, 0, room.w, room.h);
+    const items = art.pieces.map((p) => ({ piece: p, sortY: p.sortY }));
+    items.push({ player: true, sortY: game.state.player.y });
+    items.sort((a, b) => a.sortY - b.sortY);
+    for (const it of items) {
+      if (it.player) {
+        this.drawPlayer(g, game);
+        continue;
+      }
+      const p = it.piece;
+      if (!p.img) continue;
+      if (p.shadow) {
+        g.fillStyle = 'rgba(30,14,4,0.3)';
+        g.beginPath();
+        g.ellipse(p.x + p.w / 2 + 3, p.y + p.h - 4, p.w * 0.5, 7, 0, 0, Math.PI * 2);
+        g.fill();
+      }
+      if (p.pot) {
+        g.drawImage(p.img, p.x, p.y, p.w, p.leafH);
+        g.drawImage(p.pot, p.x, p.y + p.leafH - p.w * 0.9 * 0.75, p.w, p.w * 0.9); // rim overlaps the leaves
+      } else {
+        g.drawImage(p.img, p.x, p.y, p.w, p.h);
+      }
+    }
+    g.drawImage(art.front, 0, art.frontY, room.w, art.frontH);
     this.drawTarget(g, game);
     game.effects.draw(g);
-    // warm indoor light
+    // warm lamp light, darker corners
     const grad = g.createRadialGradient(room.w * 0.45, room.h * 0.45, 40, room.w * 0.45, room.h * 0.5, room.w * 0.8);
-    grad.addColorStop(0, 'rgba(255,200,120,0.06)');
-    grad.addColorStop(1, 'rgba(20,10,0,0.35)');
+    grad.addColorStop(0, 'rgba(255,200,120,0.05)');
+    grad.addColorStop(1, 'rgba(20,10,0,0.28)');
     g.fillStyle = grad;
     g.fillRect(0, 0, room.w, room.h);
   }

@@ -1229,6 +1229,38 @@
       "status": "temporary-reference-derived",
       "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 3x (Lanczos + unsharp) \u2014 still soft; needs a real export."
     },
+    "interior_prop.barrel": {
+      "file": "assets/derived/interior/barrel.png",
+      "width": 148,
+      "height": 189,
+      "source": "assets/phase2/terrain/barrel.png",
+      "status": "approved",
+      "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
+    },
+    "interior_prop.crate": {
+      "file": "assets/derived/interior/crate.png",
+      "width": 172,
+      "height": 193,
+      "source": "assets/phase2/terrain/wooden_crate.png",
+      "status": "approved",
+      "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
+    },
+    "interior_prop.water_barrel": {
+      "file": "assets/derived/interior/water_barrel.png",
+      "width": 144,
+      "height": 199,
+      "source": "assets/phase1/buildings/water_barrel.png",
+      "status": "approved",
+      "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
+    },
+    "interior_prop.workbench": {
+      "file": "assets/derived/interior/workbench.png",
+      "width": 287,
+      "height": 233,
+      "source": "assets/phase1/buildings/workbench.png",
+      "status": "approved",
+      "notes": "Crisp Phase 1/2 sprite at native resolution with its outdoor grass base keyed out (no resampling)."
+    },
     "player.carry_action": {
       "file": "assets/phase2/player/carry_action.png",
       "width": 320,

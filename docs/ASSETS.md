@@ -82,7 +82,8 @@ the label separators; upscaled 2× with Lanczos) and are marked
 | `building4.{house,well,tool_shed,market_stall,storage_shed}_l{1,2,3}` | `01_building_upgrades/*` | Levels 2–3 of each building (level 1 keeps the sharper Phase 1 sprite); storage shed levels 1–3 |
 | `building4.construction_stage{1..5}` | `02_construction_stages` | Stages 1–4 shown while any building is under construction (stage 5 is a finished red barn, so it isn't used) |
 | `prop.{scarecrow,bench,flower_crate,berry_crate,hay_bales,lantern_post,trough}` | `05_decorations_and_props` | Placeable decorations |
-| `interior.{house,tool_shed,barn,coop}` | `03_building_interiors` | Cottage interior scene (3× upscale, visibly soft); the others are imported for later phases |
+| `interior.{house,tool_shed,barn,coop}` | `03_building_interiors` | **Not loaded.** Kept as the "before" reference; the cottage is now built from layers (`src/render/interiorArt.js`) |
+| `interior_prop.{workbench,barrel,water_barrel,crate}` | Phase 1/2 crisp sprites | Indoor props at native size with the outdoor grass base keyed out (`import_assets.py --interior`) |
 
 Not used:
 - `07_npc_workers`: figures are about 25 px tall, far too small for the 84 px player.

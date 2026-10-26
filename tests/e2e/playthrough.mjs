@@ -89,14 +89,14 @@ async function main() {
     await act();
     await page.waitForTimeout(700);
     check((await state()).player.scene === 'house', 'entered the cottage interior');
-    await route([[2.95, 7.6], [2.95, 6.34]]);
+    await route([[4.5, 6.2], [2.95, 6.2]]);
     await face('left');
     check((await prompt()).includes('Sleep'), 'bed prompt inside the cottage');
     await act();
     await page.click('.modal button.primary');
     await page.waitForTimeout(1300);
     if (beforeLeaving) await beforeLeaving();
-    await route([[4.05, 7.6]]);
+    await route([[4.5, 6.2], [4.5, 8.3]]);
     await face('down');
     check((await prompt()).includes('Leave'), 'exit prompt');
     await act();
