@@ -108,3 +108,14 @@ outlines are crisper, but fine detail the old art never had is still missing. Ma
 buildings are capped at 768 px (trees 640 px) to keep phone memory in check. Manifest status:
 `hires-upscaled`. Replace them with painted art (status `redrawn`) when it exists; the old derived sprites
 are still under `assets/derived/` and `assets/phase*/`.
+
+## Vehicles (assets/vehicles/)
+
+`Farmstead_Vehicle_Angles_Pack` (supplied PNG crops) is imported by `tools/import_vehicle_angles.py`:
+the south-view crop of each vehicle is cleaned (label bar removed, checkerboard background keyed out),
+trimmed and enlarged 2x (native crops are only ~70x80 px, so they are soft), then rotated in code to the
+driving heading. The red tractor is the Small Tractor, the blue tractor the Large Tractor, the wooden
+trailer the Crop Trailer; the 4-furrow plough and the seeder are front implements (drawn turned round so the
+hitch meets the tractor). The sprayer and reaper are not in the pack and are still painted in code
+(`src/render/vehicleArt.js`). Status `temporary-reference-derived`: ask for larger repaints (see
+`docs/ART_REQUESTS.md`). Unused in the pack: yellow tractor, green loader, UTV and other trailers.

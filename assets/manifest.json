@@ -2268,6 +2268,46 @@
       "source": "phase2/assets/terrain/tiles",
       "status": "approved",
       "notes": "Cleaned 531 magenta-spill edge pixels."
+    },
+    "vehicle.crop_trailer": {
+      "file": "assets/vehicles/crop_trailer.png",
+      "width": 132,
+      "height": 146,
+      "source": "Farmstead_Vehicle_Angles_Pack/trailer_wooden_S.png",
+      "status": "temporary-reference-derived",
+      "notes": "Native crop 66x73 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
+    },
+    "vehicle.plough": {
+      "file": "assets/vehicles/plough.png",
+      "width": 152,
+      "height": 160,
+      "source": "Farmstead_Vehicle_Angles_Pack/plough_4_S.png",
+      "status": "temporary-reference-derived",
+      "notes": "Native crop 76x80 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
+    },
+    "vehicle.seeder": {
+      "file": "assets/vehicles/seeder.png",
+      "width": 144,
+      "height": 144,
+      "source": "Farmstead_Vehicle_Angles_Pack/seeder_S.png",
+      "status": "temporary-reference-derived",
+      "notes": "Native crop 72x72 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
+    },
+    "vehicle.tractor_large": {
+      "file": "assets/vehicles/tractor_large.png",
+      "width": 138,
+      "height": 166,
+      "source": "Farmstead_Vehicle_Angles_Pack/tractor_blue_S.png",
+      "status": "temporary-reference-derived",
+      "notes": "Native crop 69x83 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
+    },
+    "vehicle.tractor_small": {
+      "file": "assets/vehicles/tractor_small.png",
+      "width": 140,
+      "height": 164,
+      "source": "Farmstead_Vehicle_Angles_Pack/tractor_red_S.png",
+      "status": "temporary-reference-derived",
+      "notes": "Native crop 70x82 px from a generated atlas (label bar and checkerboard removed), enlarged 2x for smooth rotation. Low resolution: replace with a properly exported sprite."
     }
   }
 }

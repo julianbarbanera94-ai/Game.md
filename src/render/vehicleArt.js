@@ -215,9 +215,16 @@ export function implementPart(id, workWidth) {
   return cache.get(key);
 }
 
+export const VEHICLE_KEYS = ['vehicle.tractor_small', 'vehicle.tractor_large', 'vehicle.crop_trailer', 'vehicle.plough', 'vehicle.seeder'];
+
 // Draw one vehicle (with its mounted implement and trailer) at its position.
-export function drawVehicle(g, v, driver) {
+// `art` maps asset keys to loaded images (the supplied vector pack); anything
+// missing falls back to the parts painted in code above.
+export function drawVehicle(g, v, driver, art = () => null) {
   const def = VEHICLES[v.type];
+  const body = art(`vehicle.${v.type}`);
+  const front = v.mount.front ? art(`vehicle.${v.mount.front}`) : null;
+  const rear = v.mount.rear ? art(`vehicle.${v.mount.rear}`) : null;
   g.save();
   g.translate(v.x, v.y);
   // soft ground shadow (not rotated with the machine)
@@ -227,27 +234,60 @@ export function drawVehicle(g, v, driver) {
   g.fill();
   g.rotate(v.heading);
   const L = def.length;
+  const cap = v.mount.rear ? IMPLEMENTS[v.mount.rear].capacity : 0;
+  const used = Object.values(v.cargo).reduce((n, q) => n + q, 0);
+  // supplied sprites face north; the world heading 0 is east, so turn them a quarter
+  const sprite = (img, w, h, cx, cy = 0, extra = 0) => {
+    g.save();
+    g.translate(cx, cy);
+    g.rotate(Math.PI / 2 + extra);
+    g.drawImage(img, -w / 2, -h / 2, w, h);
+    g.restore();
+  };
   if (v.mount.rear) {
-    const t = implementPart('crop_trailer', def.workWidth);
-    g.drawImage(t, -L * 0.36 - 120, -35, t.width / RES, t.height / RES);
-    // loaded crops show as a pile
-    const cap = IMPLEMENTS.crop_trailer.capacity;
-    const used = Object.values(v.cargo).reduce((n, q) => n + q, 0);
-    if (used > 0) {
-      g.fillStyle = 'rgba(90,150,50,0.9)';
-      g.beginPath();
-      g.ellipse(-L * 0.36 - 66, 0, 30 * Math.min(1, 0.35 + used / cap), 17 * Math.min(1, 0.35 + used / cap), 0, 0, Math.PI * 2);
-      g.fill();
+    if (rear) {
+      const s = (L / body.height) * 1.1;
+      const w = rear.width * s;
+      const h = rear.height * s;
+      sprite(rear, w, h, -(L / 2 + h / 2 - 8));
+      if (used > 0) {
+        g.fillStyle = 'rgba(90,150,50,0.92)';
+        g.beginPath();
+        g.ellipse(-(L / 2 + h / 2 - 8), 0, h * 0.34 * Math.min(1, 0.35 + used / cap), w * 0.34 * Math.min(1, 0.35 + used / cap), 0, 0, Math.PI * 2);
+        g.fill();
+      }
+    } else {
+      const t = implementPart('crop_trailer', def.workWidth);
+      g.drawImage(t, -L * 0.36 - 120, -35, t.width / RES, t.height / RES);
+      if (used > 0) {
+        g.fillStyle = 'rgba(90,150,50,0.9)';
+        g.beginPath();
+        g.ellipse(-L * 0.36 - 66, 0, 30 * Math.min(1, 0.35 + used / cap), 17 * Math.min(1, 0.35 + used / cap), 0, 0, Math.PI * 2);
+        g.fill();
+      }
     }
   }
-  const body = vehicleParts(v.type);
-  g.drawImage(body, -(L + 16) / 2, -(def.width + 16) / 2, body.width / RES, body.height / RES);
+  if (body) {
+    const s = L / body.height;
+    sprite(body, body.width * s, body.height * s, 0);
+  } else {
+    const p = vehicleParts(v.type);
+    g.drawImage(p, -(L + 16) / 2, -(def.width + 16) / 2, p.width / RES, p.height / RES);
+  }
   if (v.mount.front) {
-    const p = implementPart(v.mount.front, def.workWidth);
-    g.drawImage(p, L * 0.46, -(def.workWidth * TILE + 20) / 2, p.width / RES, p.height / RES);
+    if (front) {
+      // the implements are drawn as towed tools (hitch at the top); a front mount turns them round
+      const s = (L / body.height) * 1.25;
+      const w = front.width * s;
+      const h = front.height * s;
+      sprite(front, w, h, L / 2 + h / 2 - 8, 0, Math.PI);
+    } else {
+      const p = implementPart(v.mount.front, def.workWidth);
+      g.drawImage(p, L * 0.46, -(def.workWidth * TILE + 20) / 2, p.width / RES, p.height / RES);
+    }
     if (v.engaged && Math.abs(v.speed) > 10) {
       g.fillStyle = 'rgba(255,230,150,0.22)';
-      g.fillRect(L * 0.46 + 6, -def.workWidth * TILE / 2, 54, def.workWidth * TILE);
+      g.fillRect(L / 2 + 4, -def.workWidth * TILE / 2, 54, def.workWidth * TILE);
     }
   }
   g.restore();

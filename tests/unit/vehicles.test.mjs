@@ -204,7 +204,7 @@ function rig(implement, { seeds = 0 } = {}) {
   v.x = 4.2 * TILE;
   v.y = 15.0 * TILE; // rows 14 and 15 straddle y = 15
   const def = VEHICLES.tractor_small;
-  v.x = 5.5 * TILE - (def.length / 2 + 26); // the area centre is over column 5
+  v.x = 5.5 * TILE - (def.length / 2 + V.WORK_AHEAD); // the area centre is over column 5
   s.inventory = seeds ? { seed_carrot: seeds } : {};
   return { s, bus, v };
 }
@@ -271,7 +271,7 @@ test('seeder plants tilled plots using seeds; sprayer waters; reaper harvests in
 
 test('locked plots are left alone by machines', () => {
   const { s, bus, v } = rig('plough');
-  v.x = 5.5 * TILE - (VEHICLES.tractor_small.length / 2 + 26);
+  v.x = 5.5 * TILE - (VEHICLES.tractor_small.length / 2 + V.WORK_AHEAD);
   v.y = 17.5 * TILE; // the south bed, not yet bought
   const r = V.work(s, v, bus);
   assert.equal(r.count, 0);

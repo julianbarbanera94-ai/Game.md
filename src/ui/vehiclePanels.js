@@ -9,6 +9,8 @@ import { guarded } from './guard.js';
 
 const bar = (value, max, low) => el('div', { class: `bar${low ? ' low' : ''}` }, el('span', { style: `width:${Math.max(0, Math.min(100, Math.round((value / Math.max(1, max)) * 100)))}%` }));
 
+const icon = (game, key) => (game.assets.entry(key) ? el('img', { class: 'vimg', src: game.assets.url(key), alt: '' }) : null);
+
 function stats(v) {
   return el('div', { class: 'vrow-stats' },
     el('small', {}, `Fuel ${Math.round(v.fuel)}/${V.tankSize(v)}`), bar(v.fuel, V.tankSize(v), v.fuel < V.tankSize(v) * 0.15),
@@ -27,6 +29,7 @@ export function installVehiclePanels(Panels) {
         const def = VEHICLES[v.type];
         const next = UPGRADES[v.upgrade];
         return el('div', { class: 'row vehicle-row', 'data-vehicle': v.uid },
+          icon(game, `vehicle.${v.type}`),
           el('div', { class: 'row-main' },
             el('strong', {}, `${def.name}${v.upgrade ? ` · ${UPGRADES[v.upgrade - 1].name}` : ''}`),
             el('small', {}, `${v.mount.front ? IMPLEMENTS[v.mount.front].name : 'no implement'}${v.mount.rear ? ' + trailer' : ''}`),
@@ -44,6 +47,7 @@ export function installVehiclePanels(Panels) {
         const locked = lvl < def.level;
         const full = s.vehicles.length >= MAX_VEHICLES;
         return el('div', { class: `row${locked ? ' locked' : ''}`, 'data-for-sale': def.id },
+          icon(game, `vehicle.${def.id}`),
           el('div', { class: 'row-main' }, el('strong', {}, def.name), el('small', {}, def.blurb),
             el('small', { class: 'status' }, locked ? `Locked — reach farm level ${def.level}` : full ? 'The garage is full' : `${def.cost} coins`)),
           el('div', { class: 'row-actions' },
@@ -53,6 +57,7 @@ export function installVehiclePanels(Panels) {
         const owned = s.owned.implements.includes(def.id);
         const on = V.mountedOn(s, def.id);
         return el('div', { class: 'row compact', 'data-implement': def.id },
+          icon(game, `vehicle.${def.id}`),
           el('div', { class: 'row-main' }, el('strong', {}, def.name), el('small', {}, def.blurb),
             owned ? el('small', { class: 'status' }, on ? `Fitted to a ${VEHICLES[on.type].name}` : 'In the garage') : null),
           el('div', { class: 'row-actions' },

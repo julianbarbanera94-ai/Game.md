@@ -305,3 +305,4 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .vehicle-row .row-actions { flex-wrap: wrap; justify-content: flex-end; }
 .vehicle-row .bar.low > span { background: linear-gradient(#f0866a, #d6452b); }
 .vehicle-panel .actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+.row img.vimg { width: 56px; height: 56px; object-fit: contain; }

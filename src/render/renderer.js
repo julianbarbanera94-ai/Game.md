@@ -160,7 +160,7 @@ export class Renderer {
       const img = this.assets.get('player.idle_back');
       if (img) driver = { img, scale: PLAYER_FRAME_SCALE * 0.6 };
     }
-    drawVehicle(g, v, driver);
+    drawVehicle(g, v, driver, (key) => this.assets.get(key));
   }
 
   // Villager: the player sprite colour-shifted and scaled until NPC art exists.

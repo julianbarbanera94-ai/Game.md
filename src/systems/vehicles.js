@@ -20,6 +20,9 @@ import { groundFactor } from './ground.js';
 //     upgrade 0-2, mount: { front: implementId|null, rear: implementId|null },
 //     cargo: { itemId: qty }, engaged }
 
+// How far beyond the nose the implement's working centre sits (px).
+export const WORK_AHEAD = 34;
+
 export const vehicleDef = (v) => VEHICLES[v.type];
 export const garageRecord = (state) => state.placed.find((p) => p.type === 'garage' && p.level >= 1) || null;
 export const parkingSpot = (state) => {
@@ -237,7 +240,7 @@ export function stepVehicle(v, input, dt, ctx) {
 // ---------------------------------------------------------------- implements
 export function workArea(v) {
   const def = vehicleDef(v);
-  const ahead = def.length / 2 + 26;
+  const ahead = def.length / 2 + WORK_AHEAD;
   return {
     cx: v.x + Math.cos(v.heading) * ahead,
     cy: v.y + Math.sin(v.heading) * ahead,
