@@ -1,8 +1,15 @@
 import { CROPS } from './crops.js';
+import { FISH_LIST } from './fish.js';
 
 // Single item model shared by inventory, shop, quests and save data.
 // category: seed | crop | tool
 export const ITEMS = {};
+
+ITEMS.fishing_rod = { id: 'fishing_rod', name: 'Fishing Rod', category: 'tool', buyPrice: 40, sellPrice: null, maxStack: 1, icon: 'icon.tool_fishing_rod' };
+
+for (const f of FISH_LIST) {
+  ITEMS[f.id] = { id: f.id, name: f.name, category: 'fish', buyPrice: null, sellPrice: f.sellPrice, maxStack: 99, icon: f.icon };
+}
 
 for (const crop of Object.values(CROPS)) {
   ITEMS[`seed_${crop.id}`] = {

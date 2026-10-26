@@ -5,6 +5,7 @@
 //           { unlock: id } -> unlock flag must be set
 
 export const SHOP_STOCK = [
+  { item: 'fishing_rod', requires: null },
   { item: 'seed_carrot', requires: null },
   { item: 'seed_lettuce', requires: null },
   { item: 'seed_potato', requires: { quest: 'q_market_day' } },

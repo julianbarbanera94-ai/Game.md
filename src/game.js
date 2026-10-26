@@ -6,6 +6,9 @@ import { EventBus } from './core/events.js';
 import * as Farming from './systems/farming.js';
 import * as Economy from './systems/economy.js';
 import * as Quests from './systems/quests.js';
+import * as Fishing from './systems/fishing.js';
+import * as Inv from './systems/inventory.js';
+import { FISH } from './data/fish.js';
 import { advanceTime, sleep } from './systems/simulation.js';
 import { clock, formatClock } from './systems/time.js';
 import { saveGame, loadGame } from './systems/save.js';
@@ -217,7 +220,7 @@ export class Game {
     const p = this.state.player;
     const driven = this.drivingVehicle;
     if (driven) this.updateDriving(dt, paused);
-    const mv = paused || this.action || driven ? { x: 0, y: 0 } : this.input.moveVector();
+    const mv = paused || this.action || driven || this.fishing ? { x: 0, y: 0 } : this.input.moveVector();
     this.playerMoving = Math.hypot(mv.x, mv.y) > 0.05;
     if (this.playerMoving) {
       if (Math.abs(mv.x) > Math.abs(mv.y) * 1.05) p.facing = mv.x > 0 ? 'right' : 'left';
@@ -255,6 +258,7 @@ export class Game {
       if (this.tryInteract()) this.actionBuffer = 0;
     }
     this.effects.update(dt);
+    if (!paused) this.updateFishing(dt);
     this.progressTimer = (this.progressTimer || 0) + dt;
     if (this.progressTimer > 0.8) {
       this.progressTimer = 0;
@@ -373,6 +377,12 @@ export class Game {
         if (a.action === 'locked') return { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
         return { kind: 'plot', id: def.id, tx: def.tx, ty: def.ty, label: a.label, ok: a.ok, action: a.action };
       }
+    }
+    // a rod in hand on the creek bank: cast from here
+    if (this.fishing) return { kind: 'fish', label: this.fishing.phase === 'bite' ? 'Hook it!' : 'Reel in', ok: true, x: this.fishing.x, y: this.fishing.y - 12 };
+    if (this.state.inventory.fishing_rod && this.activeTool === 'rod') {
+      const spot = Fishing.castSpot(p, p.facing);
+      if (spot) return { kind: 'fish', label: 'Cast line', ok: true, x: spot.x, y: spot.y - 12 };
     }
     const placed = this.state.placed
       .filter((r) => r.type === 'storage_shed' || r.type === 'garage' || BUILDINGS[r.type]?.livestock || r.kind === 'decor')
@@ -502,12 +512,78 @@ export class Game {
   // Returns true if the press was used (even if the game answered "can't").
   tryInteract() {
     const t = this.target;
+    if (this.fishing) {
+      this.fishAction();
+      return true;
+    }
     if (!t || this.action) return false;
     if (t.kind === 'drive') this.toggleEngage();
+    else if (t.kind === 'fish') this.fishAction();
     else if (t.kind === 'plot') this.interactPlot(t);
     else if (t.kind === 'animal') this.interactAnimal(t);
     else this.interactObject(t.objectKind);
     return true;
+  }
+
+  // ------------------------------------------------------------ fishing
+  // Action casts from the bank; while the line is out, Action reels in, or hooks
+  // when the float dips. Nothing is saved mid-cast: a reload clears the line.
+  fishAction() {
+    const f = this.fishing;
+    if (!f) {
+      const p = this.state.player;
+      const spot = Fishing.castSpot(p, p.facing);
+      if (!spot) return;
+      this.fishing = { phase: 'wait', t: 0, wait: Fishing.waitSeconds(), x: spot.x, y: spot.y, fish: null };
+      this.effects.burst('water', spot.x, spot.y);
+      this.sfx.play('water');
+      this.hud.toast('Line cast — wait for a bite');
+      return;
+    }
+    if (f.phase === 'wait') {
+      this.fishing = null;
+      this.hud.toast('You reel the line in');
+      return;
+    }
+    // hooked!
+    const fish = f.fish;
+    this.fishing = null;
+    const added = Inv.add(this.state.inventory, fish.id, 1, this.bagSlots());
+    if (!added.ok) {
+      this.hud.toast(added.reason === 'No free space' ? 'Your bag is full — the fish got away' : added.reason, 'warn');
+      this.sfx.play('error');
+      return;
+    }
+    this.bus.emit('catch', { item: fish.id, qty: 1 });
+    this.effects.burst('water', f.x, f.y);
+    this.effects.burst('sparkle', f.x, f.y - 30);
+    this.sfx.play('quest');
+    this.vibrate(20);
+    this.hud.toast(`Caught a ${fish.name}! Worth ${fish.sellPrice} coins at the market`, 'good');
+    this.autosave('fish');
+  }
+
+  updateFishing(dt) {
+    const f = this.fishing;
+    if (!f) return;
+    f.t += dt;
+    if (f.phase === 'wait' && f.t >= f.wait) {
+      const fish = Fishing.pickFish(this.state.time);
+      if (!fish) {
+        this.fishing = null;
+        this.hud.toast('Nothing is biting at this time of year');
+        return;
+      }
+      f.phase = 'bite';
+      f.t = 0;
+      f.fish = fish;
+      this.sfx.play('plant');
+      this.effects.burst('water', f.x, f.y);
+      this.hud.toast('A bite! Press A to hook it', 'quest');
+    } else if (f.phase === 'bite' && f.t > Fishing.HOOK_WINDOW) {
+      this.fishing = null;
+      this.hud.toast('It got away');
+    }
   }
 
   interactPlot(t) {

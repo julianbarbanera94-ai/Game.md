@@ -49,3 +49,9 @@
 `prop.sprinkler` is built by `tools/paint_sprinkler.py` from the game's painted rocks, soil and plants with a code-shaded brass head. Still wanted: a
 hand-painted top-down sprite in the style of the other props, transparent PNG, about 300 x 340 px, anchored
 at the bottom centre, the spinning head about 60% up the image.
+
+## Fishing (new)
+
+Stand-ins painted in code: `icon.tool_fishing_rod`, `icon.fish_perch`, `icon.fish_carp`, `icon.fish_trout`,
+`icon.fish_bass`, `icon.fish_pike`. Wanted: hand-painted item icons in the style of the produce icons,
+transparent PNG, about 240 x 240 px, fish shown side-on facing right.

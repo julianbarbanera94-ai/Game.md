@@ -121,6 +121,7 @@ export class Hud {
       { id: 'hoe', icon: 'icon.tool_hoe', label: 'Hoe', kind: 'tool' },
       { id: 'can', icon: 'icon.tool_watering_can', label: 'Watering can', kind: 'tool', count: `${state.can.water}/${state.can.capacity}`, meter: state.can.water / state.can.capacity },
     ];
+    if (state.inventory.fishing_rod) slots.push({ id: 'rod', icon: 'icon.tool_fishing_rod', label: 'Fishing rod', kind: 'tool' });
     for (const [id, qty] of Object.entries(state.inventory)) {
       const item = getItem(id);
       if (item?.category === 'seed') slots.push({ id, icon: item.icon, label: item.name, kind: 'seed', count: qty });

@@ -15,7 +15,8 @@
     "test:vehicles": "node tests/e2e/vehicles.mjs",
     "test:integration": "node tests/e2e/integration.mjs",
     "test:polish": "node tests/e2e/polish.mjs",
-    "test:sprinklers": "node tests/e2e/sprinklers.mjs"
+    "test:sprinklers": "node tests/e2e/sprinklers.mjs",
+    "test:fishing": "node tests/e2e/fishing.mjs"
   },
   "engines": {
     "node": ">=18"

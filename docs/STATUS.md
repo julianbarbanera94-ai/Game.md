@@ -149,6 +149,19 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
 
+## Fishing
+
+- Buy a **Fishing Rod** at the market stall (40 coins). It joins the hotbar; select it, stand on either
+  creek bank facing the water and press Action to cast. Wait for the float to dip (3-9 s), then press
+  Action within about 1.5 s to hook the fish; Action while waiting reels in.
+- Fish: Perch (22, all year, better at dusk), Carp (30, spring-autumn, dawn), Trout (52, spring and
+  autumn, dawn), Largemouth Bass (44, summer, dusk) and the rare Pike (88, autumn and winter). Sell them at
+  the market or to Tobias; give them as gifts. Catches count toward a `fish` counter.
+- Line and float are drawn in the world, with ripples and a dip on a bite.
+- Icons for the rod and fish are painted in code (`tools/paint_fishing.py`) as **stand-ins**; they do not
+  yet meet the hand-painted standard and are on the art request list.
+- Tests: `tests/unit/fishing.test.mjs` (7), `npm run test:fishing` (13 checks).
+
 ## Sprinklers
 
 - Unlocks at **farm level 2** (shown in the Progress tree and announced). Build one from the planner

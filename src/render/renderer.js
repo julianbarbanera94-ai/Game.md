@@ -102,11 +102,46 @@ export class Renderer {
     }
 
     this.drawSprinklers(g, game);
+    this.drawFishing(g, game);
     this.drawPlacement(g, game);
     this.drawTarget(g, game);
     game.effects.draw(g);
     this.drawLighting(g, game, cam);
     this.drawWeather(g, game, cam);
+  }
+
+  // The line from the rod tip to a float that bobs, then dips and ripples on a bite.
+  drawFishing(g, game) {
+    const f = game.fishing;
+    if (!f) return;
+    const p = game.state.player;
+    const tipX = p.x + (p.facing === 'left' ? -16 : p.facing === 'right' ? 16 : 0), tipY = p.y - 44;
+    const t = game.clockSeconds;
+    const bite = f.phase === 'bite';
+    const dip = bite ? 10 + Math.sin(t * 30) * 4 : Math.sin(t * 2.4) * 2.5;
+    const bx = f.x, by = f.y + dip;
+    g.save();
+    g.strokeStyle = 'rgba(245,240,225,0.85)';
+    g.lineWidth = 1.5;
+    g.beginPath();
+    g.moveTo(tipX, tipY);
+    g.quadraticCurveTo((tipX + bx) / 2, Math.min(tipY, by) - 30, bx, by);
+    g.stroke();
+    // float: red top, white bottom
+    g.fillStyle = bite ? '#ff5a3c' : '#e8443a';
+    g.beginPath(); g.arc(bx, by, 5, Math.PI, 0); g.fill();
+    g.fillStyle = '#fbfbf6';
+    g.beginPath(); g.arc(bx, by, 5, 0, Math.PI); g.fill();
+    g.strokeStyle = 'rgba(30,20,10,0.7)';
+    g.lineWidth = 1.2;
+    g.beginPath(); g.arc(bx, by, 5, 0, Math.PI * 2); g.stroke();
+    // ripples on the water
+    const ph = (t * (bite ? 2.5 : 0.7)) % 1;
+    g.globalAlpha = (bite ? 0.9 : 0.4) * (1 - ph);
+    g.strokeStyle = '#e4f6ff';
+    g.lineWidth = 2;
+    g.beginPath(); g.ellipse(f.x, f.y + 4, 6 + ph * 22, 2.5 + ph * 7, 0, 0, Math.PI * 2); g.stroke();
+    g.restore();
   }
 
   // Spinning water jets from sprinklers that are running: every morning for

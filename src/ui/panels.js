@@ -121,7 +121,7 @@ export class Panels {
         ['sell', 'buy'].map((t) => el('button', {
           class: `tab${t === current ? ' active' : ''}`, role: 'tab', 'aria-selected': String(t === current),
           onclick: () => { current = t; render(); },
-        }, t === 'sell' ? 'Sell produce' : 'Buy seeds')));
+        }, t === 'sell' ? 'Sell produce & fish' : 'Buy seeds & tools')));
       let rows;
       if (current === 'sell') {
         const sellable = Object.entries(s.inventory).filter(([id]) => getItem(id)?.sellPrice != null);
@@ -145,8 +145,8 @@ export class Panels {
             el('small', {}, unlocked ? `${item.buyPrice} coins · owned ${s.inventory[item.id] || 0}` : `Locked — ${lockedText}`)),
           el('div', { class: 'row-actions' },
             el('button', { disabled: !unlocked || s.coins < item.buyPrice, 'data-buy': item.id, onclick: guarded(() => game.buy(item.id, 1)) }, `Buy 1 (${item.buyPrice})`),
-            el('button', { class: 'primary', disabled: !unlocked || s.coins < item.buyPrice * 5, 'data-buy5': item.id, onclick: guarded(() => game.buy(item.id, 5)) },
-              `Buy 5 (${item.buyPrice * 5})`))));
+            item.maxStack > 1 ? el('button', { class: 'primary', disabled: !unlocked || s.coins < item.buyPrice * 5, 'data-buy5': item.id, onclick: guarded(() => game.buy(item.id, 5)) },
+              `Buy 5 (${item.buyPrice * 5})`) : null)));
       }
       content.replaceChildren(tabs, el('div', { class: 'rows' }, rows),
         el('div', { class: 'footer' }, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`));

@@ -2444,6 +2444,54 @@
       "source": "tools/paint_sprinkler.py",
       "status": "painted-in-code",
       "notes": "Built from the game's painted rocks, soil, grass and flowers around a brass sprinkler shaded in code (normals, patina, scratches). No sprinkler art was supplied."
+    },
+    "icon.tool_fishing_rod": {
+      "file": "assets/derived/icons/tool_fishing_rod.png",
+      "width": 201,
+      "height": 213,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "icon.fish_perch": {
+      "file": "assets/derived/icons/fish_perch.png",
+      "width": 145,
+      "height": 110,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "icon.fish_carp": {
+      "file": "assets/derived/icons/fish_carp.png",
+      "width": 145,
+      "height": 110,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "icon.fish_trout": {
+      "file": "assets/derived/icons/fish_trout.png",
+      "width": 145,
+      "height": 110,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "icon.fish_bass": {
+      "file": "assets/derived/icons/fish_bass.png",
+      "width": 145,
+      "height": 110,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "icon.fish_pike": {
+      "file": "assets/derived/icons/fish_pike.png",
+      "width": 150,
+      "height": 110,
+      "source": "tools/paint_fishing.py",
+      "status": "painted-in-code",
+      "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
     }
   }
 }
