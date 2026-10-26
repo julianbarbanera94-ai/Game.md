@@ -36,9 +36,10 @@ export class Camera {
       this.fitPad = top / scale;
       return;
     }
-    const tilesAcross = Math.min(21, Math.max(8, cssW / 66));
+    // ~20% wider view than before: the art is shown smaller, so it reads sharper
+    const tilesAcross = Math.min(25, Math.max(10, cssW / 55));
     let scale = cssW / (tilesAcross * 64);
-    scale = Math.min(scale, cssH / (8.5 * 64));
+    scale = Math.min(scale, cssH / (10.2 * 64));
     this.scale = scale;
     this.viewW = cssW / scale;
     this.viewH = cssH / scale;
