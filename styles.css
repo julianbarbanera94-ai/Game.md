@@ -214,3 +214,21 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .save-status { margin: 0; padding: 8px 12px; border-radius: 10px; font-weight: 700; text-align: center; }
 .save-status.ok { background: #dff0cf; color: #2f6a22; }
 .save-status.bad { background: #f8dcd2; color: #9a3a1c; }
+
+/* livestock panel */
+.livestock { padding: 14px 16px 16px; }
+.live-summary { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+.live-summary small { color: #6b5638; }
+.live-actions { display: flex; gap: 8px; margin-bottom: 10px; }
+.live-actions button { flex: 1; padding: 10px; }
+.row.animal img { width: 54px; height: 54px; object-fit: contain; }
+.row.animal.hungry { border-color: #d8885a; background: rgba(255, 232, 214, 0.7); }
+.status.hungry { color: #a24b23; font-weight: 700; }
+.mood { display: flex; align-items: center; gap: 8px; }
+.mood-bar { flex: 0 0 90px; height: 7px; border-radius: 4px; background: rgba(0,0,0,0.15); overflow: hidden; }
+.mood-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #e8a94b, #86c65a); }
+.ready { color: #8a5a10; font-weight: 700; }
+.live-buy { margin-top: 12px; }
+.live-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.live-buttons button { flex: 1 1 140px; padding: 10px; }
+.modal button.danger { background: #f6d9cf; border-color: #c4623c; color: #8f2f12; }

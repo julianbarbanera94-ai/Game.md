@@ -5,6 +5,7 @@ import { createNewState } from './state.js';
 import { refreshAvailability } from './quests.js';
 import { applyUpgradeEffects } from './economy.js';
 import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
+import { SPECIES } from '../data/animals.js';
 import { applyLevelEffects, FIXED_BUILDINGS } from './buildings.js';
 
 // Versioned save model. Loading never trusts stored data: every field is
@@ -25,6 +26,9 @@ const MIGRATIONS = {
     return out;
   },
 };
+
+// v2 -> v3: livestock arrived; old saves simply have no animals.
+MIGRATIONS[2] = (data) => ({ ...data, version: 3, animals: [] });
 
 function validJob(job, maxLevel) {
   if (!job || typeof job !== 'object') return null;
@@ -109,7 +113,30 @@ export function deserialize(json) {
       s.placed.push(rec);
     }
   }
-  s.nextUid = Math.floor(num(data.nextUid, s.placed.length + 1));
+  // Livestock: drop anything whose species or home building no longer exists.
+  if (Array.isArray(data.animals)) {
+    const used = new Set();
+    const perHome = {};
+    for (const a of data.animals.slice(0, 200)) {
+      if (!a || typeof a !== 'object' || typeof a.uid !== 'string' || used.has(a.uid)) continue;
+      const sp = SPECIES[a.species];
+      const home = s.placed.find((p) => p.uid === a.home && BUILDINGS[p.type]?.livestock);
+      if (!sp || !home || home.type !== sp.home || home.level < 1) continue;
+      const cap = BUILDINGS[home.type].capacity[home.level - 1];
+      if ((perHome[home.uid] = (perHome[home.uid] || 0) + 1) > cap) continue;
+      used.add(a.uid);
+      s.animals.push({
+        uid: a.uid, species: sp.id, home: home.uid,
+        name: typeof a.name === 'string' ? a.name.slice(0, 24) : sp.name,
+        fedUntil: num(a.fedUntil, 0, -1e9, 1e12),
+        happiness: num(a.happiness, 50, 0, 100),
+        progress: num(a.progress, 0, 0, sp.cycleMinutes),
+        stock: Math.floor(num(a.stock, 0, 0, sp.maxStock)),
+        petAt: num(a.petAt, -1e9, -1e12, 1e12),
+      });
+    }
+  }
+  s.nextUid = Math.floor(num(data.nextUid, s.placed.length + s.animals.length + 1));
   applyLevelEffects(s);
   if (data.can) s.can.water = Math.floor(num(data.can.water, s.can.water, 0, s.can.capacity));
   if (data.plots) {

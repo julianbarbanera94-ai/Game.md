@@ -13,6 +13,9 @@ import { CollisionWorld, overlaps } from './world/collision.js';
 import { buildInterior, placedColliders } from './world/layout.js';
 import * as Buildings from './systems/buildings.js';
 import * as Storage from './systems/storage.js';
+import * as Animals from './systems/animals.js';
+import { SPECIES, productLabel } from './data/animals.js';
+import { AnimalActors } from './world/animalActors.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
 import { Camera } from './world/camera.js';
 import { Effects } from './render/effects.js';
@@ -24,6 +27,7 @@ const PLOT_AT = new Map(PLOTS.map((p) => [`${p.tx},${p.ty}`, p]));
 const FEET = { w: 13, h: 7 }; // half-size of the player's collision box (px)
 const ACTION_TIME = 0.38;
 const AUTOSAVE_SECONDS = 60;
+const ANIMAL_REACH = 58; // px from the player's feet to an animal's feet
 const NO_SAVING_TEXT = "Saving is unavailable: this device isn't letting the game keep saved data (storage is blocked). You can play, but progress will be lost when you close the game.";
 
 export class Game {
@@ -39,6 +43,7 @@ export class Game {
     this.farmCollision = new CollisionWorld(world.bounds, world.colliders);
     this.interiors = { house: buildInterior(assets, 'house') };
     this.placement = null; // { type, x, y, valid } while placing a building
+    this.actors = new AnimalActors();
     this.effects = new Effects();
     this.hud = new Hud(this);
     this.panels = new Panels(this);
@@ -73,6 +78,7 @@ export class Game {
       this.refreshColliders();
       this.panels.rerender();
     });
+    this.bus.on('buyAnimal', ({ species }) => this.hud.toast(`${SPECIES[species].name} bought`, 'good'));
     this.bus.on('autoWatered', ({ count }) => this.hud.toast(`The well watered ${count} plot${count === 1 ? '' : 's'} this morning`));
   }
 
@@ -154,6 +160,8 @@ export class Game {
       this.animTime = 0;
     }
 
+    this.actors.sync(this.state);
+    if (!paused) this.actors.update(dt);
     if (this.placement) this.updatePlacement();
     this.target = paused ? null : this.placement ? this.placementTarget() : this.resolveTarget();
     // A tap that landed mid-action (or just before a target was in reach) is
@@ -233,9 +241,47 @@ export class Game {
         return { kind: 'plot', id: def.id, tx: def.tx, ty: def.ty, label: a.label, ok: a.ok, action: a.action };
       }
     }
-    const placed = this.state.placed.filter((r) => r.type === 'storage_shed')
-      .map((r) => ({ id: r.uid, uid: r.uid, kind: 'storage', x: r.x * TILE, y: (r.y + 0.15) * TILE }));
-    return this.nearestInteractable([...this.world.interactables, ...placed]);
+    const placed = this.state.placed
+      .filter((r) => r.type === 'storage_shed' || BUILDINGS[r.type]?.livestock)
+      .map((r) => (r.type === 'storage_shed'
+        ? { id: r.uid, uid: r.uid, kind: 'storage', x: r.x * TILE, y: (r.y + 0.15) * TILE }
+        : { id: r.uid, uid: r.uid, kind: 'livestock', x: r.x * TILE, y: (r.y + 0.75) * TILE }));
+    const object = this.nearestInteractable([...this.world.interactables, ...placed]);
+    const animal = this.nearestAnimal();
+    if (animal && (!object || animal.dist <= object.dist)) return animal;
+    return object;
+  }
+
+  // The closest wandering animal within reach, with the action a tap would do.
+  nearestAnimal() {
+    const p = this.state.player;
+    let best = null;
+    let bestD = ANIMAL_REACH;
+    for (const ac of this.actors.list()) {
+      const d = Math.hypot(ac.x - p.x, ac.y - p.y);
+      if (d < bestD) {
+        bestD = d;
+        best = ac;
+      }
+    }
+    if (!best) return null;
+    const a = this.state.animals.find((x) => x.uid === best.uid);
+    if (!a) return null;
+    return { kind: 'animal', uid: a.uid, dist: bestD, x: best.x, y: best.y, ...this.animalAction(a) };
+  }
+
+  animalAction(a) {
+    const s = this.state;
+    const sp = SPECIES[a.species];
+    if (a.stock > 0) return { action: 'collect', ok: true, label: `Collect ${productLabel(a.species, a.stock)} from ${a.name}` };
+    if (Animals.isHungry(s, a)) {
+      const have = s.inventory[sp.feed] || 0;
+      return have > 0
+        ? { action: 'feed', ok: true, label: `Feed ${a.name} and any other hungry animals here (${have} ${getItem(sp.feed).name.toLowerCase()})` }
+        : { action: 'feed', ok: false, label: `${a.name} is hungry — buy ${getItem(sp.feed).name.toLowerCase()} at the market` };
+    }
+    if (Animals.canPet(s, a)) return { action: 'pet', ok: true, label: `Pet ${a.name} (${Animals.statusText(s, a)})` };
+    return { action: 'none', ok: false, label: `${a.name} — ${Animals.statusText(s, a)}, ${Animals.moodText(a).toLowerCase()}` };
   }
 
   nearestInteractable(list) {
@@ -250,14 +296,18 @@ export class Game {
       }
     }
     if (!best) return null;
-    return { kind: 'object', uid: best.uid, ...this.objectTarget(best.kind, best.x, best.y, best.uid) };
+    return { kind: 'object', uid: best.uid, dist: bestD, ...this.objectTarget(best.kind, best.x, best.y, best.uid) };
   }
 
   objectTarget(kind, x, y, uid) {
     const s = this.state;
     const building = (id) => s.buildings[id]?.job ? ' (builders at work)' : '';
     const shed = uid && s.placed.find((r) => r.uid === uid);
+    const barnRec = shed && BUILDINGS[shed.type]?.livestock ? shed : null;
     const labels = {
+      livestock: barnRec?.level >= 1
+        ? `Open ${BUILDINGS[barnRec.type].name.toLowerCase()} (${Animals.animalsAt(s, barnRec.uid).length}/${Animals.capacity(barnRec)} animals)`
+        : `${barnRec ? BUILDINGS[barnRec.type].name : 'Building'} under construction — ready ${barnRec?.job ? formatClock(barnRec.job.end) : ''}`,
       house: `Enter cottage${building('house')}`,
       bed: 'Sleep until morning',
       exit: 'Leave cottage',
@@ -271,7 +321,7 @@ export class Game {
       road_block: 'Inspect the fallen tree',
       garden_sign: s.unlocks.gardenExpansion ? 'South garden bed (owned)' : 'Expand the garden',
     };
-    const ok = kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' ? shed?.level >= 1 : true;
+    const ok = kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
     return { objectKind: kind, x, y, label: labels[kind], ok };
   }
 
@@ -281,6 +331,7 @@ export class Game {
     const t = this.target;
     if (!t || this.action) return false;
     if (t.kind === 'plot') this.interactPlot(t);
+    else if (t.kind === 'animal') this.interactAnimal(t);
     else this.interactObject(t.objectKind);
     return true;
   }
@@ -338,6 +389,12 @@ export class Game {
       case 'storage':
         if (this.target?.uid) this.panels.storage(this.target.uid);
         break;
+      case 'livestock': {
+        const rec = this.target?.uid && s.placed.find((r) => r.uid === this.target.uid);
+        if (rec?.level >= 1) this.panels.livestock(rec.uid);
+        else this.hud.toast('The builders are still working on it', 'warn');
+        break;
+      }
       case 'mailbox':
         this.panels.dialog('Mailbox', this.mailText());
         break;
@@ -433,6 +490,87 @@ export class Game {
     } else this.activeTool = slot.id;
   }
 
+  // ------------------------------------------------------------ livestock
+  interactAnimal(t) {
+    const a = this.state.animals.find((x) => x.uid === t.uid);
+    const ac = this.actors.get(t.uid);
+    if (!a) return;
+    if (t.action === 'collect') return this.collectFrom(a.uid, ac);
+    if (t.action === 'feed') return this.feedHome(a.home);
+    if (t.action === 'pet') {
+      const r = Animals.pet(this.state, a.uid, this.bus);
+      if (r.ok) {
+        this.sfx.play('click');
+        if (ac) this.effects.text('♥', ac.x, ac.y - SPECIES[a.species].drawHeight - 6, '#ff9fb2');
+        this.hud.toast(`${a.name} loves the attention`);
+      } else this.hud.toast(r.reason, 'warn');
+      return;
+    }
+    this.hud.toast(t.label);
+  }
+
+  collectFrom(uid, ac = this.actors.get(uid)) {
+    const a0 = this.state.animals.find((x) => x.uid === uid);
+    const r = Animals.collect(this.state, uid, this.bus);
+    if (r.ok) {
+      this.sfx.play('harvest');
+      this.action = { kind: 'harvest', t: 0, dur: ACTION_TIME };
+      if (ac) {
+        this.effects.burst('harvest', ac.x, ac.y - 20);
+        this.effects.text(`+${productLabel(a0.species, r.qty)}`, ac.x, ac.y - 50, '#fff4c2');
+      }
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.panels.rerender();
+    return r;
+  }
+
+  collectHome(homeUid) {
+    const r = Animals.collectYard(this.state, homeUid, this.bus);
+    if (r.ok) {
+      this.sfx.play('harvest');
+      const parts = Object.entries(r.got).map(([id, q]) => `${q} ${getItem(id).name.toLowerCase()}`);
+      this.hud.toast(`Collected ${parts.join(', ')}${r.blocked ? ` — ${r.blocked}` : ''}`, 'good');
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.panels.rerender();
+  }
+
+  feedHome(homeUid) {
+    const r = Animals.feedYard(this.state, homeUid, this.bus);
+    if (r.ok) {
+      this.sfx.play('plant');
+      this.hud.toast(`Fed ${r.fed} ${r.fed === 1 ? 'animal' : 'animals'}${r.short ? ` — out of feed for ${r.short}` : ''}`, 'good');
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.panels.rerender();
+  }
+
+  buyAnimal(speciesId, homeUid) {
+    const r = Animals.buy(this.state, speciesId, homeUid, this.bus);
+    if (r.ok) this.sfx.play('coin');
+    else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.panels.rerender();
+  }
+
+  sellAnimal(uid) {
+    const r = Animals.sell(this.state, uid, this.bus);
+    if (r.ok) {
+      this.sfx.play('coin');
+      this.hud.toast(`Sold ${r.animal.name} for ${r.value} coins`, 'good');
+    } else this.hud.toast(r.reason, 'warn');
+    this.panels.rerender();
+  }
+
   // ------------------------------------------------------------ storage
   bagSlots() {
     return Buildings.bagSlots(this.state);
@@ -489,11 +627,16 @@ export class Game {
     const pl = this.placement;
     const p = this.state.player;
     const [fx, fy] = FACING[p.facing];
-    const fp = (DECORATIONS[pl.type] || BUILDINGS[pl.type]).footprint;
-    const dist = 0.5 + (fy !== 0 ? fp[1] : fp[0] / 2) + (fy < 0 ? 0.2 : 0);
-    pl.x = Math.round((p.x / TILE + fx * dist) * 4) / 4;
-    pl.y = Math.round((p.y / TILE + fy * dist + (fy > 0 ? fp[1] : 0)) * 4) / 4;
-    pl.valid = this.isBuildable(Buildings.footprintRect(pl.type, pl.x, pl.y));
+    // Put the whole reserved area (building plus pasture) just in front of the player.
+    const rel = Buildings.areaRect(pl.type, 0, 0);
+    const w = rel.x1 - rel.x0;
+    const h = rel.y1 - rel.y0;
+    const dist = (fy !== 0 ? h : w) / 2 + 0.6;
+    const cx = p.x / TILE + fx * dist;
+    const cy = p.y / TILE + fy * dist - 0.3;
+    pl.x = Math.round((cx - (rel.x0 + rel.x1) / 2) * 4) / 4;
+    pl.y = Math.round((cy - (rel.y0 + rel.y1) / 2) * 4) / 4;
+    pl.valid = this.isBuildable(Buildings.areaRect(pl.type, pl.x, pl.y));
   }
 
   // A footprint (tile rect) is buildable if it is inside the bounds and clear

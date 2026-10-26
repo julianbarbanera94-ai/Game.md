@@ -1,5 +1,24 @@
 # Farmstead — Implementation Status
 
+## Milestone 3 — Phase 5: livestock (chickens, cows, sheep)
+
+| Feature | Where | Verified by |
+|---|---|---|
+| Chicken coop and barn: placeable via the planner, built over game time, 3 levels each (capacity 4/8/12 and 3/6/10) | `data/buildings.js` | unit + e2e |
+| Fenced pasture under each building with a walk-in gate; animals wander inside it | `systems/pasture.js`, `world/animalActors.js` | unit (stay inside the fence) + e2e |
+| Buy animals (right building, capacity, coins), sell back for half, with a confirm tap | `systems/animals.js`, livestock panel | unit + e2e |
+| Feeding: chicken feed / hay bought at the market (unlocked by owning the building); one tap feeds every hungry animal in that pasture; a feeding lasts one game day | same | unit + e2e |
+| Production only while fed; happy animals produce 25% faster; up to 3 products wait on each animal; collecting never duplicates; a full bag leaves the product on the animal | same | unit |
+| In-world prompts and bubbles: product ready / hungry; tap to collect, feed or pet | `game.js`, `render/renderer.js` | e2e + screenshots |
+| Eggs, milk and wool sell at the market | `data/items.js` | e2e |
+| Quests: A Home for Hens → First Hens → Egg Money → Room for Cattle → Fresh Milk → Something Woolly | `data/quests.js` | unit + e2e |
+| Save v3 (migration from v2); invalid or over-capacity animals are dropped on load | `systems/save.js` | unit + e2e |
+
+Tests: `npm test` 41/41 · `npm run test:e2e` 231/231 · `npm run test:touch` 23/23.
+
+Art: animals, products, feed and the coop/barn are temporary cut-outs from the Phase 4/5 reference panels (animals about 40 px tall natively). The coop art has hens painted into it. See `docs/ART_REQUESTS.md`.
+
+
 ## Fix round: mobile controls (after first APK test)
 
 Reported on a phone, in landscape: (1) the cottage is blurry; (2) controls sit too high; (3) buttons only worked while A was held; (4) none of the pause-menu buttons worked.

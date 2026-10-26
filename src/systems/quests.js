@@ -29,12 +29,14 @@ function matches(obj, type, payload) {
   if (obj.crop && payload.crop !== obj.crop) return false;
   if (obj.category && payload.category !== obj.category) return false;
   if (obj.id && payload.id !== obj.id) return false;
+  if (obj.item && payload.item !== obj.item) return false;
+  if (obj.species && payload.species !== obj.species) return false;
   return true;
 }
 
 // Feed a gameplay event into quest progress.
 export function handleEvent(state, type, payload = {}, bus = NULL_BUS) {
-  const amount = type === 'sell' || type === 'buy' || type === 'harvest' ? payload.qty || 1 : 1;
+  const amount = ['sell', 'buy', 'harvest', 'collect', 'feed'].includes(type) ? payload.qty || 1 : 1;
   for (const q of QUESTS) {
     const qs = state.quests[q.id];
     if (qs.status !== 'active') continue;
@@ -85,7 +87,7 @@ export function rewardText(reward) {
 
 // Wire quest progress to the gameplay event bus.
 export function attachQuests(getState, bus) {
-  for (const type of ['till', 'plant', 'water', 'harvest', 'sell', 'buy', 'unlock', 'talk', 'visit', 'constructed', 'constructionStarted']) {
+  for (const type of ['till', 'plant', 'water', 'harvest', 'sell', 'buy', 'unlock', 'talk', 'visit', 'constructed', 'constructionStarted', 'buyAnimal', 'collect', 'feed', 'pet']) {
     bus.on(type, (payload) => handleEvent(getState(), type, payload, bus));
   }
 }

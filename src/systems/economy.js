@@ -13,6 +13,7 @@ export function isRequirementMet(state, req) {
   if (req.quest && state.quests[req.quest]?.status !== 'claimed') return false;
   if (req.unlock && !state.unlocks[req.unlock]) return false;
   if (req.building && buildingLevel(state, req.building[0]) < req.building[1]) return false;
+  if (req.placed && !state.placed.some((p) => p.type === req.placed && p.level >= 1)) return false;
   return true;
 }
 
@@ -21,6 +22,7 @@ export function requirementText(req) {
   if (req.quest) return `Complete "${QUESTS_BY_ID[req.quest].title}"`;
   if (req.unlock === 'gardenExpansion') return 'Expand your garden';
   if (req.building) return `${BUILDINGS[req.building[0]].name} level ${req.building[1]}`;
+  if (req.placed) return `Build a ${BUILDINGS[req.placed].name.toLowerCase()}`;
   return 'Locked';
 }
 

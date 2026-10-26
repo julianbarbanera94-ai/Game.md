@@ -2,6 +2,7 @@ import { Assets } from './assets/loader.js';
 import { buildWorld, worldSpriteKeys } from './world/layout.js';
 import { TERRAIN_KEYS } from './render/terrain.js';
 import { PLAYER_KEYS, plotSpriteKeys } from './render/sprites.js';
+import { ANIMAL_ICON_KEYS, ANIMAL_KEYS } from './render/animals.js';
 import { Renderer } from './render/renderer.js';
 import { Input } from './input/input.js';
 import { Sfx } from './audio/sfx.js';
@@ -65,7 +66,7 @@ async function boot() {
   }
   const keys = [
     ...worldSpriteKeys(), ...TERRAIN_KEYS, ...PLAYER_KEYS, ...plotSpriteKeys(Object.keys(CROPS)),
-    'foliage.grass_tall', 'foliage.fern',
+    'foliage.grass_tall', 'foliage.fern', ...ANIMAL_KEYS, ...ANIMAL_ICON_KEYS,
   ];
   await assets.loadImages(keys, (f) => (bar.style.width = `${Math.round(f * 100)}%`));
 

@@ -5,6 +5,8 @@ import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
 import { jobProgress, placeableInfo, storageSlots, upgradeInfo, FIXED_BUILDINGS } from '../systems/buildings.js';
 import { formatClock } from '../systems/time.js';
 import { slotsUsed } from '../systems/inventory.js';
+import { SPECIES, productLabel } from '../data/animals.js';
+import { animalsAt, capacity, hoursFed, isHungry, moodText, readyCount, sellValue } from '../systems/animals.js';
 import { rewardText } from '../systems/quests.js';
 import { el } from './hud.js';
 
@@ -187,7 +189,7 @@ export class Panels {
                 : null));
         });
       } else {
-        const types = ['storage_shed', ...Object.keys(DECORATIONS)];
+        const types = [...Object.values(BUILDINGS).filter((b) => b.placeable).map((b) => b.id), ...Object.keys(DECORATIONS)];
         rows = types.map((type) => {
           const info = placeableInfo(s, type);
           const def = DECORATIONS[type] || BUILDINGS[type];
@@ -205,6 +207,72 @@ export class Panels {
         el('div', { class: 'footer' }, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`));
     };
     this.show('Building Planner', content, { wide: true }).render = render;
+    render();
+  }
+
+  // ---- coop / barn: animals, feeding, collecting, buying, selling
+  livestock(uid) {
+    const game = this.game;
+    const content = el('div', { class: 'livestock' });
+    let pendingSell = null; // animal uid awaiting a second tap to confirm
+    const render = () => {
+      const s = game.state;
+      const rec = s.placed.find((p) => p.uid === uid);
+      if (!rec) return;
+      const def = BUILDINGS[rec.type];
+      const herd = animalsAt(s, uid);
+      const cap = capacity(rec);
+      const ready = readyCount(s, uid);
+      const hungry = herd.filter((a) => isHungry(s, a)).length;
+      const species = Object.values(SPECIES).filter((sp) => sp.home === rec.type);
+      const feedLine = [...new Set(species.map((sp) => sp.feed))].map((id) => `${getItem(id).name}: ${s.inventory[id] || 0}`).join(' · ');
+
+      const rows = herd.length
+        ? herd.map((a) => {
+          const sp = SPECIES[a.species];
+          const confirming = pendingSell === a.uid;
+          return el('div', { class: `row animal${isHungry(s, a) ? ' hungry' : ''}`, 'data-animal': a.uid },
+            el('img', { src: game.assets.url(`animal.${a.species}_d0`), alt: '' }),
+            el('div', { class: 'row-main' },
+              el('strong', {}, `${a.name} · ${sp.name}`),
+              el('small', { class: isHungry(s, a) ? 'status hungry' : 'status' }, isHungry(s, a) ? 'Hungry' : `Fed for about ${hoursFed(s, a)}h`),
+              el('div', { class: 'mood', role: 'img', 'aria-label': `Mood ${moodText(a)}, ${Math.round(a.happiness)} of 100` },
+                el('span', { class: 'mood-bar' }, el('span', { style: `width:${Math.round(a.happiness)}%` })),
+                el('small', {}, moodText(a))),
+              a.stock > 0 ? el('small', { class: 'ready' }, `${productLabel(a.species, a.stock)} ready`) : null),
+            el('div', { class: 'row-actions' },
+              a.stock > 0 ? el('button', { 'data-collect': a.uid, onclick: guarded(() => game.collectFrom(a.uid)) }, 'Collect') : null,
+              el('button', {
+                class: confirming ? 'danger' : '', 'data-sell-animal': a.uid,
+                onclick: guarded(() => {
+                  if (pendingSell === a.uid) { pendingSell = null; game.sellAnimal(a.uid); } else { pendingSell = a.uid; render(); }
+                }),
+              }, confirming ? `Tap again: sell for ${sellValue(a)}` : `Sell (${sellValue(a)})`)));
+        })
+        : [el('p', { class: 'empty' }, 'No animals yet. Buy some below.')];
+
+      const buys = species.map((sp) => {
+        const full = herd.length >= cap;
+        const poor = s.coins < sp.cost;
+        return el('button', {
+          class: 'primary buy-animal', 'data-buy-animal': sp.id, disabled: full || poor,
+          title: full ? 'Full — upgrade the building for more room' : poor ? `Needs ${sp.cost} coins` : '',
+          onclick: guarded(() => { pendingSell = null; game.buyAnimal(sp.id, uid); }),
+        }, `Buy ${sp.name} (${sp.cost})`);
+      });
+
+      content.replaceChildren(
+        el('div', { class: 'live-summary' },
+          el('strong', {}, `${def.name} · level ${rec.level} · ${herd.length}/${cap} animals`),
+          el('small', {}, feedLine)),
+        el('div', { class: 'live-actions' },
+          el('button', { class: 'primary', 'data-collect-all': true, disabled: ready === 0, onclick: guarded(() => { pendingSell = null; game.collectHome(uid); }) }, `Collect all (${ready})`),
+          el('button', { class: 'primary', 'data-feed-all': true, disabled: hungry === 0, onclick: guarded(() => { pendingSell = null; game.feedHome(uid); }) }, `Feed hungry (${hungry})`)),
+        el('div', { class: 'rows' }, rows),
+        el('div', { class: 'live-buy' }, buys.length && herd.length >= cap ? el('small', { class: 'status locked' }, 'Full — upgrade this building at the workbench for more room.') : null, el('div', { class: 'live-buttons' }, buys)),
+        el('div', { class: 'footer' }, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`));
+    };
+    this.show(BUILDINGS[game.state.placed.find((p) => p.uid === uid)?.type]?.name || 'Livestock', content, { wide: true, onClose: () => game.autosave('livestock') }).render = render;
     render();
   }
 

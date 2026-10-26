@@ -19,6 +19,7 @@ export function createNewState() {
     unlocks: Object.fromEntries(Object.keys(UPGRADES).map((k) => [k, false])),
     buildings: createBuildingState(),
     placed: [],
+    animals: [],
     nextUid: 1,
     quests: createQuestState(),
     stats: { earned: 0 },

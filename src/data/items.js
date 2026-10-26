@@ -26,6 +26,15 @@ for (const crop of Object.values(CROPS)) {
   };
 }
 
+// Animal products and feed (Phase 5).
+Object.assign(ITEMS, {
+  egg: { id: 'egg', name: 'Egg', category: 'animal', buyPrice: null, sellPrice: 12, maxStack: 99, icon: 'icon.product_egg' },
+  milk: { id: 'milk', name: 'Milk', category: 'animal', buyPrice: null, sellPrice: 34, maxStack: 99, icon: 'icon.product_milk' },
+  wool: { id: 'wool', name: 'Wool', category: 'animal', buyPrice: null, sellPrice: 48, maxStack: 99, icon: 'icon.product_wool' },
+  chicken_feed: { id: 'chicken_feed', name: 'Chicken Feed', category: 'feed', buyPrice: 4, sellPrice: null, maxStack: 99, icon: 'icon.feed_chicken' },
+  hay: { id: 'hay', name: 'Hay', category: 'feed', buyPrice: 6, sellPrice: null, maxStack: 99, icon: 'icon.feed_hay' },
+});
+
 export const INVENTORY_SLOTS = 16;
 
 export function getItem(id) {

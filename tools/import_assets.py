@@ -340,6 +340,7 @@ def main():
     ap.add_argument("--phase2")
     ap.add_argument("--phase3")
     ap.add_argument("--phase4")
+    ap.add_argument("--phase5")
     args = ap.parse_args()
     mpath = os.path.join(OUT, "manifest.json")
     if os.path.exists(mpath):
@@ -353,6 +354,8 @@ def main():
         phase3(args.phase3)
     if args.phase4:
         phase4(args.phase4)
+    if args.phase5:
+        phase5(args.phase5)
     ensure(OUT)
     manifest["assets"] = dict(sorted(manifest["assets"].items()))
     with open(mpath, "w") as f:
@@ -454,6 +457,8 @@ P4_BUILDINGS = {
     "tool_shed": "tool_shed_workshop_levels_1_to_3.png",
     "market_stall": "market_stall_levels_1_to_3.png",
     "storage_shed": "storage_shed_levels_1_to_3.png",
+    "chicken_coop": "chicken_coop_levels_1_to_3.png",
+    "barn": "barn_livestock_levels_1_to_3.png",
 }
 
 
@@ -508,6 +513,79 @@ def phase4(root, preview_dir=None):
         interiors[i].save(dst, optimize=True)
         register(f"interior.{name}", dst, "phase4/03_building_interiors/top_down_building_interiors.png",
                  "temporary-reference-derived", notes=P4_NOTE + " Upscaled 3x (Lanczos + unsharp) — still soft; needs a real export.")
+
+
+
+# ---------------------------------------------------------------- phase 5 (derived)
+
+P5_NOTE = ("TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). "
+           "Replace with production sprites.")
+P5_ROWS = {"chicken": (30, 96), "cow": (97, 181), "sheep": (190, 259), "pig": (262, 343),
+           "duck": (350, 426), "horse": (428, 546)}
+
+
+def cream_keyed(img, top, tol=34):
+    """Key out the warm cream card/panel background of a reference panel. Seeds
+    are low-variance cream pixels on a coarse grid, so white sprites (chicken,
+    sheep) are not mistaken for background."""
+    a = np.asarray(img).astype(int)
+    h, w, _ = a.shape
+    seeds = []
+    for y in range(top + 2, h - 3, 5):
+        for x in range(3, w - 3, 5):
+            p = a[y - 2:y + 3, x - 2:x + 3].reshape(-1, 3)
+            r_, g_, b_ = p.mean(0)
+            if r_ > 205 and g_ > 185 and b_ > 140 and 22 <= r_ - b_ <= 75 and p.std(0).max() < 5:
+                seeds.append((x, y - top))
+    return key_background(img.crop((0, top, w, h)), seeds, tol)
+
+
+def sprite_boxes(keyed, min_area, min_h, max_w, x_min=0):
+    boxes = [b for b in components(keyed, min_area)
+             if (b[3] - b[1]) >= min_h and (b[2] - b[0]) <= max_w and b[0] >= x_min]
+    boxes.sort(key=lambda b: (round(b[1] / 30), b[0]))
+    return boxes
+
+
+def phase5(root):
+    d = ensure(os.path.join(OUT, "derived", "phase5"))
+    # animals: per row, 5 frames facing the camera then 4 facing away
+    panel = Image.open(os.path.join(root, "01_animal_idle_and_movement", "animal_idle_movement_reference.png")).convert("RGB")
+    top = 28
+    keyed = cream_keyed(panel, top)
+    boxes = sprite_boxes(keyed, 500, 28, 60, x_min=50)
+    for name, (y0, y1) in P5_ROWS.items():
+        row = sorted([b for b in boxes if y0 - top <= b[1] + (b[3] - b[1]) // 2 <= y1 - top], key=lambda b: b[0])
+        if len(row) != 9:
+            raise SystemExit(f"{name}: expected 9 frames, found {len(row)}")
+        for i, (x0, y0_, x1, y1_, _) in enumerate(row):
+            sp = trim(largest_component(keyed.crop((x0 - 1, y0_ - 1, x1 + 1, y1_ + 1))), 1)
+            sp = enlarge(sp, 3)
+            tag = f"d{i}" if i < 5 else f"u{i - 5}"
+            dst = os.path.join(d, f"{name}_{tag}.png")
+            sp.save(dst, optimize=True)
+            register(f"animal.{name}_{tag}", dst, "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+                     "temporary-reference-derived", notes=P5_NOTE + (" Faces the camera." if i < 5 else " Faces away from the camera."))
+    # products and feed icons (largest object in each card)
+    def icons(fn, top_, names, key_prefix, src):
+        pn = Image.open(os.path.join(root, fn)).convert("RGB")
+        k = cream_keyed(pn, top_)
+        bx = sprite_boxes(k, 350, 18, 80, x_min=0)
+        bx.sort(key=lambda b: b[0])
+        if len(bx) < len(names):
+            raise SystemExit(f"{fn}: expected {len(names)} icons, found {len(bx)}")
+        for name, (x0, y0_, x1, y1_, _) in zip(names, bx):
+            sp = trim(largest_component(k.crop((x0 - 1, y0_ - 1, x1 + 1, y1_ + 1))), 1)
+            sp = enlarge(sp, 3)
+            dst = os.path.join(d, f"{key_prefix}_{name}.png")
+            sp.save(dst, optimize=True)
+            register(f"icon.{key_prefix}_{name}", dst, src, "temporary-reference-derived", notes=P5_NOTE)
+    icons("05_animal_products/animal_products_items.png", 30,
+          ["egg", "milk", "wool", "pork", "duck_egg", "feather", "leather", "manure"], "product",
+          "phase5/05_animal_products/animal_products_items.png")
+    icons("06_animal_food_and_supplies/animal_food_supplies.png", 30,
+          ["chicken", "cattle", "hay", "pig", "salt", "trough"], "feed",
+          "phase5/06_animal_food_and_supplies/animal_food_supplies.png")
 
 
 if __name__ == "__main__":

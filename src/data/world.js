@@ -53,7 +53,7 @@ export const OBJECTS = [
     interact: 'tool_shed', interactPoint: [26.0, 10.1] },
   { id: 'market_stall', building: 'market_stall', sprite: 'building.market_stall', x: 30.4, y: 10.9, w: 4.2, collider: [-1.95, -1.9, 1.95, -0.25],
     interact: 'market', interactPoint: [30.4, 11.2] },
-  { id: 'village_sign', sprite: 'building.signpost', x: 32.4, y: 13.2, w: 1.3, collider: [-0.15, -0.3, 0.15, 0], interact: 'village_sign' },
+  { id: 'village_sign', sprite: 'building.signpost', x: 32.6, y: 12.5, w: 1.3, collider: [-0.15, -0.3, 0.15, 0], interact: 'village_sign' },
   { id: 'road_block', sprite: 'foliage.fallen_log', x: 34.3, y: 12.3, w: 2.0, collider: [-1, -0.8, 1, 0], interact: 'road_block' },
   { id: 'garden_sign', sprite: 'building.signpost', x: 10.9, y: 17.6, w: 1.2, collider: [-0.15, -0.3, 0.15, 0], interact: 'garden_sign' },
   { id: 'bridge', sprite: 'building.wooden_bridge', x: 17.9, y: 24.95, w: 2.75, ground: true },
@@ -79,21 +79,23 @@ export const SCENERY = [
   ['foliage.tree_pine', 35.0, 8.4, 2.4, 0.3], ['foliage.tree_oak', 35.2, 15.6, 3.0, 0.35],
   ['foliage.tree_autumn', 34.6, 19.0, 2.7, 0.3], ['foliage.tree_pine', 35.2, 22.2, 2.4, 0.3],
   // middle meadow
-  ['foliage.tree_oak', 13.6, 17.4, 3.0, 0.35], ['foliage.tree_blossom', 24.2, 16.4, 2.6, 0.3],
-  ['foliage.tree_pine', 28.4, 18.6, 2.4, 0.3], ['foliage.tree_oak', 31.4, 16.0, 3.0, 0.35],
-  ['foliage.tree_birch', 21.8, 20.6, 2.5, 0.3], ['foliage.tree_autumn', 12.4, 21.6, 2.6, 0.3],
+  
+  
+  ['foliage.tree_autumn', 12.4, 21.6, 2.6, 0.3],
   // south of creek
   ['foliage.tree_pine', 4.0, 27.4, 2.4, 0], ['foliage.tree_oak', 8.0, 27.8, 3.0, 0],
   ['foliage.tree_oak', 13.0, 27.6, 3.0, 0.35], ['foliage.tree_pine', 22.4, 27.4, 2.4, 0.3],
   ['foliage.tree_oak', 27.0, 27.9, 3.0, 0], ['foliage.tree_birch', 31.4, 27.4, 2.5, 0],
   // bushes, rocks and props
-  ['foliage.bush_berries', 14.3, 12.9, 1.5, 0.45], ['foliage.bush_flowering', 21.0, 12.9, 1.5, 0.45],
-  ['foliage.bush_yellow_flowers', 23.2, 14.6, 1.4, 0.4], ['foliage.bush_white_flowers', 3.0, 12.6, 1.4, 0.4],
-  ['foliage.bush_green', 19.6, 18.0, 1.5, 0.45], ['foliage.bush_green', 33.0, 14.8, 1.4, 0.4],
-  ['foliage.rock_mossy', 25.4, 21.0, 1.7, 0.5], ['foliage.rock_cluster', 9.4, 22.0, 1.7, 0.5],
-  ['foliage.rock_small', 15.2, 21.4, 1.2, 0.35], ['foliage.rock_small', 29.6, 13.6, 1.1, 0.3],
-  ['foliage.tree_stump', 11.6, 19.6, 1.3, 0.4], ['foliage.tree_stump', 27.0, 14.4, 1.3, 0.4],
-  ['foliage.fallen_log', 31.0, 21.6, 2.1, 0.0],
+  ['foliage.bush_berries', 14.3, 12.9, 1.5, 0.45], ['foliage.bush_flowering', 19.5, 12.9, 1.5, 0.45],
+  ['foliage.bush_white_flowers', 3.0, 12.6, 1.4, 0.4],
+  ['foliage.bush_green', 19.6, 18.0, 1.5, 0.45], ['foliage.bush_green', 33.9, 14.8, 1.4, 0.4],
+  ['foliage.rock_cluster', 9.4, 22.0, 1.7, 0.5],
+  ['foliage.rock_small', 15.2, 21.4, 1.2, 0.35],
+  ['foliage.tree_stump', 11.6, 19.6, 1.3, 0.4],
+  ['foliage.fallen_log', 31.0, 21.8, 2.1, 0.0],
+  ['foliage.tree_oak', 24.6, 22.4, 3.0, 0.35], ['foliage.tree_birch', 28.6, 22.5, 2.5, 0.3],
+  ['foliage.tree_pine', 33.6, 22.0, 2.4, 0.3], ['foliage.tree_blossom', 19.9, 21.8, 2.5, 0.3],
   ['terrain2.barrel', 20.6, 8.6, 0.9, 0.3], ['terrain2.wooden_crate', 28.0, 10.7, 0.9, 0.3],
   ['terrain2.wooden_crate', 14.4, 8.2, 0.85, 0.3],
 ];

@@ -243,7 +243,7 @@ async function main() {
   await page.click('[data-place="storage_shed"]');
   await page.waitForTimeout(100);
   check(await page.isVisible('#btn-cancel'), 'placement mode active');
-  await route([[22.0, 11.6], [22.0, 15.2]]);
+  await route([[22.0, 11.6], [15.4, 11.6], [15.4, 15.6]]);
   await face('down');
   await page.waitForTimeout(100);
   check((await prompt()).includes('Place Storage Shed'), 'valid spot for the storage shed');
@@ -257,13 +257,13 @@ async function main() {
   await page.keyboard.up('ArrowDown');
   check((await pos()).y < s.placed[0].y - 1.2, 'construction site blocks the player');
   // decoration
-  await route([[22.0, 11.6], [22.4, 11.6], [22.4, 10.3]]);
+  await route([[15.4, 11.6], [22.4, 11.6], [22.4, 10.3]]);
   await face('up');
   await act();
   await page.click('.tab:nth-child(2)');
   await page.waitForTimeout(400);
   await page.click('[data-place="scarecrow"]');
-  await route([[22.4, 11.6], [26.0, 11.6], [26.0, 15.2]]);
+  await route([[22.4, 11.6], [17.6, 11.6], [17.6, 18.6], [16.0, 18.6]]);
   await face('down');
   await page.waitForTimeout(100);
   await act();
@@ -272,7 +272,7 @@ async function main() {
   await shot('construction');
 
   // sleep inside the cottage: builders finish overnight
-  await route([[26.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
+  await route([[17.6, 18.6], [17.6, 8.75]]);
   await sleepInCottage(async () => {
     await shot('interior');
     s = await state();
@@ -284,7 +284,7 @@ async function main() {
   });
 
   // use the storage shed
-  await route([[17.9, 11.6], [17.9, 18.8], [22.0, 18.8]]);
+  await route([[17.9, 11.6], [17.9, 17.9], [15.4, 17.9]]);
   await face('up');
   check((await prompt()).includes('storage shed'), 'storage shed prompt');
   await act();
@@ -297,6 +297,179 @@ async function main() {
   await shot('storage');
   await page.keyboard.press('Escape');
 
+  // ---------------- Phase 5: livestock
+  // Expand the garden (the real flow) to finish "Room to Grow", which unlocks the coop.
+  await route([[11.45, 17.65]]);
+  await face('left');
+  check((await prompt()).includes('Expand'), 'garden sign offers the expansion');
+  await act();
+  await page.waitForSelector('.upgrade');
+  await page.click('[data-upgrade="gardenExpansion"]');
+  await until('window.farmstead.state.unlocks.gardenExpansion === true');
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Enter');
+  await until('window.farmstead.state.quests.q_room_to_grow.status === "claimed"');
+  check((await state()).quests.q_coop.status === 'active', 'room to grow done: "A Home for Hens" unlocked');
+
+  // Build a chicken coop in the east meadow with the planner.
+  await route([[12.1, 17.65], [12.1, 11.6], [22.4, 11.6], [22.4, 10.3]]);
+  await face('up');
+  await act();
+  await page.waitForSelector('.planner');
+  await page.click('.tab:nth-child(2)');
+  await page.waitForTimeout(400);
+  check(await page.isEnabled('[data-place="chicken_coop"]'), 'coop can be built once the garden is expanded');
+  check(!(await page.isEnabled('[data-place="barn"]')), 'barn is still locked (needs Egg Money)');
+  await page.click('[data-place="chicken_coop"]');
+  await route([[22.4, 11.6], [24.0, 11.6], [24.0, 12.9]]);
+  await face('down');
+  await page.waitForTimeout(150);
+  check((await prompt()).includes('Place Chicken Coop'), 'valid spot for the coop and its pasture');
+  await shot('placing-coop');
+  await act();
+  s = await state();
+  const coopUid = s.placed.find((p) => p.type === 'chicken_coop').uid;
+  check(s.placed.find((p) => p.uid === coopUid).level === 0, 'coop under construction');
+  await route([[24.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
+  await sleepInCottage(async () => {
+    s = await state();
+    check(s.placed.find((p) => p.uid === coopUid).level === 1, 'coop finished overnight');
+    check(s.quests.q_coop.status === 'complete', '"A Home for Hens" complete');
+    await page.keyboard.press('Enter');
+    await until('window.farmstead.state.quests.q_coop.status === "claimed"');
+  });
+
+  // Chicken feed is for sale now that a coop exists.
+  await route([[17.9, 11.6], [30.4, 11.6], [30.4, 11.3]]);
+  await face('up');
+  await act();
+  await page.waitForSelector('.shop');
+  await page.click('.tab:nth-child(2)');
+  await page.waitForTimeout(200);
+  check(await page.isEnabled('[data-buy5="chicken_feed"]'), 'market now sells chicken feed');
+  check(await page.isDisabled('[data-buy="hay"]'), 'hay is still locked (no barn yet)');
+  await page.click('[data-buy5="chicken_feed"]');
+  await until('window.farmstead.state.inventory.chicken_feed === 5');
+  await page.keyboard.press('Escape');
+
+  // Walk through the pasture gate, open the coop and buy two hens.
+  const toCoop = [[20.5, 11.6], [20.5, 21.0], [24.0, 21.0], [24.0, 17.9]];
+  await route(toCoop);
+  await face('up');
+  check((await prompt()).includes('Open chicken coop'), 'coop prompt inside the pasture');
+  await act();
+  await page.waitForSelector('.livestock');
+  await shot('coop-panel-empty');
+  await page.click('[data-buy-animal="chicken"]');
+  await page.waitForTimeout(450);
+  await page.click('[data-buy-animal="chicken"]');
+  await until('window.farmstead.state.animals.length === 2');
+  s = await state();
+  check(s.animals.length === 2 && s.coins < 1500, 'two hens bought');
+  check(s.quests.q_first_hens.progress[0] === 2, '"First Hens": buying counted');
+  await page.keyboard.press('Escape');
+
+  // Hunger: after a few hours the hens are hungry; feed them in the world.
+  await page.evaluate(() => { const st = window.farmstead.state; st.animals.forEach((a) => { a.fedUntil = st.time - 1; }); });
+  await page.evaluate(() => {
+    const g = window.farmstead; const ac = g.actors.list()[0];
+    g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
+  });
+  await page.waitForTimeout(250);
+  check((await prompt()).includes('Feed'), 'a hungry hen offers feeding');
+  await shot('hungry-hens');
+  await act();
+  s = await state();
+  check(s.animals.every((a) => a.fedUntil > s.time), 'both hens fed with one tap');
+  check(s.inventory.chicken_feed === 3, 'two feed used');
+  check(s.quests.q_first_hens.status === 'complete', '"First Hens" complete');
+  await page.keyboard.press('Enter');
+  await until('window.farmstead.state.quests.q_first_hens.status === "claimed"');
+  check((await state()).inventory.chicken_feed === 9, 'quest reward: 6 chicken feed');
+
+  // A night's sleep: fed hens lay eggs.
+  await route([[24.0, 18.8], [24.0, 21.0], [20.5, 21.0], [20.5, 11.6], [17.6, 11.6], [17.6, 8.75]]);
+  await sleepInCottage(async () => {
+    s = await state();
+    check(s.animals.every((a) => a.stock >= 1), 'each hen laid at least one egg overnight');
+  });
+
+  // Collect from a hen in the world, then the rest from the coop menu.
+  await route([[17.9, 11.6], ...toCoop.slice(0, 3), [24.0, 18.8]]);
+  await page.evaluate(() => {
+    const g = window.farmstead; const ac = g.actors.list()[0];
+    g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
+  });
+  await page.waitForTimeout(250);
+  const promptText = await prompt();
+  check(/Collect \d+ eggs? from/.test(promptText), `a hen with eggs offers collecting ("${promptText.trim().slice(0, 40)}…")`);
+  await shot('eggs-ready');
+  const eggsBefore = (await state()).inventory.egg || 0;
+  await act();
+  const afterOne = (await state()).inventory.egg || 0;
+  check(afterOne > eggsBefore, 'eggs collected from one hen');
+  await page.evaluate(() => { const g = window.farmstead; g.state.player.x = 24.0 * 64; g.state.player.y = 17.9 * 64; g.state.player.facing = 'up'; });
+  await page.waitForTimeout(250);
+  await act();
+  await page.waitForSelector('.livestock');
+  await page.click('[data-collect-all]');
+  await page.waitForTimeout(300);
+  s = await state();
+  check(s.animals.every((a) => a.stock === 0), 'collect-all emptied both hens');
+  const eggs = s.inventory.egg;
+  check(eggs >= 4, `collected ${eggs} eggs in total`);
+  await page.keyboard.press('Escape');
+
+  // Sell the eggs at the market.
+  await route([[24.0, 18.8], [24.0, 21.0], [20.5, 21.0], [20.5, 11.6], [30.4, 11.6], [30.4, 11.3]]);
+  await face('up');
+  await act();
+  await page.waitForSelector('.shop');
+  const coinsBefore = (await state()).coins;
+  await page.click('[data-sell-all="egg"]');
+  await until(`window.farmstead.state.coins === ${coinsBefore + eggs * 12}`);
+  check((await state()).coins === coinsBefore + eggs * 12, `sold ${eggs} eggs for ${eggs * 12} coins`);
+  await page.keyboard.press('Escape');
+  s = await state();
+  check(s.quests.q_egg_money.status === 'complete', '"Egg Money" complete');
+  await page.keyboard.press('Enter');
+  await until('window.farmstead.state.quests.q_egg_money.status === "claimed"');
+
+  // Barn next to the coop, then a cow.
+  await route([[30.4, 11.6], [22.4, 11.6], [22.4, 10.3]]);
+  await face('up');
+  await act();
+  await page.waitForSelector('.planner');
+  await page.click('.tab:nth-child(2)');
+  await page.waitForTimeout(400);
+  check(await page.isEnabled('[data-place="barn"]'), 'barn unlocked by Egg Money');
+  await page.click('[data-place="barn"]');
+  await route([[22.4, 11.6], [30.0, 11.6], [30.0, 12.9]]);
+  await face('down');
+  await page.waitForTimeout(150);
+  check((await prompt()).includes('Place Barn'), 'valid spot for the barn beside the coop');
+  await act();
+  await route([[30.0, 11.6], [17.6, 11.6], [17.6, 8.75]]);
+  await sleepInCottage(async () => {
+    s = await state();
+    check(s.placed.find((p) => p.type === 'barn').level === 1, 'barn finished overnight');
+    await page.keyboard.press('Enter');
+    await until('window.farmstead.state.quests.q_barn.status === "claimed"');
+  });
+  await route([[17.9, 11.6], [20.5, 11.6], [20.5, 21.0], [30.0, 21.0], [30.0, 17.8]]);
+  await face('up');
+  check((await prompt()).includes('Open barn'), 'barn prompt inside its pasture');
+  await act();
+  await page.waitForSelector('.livestock');
+  check(await page.isDisabled('[data-buy-animal="chicken"]').catch(() => true), 'barn does not sell chickens');
+  await page.click('[data-buy-animal="cow"]');
+  await until('window.farmstead.state.animals.some((a) => a.species === "cow")');
+  await shot('barn-panel');
+  await page.keyboard.press('Escape');
+  s = await state();
+  check(s.animals.filter((a) => a.species === 'cow').length === 1 && s.quests.q_fresh_milk.progress[0] === 1, 'cow bought; "Fresh Milk" counts it');
+  await shot('livestock-farm');
+
   // manual save, reload, continue
   await page.keyboard.press('Escape');
   await page.click('[data-action="save"]');
@@ -304,7 +477,8 @@ async function main() {
   const before = await state();
   await page.reload();
   await page.waitForSelector('#title:not([hidden])');
-  check((await page.textContent('#save-info')).includes('Day 3'), 'title shows saved game');
+  const savedDay = Math.floor(before.time / 1440) + 1;
+  check((await page.textContent('#save-info')).includes(`Day ${savedDay}`), `title shows the saved game (Day ${savedDay})`);
   await page.click('#btn-continue');
   await page.waitForTimeout(300);
   const after = await state();
@@ -315,6 +489,10 @@ async function main() {
   check(Math.abs(after.player.x - before.player.x) < 1, 'player position restored');
   check(JSON.stringify(after.buildings) === JSON.stringify(before.buildings), 'building levels restored');
   check(JSON.stringify(after.placed) === JSON.stringify(before.placed), 'placed buildings and shed contents restored');
+  // identity and stored values exactly; happiness/progress keep ticking after Continue, so allow drift
+  const fixed = (list) => JSON.stringify(list.map(({ uid, species, home, name, fedUntil, stock, petAt }) => ({ uid, species, home, name, fedUntil, stock, petAt })));
+  const drift = after.animals.every((a, i) => Math.abs(a.happiness - before.animals[i].happiness) < 2 && Math.abs(a.progress - before.animals[i].progress) < 30);
+  check(after.animals.length === 3 && fixed(after.animals) === fixed(before.animals) && drift, 'livestock restored (names, homes, feeding, products)');
   await shot('after-reload');
 
   // night lighting check

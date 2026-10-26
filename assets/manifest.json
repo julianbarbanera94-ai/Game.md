@@ -1,6 +1,438 @@
 {
   "version": 1,
   "assets": {
+    "animal.chicken_d0": {
+      "file": "assets/derived/phase5/chicken_d0.png",
+      "width": 99,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.chicken_d1": {
+      "file": "assets/derived/phase5/chicken_d1.png",
+      "width": 96,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.chicken_d2": {
+      "file": "assets/derived/phase5/chicken_d2.png",
+      "width": 102,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.chicken_d3": {
+      "file": "assets/derived/phase5/chicken_d3.png",
+      "width": 96,
+      "height": 153,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.chicken_d4": {
+      "file": "assets/derived/phase5/chicken_d4.png",
+      "width": 96,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.chicken_u0": {
+      "file": "assets/derived/phase5/chicken_u0.png",
+      "width": 93,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.chicken_u1": {
+      "file": "assets/derived/phase5/chicken_u1.png",
+      "width": 108,
+      "height": 159,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.chicken_u2": {
+      "file": "assets/derived/phase5/chicken_u2.png",
+      "width": 108,
+      "height": 159,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.chicken_u3": {
+      "file": "assets/derived/phase5/chicken_u3.png",
+      "width": 105,
+      "height": 156,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.cow_d0": {
+      "file": "assets/derived/phase5/cow_d0.png",
+      "width": 141,
+      "height": 234,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.cow_d1": {
+      "file": "assets/derived/phase5/cow_d1.png",
+      "width": 123,
+      "height": 231,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.cow_d2": {
+      "file": "assets/derived/phase5/cow_d2.png",
+      "width": 126,
+      "height": 228,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.cow_d3": {
+      "file": "assets/derived/phase5/cow_d3.png",
+      "width": 120,
+      "height": 228,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.cow_d4": {
+      "file": "assets/derived/phase5/cow_d4.png",
+      "width": 123,
+      "height": 228,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.cow_u0": {
+      "file": "assets/derived/phase5/cow_u0.png",
+      "width": 114,
+      "height": 231,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.cow_u1": {
+      "file": "assets/derived/phase5/cow_u1.png",
+      "width": 117,
+      "height": 219,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.cow_u2": {
+      "file": "assets/derived/phase5/cow_u2.png",
+      "width": 123,
+      "height": 225,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.cow_u3": {
+      "file": "assets/derived/phase5/cow_u3.png",
+      "width": 114,
+      "height": 231,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.duck_d0": {
+      "file": "assets/derived/phase5/duck_d0.png",
+      "width": 114,
+      "height": 198,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.duck_d1": {
+      "file": "assets/derived/phase5/duck_d1.png",
+      "width": 123,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.duck_d2": {
+      "file": "assets/derived/phase5/duck_d2.png",
+      "width": 114,
+      "height": 198,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.duck_d3": {
+      "file": "assets/derived/phase5/duck_d3.png",
+      "width": 114,
+      "height": 198,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.duck_d4": {
+      "file": "assets/derived/phase5/duck_d4.png",
+      "width": 111,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.duck_u0": {
+      "file": "assets/derived/phase5/duck_u0.png",
+      "width": 105,
+      "height": 195,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.duck_u1": {
+      "file": "assets/derived/phase5/duck_u1.png",
+      "width": 108,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.duck_u2": {
+      "file": "assets/derived/phase5/duck_u2.png",
+      "width": 108,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.duck_u3": {
+      "file": "assets/derived/phase5/duck_u3.png",
+      "width": 102,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.horse_d0": {
+      "file": "assets/derived/phase5/horse_d0.png",
+      "width": 126,
+      "height": 327,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.horse_d1": {
+      "file": "assets/derived/phase5/horse_d1.png",
+      "width": 129,
+      "height": 324,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.horse_d2": {
+      "file": "assets/derived/phase5/horse_d2.png",
+      "width": 120,
+      "height": 312,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.horse_d3": {
+      "file": "assets/derived/phase5/horse_d3.png",
+      "width": 117,
+      "height": 324,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.horse_d4": {
+      "file": "assets/derived/phase5/horse_d4.png",
+      "width": 114,
+      "height": 318,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.horse_u0": {
+      "file": "assets/derived/phase5/horse_u0.png",
+      "width": 114,
+      "height": 300,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.horse_u1": {
+      "file": "assets/derived/phase5/horse_u1.png",
+      "width": 132,
+      "height": 291,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.horse_u2": {
+      "file": "assets/derived/phase5/horse_u2.png",
+      "width": 159,
+      "height": 276,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.horse_u3": {
+      "file": "assets/derived/phase5/horse_u3.png",
+      "width": 123,
+      "height": 282,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.pig_d0": {
+      "file": "assets/derived/phase5/pig_d0.png",
+      "width": 126,
+      "height": 207,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.pig_d1": {
+      "file": "assets/derived/phase5/pig_d1.png",
+      "width": 120,
+      "height": 213,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.pig_d2": {
+      "file": "assets/derived/phase5/pig_d2.png",
+      "width": 114,
+      "height": 213,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.pig_d3": {
+      "file": "assets/derived/phase5/pig_d3.png",
+      "width": 135,
+      "height": 207,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.pig_d4": {
+      "file": "assets/derived/phase5/pig_d4.png",
+      "width": 117,
+      "height": 207,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.pig_u0": {
+      "file": "assets/derived/phase5/pig_u0.png",
+      "width": 114,
+      "height": 201,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.pig_u1": {
+      "file": "assets/derived/phase5/pig_u1.png",
+      "width": 105,
+      "height": 192,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.pig_u2": {
+      "file": "assets/derived/phase5/pig_u2.png",
+      "width": 108,
+      "height": 192,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.pig_u3": {
+      "file": "assets/derived/phase5/pig_u3.png",
+      "width": 108,
+      "height": 192,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.sheep_d0": {
+      "file": "assets/derived/phase5/sheep_d0.png",
+      "width": 135,
+      "height": 174,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.sheep_d1": {
+      "file": "assets/derived/phase5/sheep_d1.png",
+      "width": 123,
+      "height": 174,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.sheep_d2": {
+      "file": "assets/derived/phase5/sheep_d2.png",
+      "width": 132,
+      "height": 171,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.sheep_d3": {
+      "file": "assets/derived/phase5/sheep_d3.png",
+      "width": 111,
+      "height": 165,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.sheep_d4": {
+      "file": "assets/derived/phase5/sheep_d4.png",
+      "width": 120,
+      "height": 171,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces the camera."
+    },
+    "animal.sheep_u0": {
+      "file": "assets/derived/phase5/sheep_u0.png",
+      "width": 105,
+      "height": 183,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.sheep_u1": {
+      "file": "assets/derived/phase5/sheep_u1.png",
+      "width": 120,
+      "height": 177,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.sheep_u2": {
+      "file": "assets/derived/phase5/sheep_u2.png",
+      "width": 111,
+      "height": 180,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
+    "animal.sheep_u3": {
+      "file": "assets/derived/phase5/sheep_u3.png",
+      "width": 120,
+      "height": 180,
+      "source": "phase5/01_animal_idle_and_movement/animal_idle_movement_reference.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites. Faces away from the camera."
+    },
     "audio.coin_pickup": {
       "file": "assets/phase1/audio/coin_pickup.wav",
       "source": "phase1/assets/10_audio",
@@ -132,6 +564,54 @@
       "source": "phase1/assets/03_buildings (v2 detailed)",
       "status": "approved",
       "notes": ""
+    },
+    "building4.barn_l1": {
+      "file": "assets/derived/phase4/barn_l1.png",
+      "width": 236,
+      "height": 276,
+      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+    },
+    "building4.barn_l2": {
+      "file": "assets/derived/phase4/barn_l2.png",
+      "width": 310,
+      "height": 336,
+      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+    },
+    "building4.barn_l3": {
+      "file": "assets/derived/phase4/barn_l3.png",
+      "width": 430,
+      "height": 338,
+      "source": "phase4/01_building_upgrades/barn_livestock_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+    },
+    "building4.chicken_coop_l1": {
+      "file": "assets/derived/phase4/chicken_coop_l1.png",
+      "width": 202,
+      "height": 278,
+      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+    },
+    "building4.chicken_coop_l2": {
+      "file": "assets/derived/phase4/chicken_coop_l2.png",
+      "width": 300,
+      "height": 306,
+      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
+    },
+    "building4.chicken_coop_l3": {
+      "file": "assets/derived/phase4/chicken_coop_l3.png",
+      "width": 422,
+      "height": 340,
+      "source": "phase4/01_building_upgrades/chicken_coop_levels_1_to_3.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: isolated from a Phase 4 reference panel (low resolution, keyed background). Replace with a properly exported production sprite. Upscaled 2x (Lanczos + unsharp)."
     },
     "building4.construction_stage1": {
       "file": "assets/derived/phase4/construction_stage1.png",
@@ -453,6 +933,54 @@
       "status": "approved",
       "notes": "Cleaned 1231 magenta-spill edge pixels."
     },
+    "icon.feed_cattle": {
+      "file": "assets/derived/phase5/feed_cattle.png",
+      "width": 180,
+      "height": 189,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.feed_chicken": {
+      "file": "assets/derived/phase5/feed_chicken.png",
+      "width": 183,
+      "height": 180,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.feed_hay": {
+      "file": "assets/derived/phase5/feed_hay.png",
+      "width": 186,
+      "height": 204,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.feed_pig": {
+      "file": "assets/derived/phase5/feed_pig.png",
+      "width": 186,
+      "height": 204,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.feed_salt": {
+      "file": "assets/derived/phase5/feed_salt.png",
+      "width": 162,
+      "height": 162,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.feed_trough": {
+      "file": "assets/derived/phase5/feed_trough.png",
+      "width": 240,
+      "height": 189,
+      "source": "phase5/06_animal_food_and_supplies/animal_food_supplies.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
     "icon.produce_carrot": {
       "file": "assets/derived/phase3/icons/produce_carrot.png",
       "width": 65,
@@ -516,6 +1044,70 @@
       "source": "phase3/01_crop_growth_reference/crop_growth_stages_all.png",
       "status": "temporary-reference-derived",
       "notes": "TEMPORARY: sliced from a Phase 3 reference board (~80px cells, keyed background). Replace with properly exported production sprites."
+    },
+    "icon.product_duck_egg": {
+      "file": "assets/derived/phase5/product_duck_egg.png",
+      "width": 111,
+      "height": 159,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_egg": {
+      "file": "assets/derived/phase5/product_egg.png",
+      "width": 114,
+      "height": 156,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_feather": {
+      "file": "assets/derived/phase5/product_feather.png",
+      "width": 120,
+      "height": 174,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_leather": {
+      "file": "assets/derived/phase5/product_leather.png",
+      "width": 138,
+      "height": 153,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_manure": {
+      "file": "assets/derived/phase5/product_manure.png",
+      "width": 147,
+      "height": 186,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_milk": {
+      "file": "assets/derived/phase5/product_milk.png",
+      "width": 111,
+      "height": 192,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_pork": {
+      "file": "assets/derived/phase5/product_pork.png",
+      "width": 144,
+      "height": 156,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
+    },
+    "icon.product_wool": {
+      "file": "assets/derived/phase5/product_wool.png",
+      "width": 132,
+      "height": 177,
+      "source": "phase5/05_animal_products/animal_products_items.png",
+      "status": "temporary-reference-derived",
+      "notes": "TEMPORARY: cut from a Phase 5 reference panel (animals ~40 px tall, enlarged 3x). Replace with production sprites."
     },
     "icon.seed_carrot": {
       "file": "assets/derived/phase3/icons/seed_carrot.png",

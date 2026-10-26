@@ -54,6 +54,38 @@ export const BUILDINGS = {
       { sprite: 'building4.storage_shed_l3', w: 3.6, cost: 600, buildMinutes: 360, requires: { building: ['house', 3] }, effect: 'Stores 36 kinds of items.' },
     ],
   },
+  // Livestock buildings (Phase 5). Sprites are Phase 4 panel cut-outs drawn at a
+  // scale where the hens baked into the art match the real chicken sprites.
+  // footprint = collision [w, h] in tiles above the anchor, per level.
+  // pasture = fenced roaming area below the anchor (tiles), with a gate gap.
+  chicken_coop: {
+    id: 'chicken_coop',
+    name: 'Chicken Coop',
+    placeable: true,
+    livestock: true,
+    capacity: [4, 8, 12],
+    pasture: { w: 5.4, h: 3.2, gate: 1.4 },
+    footprint: [2.2, 2.6],
+    levels: [
+      { sprite: 'building4.chicken_coop_l1', w: 2.6, footprint: [2.2, 2.6], cost: 350, buildMinutes: 480, requires: { quest: 'q_room_to_grow' }, effect: 'Houses up to 4 chickens.' },
+      { sprite: 'building4.chicken_coop_l2', w: 3.9, footprint: [3.4, 3.0], cost: 400, buildMinutes: 360, requires: { quest: 'q_egg_money' }, effect: 'Houses up to 8 chickens.' },
+      { sprite: 'building4.chicken_coop_l3', w: 5.4, footprint: [4.6, 3.3], cost: 900, buildMinutes: 480, requires: { building: ['house', 2] }, effect: 'Houses up to 12 chickens.' },
+    ],
+  },
+  barn: {
+    id: 'barn',
+    name: 'Barn',
+    placeable: true,
+    livestock: true,
+    capacity: [3, 6, 10],
+    pasture: { w: 6.0, h: 3.6, gate: 1.6 },
+    footprint: [2.6, 2.6],
+    levels: [
+      { sprite: 'building4.barn_l1', w: 3.0, footprint: [2.6, 2.6], cost: 800, buildMinutes: 600, requires: { quest: 'q_egg_money' }, effect: 'Houses up to 3 cows or sheep.' },
+      { sprite: 'building4.barn_l2', w: 4.0, footprint: [3.6, 3.2], cost: 700, buildMinutes: 480, requires: { quest: 'q_fresh_milk' }, effect: 'Houses up to 6 cows or sheep.' },
+      { sprite: 'building4.barn_l3', w: 5.5, footprint: [4.8, 3.2], cost: 1500, buildMinutes: 600, requires: { quest: 'q_woolly' }, effect: 'Houses up to 10 cows or sheep.' },
+    ],
+  },
 };
 
 // Purely decorative placeables (instant, no levels).

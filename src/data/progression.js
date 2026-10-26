@@ -11,6 +11,8 @@ export const SHOP_STOCK = [
   { item: 'seed_tomato', requires: { quest: 'q_market_day' } },
   { item: 'seed_strawberry', requires: { unlock: 'gardenExpansion' } },
   { item: 'seed_pumpkin', requires: { unlock: 'gardenExpansion' } },
+  { item: 'chicken_feed', requires: { placed: 'chicken_coop' } },
+  { item: 'hay', requires: { placed: 'barn' } },
 ];
 
 export const UPGRADES = {

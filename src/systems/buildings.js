@@ -7,6 +7,7 @@ import { CROPS } from '../data/crops.js';
 import { WATER_DURATION } from '../data/crops.js';
 import { NULL_BUS } from '../core/events.js';
 import { isRequirementMet, requirementText } from './economy.js';
+import { pastureOf } from './pasture.js';
 import { isPlotAvailable } from './farming.js';
 
 // Building levels, construction jobs, placement and level effects.
@@ -82,9 +83,29 @@ export function placeableInfo(state, type) {
   return { state: 'available', cost: first.cost, def, kind: 'building' };
 }
 
-export function footprintRect(type, x, y) {
-  const fp = (DECORATIONS[type] || BUILDINGS[type]).footprint;
+// Collision footprint (tiles) of a decoration, or of a building at `level`.
+export function footprintSize(type, level = 1) {
+  if (DECORATIONS[type]) return DECORATIONS[type].footprint;
+  const def = BUILDINGS[type];
+  return def.levels[Math.max(1, level) - 1].footprint || def.footprint;
+}
+
+export function footprintRect(type, x, y, level = 1) {
+  const fp = footprintSize(type, level);
   return { x0: x - fp[0] / 2, y0: y - fp[1], x1: x + fp[0] / 2, y1: y };
+}
+
+// Everything a placed object reserves: the building at its largest size plus,
+// for livestock buildings, the whole pasture. Used to validate placement.
+export function areaRect(type, x, y) {
+  const def = BUILDINGS[type];
+  const base = footprintRect(type, x, y, def ? def.levels.length : 1);
+  const g = pastureOf(type, x, y);
+  if (!g) return base;
+  return {
+    x0: Math.min(base.x0, g.rect.x0), y0: Math.min(base.y0, g.rect.y0),
+    x1: Math.max(base.x1, g.rect.x1), y1: Math.max(base.y1, g.rect.y1),
+  };
 }
 
 // Place a building/decoration at tile coords (x, y = bottom-centre anchor).
@@ -92,7 +113,7 @@ export function footprintRect(type, x, y) {
 export function place(state, type, x, y, isFree, bus = NULL_BUS) {
   const info = placeableInfo(state, type);
   if (info.state !== 'available') return { ok: false, reason: info.reason || 'Cannot build that' };
-  if (!isFree(footprintRect(type, x, y))) return { ok: false, reason: "Can't build there" };
+  if (!isFree(areaRect(type, x, y))) return { ok: false, reason: "Can't build there" };
   state.coins -= info.cost;
   state.nextUid = (state.nextUid || 1) + 1;
   const rec = { uid: `p${state.nextUid}`, kind: info.kind, type, x: Math.round(x * 100) / 100, y: Math.round(y * 100) / 100 };

@@ -82,4 +82,73 @@ QUESTS.push(
   },
 );
 
+QUESTS.push(
+  {
+    id: 'q_coop',
+    title: 'A Home for Hens',
+    giver: 'Workbench',
+    description: 'Use the building planner to place a chicken coop and let the builders finish it.',
+    prereqs: ['q_room_to_grow'],
+    objectives: [{ type: 'constructed', id: 'chicken_coop', count: 1, label: 'Build a chicken coop' }],
+    reward: { coins: 50 },
+  },
+  {
+    id: 'q_first_hens',
+    title: 'First Hens',
+    giver: 'Chicken coop',
+    description: 'Open the coop, buy two chickens and feed them. Chicken feed is sold at the market.',
+    prereqs: ['q_coop'],
+    objectives: [
+      { type: 'buyAnimal', species: 'chicken', count: 2, label: 'Buy chickens' },
+      { type: 'feed', count: 2, label: 'Feed your animals' },
+    ],
+    reward: { items: { chicken_feed: 6 } },
+  },
+  {
+    id: 'q_egg_money',
+    title: 'Egg Money',
+    giver: 'Chicken coop',
+    description: 'Fed hens lay eggs over time. Collect them from the hens (or the coop menu) and sell them at the market.',
+    prereqs: ['q_first_hens'],
+    objectives: [
+      { type: 'collect', item: 'egg', count: 4, label: 'Collect eggs' },
+      { type: 'sell', category: 'animal', count: 4, label: 'Sell animal products' },
+    ],
+    reward: { coins: 60 },
+  },
+  {
+    id: 'q_barn',
+    title: 'Room for Cattle',
+    giver: 'Workbench',
+    description: 'Cows and sheep live in a barn. Place one with the building planner.',
+    prereqs: ['q_egg_money'],
+    objectives: [{ type: 'constructed', id: 'barn', count: 1, label: 'Build a barn' }],
+    reward: { coins: 100 },
+  },
+  {
+    id: 'q_fresh_milk',
+    title: 'Fresh Milk',
+    giver: 'Barn',
+    description: 'Buy a cow, keep it fed with hay and collect its milk.',
+    prereqs: ['q_barn'],
+    objectives: [
+      { type: 'buyAnimal', species: 'cow', count: 1, label: 'Buy a cow' },
+      { type: 'collect', item: 'milk', count: 2, label: 'Collect milk' },
+    ],
+    reward: { coins: 120 },
+  },
+  {
+    id: 'q_woolly',
+    title: 'Something Woolly',
+    giver: 'Barn',
+    description: 'A sheep needs hay too. Collect some wool.',
+    prereqs: ['q_fresh_milk'],
+    objectives: [
+      { type: 'buyAnimal', species: 'sheep', count: 1, label: 'Buy a sheep' },
+      { type: 'collect', item: 'wool', count: 2, label: 'Collect wool' },
+    ],
+    reward: { coins: 150 },
+  },
+);
+
 export const QUESTS_BY_ID = Object.fromEntries(QUESTS.map((q) => [q.id, q]));

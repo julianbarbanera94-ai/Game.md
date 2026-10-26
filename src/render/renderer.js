@@ -3,7 +3,12 @@ import { CREEK, PLOTS } from '../data/world.js';
 import { isPlotAvailable, isWet } from '../systems/farming.js';
 import { darkness, formatClock } from '../systems/time.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
-import { footprintRect, spriteFor } from '../systems/buildings.js';
+import { areaRect, spriteFor } from '../systems/buildings.js';
+import { pastureFence } from '../world/layout.js';
+import { pastureOf } from '../systems/pasture.js';
+import { SPECIES } from '../data/animals.js';
+import { isHungry } from '../systems/animals.js';
+import { animalFrame } from './animals.js';
 import { buildGround } from './terrain.js';
 import { playerFrame, plotSpriteKey, untilledVariant, wetVariant } from './sprites.js';
 
@@ -21,6 +26,7 @@ export class Renderer {
     this.ground = null;
     this.groundRes = 1;
     this.dpr = 1;
+    this.fenceCache = new Map();
   }
 
   resize(cssW, cssH, camera) {
@@ -60,6 +66,7 @@ export class Renderer {
     }
     this.drawWater(g, game.clockSeconds);
     this.drawPlots(g, game);
+    this.drawPastures(g, game);
 
     // y-sorted sprites
     const items = [];
@@ -70,9 +77,11 @@ export class Renderer {
       items.push(d);
     }
     items.push({ player: true, sortY: game.state.player.y });
+    for (const ac of game.actors.list()) items.push({ animal: ac, sortY: ac.y });
     items.sort((a, b) => a.sortY - b.sortY);
     for (const d of items) {
       if (d.player) this.drawPlayer(g, game);
+      else if (d.animal) this.drawAnimal(g, game, d.animal);
       else this.drawSprite(g, d);
     }
 
@@ -94,14 +103,103 @@ export class Renderer {
   }
 
   placedDrawables(state) {
-    return state.placed.map((p) => {
+    const out = [];
+    for (const p of state.placed) {
       const base = { uid: p.uid, x: p.x * TILE, y: p.y * TILE, sortY: p.y * TILE };
-      if (p.kind === 'building') return { ...base, building: p.type, w: TILE * 3, h: TILE * 3 };
+      if (p.kind === 'building') {
+        out.push({ ...base, building: p.type, w: TILE * 3, h: TILE * 3 });
+        if (p.level >= 1 && pastureOf(p.type, p.x, p.y)) {
+          const key = `${p.uid}:${p.x}:${p.y}`;
+          if (!this.fenceCache.has(key)) this.fenceCache.set(key, pastureFence(this.assets, p.type, p.x, p.y));
+          out.push(...this.fenceCache.get(key));
+        }
+        continue;
+      }
       const def = DECORATIONS[p.type];
       const e = this.assets.entry(def.sprite);
       const w = def.w * TILE;
-      return { ...base, sprite: def.sprite, w, h: e ? (w * e.height) / e.width : w };
-    });
+      out.push({ ...base, sprite: def.sprite, w, h: e ? (w * e.height) / e.width : w });
+    }
+    return out;
+  }
+
+  // Trodden-earth patch inside each finished pasture.
+  drawPastures(g, game) {
+    for (const p of game.state.placed) {
+      if (p.kind !== 'building' || p.level < 1) continue;
+      const geo = pastureOf(p.type, p.x, p.y);
+      if (!geo) continue;
+      const { rect } = geo;
+      const x = rect.x0 * TILE, y = rect.y0 * TILE, w = (rect.x1 - rect.x0) * TILE, h = (rect.y1 - rect.y0) * TILE;
+      g.save();
+      const grad = g.createRadialGradient(x + w / 2, y + h * 0.45, 20, x + w / 2, y + h * 0.5, w * 0.6);
+      grad.addColorStop(0, 'rgba(176,140,78,0.42)');
+      grad.addColorStop(1, 'rgba(176,140,78,0.12)');
+      g.fillStyle = grad;
+      g.beginPath();
+      g.roundRect(x, y, w, h, 18);
+      g.fill();
+      g.restore();
+    }
+  }
+
+  drawAnimal(g, game, ac) {
+    const a = game.state.animals.find((x) => x.uid === ac.uid);
+    if (!a) return;
+    const sp = SPECIES[ac.species];
+    const f = animalFrame(ac.species, ac);
+    const img = this.assets.get(f.key);
+    if (!img) return;
+    const h = sp.drawHeight;
+    const w = (h * img.width) / img.height;
+    const hop = ac.moving ? -Math.abs(Math.sin(ac.t * 9)) * (ac.species === 'chicken' ? 3 : 1.6) : Math.sin(ac.t * 1.6) * 0.5;
+    g.save();
+    g.fillStyle = 'rgba(25,35,10,0.22)';
+    g.beginPath();
+    g.ellipse(ac.x, ac.y - 1, w * 0.36, h * 0.09, 0, 0, Math.PI * 2);
+    g.fill();
+    g.translate(ac.x, ac.y + hop);
+    if (f.flip) g.scale(-1, 1);
+    g.drawImage(img, -w / 2, -h, w, h);
+    g.restore();
+    // speech bubble: finished product, or hungry
+    const ready = a.stock > 0;
+    const hungry = isHungry(game.state, a);
+    if (ready || hungry) {
+      const icon = this.assets.get(ready ? `icon.product_${sp.product}` : `icon.feed_${sp.feed === 'hay' ? 'hay' : 'chicken'}`);
+      const bob = Math.sin(game.clockSeconds * 3 + ac.t) * 2;
+      const bx = ac.x, by = ac.y - h - 16 + bob;
+      g.save();
+      g.fillStyle = 'rgba(255,250,235,0.96)';
+      g.strokeStyle = ready ? '#d9a431' : '#c8602d';
+      g.lineWidth = 2;
+      g.beginPath();
+      g.arc(bx, by, 13, 0, Math.PI * 2);
+      g.fill();
+      g.stroke();
+      g.beginPath();
+      g.moveTo(bx - 4, by + 11);
+      g.lineTo(bx, by + 18);
+      g.lineTo(bx + 4, by + 11);
+      g.fill();
+      if (icon) {
+        const s = 19;
+        const iw = icon.width >= icon.height ? s : (s * icon.width) / icon.height;
+        const ih = icon.width >= icon.height ? (s * icon.height) / icon.width : s;
+        g.drawImage(icon, bx - iw / 2, by - ih / 2, iw, ih);
+      }
+      if (!ready && hungry) {
+        g.fillStyle = '#d6452b';
+        g.beginPath();
+        g.arc(bx + 10, by - 10, 5.5, 0, Math.PI * 2);
+        g.fill();
+        g.fillStyle = '#fff';
+        g.font = '800 9px system-ui, sans-serif';
+        g.textAlign = 'center';
+        g.fillText('!', bx + 10, by - 6.8);
+      }
+      g.restore();
+    }
   }
 
   drawProgress(g, d, time) {
@@ -129,7 +227,7 @@ export class Renderer {
     const sprite = def ? def.sprite : BUILDINGS[pl.type].levels[0].sprite;
     const wT = def ? def.w : BUILDINGS[pl.type].levels[0].w;
     const img = this.assets.get(sprite);
-    const fr = footprintRect(pl.type, pl.x, pl.y);
+    const fr = areaRect(pl.type, pl.x, pl.y);
     g.save();
     g.fillStyle = pl.valid ? 'rgba(120,220,110,0.35)' : 'rgba(230,80,60,0.4)';
     g.strokeStyle = pl.valid ? 'rgba(200,255,190,0.9)' : 'rgba(255,170,150,0.9)';

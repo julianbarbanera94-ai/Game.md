@@ -3,6 +3,7 @@ import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, PATHS, SCENERY } from '../data/
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
 import { INTERIORS } from '../data/interiors.js';
 import { footprintRect } from '../systems/buildings.js';
+import { pastureColliders, pastureOf } from '../systems/pasture.js';
 
 // Converts tile-space world data into runtime drawables + colliders.
 // A drawable: { sprite, x, y, w, h, src?, flip?, sortY }  (x,y = bottom-centre anchor, px)
@@ -89,6 +90,43 @@ function buildFence(assets, drawables, colliders) {
   );
 }
 
+// Fence pieces (y-sorted drawables, px) around a livestock building's pasture:
+// rails along the bottom edge either side of the gate, posts up both sides and
+// at the gate. The top edge is the building itself.
+export function pastureFence(assets, type, x, y) {
+  const g = pastureOf(type, x, y);
+  if (!g) return [];
+  const H = 'terrain.fence_horizontal_detailed';
+  const POST = 'building.fence_segment';
+  const out = [];
+  const { rect, gate } = g;
+  const railY = rect.y1 + 0.2;
+  const addRuns = (x0, x1) => {
+    const n = Math.max(1, Math.round(x1 - x0));
+    const step = (x1 - x0) / n;
+    const rail = spriteSize(assets, H, step * 1.1);
+    for (let i = 0; i < n; i++) {
+      out.push({ sprite: H, x: (x0 + step * (i + 0.5)) * TILE, y: railY * TILE, w: rail.w, h: rail.h, sortY: railY * TILE });
+    }
+  };
+  addRuns(rect.x0, gate[0]);
+  addRuns(gate[1], rect.x1);
+  const seg = assets.entry(POST);
+  if (seg) {
+    const src = [0, 0, seg.width * 0.12, seg.height];
+    const pw = 0.36 * TILE;
+    const ph = (pw * src[3]) / src[2];
+    const post = (px, py) => out.push({ sprite: POST, src, x: px * TILE, y: py * TILE, w: pw, h: ph, sortY: py * TILE });
+    for (let py = rect.y0 + 0.65; py <= rect.y1 + 0.2; py += 0.55) {
+      post(rect.x0, py);
+      post(rect.x1, py);
+    }
+    post(gate[0], railY);
+    post(gate[1], railY);
+  }
+  return out;
+}
+
 // Areas where nothing may be built: garden, creek/bridge, paths (px rects).
 function noBuildZones() {
   const z = [
@@ -107,10 +145,14 @@ function noBuildZones() {
 
 // Colliders for player-placed objects (px rects).
 export function placedColliders(state) {
-  return state.placed.map((p) => {
-    const r = footprintRect(p.type, p.x, p.y);
-    return { x0: r.x0 * TILE, y0: r.y0 * TILE, x1: r.x1 * TILE, y1: r.y1 * TILE };
-  });
+  const px = (r) => ({ x0: r.x0 * TILE, y0: r.y0 * TILE, x1: r.x1 * TILE, y1: r.y1 * TILE });
+  const out = [];
+  for (const p of state.placed) {
+    out.push(px(footprintRect(p.type, p.x, p.y, p.level || 1)));
+    // pasture fences appear once the building is finished
+    if (p.kind === 'building' && p.level >= 1) out.push(...pastureColliders(p.type, p.x, p.y).map(px));
+  }
+  return out;
 }
 
 // Runtime data for an interior scene (px, in the interior's own space).
