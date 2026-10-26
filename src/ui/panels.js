@@ -276,12 +276,13 @@ export class Panels {
   }
 
   // ---- pause menu
-  menu() {
+  menu(status = null) {
     const g = this.game;
     const content = el('div', { class: 'menu' },
+      status ? el('p', { class: `save-status ${status.ok ? 'ok' : 'bad'}`, role: 'status' }, status.text) : null,
       el('button', { class: 'primary', onclick: () => this.close() }, 'Resume'),
       el('button', { 'data-action': 'save', onclick: guarded(() => g.manualSave()) }, 'Save game'),
-      el('button', { onclick: () => { g.toggleMute(); this.menu(); } }, g.state.settings.muted ? 'Sound: off' : 'Sound: on'),
+      el('button', { 'data-action': 'sound', onclick: () => { g.toggleMute(); this.menu(); } }, g.state.settings.muted ? 'Sound: off' : 'Sound: on'),
       el('button', { onclick: () => this.controls() }, 'Controls'),
       el('button', { onclick: () => g.quitToTitle() }, 'Save & quit to title'));
     this.show('Paused', content);

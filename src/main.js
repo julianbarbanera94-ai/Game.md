@@ -11,16 +11,45 @@ import { CROPS } from './data/crops.js';
 import { createNewState } from './systems/state.js';
 import { hasSave, loadGame, savePreview } from './systems/save.js';
 import { clock } from './systems/time.js';
+import { SAVE_KEY } from './config.js';
 
+// Where saves live, best first:
+//  1. the Android app's own file storage (window.AndroidStorage, written synchronously),
+//  2. the browser's localStorage,
+//  3. memory only — then `persistent` is false and the game warns the player.
 const storage = (() => {
+  const native = window.AndroidStorage;
+  if (native && typeof native.setItem === 'function') {
+    const store = {
+      persistent: true,
+      kind: 'android',
+      getItem: (k) => native.getItem(k),
+      setItem: (k, v) => {
+        if (native.setItem(k, v) === false) throw new Error('the app could not write its save file');
+      },
+      removeItem: (k) => native.removeItem(k),
+    };
+    // Carry a save made before the native store existed over to it.
+    try {
+      const old = window.localStorage.getItem(SAVE_KEY);
+      if (old && !native.getItem(SAVE_KEY)) native.setItem(SAVE_KEY, old);
+    } catch { /* localStorage unavailable: nothing to migrate */ }
+    return store;
+  }
   try {
     const k = '__farmstead_probe';
     window.localStorage.setItem(k, '1');
     window.localStorage.removeItem(k);
-    return window.localStorage;
+    return {
+      persistent: true,
+      kind: 'browser',
+      getItem: (key) => window.localStorage.getItem(key),
+      setItem: (key, v) => window.localStorage.setItem(key, v),
+      removeItem: (key) => window.localStorage.removeItem(key),
+    };
   } catch {
     const mem = new Map();
-    return { getItem: (k) => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)), removeItem: (k) => mem.delete(k) };
+    return { persistent: false, kind: 'memory', getItem: (k) => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)), removeItem: (k) => mem.delete(k) };
   }
 })();
 
@@ -62,6 +91,7 @@ async function boot() {
   document.getElementById('btn-menu').addEventListener('click', () => game.running && game.panels.menu());
   document.getElementById('btn-cancel').addEventListener('click', () => game.cancelPlacement());
   document.addEventListener('visibilitychange', () => { if (document.hidden && game.running) game.autosave('hidden'); });
+  window.addEventListener('pagehide', () => { if (game.running) game.autosave('hidden'); });
   window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
   window.addEventListener('keydown', () => sfx.unlock(), { once: true });
 

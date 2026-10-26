@@ -148,7 +148,10 @@ export function hasSave(storage) {
 
 export function saveGame(storage, state) {
   try {
-    storage.setItem(SAVE_KEY, serialize(state));
+    const json = serialize(state);
+    storage.setItem(SAVE_KEY, json);
+    // Read it back: some storages accept writes and silently drop them.
+    if (storage.getItem(SAVE_KEY) !== json) return { ok: false, reason: 'Could not save: the device did not keep the data' };
     return { ok: true };
   } catch (err) {
     return { ok: false, reason: `Could not save: ${err.message}` };

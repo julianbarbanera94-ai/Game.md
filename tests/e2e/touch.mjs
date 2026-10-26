@@ -78,10 +78,10 @@ async function main() {
   await tap('[data-action="save"]', held);
   await page.waitForTimeout(250);
   check(await page.evaluate(() => !!localStorage.getItem('farmstead.save')), 'Save game works while the stick is held');
-  await tap('.modal .menu button:nth-child(3)', held);
+  await tap('[data-action="sound"]', held);
   await page.waitForTimeout(250);
   check(await page.evaluate(() => window.farmstead.state.settings.muted === true), 'Sound toggle works while the stick is held');
-  await tap('.modal .menu button:nth-child(3)', held);
+  await tap('[data-action="sound"]', held);
   await page.waitForTimeout(250);
   await tap('.modal button.primary', held);
   await page.waitForTimeout(250);
@@ -128,6 +128,57 @@ async function main() {
   check(rects.hotbar.x0 >= rects.stick.x1 && rects.hotbar.x1 <= rects.action.x0, 'hotbar fits between the stick and A');
   await page.screenshot({ path: path.join(outDir, 'touch-landscape.png') });
   check(errors.length === 0, `no page errors (${errors.join(' | ')})`);
+
+  // ---- Saving (the Android app provides window.AndroidStorage; simulate it) ----
+  const nativeCtx = await browser.newContext({ viewport: { width: 762, height: 352 }, hasTouch: true, isMobile: true });
+  await nativeCtx.addInitScript(() => {
+    // Stand-in for the Java bridge, backed by a separate localStorage namespace so it survives reloads.
+    window.__nativeWrites = 0;
+    window.AndroidStorage = {
+      getItem: (k) => window.localStorage.getItem('native:' + k),
+      setItem: (k, v) => { window.localStorage.setItem('native:' + k, v); window.__nativeWrites++; return true; },
+      removeItem: (k) => window.localStorage.removeItem('native:' + k),
+    };
+  });
+  const np = await nativeCtx.newPage();
+  const nerrors = [];
+  np.on('pageerror', (e) => nerrors.push(e.message));
+  await np.goto(`http://localhost:${PORT}/`);
+  await np.waitForSelector('#title:not([hidden])');
+  await np.tap('#btn-new');
+  await np.waitForSelector('.modal');
+  await np.tap('.modal button.primary');
+  await np.waitForTimeout(250);
+  await np.evaluate(() => { window.farmstead.state.coins = 777; });
+  await np.tap('#btn-menu');
+  await np.waitForSelector('.modal');
+  await np.tap('[data-action="save"]');
+  await np.waitForTimeout(300);
+  check((await np.textContent('.save-status')).includes('Saved'), 'pause menu shows "Saved" after Save game');
+  check(await np.evaluate(() => window.__nativeWrites > 0 && !!window.localStorage.getItem('native:farmstead.save')), 'save went to the app\'s native storage');
+  check(await np.evaluate(() => !window.localStorage.getItem('farmstead.save')), 'and not to browser localStorage');
+  await np.reload();
+  await np.waitForSelector('#title:not([hidden])');
+  check(!(await np.evaluate(() => document.querySelector('#btn-continue').disabled)), 'Continue is enabled after a restart');
+  await np.tap('#btn-continue');
+  await np.waitForTimeout(400);
+  check((await np.evaluate(() => window.farmstead.state.coins)) === 777, 'progress restored from native storage after a restart');
+  // leaving the app (page hidden) saves
+  await np.evaluate(() => { window.farmstead.state.coins = 888; window.dispatchEvent(new Event('pagehide')); });
+  check(await np.evaluate(() => JSON.parse(window.localStorage.getItem('native:farmstead.save')).coins === 888), 'pagehide autosaves');
+  check(nerrors.length === 0, `no page errors with native storage (${nerrors.join(' | ')})`);
+
+  // Blocked browser storage must be reported, not silently "saved" to memory.
+  const blockedCtx = await browser.newContext({ viewport: { width: 762, height: 352 }, hasTouch: true, isMobile: true });
+  await blockedCtx.addInitScript(() => {
+    Storage.prototype.setItem = () => { throw new DOMException('blocked', 'SecurityError'); };
+  });
+  const bp = await blockedCtx.newPage();
+  await bp.goto(`http://localhost:${PORT}/`);
+  await bp.waitForSelector('#title:not([hidden])');
+  await bp.tap('#btn-new');
+  await bp.waitForSelector('.modal');
+  check((await bp.textContent('.modal')).includes('Saving is unavailable'), 'blocked storage shows a clear warning at game start');
 }
 
 main()

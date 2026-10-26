@@ -210,3 +210,7 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .menu button { padding: 9px; }
   .menu { gap: 6px; padding-top: 10px; padding-bottom: 12px; }
 }
+
+.save-status { margin: 0; padding: 8px 12px; border-radius: 10px; font-weight: 700; text-align: center; }
+.save-status.ok { background: #dff0cf; color: #2f6a22; }
+.save-status.bad { background: #f8dcd2; color: #9a3a1c; }

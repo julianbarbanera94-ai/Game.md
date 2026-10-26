@@ -24,6 +24,7 @@ const PLOT_AT = new Map(PLOTS.map((p) => [`${p.tx},${p.ty}`, p]));
 const FEET = { w: 13, h: 7 }; // half-size of the player's collision box (px)
 const ACTION_TIME = 0.38;
 const AUTOSAVE_SECONDS = 60;
+const NO_SAVING_TEXT = "Saving is unavailable: this device isn't letting the game keep saved data (storage is blocked). You can play, but progress will be lost when you close the game.";
 
 export class Game {
   constructor({ assets, world, renderer, input, sfx, storage, onQuit }) {
@@ -108,7 +109,9 @@ export class Game {
     this.camera.follow(state.player.x, state.player.y - 40, 0, true);
     this.hud.cache = {};
     document.getElementById('hud').hidden = false;
-    if (isNew || !state.flags.introSeen) this.showIntro();
+    const noSaving = this.storage.persistent === false;
+    if (isNew || !state.flags.introSeen) this.showIntro(noSaving);
+    else if (noSaving) this.panels.dialog('Saving is unavailable', NO_SAVING_TEXT);
     else this.hud.toast(`Welcome back — Day ${clock(state.time).day}, ${formatClock(state.time)}`);
   }
 
@@ -605,7 +608,10 @@ export class Game {
 
   manualSave() {
     const r = this.autosave('manual');
-    if (r.ok) this.hud.toast('Game saved', 'good');
+    const when = `Day ${clock(this.state.time).day}, ${formatClock(this.state.time)}`;
+    if (r.ok) this.hud.toast(`Game saved — ${when}`, 'good');
+    // Show the result inside the pause menu too, where the player is looking.
+    if (this.panels.current?.title === 'Paused') this.panels.menu({ ok: r.ok, text: r.ok ? `Saved ✓  ${when}` : r.reason });
   }
 
   toggleMute() {
@@ -619,12 +625,12 @@ export class Game {
     this.onQuit?.();
   }
 
-  showIntro() {
+  showIntro(noSaving = false) {
     this.state.flags.introSeen = true;
     this.panels.dialog('Welcome to Farmstead',
       'You have inherited a small cottage, a fenced garden and a handful of carrot seeds.\n\n' +
       'Walk with WASD / arrow keys (or the on-screen stick) and press E / Space (or the action button) to interact with whatever you face.\n\n' +
-      'Start with the quest on the left: till, plant and water the garden plots.',
+      'Start with the quest on the left: till, plant and water the garden plots.' + (noSaving ? `\n\n${NO_SAVING_TEXT}` : ''),
       [{ label: "Let's farm!", primary: true }]);
   }
 }

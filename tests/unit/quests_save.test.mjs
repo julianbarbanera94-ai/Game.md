@@ -95,3 +95,12 @@ test('storage wrappers report failures instead of throwing', () => {
   const full = { getItem: () => null, setItem: () => { throw new Error('QuotaExceeded'); } };
   assert.equal(saveGame(full, s).ok, false);
 });
+
+test('a storage that silently drops writes is reported as a failed save', () => {
+  const dropping = { getItem: () => null, setItem: () => {} };
+  const r = saveGame(dropping, createNewState());
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /did not keep/);
+  const truncating = { v: null, getItem() { return this.v; }, setItem(k, v) { this.v = v.slice(0, 20); } };
+  assert.equal(saveGame(truncating, createNewState()).ok, false);
+});

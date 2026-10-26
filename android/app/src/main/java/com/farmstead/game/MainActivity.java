@@ -2,10 +2,12 @@ package com.farmstead.game;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -20,6 +22,31 @@ import androidx.webkit.WebViewAssetLoader;
  * modules, fetch() and localStorage behave exactly as in a desktop browser.
  */
 public class MainActivity extends Activity {
+    /**
+     * Save-game storage exposed to the page as window.AndroidStorage. Values
+     * go to the app's SharedPreferences with commit() (synchronous), so a save
+     * is on disk before the call returns and survives the app being killed.
+     * It is only reachable from the bundled game pages.
+     */
+    private class AndroidStorage {
+        private final SharedPreferences prefs = getSharedPreferences("farmstead", MODE_PRIVATE);
+
+        @JavascriptInterface
+        public String getItem(String key) {
+            return prefs.getString(key, null);
+        }
+
+        @JavascriptInterface
+        public boolean setItem(String key, String value) {
+            return prefs.edit().putString(key, value).commit();
+        }
+
+        @JavascriptInterface
+        public void removeItem(String key) {
+            prefs.edit().remove(key).commit();
+        }
+    }
+
     private static final String START_URL = "https://appassets.androidplatform.net/assets/www/index.html";
     private WebView webView;
 
@@ -38,6 +65,7 @@ public class MainActivity extends Activity {
         s.setMediaPlaybackRequiresUserGesture(false);
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
+        webView.addJavascriptInterface(new AndroidStorage(), "AndroidStorage");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
@@ -79,10 +107,13 @@ public class MainActivity extends Activity {
                 null);
     }
 
+    // Save before the page is paused (leaving the app, screen off, app switcher).
     @Override
     protected void onPause() {
         super.onPause();
-        webView.onPause();
+        webView.evaluateJavascript(
+                "window.farmstead && window.farmstead.running && window.farmstead.autosave('pause');",
+                value -> webView.onPause());
     }
 
     @Override

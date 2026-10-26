@@ -12,7 +12,16 @@ Reported on a phone, in landscape: (1) the cottage is blurry; (2) controls sit t
 | Controls too high in landscape | Fixed 110 px offsets meant for portrait | Short-screen layout: stick and A hug the bottom corners, one quest shown, smaller hotbar and prompt | `test:touch` (positions and no overlap) |
 | Cottage blurry | The only source is a 141×142 px board panel, enlarged | Whole room now fits above the HUD at no more than 1.25× zoom (smaller is sharper), plus unsharp-masked enlargement. **Still soft: it needs a real export, see `docs/ART_REQUESTS.md`** | screenshots |
 
-Tests: `npm test` 26/26 · `npm run test:e2e` 125/125 · `npm run test:touch` 15/15.
+### Saving on the phone
+Reported: "I also can't save". What I found and changed:
+- Likely cause of the report: the **Save game** button was one of the dead buttons (second-finger taps, fixed above).
+- A second trap: if the browser's storage was blocked, the game silently fell back to saving in memory — it said "saved" and lost everything on restart. Now the game warns at start ("Saving is unavailable") instead.
+- Every save is **read back and compared**; a storage that drops or truncates the write is reported as a failed save (unit-tested).
+- The pause menu shows **"Saved ✓ Day N, time"** (or the error) right where you tapped.
+- **Android app:** saves go to the app's own file storage (`window.AndroidStorage`, `SharedPreferences.commit()` — synchronous, so on disk before the call returns) instead of relying on WebView localStorage; an older localStorage save is copied across on first run. The app also saves when it is paused/backgrounded, and the page saves on `pagehide`.
+- Not verified on a device: the Java side compiles only on GitHub Actions and I can't run the APK here. The JavaScript side was tested against a stand-in for the bridge (save → restart → Continue restores progress; page hidden saves).
+
+Tests: `npm test` 27/27 · `npm run test:e2e` 125/125 · `npm run test:touch` 23/23.
 
 ## Milestone 2 — Phase 4: buildings & expansion
 
