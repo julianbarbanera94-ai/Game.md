@@ -371,12 +371,17 @@ async function main() {
 
   // Hunger: after a few hours the hens are hungry; feed them in the world.
   await page.evaluate(() => { const st = window.farmstead.state; st.animals.forEach((a) => { a.fedUntil = st.time - 1; }); });
-  await page.evaluate(() => {
-    const g = window.farmstead; const ac = g.actors.list()[0];
-    g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
-  });
-  await page.waitForTimeout(250);
-  check((await prompt()).includes('Feed'), 'a hungry hen offers feeding');
+  // Hens wander, so stand next to the first one again if it moved before the prompt updates.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    await page.evaluate(() => {
+      const g = window.farmstead; const ac = g.actors.list()[0];
+      g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
+    });
+    await page.waitForTimeout(250);
+    if ((await prompt()).includes('Feed')) break;
+  }
+  const feedPrompt = await prompt();
+  check(feedPrompt.includes('Feed'), `a hungry hen offers feeding (prompt: "${feedPrompt.trim()}")`);
   await shot('hungry-hens');
   await act();
   s = await state();
@@ -396,11 +401,15 @@ async function main() {
 
   // Collect from a hen in the world, then the rest from the coop menu.
   await route([[17.9, 11.6], ...toCoop.slice(0, 3), [24.0, 18.8]]);
-  await page.evaluate(() => {
-    const g = window.farmstead; const ac = g.actors.list()[0];
-    g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
-  });
-  await page.waitForTimeout(250);
+  // Hens wander, so stand next to the first one again if it moved before the prompt updates.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    await page.evaluate(() => {
+      const g = window.farmstead; const ac = g.actors.list()[0];
+      g.state.player.x = ac.x; g.state.player.y = ac.y - 24; g.state.player.facing = 'down';
+    });
+    await page.waitForTimeout(250);
+    if ((await prompt()).includes('Feed')) break;
+  }
   const promptText = await prompt();
   check(/Collect \d+ eggs? from/.test(promptText), `a hen with eggs offers collecting ("${promptText.trim().slice(0, 40)}…")`);
   await shot('eggs-ready');
