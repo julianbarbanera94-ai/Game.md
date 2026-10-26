@@ -4,6 +4,7 @@ import { STARTING_STATE, UPGRADES } from '../data/progression.js';
 import { createPlot } from './farming.js';
 import { createQuestState, refreshAvailability } from './quests.js';
 import { createBuildingState } from './buildings.js';
+import { rollover as rolloverOrders } from './orders.js';
 
 // The complete persistent game state. Rendering-only data never lives here.
 export function createNewState() {
@@ -21,12 +22,16 @@ export function createNewState() {
     placed: [],
     animals: [],
     cleared: [], // SCENERY indices removed by the player
+    relations: {}, // villager friendship: { npcId: { points, lastTalkDay } }
+    orders: { day: 0, nextId: 1, list: [] }, // delivery requests
+    shops: { day: 0, bought: {}, traded: {} }, // today's village stock and demand
     nextUid: 1,
     quests: createQuestState(),
     stats: { earned: 0 },
-    flags: { introSeen: false },
+    flags: { introSeen: false, roadOpen: false, visitedVillage: false },
     settings: { muted: false },
   };
   refreshAvailability(state);
+  rolloverOrders(state);
   return state;
 }

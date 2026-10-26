@@ -1,4 +1,5 @@
 import { SCENERY } from '../data/world.js';
+import { VILLAGE_X0 } from '../data/village.js';
 import { NULL_BUS } from '../core/events.js';
 
 // Clearing scenery (trees, bushes, rocks...) to make room for buildings.
@@ -22,7 +23,7 @@ export function clearInfo(index) {
   if (!e) return null;
   const [sprite, x, y] = e;
   const kind = KINDS.find((k) => sprite.includes(k.match));
-  if (!kind) return null;
+  if (!kind || x >= VILLAGE_X0) return null; // the village is not for clearing
   if (sprite.includes('tree_') && !sprite.includes('stump') && (x < BORDER.x0 || x > BORDER.x1 || y < BORDER.y0 || y > BORDER.y1)) return null;
   return { index, name: kind.name, cost: kind.cost, x, y };
 }

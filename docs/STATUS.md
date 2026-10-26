@@ -110,6 +110,19 @@ Known gaps: building art is low-resolution cut-outs (see `ASSETS.md`); there is 
 
 Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map border can be cleared for coins (tree 60, boulder 40, stump 25, log 30, bush 20, barrel/crate 10): walk up, press A, confirm. The outer ring of trees stays. Placing a building on a blocked spot says exactly why (edge of the map, path, garden, creek, a tree/rock to clear, a door too close, you standing in it), outlines the blocking objects in red, and slides to the nearest valid spot within ~2 tiles. Tests: `tests/e2e/building_after_clearing.mjs` clears scenery and builds a scarecrow, shed, coop and barn in the freed spots. Saved as `cleared` (save v4, v3 saves migrate). Tests: `tests/unit/clearing.test.mjs`, `npm run test:clearing`.
 
+## Phase 7: village, villagers, requests and shops
+
+- **The road east.** The map is now 64 tiles wide. A fallen tree blocks the road at the east end of the farm; after "Market Day" a work crew clears it for 150 coins (quest "The Road East"). A forest wall keeps the rest of the border closed.
+- **Willowmere** (tiles x 36-62): cobbled square with a well, notice board, benches and lanterns (they light up at night), General Store, Smithy, Carpenter, Inn and two market stalls. *Buildings reuse existing farm sprites as stand-ins.*
+- **Five villagers** (Mara the shopkeeper, Bram the blacksmith, Odette the innkeeper, Tobias the trader, Wren the resident) with daily schedules (shops open and close, Wren wanders between waypoints, doors say "closed - back around ..." when they are away), `?`/`!` markers over their heads, and numbered dialogue choices (tap or press 1-9). *They use the player sprite recoloured per villager, with a name tag, until NPC art is supplied.*
+- **Friendship**: +3 for the first chat each day, +points for deliveries. Levels Stranger, Acquaintance, Friend, Close friend give shop discounts and warmer chat.
+- **General Store**: limited daily stock of seeds and feed, friendship discount. **Tobias**: pays 15% extra for the first 8 of each product per day.
+- **Delivery requests**: new ones are posted every morning on the notice board (max 4 open, carry max 3), with a deadline and a reward in coins and friendship. Accept, bring the goods, talk to the villager who asked. Progress is the real inventory; each request pays once.
+- **Quests** (from real events): The Road East, Willowmere, Meet the Shopkeeper, Special Delivery, Good Neighbour.
+- **Save v5**: friendships, requests, today's shop state, road and visit flags; v4 saves migrate; everything is validated on load.
+- Tests: `tests/unit/village.test.mjs` (schedules, friendship, shops, requests, quests, save), `npm run test:village` (43 checks: road, walking in, dialogue, buying, requests, trader, night, reload).
+- Not yet: shop interiors, villager gifts, seasonal stalls, NPC walking art, sound for the village.
+
 ## Asset audit
 
 See `docs/audit/ASSET_AUDIT.md`: every image in the ten packs measured against resolution standards; the cottage interior was rebuilt from layers; remaining soft assets (buildings, animals, icons, decorations) need new exports.

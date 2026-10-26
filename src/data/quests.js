@@ -151,4 +151,53 @@ QUESTS.push(
   },
 );
 
+// Phase 7: the village.
+QUESTS.push(
+  {
+    id: 'q_open_road',
+    title: 'The Road East',
+    giver: 'Fallen tree',
+    description: 'A storm-felled tree blocks the road to Willowmere village. Hire it cleared (150 coins) — walk up to it at the east end of the road.',
+    prereqs: ['q_market_day'],
+    objectives: [{ type: 'roadOpened', count: 1, label: 'Clear the fallen tree on the east road' }],
+    reward: { coins: 40 },
+  },
+  {
+    id: 'q_visit_village',
+    title: 'Willowmere',
+    giver: 'Village sign',
+    description: 'The road is open. Walk east and visit the village square.',
+    prereqs: ['q_open_road'],
+    objectives: [{ type: 'visit', id: 'village', count: 1, label: 'Walk to the village square' }],
+    reward: { coins: 30 },
+  },
+  {
+    id: 'q_meet_mara',
+    title: 'Meet the Shopkeeper',
+    giver: 'Mara',
+    description: 'Mara runs the General Store, north-west of the square. Say hello.',
+    prereqs: ['q_visit_village'],
+    objectives: [{ type: 'talk', id: 'mara', count: 1, label: 'Talk to Mara' }],
+    reward: { items: { seed_lettuce: 4 } },
+  },
+  {
+    id: 'q_first_delivery',
+    title: 'Special Delivery',
+    giver: 'Notice board',
+    description: 'Read the notice board in the square, accept a request, bring the goods to the villager who asked, and talk to them to hand them over.',
+    prereqs: ['q_meet_mara'],
+    objectives: [{ type: 'deliver', count: 1, label: 'Deliver a request' }],
+    reward: { coins: 60 },
+  },
+  {
+    id: 'q_good_neighbour',
+    title: 'Good Neighbour',
+    giver: 'Willowmere',
+    description: 'Chat with villagers and help them out until one of them counts you as a friend.',
+    prereqs: ['q_first_delivery'],
+    objectives: [{ type: 'friendshipLevel', minLevel: 2, count: 1, label: 'Become friends with a villager' }],
+    reward: { coins: 150 },
+  },
+);
+
 export const QUESTS_BY_ID = Object.fromEntries(QUESTS.map((q) => [q.id, q]));

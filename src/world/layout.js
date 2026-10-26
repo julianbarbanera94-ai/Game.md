@@ -1,4 +1,5 @@
 import { TILE, WORLD_W } from '../config.js';
+import { FOREST_WALL_X, ROAD_GATE, ROAD_Y, VILLAGE_X0 } from '../data/village.js';
 import { BOUNDS, BRIDGE, CREEK, GARDEN, OBJECTS, PATHS, SCENERY } from '../data/world.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
 import { INTERIORS } from '../data/interiors.js';
@@ -24,13 +25,16 @@ export function buildWorld(assets) {
   const groundDrawables = [];
   const colliders = [];
   const interactables = [];
+  let roadBlock = null;
 
   for (const o of OBJECTS) {
     const { w, h } = spriteSize(assets, o.sprite, o.w);
     // Buildings with levels resolve their sprite every frame from game state.
-    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE };
+    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE, light: o.light };
     (o.ground ? groundDrawables : drawables).push(d);
-    if (o.collider) colliders.push(rectFrom(o.x, o.y, o.collider));
+    const col = o.collider ? rectFrom(o.x, o.y, o.collider) : null;
+    if (col) colliders.push(col);
+    if (o.id === 'road_block') roadBlock = { drawable: d, collider: col };
     if (o.interact) {
       const p = o.interactPoint || [o.x, o.y + 0.1];
       interactables.push({ id: o.id, kind: o.interact, x: p[0] * TILE, y: p[1] * TILE });
@@ -52,6 +56,14 @@ export function buildWorld(assets) {
 
   buildFence(assets, drawables, colliders);
 
+  // The forest between farm and village is walled off except for the road, which
+  // stays shut until the fallen tree is cleared (see Game.applyWorldFlags).
+  const wallRect = (y0, y1) => ({ x0: FOREST_WALL_X[0] * TILE, y0: y0 * TILE, x1: FOREST_WALL_X[1] * TILE, y1: y1 * TILE });
+  colliders.push(wallRect(0, ROAD_Y[0]), wallRect(ROAD_Y[1], 28));
+  const gate = { x0: ROAD_GATE.x0 * TILE, y0: ROAD_GATE.y0 * TILE, x1: ROAD_GATE.x1 * TILE, y1: ROAD_GATE.y1 * TILE };
+  colliders.push(gate);
+  roadBlock = { ...roadBlock, gate, open: false };
+
   // Creek blocks movement except across the bridge.
   const cy0 = (CREEK.y0 + 0.15) * TILE;
   const cy1 = (CREEK.y1 - 0.05) * TILE;
@@ -59,7 +71,7 @@ export function buildWorld(assets) {
   colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: WORLD_W, y1: cy1 });
 
   const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
-  return { drawables, groundDrawables, colliders, interactables, bounds, scenery, noBuild: noBuildZones() };
+  return { drawables, groundDrawables, colliders, interactables, bounds, scenery, roadBlock, noBuild: noBuildZones() };
 }
 
 // Garden fence: horizontal rail pieces on top/bottom, post runs on the sides.
@@ -141,6 +153,7 @@ function noBuildZones() {
     { name: 'the garden', x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
     { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
   ];
+  z.push({ name: 'the village', x0: VILLAGE_X0 * TILE, y0: 0, x1: WORLD_W, y1: 28 * TILE });
   for (const p of PATHS) {
     const hw = (p.width / 2) * TILE;
     z.push({

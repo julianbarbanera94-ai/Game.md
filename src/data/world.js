@@ -1,3 +1,5 @@
+import { VILLAGE_PATHS, VILLAGE_OBJECTS, VILLAGE_SCENERY, VILLAGE_DECOR } from './village.js';
+
 // Starter farm layout. All coordinates are in tiles (see config.TILE).
 // Objects are anchored at the bottom-centre of their sprite (x, y) and drawn
 // `w` tiles wide, preserving aspect ratio. Colliders are [x0, y0, x1, y1]
@@ -6,7 +8,7 @@
 export const SPAWN = { x: 17.6, y: 9.4 };
 
 // Walkable area (tiles). Outside this the forest edge / creek bank blocks.
-export const BOUNDS = { x0: 1.6, y0: 3.0, x1: 34.3, y1: 26.4 };
+export const BOUNDS = { x0: 1.6, y0: 3.0, x1: 62.3, y1: 26.4 };
 
 // Ground features used by the terrain painter and collision.
 export const PATHS = [
@@ -54,7 +56,7 @@ export const OBJECTS = [
   { id: 'market_stall', building: 'market_stall', sprite: 'building.market_stall', x: 30.4, y: 10.9, w: 4.2, collider: [-1.95, -1.9, 1.95, -0.25],
     interact: 'market', interactPoint: [30.4, 11.2] },
   { id: 'village_sign', sprite: 'building.signpost', x: 32.6, y: 12.5, w: 1.3, collider: [-0.15, -0.3, 0.15, 0], interact: 'village_sign' },
-  { id: 'road_block', sprite: 'foliage.fallen_log', x: 34.3, y: 12.3, w: 2.0, collider: [-1, -0.8, 1, 0], interact: 'road_block' },
+  { id: 'road_block', sprite: 'foliage.fallen_log', x: 34.3, y: 12.3, w: 2.0, collider: [-1, -0.8, 1, 0], interact: 'road_block', interactPoint: [33.3, 11.9] },
   { id: 'garden_sign', sprite: 'building.signpost', x: 10.9, y: 17.6, w: 1.2, collider: [-0.15, -0.3, 0.15, 0], interact: 'garden_sign' },
   { id: 'bridge', sprite: 'building.wooden_bridge', x: 17.9, y: 24.95, w: 2.75, ground: true },
 ];
@@ -110,3 +112,10 @@ export const GROUND_DECOR = [
   ['foliage.grass_tall', 14.6, 15.8, 1.0], ['foliage.flower_yellow', 30.0, 15.0, 1.1],
   ['foliage.mushrooms', 23.2, 7.6, 0.8], ['foliage.flower_patch', 19.6, 14.8, 1.1],
 ];
+
+// The village (east of the farm) extends the same lists; scenery is appended so
+// indices stored in saves (state.cleared) stay valid.
+PATHS.push(...VILLAGE_PATHS);
+OBJECTS.push(...VILLAGE_OBJECTS);
+SCENERY.push(...VILLAGE_SCENERY);
+GROUND_DECOR.push(...VILLAGE_DECOR);

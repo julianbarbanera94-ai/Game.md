@@ -1,8 +1,13 @@
 import { clearInfo } from './clearing.js';
-import { SAVE_KEY, SAVE_VERSION, WORLD_W, WORLD_H } from '../config.js';
+import { SAVE_KEY, SAVE_VERSION, WORLD_W, WORLD_H, TILE } from '../config.js';
+import { NPCS } from '../data/npcs.js';
+import { VILLAGE_X0 } from '../data/village.js';
+import { SPAWN } from '../data/world.js';
 import { CROPS } from '../data/crops.js';
 import { getItem } from '../data/items.js';
 import { createNewState } from './state.js';
+import { rollover as rolloverOrders } from './orders.js';
+import { rollover as rolloverShops } from './shops.js';
 import { refreshAvailability } from './quests.js';
 import { applyUpgradeEffects } from './economy.js';
 import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
@@ -32,6 +37,9 @@ const MIGRATIONS = {
 MIGRATIONS[2] = (data) => ({ ...data, version: 3, animals: [] });
 // v3 -> v4: scenery can be cleared; old saves have cleared nothing.
 MIGRATIONS[3] = (data) => ({ ...data, version: 4, cleared: [] });
+// v4 -> v5: the village. Old saves have no friendships, requests or shop history,
+// and if they already cleared... nothing: the road starts closed.
+MIGRATIONS[4] = (data) => ({ ...data, version: 5, relations: {}, orders: { day: 0, nextId: 1, list: [] }, shops: { day: 0, bought: {}, traded: {} } });
 
 function validJob(job, maxLevel) {
   if (!job || typeof job !== 'object') return null;
@@ -166,8 +174,49 @@ export function deserialize(json) {
   }
   s.stats.earned = num(data.stats?.earned, 0);
   s.flags.introSeen = !!data.flags?.introSeen;
+  s.flags.roadOpen = !!data.flags?.roadOpen;
+  s.flags.visitedVillage = !!data.flags?.visitedVillage;
+  // villagers: friendship, requests and today's shop state
+  if (data.relations && typeof data.relations === 'object') {
+    for (const id of Object.keys(NPCS)) {
+      const r = data.relations[id];
+      if (r && typeof r === 'object') s.relations[id] = { points: Math.floor(num(r.points, 0, 0, 999)), lastTalkDay: Math.floor(num(r.lastTalkDay, 0)) };
+    }
+  }
+  if (data.orders && typeof data.orders === 'object') {
+    const seen = new Set();
+    const list = [];
+    for (const o of Array.isArray(data.orders.list) ? data.orders.list.slice(0, 40) : []) {
+      if (!o || typeof o.id !== 'string' || seen.has(o.id) || !NPCS[o.giver]) continue;
+      const item = getItem(o.item);
+      if (!item || item.sellPrice == null || !['open', 'accepted', 'done', 'expired'].includes(o.status)) continue;
+      seen.add(o.id);
+      list.push({
+        id: o.id.slice(0, 12), giver: o.giver, item: o.item, qty: Math.floor(num(o.qty, 1, 1, 99)),
+        coins: Math.floor(num(o.coins, 0, 0, 100000)), rep: Math.floor(num(o.rep, 0, 0, 50)),
+        deadline: Math.floor(num(o.deadline, 0)), status: o.status,
+      });
+    }
+    const maxId = list.reduce((m, o) => Math.max(m, Number(o.id.slice(1)) || 0), 0);
+    s.orders = { day: Math.floor(num(data.orders.day, 0)), nextId: Math.max(maxId + 1, Math.floor(num(data.orders.nextId, 1, 1))), list };
+    // never more accepted requests than the player can carry
+    let carried = 0;
+    for (const o of s.orders.list) if (o.status === 'accepted' && ++carried > 3) o.status = 'open';
+  }
+  if (data.shops && typeof data.shops === 'object') {
+    const counts = (src) => Object.fromEntries(Object.entries(src && typeof src === 'object' ? src : {})
+      .filter(([id]) => getItem(id)).map(([id, n]) => [id, Math.floor(num(n, 0, 0, 999))]).filter(([, n]) => n > 0));
+    s.shops = { day: Math.floor(num(data.shops.day, 0)), bought: counts(data.shops.bought), traded: counts(data.shops.traded) };
+  }
+  // someone saved in the village before the road opened (or edited their save): go home
+  if (!s.flags.roadOpen && s.player.scene === 'farm' && s.player.x > VILLAGE_X0 * TILE) {
+    s.player.x = SPAWN.x * TILE;
+    s.player.y = SPAWN.y * TILE;
+  }
   s.settings.muted = !!data.settings?.muted;
   refreshAvailability(s);
+  rolloverShops(s);
+  rolloverOrders(s);
   return s;
 }
 

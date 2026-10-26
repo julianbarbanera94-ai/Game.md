@@ -9,23 +9,11 @@ import { SPECIES, productLabel } from '../data/animals.js';
 import { animalsAt, capacity, hoursFed, isHungry, moodText, readyCount, sellValue } from '../systems/animals.js';
 import { rewardText } from '../systems/quests.js';
 import { el } from './hud.js';
+import { guarded } from './guard.js';
+import { installVillagePanels } from './villagePanels.js';
 
 // Full-screen / modal interfaces. Every panel closes with Esc, the close
 // button or a click on the backdrop, and returns control to gameplay.
-
-// Guards against double-taps triggering a transaction twice. The cooldown is
-// shared by every panel button because panels re-render (replacing their
-// buttons) after each transaction, so a per-button flag would reset.
-const ACTION_COOLDOWN_MS = 350;
-let lastActionAt = 0;
-function guarded(fn) {
-  return (e) => {
-    const now = performance.now();
-    if (now - lastActionAt < ACTION_COOLDOWN_MS) return;
-    lastActionAt = now;
-    fn(e);
-  };
-}
 
 export class Panels {
   constructor(game) {
@@ -365,3 +353,5 @@ export class Panels {
       [{ label: 'Back', action: () => this.menu() }]);
   }
 }
+
+installVillagePanels(Panels);

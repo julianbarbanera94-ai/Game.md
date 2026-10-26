@@ -1,5 +1,6 @@
 import { TILE, WORLD_W, WORLD_H } from '../config.js';
 import { CREEK, GROUND_DECOR, PATHS } from '../data/world.js';
+import { PLAZA } from '../data/village.js';
 import { mulberry32 } from '../core/rng.js';
 
 // Paints the static ground layer once at load.
@@ -11,7 +12,7 @@ import { mulberry32 } from '../core/rng.js';
 
 export const TERRAIN_KEYS = [
   'terrain.grass_detailed', 'terrain2.grass_flower', 'terrain.dirt_detailed', 'terrain2.dirt_path',
-  'terrain2.pond_water', 'terrain.water_pond_detailed', 'foliage.rock_small', 'foliage.rock_cluster',
+  'terrain2.pond_water', 'terrain.water_pond_detailed', 'terrain.cobblestone_detailed', 'terrain2.cobblestone_path', 'foliage.rock_small', 'foliage.rock_cluster',
   'foliage.grass_tall', 'foliage.fern', ...GROUND_DECOR.map((d) => d[0]),
 ];
 
@@ -117,7 +118,7 @@ export function buildGround(assets, res, groundDrawables) {
   const flowerStamps = flowerImg ? [makeStamp(flowerImg, 0.15, 170, 0.4)] : [];
   if (grassStamps.length) splat(g, grassStamps, rand, 0, 0, WORLD_W, WORLD_H, 170, 100, 50);
   if (flowerStamps.length) {
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 46; i++) {
       g.save();
       g.globalAlpha = 0.85;
       g.drawImage(flowerStamps[0], rand() * WORLD_W - 85, rand() * WORLD_H - 85, 170, 170);
@@ -158,6 +159,36 @@ export function buildGround(assets, res, groundDrawables) {
     strokePaths(g, 0.55);
     g.restore();
     g.drawImage(dirt, 0, 0);
+  }
+
+  // 2b. village square: cobbles, feathered at the edge, with a worn dark rim
+  const cobbles = ['terrain2.cobblestone_path', 'terrain.cobblestone_detailed'].map((k) => assets.get(k)).filter(Boolean);
+  if (cobbles.length) {
+    const px = PLAZA.x0 * TILE, py = PLAZA.y0 * TILE, pw = (PLAZA.x1 - PLAZA.x0) * TILE, ph = (PLAZA.y1 - PLAZA.y0) * TILE;
+    const pad = 40;
+    const sq = canvas(pw + pad * 2, ph + pad * 2);
+    const sg = sq.getContext('2d');
+    sg.fillStyle = averageColor(cobbles[0]);
+    sg.fillRect(0, 0, sq.width, sq.height);
+    splat(sg, cobbles.map((im) => makeStamp(im, 0.12, 150, 0.6)), rand, 0, 0, sq.width, sq.height, 150, 80, 30);
+    const edge = canvas(sq.width, sq.height);
+    const eg = edge.getContext('2d');
+    for (const [grow, alpha] of [[34, 0.2], [26, 0.4], [18, 0.7], [8, 1]]) { // outermost first, fully opaque in the middle
+      eg.fillStyle = `rgba(0,0,0,${alpha})`;
+      eg.beginPath();
+      eg.roundRect(pad - grow, pad - grow, pw + grow * 2, ph + grow * 2, 28);
+      eg.fill();
+    }
+    sg.globalCompositeOperation = 'destination-in';
+    sg.drawImage(edge, 0, 0);
+    g.save();
+    g.globalAlpha = 0.3;
+    g.fillStyle = '#4a3a17';
+    g.beginPath();
+    g.roundRect(px - 10, py - 10, pw + 20, ph + 20, 30);
+    g.fill();
+    g.restore();
+    g.drawImage(sq, px - pad, py - pad);
   }
 
   // 3. creek: muddy bank, splatted water, rocks on both banks

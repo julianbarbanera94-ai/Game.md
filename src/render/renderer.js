@@ -1,4 +1,4 @@
-import { TILE, PLAYER_HEIGHT, WORLD_W } from '../config.js';
+import { TILE, PLAYER_HEIGHT, WORLD_W, WORLD_H } from '../config.js';
 import { CREEK, PLOTS } from '../data/world.js';
 import { isPlotAvailable, isWet } from '../systems/farming.js';
 import { darkness, formatClock } from '../systems/time.js';
@@ -40,7 +40,9 @@ export class Renderer {
   }
 
   buildStatic(camera) {
-    this.groundRes = Math.min(1.5, Math.max(1, camera.scale * this.dpr));
+    // the ground is one big canvas: keep it under ~12M pixels so phones stay happy
+    const maxRes = Math.sqrt(12e6 / (WORLD_W * WORLD_H));
+    this.groundRes = Math.min(1.5, maxRes, Math.max(1, camera.scale * this.dpr));
     this.ground = buildGround(this.assets, this.groundRes, this.world.groundDrawables);
   }
 
@@ -79,10 +81,12 @@ export class Renderer {
     }
     items.push({ player: true, sortY: game.state.player.y });
     for (const ac of game.actors.list()) items.push({ animal: ac, sortY: ac.y });
+    for (const n of game.npcs.list()) items.push({ npc: n, sortY: n.y });
     items.sort((a, b) => a.sortY - b.sortY);
     for (const d of items) {
       if (d.player) this.drawPlayer(g, game);
       else if (d.animal) this.drawAnimal(g, game, d.animal);
+      else if (d.npc) this.drawNpc(g, game, d.npc);
       else this.drawSprite(g, d);
     }
 
@@ -140,6 +144,92 @@ export class Renderer {
       g.beginPath();
       g.roundRect(x, y, w, h, 18);
       g.fill();
+      g.restore();
+    }
+  }
+
+  // Villager: the player sprite colour-shifted and scaled until NPC art exists.
+  tintedFrame(key, tint) {
+    this.tintCache ||= new Map();
+    const id = `${key}|${tint.shirt}|${tint.pants}|${tint.hair}`;
+    if (this.tintCache.has(id)) return this.tintCache.get(id);
+    const img = this.assets.get(key);
+    if (!img) return null;
+    const c = document.createElement('canvas');
+    c.width = img.width;
+    c.height = img.height;
+    const g = c.getContext('2d');
+    g.drawImage(img, 0, 0);
+    const data = g.getImageData(0, 0, c.width, c.height);
+    const d = data.data;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] < 8) continue;
+      const [h, s, v] = rgbToHsv(d[i], d[i + 1], d[i + 2]);
+      let nh = null;
+      let nv = v;
+      let ns = s;
+      if (s > 0.35 && (h >= 195 && h <= 265)) nh = tint.pants; // blue overalls
+      else if (s > 0.4 && (h >= 345 || h <= 12) && v > 0.35) nh = tint.shirt; // red shirt
+      else if (h >= 10 && h <= 45 && v < 0.4 && s > 0.3) { // dark brown hair
+        nv = Math.min(1, v * tint.hair);
+        ns = tint.hair > 1.3 ? s * 0.8 : s;
+      }
+      if (nh == null && nv === v) continue;
+      const [r, gg, b] = hsvToRgb(nh ?? h, ns, nv);
+      d[i] = r;
+      d[i + 1] = gg;
+      d[i + 2] = b;
+    }
+    g.putImageData(data, 0, 0);
+    this.tintCache.set(id, c);
+    return c;
+  }
+
+  drawNpc(g, game, n) {
+    const def = n.def;
+    const f = playerFrame(n.facing, n.moving, n.t, null);
+    const img = this.tintedFrame(f.key, def.tint);
+    if (!img) return;
+    const k = PLAYER_FRAME_SCALE * def.scale;
+    const w = img.width * k;
+    const h = img.height * k;
+    g.fillStyle = 'rgba(25,35,10,0.32)';
+    g.beginPath();
+    g.ellipse(n.x, n.y - 2, 19 * def.scale, 7 * def.scale, 0, 0, Math.PI * 2);
+    g.fill();
+    g.save();
+    g.translate(n.x, n.y);
+    if (f.flip) g.scale(-1, 1);
+    g.drawImage(img, -w * 0.5, -h * (306 / 320), w, h);
+    g.restore();
+    // name tag when close, and a marker when they have something for the player
+    const p = game.state.player;
+    const near = Math.hypot(n.x - p.x, n.y - p.y) < TILE * 3;
+    const top = n.y - h * (306 / 320) + 6;
+    const mark = game.npcMarker(n.id);
+    if (near) {
+      g.save();
+      g.font = '700 13px system-ui, sans-serif';
+      g.textAlign = 'center';
+      const tw = g.measureText(def.name).width + 12;
+      g.fillStyle = 'rgba(20,28,22,0.78)';
+      g.beginPath();
+      g.roundRect(n.x - tw / 2, top - 22, tw, 18, 8);
+      g.fill();
+      g.fillStyle = '#fff4d6';
+      g.fillText(def.name, n.x, top - 9);
+      g.restore();
+    }
+    if (mark) {
+      const bob = Math.sin(game.clockSeconds * 4) * 2;
+      g.save();
+      g.font = '800 20px system-ui, sans-serif';
+      g.textAlign = 'center';
+      g.lineWidth = 4;
+      g.strokeStyle = 'rgba(40,25,5,0.85)';
+      g.fillStyle = mark === '?' ? '#8be06a' : '#ffd84a';
+      g.strokeText(mark, n.x, top - (near ? 30 : 10) + bob);
+      g.fillText(mark, n.x, top - (near ? 30 : 10) + bob);
       g.restore();
     }
   }
@@ -424,6 +514,7 @@ export class Renderer {
     g.globalCompositeOperation = 'lighter';
     const lights = [[17.7 * TILE, 7.6 * TILE, 200], [game.state.player.x, game.state.player.y - 40, 120]];
     for (const p of game.state.placed) if (DECORATIONS[p.type]?.light) lights.push([p.x * TILE, (p.y - 1.2) * TILE, 150]);
+    for (const d of this.world.drawables) if (d.light) lights.push([d.x, d.y - 1.2 * TILE, 150]);
     for (const [x, y, r] of lights) {
       const grad = g.createRadialGradient(x, y, 0, x, y, r);
       grad.addColorStop(0, `rgba(255,190,90,${dark * 0.28})`);
@@ -433,4 +524,23 @@ export class Renderer {
     }
     g.restore();
   }
+}
+
+function rgbToHsv(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  let h = 0;
+  if (d) {
+    if (max === r) h = ((g - b) / d + 6) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+  }
+  return [h, max ? d / max : 0, max];
+}
+
+function hsvToRgb(h, s, v) {
+  const c = v * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = v - c;
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
 }

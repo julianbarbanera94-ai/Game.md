@@ -2,6 +2,8 @@ import { tickGrowth } from './farming.js';
 import { minutesUntilMorning } from './time.js';
 import { morning, tickConstruction } from './buildings.js';
 import { tickAnimals } from './animals.js';
+import { rollover as rolloverOrders } from './orders.js';
+import { rollover as rolloverShops } from './shops.js';
 import { NULL_BUS } from '../core/events.js';
 
 // Advance the shared world clock. Everything time-based hangs off this.
@@ -16,7 +18,11 @@ export function advanceTime(state, minutes, bus = NULL_BUS) {
     state.time += step;
     minutes -= step;
     tickConstruction(state, bus);
-    if (step === toMorning) morning(state, bus);
+    if (step === toMorning) {
+      morning(state, bus);
+      rolloverShops(state);
+      rolloverOrders(state, bus);
+    }
   }
 }
 

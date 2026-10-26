@@ -232,3 +232,14 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .live-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .live-buttons button { flex: 1 1 140px; padding: 10px; }
 .modal button.danger { background: #f6d9cf; border-color: #c4623c; color: #8f2f12; }
+
+/* ---- village: dialogue, notice board */
+.talk, .board { padding: 14px 16px 16px; }
+.talk-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.talk-head small { display: block; color: #6b5638; }
+.portrait { width: 52px; height: 52px; border-radius: 50%; border: 3px solid #7b5530; color: #fff; font-weight: 800; font-size: 24px; display: grid; place-items: center; text-shadow: 0 2px 2px rgba(0,0,0,0.4); flex: none; }
+.say { margin: 0 0 12px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.65); border: 1px solid #e0c99a; line-height: 1.45; min-height: 3.2em; }
+.choices { display: flex; flex-direction: column; gap: 8px; }
+.choices button { text-align: left; padding: 10px 12px; }
+.board h3 { margin: 12px 0 6px; font-size: 15px; }
+.row.accepted { border-color: #6aa84f; background: rgba(214, 240, 200, 0.6); }

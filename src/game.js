@@ -17,6 +17,13 @@ import * as Animals from './systems/animals.js';
 import * as Clearing from './systems/clearing.js';
 import { SPECIES, productLabel } from './data/animals.js';
 import { AnimalActors } from './world/animalActors.js';
+import { NpcActors } from './world/npcActors.js';
+import { NPCS } from './data/npcs.js';
+import * as Relations from './systems/relations.js';
+import * as Orders from './systems/orders.js';
+import * as Shops from './systems/shops.js';
+import { awayText, presentNow } from './systems/npcs.js';
+import { ROAD_Y, VILLAGE_X0 } from './data/village.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
 import { Camera } from './world/camera.js';
 import { Effects } from './render/effects.js';
@@ -28,6 +35,7 @@ const PLOT_AT = new Map(PLOTS.map((p) => [`${p.tx},${p.ty}`, p]));
 const FEET = { w: 13, h: 7 }; // half-size of the player's collision box (px)
 const ACTION_TIME = 0.38;
 const AUTOSAVE_SECONDS = 60;
+const ROAD_CLEARING_COST = 150;
 const ANIMAL_REACH = 58; // px from the player's feet to an animal's feet
 const NO_SAVING_TEXT = "Saving is unavailable: this device isn't letting the game keep saved data (storage is blocked). You can play, but progress will be lost when you close the game.";
 
@@ -45,6 +53,7 @@ export class Game {
     this.interiors = { house: buildInterior('house') };
     this.placement = null; // { type, x, y, valid } while placing a building
     this.actors = new AnimalActors();
+    this.npcs = new NpcActors();
     this.effects = new Effects();
     this.hud = new Hud(this);
     this.panels = new Panels(this);
@@ -112,6 +121,7 @@ export class Game {
     this.running = true;
     this.placement = null;
     this.applyCleared();
+    this.applyWorldFlags();
     this.setCameraWorld();
     this.camera.follow(state.player.x, state.player.y - 40, 0, true);
     this.hud.cache = {};
@@ -163,6 +173,11 @@ export class Game {
 
     this.actors.sync(this.state);
     if (!paused) this.actors.update(dt);
+    if (!this.interior) {
+      this.npcs.sync(this.state);
+      if (!paused) this.npcs.update(dt);
+      this.checkVillageVisit();
+    }
     if (this.placement) this.updatePlacement();
     this.target = paused ? null : this.placement ? this.placementTarget() : this.resolveTarget();
     // A tap that landed mid-action (or just before a target was in reach) is
@@ -189,6 +204,10 @@ export class Game {
       if (e.code === 'Escape') {
         e.preventDefault();
         this.panels.close();
+        return true;
+      }
+      if (this.panels.current?.onKey?.(e)) {
+        e.preventDefault();
         return true;
       }
       return false; // let Enter/Space activate the focused panel button
@@ -248,10 +267,28 @@ export class Game {
         ? { id: r.uid, uid: r.uid, kind: 'storage', x: r.x * TILE, y: (r.y + 0.15) * TILE }
         : { id: r.uid, uid: r.uid, kind: 'livestock', x: r.x * TILE, y: (r.y + 0.75) * TILE }));
     const clearable = Clearing.clearables(this.state).map((c) => ({ kind: 'clear', uid: `scn${c.index}`, x: c.x * TILE, y: c.y * TILE + 6 }));
-    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable]);
+    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables()]);
     const animal = this.nearestAnimal();
     if (animal && (!object || animal.dist <= object.dist)) return animal;
     return object;
+  }
+
+  // '?' = they are waiting for goods you carry, '!' = a quest asks you to talk to them.
+  npcMarker(id) {
+    const s = this.state;
+    if (Orders.acceptedOrders(s).some((o) => o.giver === id && Orders.have(s, o) >= o.qty)) return '?';
+    const talkQuest = Quests.trackedQuests(s).some(({ def, state: qs }) => qs && def.objectives.some((o, i) => o.type === 'talk' && o.id === id && qs.progress[i] < o.count));
+    return talkQuest ? '!' : null;
+  }
+
+  // Villagers you can talk to, plus the closed door of anyone who is away.
+  npcInteractables() {
+    const out = this.npcs.list().map((a) => ({ kind: 'npc', uid: `npc:${a.id}`, x: a.x, y: a.y }));
+    for (const def of Object.values(NPCS)) {
+      if (def.wander || presentNow(def, this.state.time)) continue;
+      out.push({ kind: 'closed', uid: `closed:${def.id}`, x: def.door[0] * TILE, y: (def.door[1] + 0.5) * TILE });
+    }
+    return out;
   }
 
   // The closest wandering animal within reach, with the action a tap would do.
@@ -306,8 +343,14 @@ export class Game {
     const building = (id) => s.buildings[id]?.job ? ' (builders at work)' : '';
     const shed = uid && s.placed.find((r) => r.uid === uid);
     const barnRec = shed && BUILDINGS[shed.type]?.livestock ? shed : null;
+    const npcId = uid && /^(npc|closed):/.test(String(uid)) ? String(uid).split(':')[1] : null;
+    const npcDef = npcId ? NPCS[npcId] : null;
     const scn = kind === 'clear' ? Clearing.clearInfo(Number(String(uid).slice(3))) : null;
     const labels = {
+      npc: npcDef ? `Talk to ${npcDef.name} (${npcDef.role})` : 'Talk',
+      closed: npcDef ? `${npcDef.place} is closed — ${awayText(npcDef, s.time).replace(/^.*? is away — /, '')}` : 'Closed',
+      notice_board: 'Read the notice board',
+      road_block: s.flags.roadOpen ? 'The road is open' : 'Inspect the fallen tree',
       clear: scn ? `Clear ${scn.name} (${scn.cost} coins)` : 'Clear',
       livestock: barnRec?.level >= 1
         ? `Open ${BUILDINGS[barnRec.type].name.toLowerCase()} (${Animals.animalsAt(s, barnRec.uid).length}/${Animals.capacity(barnRec)} animals)`
@@ -322,10 +365,9 @@ export class Game {
       tool_shed: `Workshop — upgrades${building('tool_shed')}`,
       market: 'Open the market stall',
       village_sign: 'Read the signpost',
-      road_block: 'Inspect the fallen tree',
       garden_sign: s.unlocks.gardenExpansion ? 'South garden bed (owned)' : 'Expand the garden',
     };
-    const ok = kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
+    const ok = kind === 'closed' ? false : kind === 'clear' ? !!scn && s.coins >= scn.cost : kind === 'well' ? s.can.water < s.can.capacity : kind === 'storage' || kind === 'livestock' ? shed?.level >= 1 : true;
     return { objectKind: kind, x, y, label: labels[kind], ok };
   }
 
@@ -423,11 +465,127 @@ export class Game {
           [{ label: `Clear it (${info.cost} coins)`, primary: true, action: () => this.clearScenery(index) }, { label: 'Leave it' }]);
         break;
       }
-      case 'road_block':
-        this.panels.dialog('Fallen Tree', 'A storm-felled trunk blocks the road to Willowmere. It will be cleared once the village opens in a later update.');
+      case 'road_block': {
+        const quest = s.quests.q_open_road;
+        if (s.flags.roadOpen) break;
+        if (quest.status === 'locked') {
+          this.panels.dialog('Fallen Tree', 'A storm-felled trunk blocks the road to Willowmere. Get your farm going first — sell some produce at the market stall and a work crew will be available.');
+        } else if (s.coins < ROAD_CLEARING_COST) {
+          this.panels.dialog('Fallen Tree', `A work crew will clear the trunk for ${ROAD_CLEARING_COST} coins. You have ${s.coins}.`);
+        } else {
+          this.panels.dialog('Fallen Tree', `Hire a work crew to clear the trunk and open the road to Willowmere village? It costs ${ROAD_CLEARING_COST} coins.`,
+            [{ label: `Open the road (${ROAD_CLEARING_COST} coins)`, primary: true, action: () => this.openRoad() }, { label: 'Not yet' }]);
+        }
+        break;
+      }
+      case 'npc': {
+        const id = String(this.target?.uid || '').split(':')[1];
+        if (NPCS[id]) this.panels.talk(id);
+        break;
+      }
+      case 'closed': {
+        this.hud.toast(this.target?.label || 'Closed', 'warn');
+        this.sfx.play('error');
+        break;
+      }
+      case 'notice_board':
+        this.panels.board();
         break;
       default:
     }
+  }
+
+  openRoad() {
+    const s = this.state;
+    if (s.flags.roadOpen) return;
+    if (s.coins < ROAD_CLEARING_COST) {
+      this.hud.toast('Not enough coins', 'warn');
+      return;
+    }
+    s.coins -= ROAD_CLEARING_COST;
+    s.flags.roadOpen = true;
+    this.bus.emit('roadOpened', { cost: ROAD_CLEARING_COST });
+    this.applyWorldFlags();
+    this.effects.burst('dirt', 34.3 * TILE, 12.3 * TILE - 20);
+    this.sfx.play('quest');
+    this.hud.toast('The road to Willowmere is open!', 'good');
+    this.autosave('road');
+  }
+
+  // The fallen tree and the invisible gate behind it exist only while the road is shut.
+  applyWorldFlags() {
+    const rb = this.world.roadBlock;
+    const open = !!this.state.flags.roadOpen;
+    if (rb && rb.open !== open) {
+      rb.open = open;
+      const list = (arr, item) => {
+        if (!item) return;
+        const at = arr.indexOf(item);
+        if (open && at >= 0) arr.splice(at, 1);
+        else if (!open && at < 0) arr.push(item);
+      };
+      list(this.world.drawables, rb.drawable);
+      list(this.world.colliders, rb.collider);
+      list(this.world.colliders, rb.gate);
+    }
+    this.refreshColliders();
+  }
+
+  checkVillageVisit() {
+    const s = this.state;
+    if (s.flags.visitedVillage || s.player.x < (VILLAGE_X0 + 3) * TILE) return;
+    s.flags.visitedVillage = true;
+    this.bus.emit('visit', { id: 'village' });
+    this.hud.toast('Welcome to Willowmere!', 'good');
+  }
+
+  // ---- village transactions (called by the panels)
+  storeBuy(itemId, qty) {
+    const r = Shops.storeBuy(this.state, itemId, qty, this.bus);
+    if (!r.ok) {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    } else {
+      this.sfx.play('coin');
+      this.hud.toast(`Bought ${qty} ${getItem(itemId).name}`);
+    }
+    this.panels.rerender();
+    return r;
+  }
+
+  traderSell(itemId, qty) {
+    const r = Shops.traderSell(this.state, itemId, qty, this.bus);
+    if (!r.ok) {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    } else {
+      this.sfx.play('coin');
+      this.hud.toast(`Sold for ${r.total} coins`, 'good');
+    }
+    this.panels.rerender();
+    return r;
+  }
+
+  acceptOrder(id) {
+    const r = Orders.accept(this.state, id, this.bus);
+    this.hud.toast(r.ok ? 'Request accepted — bring the goods to them' : r.reason, r.ok ? 'good' : 'warn');
+    this.sfx.play(r.ok ? 'click' : 'error');
+    this.panels.rerender();
+    return r;
+  }
+
+  deliverOrder(id, giver) {
+    const r = Orders.deliver(this.state, id, giver, this.bus);
+    if (r.ok) {
+      this.sfx.play('quest');
+      this.hud.toast(`Delivered! +${r.order.coins} coins, +${r.order.rep} friendship with ${NPCS[r.order.giver].name}`, 'good');
+      this.autosave('deliver');
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    this.panels.rerender();
+    return r;
   }
 
   clearScenery(index) {

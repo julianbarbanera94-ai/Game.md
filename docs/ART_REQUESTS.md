@@ -30,3 +30,10 @@
 - One file per sprite; naming like `house_l2.png`, `carrot_ready.png`.
 - Same lighting direction and palette as `docs/reference/approved_starting_area_reference.jpg`.
 - A CSV/JSON giving each sprite's size, anchor and collision footprint.
+
+## Phase 7 (village) art still needed
+
+- Villager sprites: farmer, shopkeeper (Mara), blacksmith (Bram), innkeeper (Odette), trader (Tobias), child (Wren): 4 directions, idle + walk, 256-320 px frames, consistent anchor.
+- Portraits for the dialogue panel (the panel currently shows a coloured initial).
+- Dedicated village buildings: general store, smithy, carpenter, inn (currently farm sprites reused), market stall variants, notice board, fountain, dock.
+- Shop interiors (overhead) for the four shops.
