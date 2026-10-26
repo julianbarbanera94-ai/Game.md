@@ -12,6 +12,7 @@ export const UNLOCKS = [
   { id: 'land_north', track: 'Farming', name: 'North field (+8 plots)', requires: { unlock: 'northField' } },
   { id: 'can_upgrade', track: 'Farming', name: 'Bigger watering can (workshop level 2)', requires: { building: ['tool_shed', 2] } },
   { id: 'auto_water', track: 'Farming', name: 'Automatic watering (well level 2)', requires: { building: ['well', 2] } },
+  { id: 'sprinklers', track: 'Farming', name: 'Sprinklers (farm level 2)', requires: { level: 2 } },
   { id: 'chickens', track: 'Livestock', name: 'Chickens and eggs (chicken coop)', requires: { placed: 'chicken_coop' } },
   { id: 'cattle', track: 'Livestock', name: 'Cows, sheep, milk and wool (barn)', requires: { placed: 'barn' } },
   { id: 'storage', track: 'Buildings', name: 'Storage shed', requires: { placed: 'storage_shed' } },

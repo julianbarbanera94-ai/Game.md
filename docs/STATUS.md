@@ -149,6 +149,21 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
 
+## Sprinklers
+
+- Unlocks at **farm level 2** (shown in the Progress tree and announced). Build one from the planner
+  (Build & decorate) for 150 coins.
+- It may stand on the garden's paths (never on a plot). It keeps every planted, growing plot within about
+  2 tiles each way watered, all day, while the clock runs, including overnight. One on the path between the
+  two beds, near the middle, waters all 16 garden plots. The placement preview shows its square and the
+  plots it will reach.
+- Spinning water jets run each morning (6:00-6:30) and whenever it waters a dry plot. It can be moved or
+  picked up like other decorations, and it is saved with the farm.
+- The sprite is painted in code (`tools/paint_sprinkler.mjs`); a hand-painted one is on the art list.
+- Tests: `tests/unit/sprinklers.test.mjs` (4), `npm run test:sprinklers` (13 checks).
+- Rain and sprinklers now water at the start of every clock step, so a long skip (sleeping) grows crops
+  that were dry when it began.
+
 ## Phase 10: polish, animation and validation
 
 Full report: `docs/RELEASE_REPORT.md`. In short: original music, ambience and effects with separate volumes;

@@ -1,5 +1,6 @@
 import { TILE, PLAYER_HEIGHT, WORLD_W, WORLD_H } from '../config.js';
-import { CREEK, PLOTS } from '../data/world.js';
+import { CREEK, PLOTS, PLOTS_BY_ID } from '../data/world.js';
+import { plotsInRange } from '../systems/sprinklers.js';
 import { isPlotAvailable, isWet } from '../systems/farming.js';
 import { darkness, formatClock } from '../systems/time.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
@@ -100,11 +101,71 @@ export class Renderer {
       else this.drawSprite(g, d);
     }
 
+    this.drawSprinklers(g, game);
     this.drawPlacement(g, game);
     this.drawTarget(g, game);
     game.effects.draw(g);
     this.drawLighting(g, game, cam);
     this.drawWeather(g, game, cam);
+  }
+
+  // Spinning water jets from sprinklers that are running: every morning for
+  // half an hour and for a few seconds whenever one waters a dry plot.
+  drawSprinklers(g, game) {
+    const s = game.state;
+    const minute = s.time % 1440;
+    const morning = minute >= 360 && minute < 390;
+    const t = game.clockSeconds;
+    for (const rec of s.placed) {
+      const def = DECORATIONS[rec.type];
+      if (!def?.range) continue;
+      if (!morning && !((game.sprayUntil?.[rec.uid] || 0) > t)) continue;
+      const hx = rec.x * TILE, hy = rec.y * TILE - def.w * TILE * 0.68; // the spinning head
+      const R = def.range * TILE * 0.92;
+      g.save();
+      for (const jet of [0, Math.PI]) {
+        const a = t * 2.4 + jet;
+        const ex = Math.cos(a) * R, ey = Math.sin(a) * R * 0.62;
+        const pt = (k) => ({ x: hx + ex * k, y: hy + 34 * k + ey * k - Math.sin(k * Math.PI) * 46 });
+        // the jet itself: a soft streak along the arc
+        g.globalAlpha = 0.55;
+        g.strokeStyle = '#e4f6ff';
+        g.lineWidth = 3;
+        g.lineCap = 'round';
+        g.beginPath();
+        for (let i = 0; i <= 20; i++) {
+          const q = pt(i / 20);
+          if (i) g.lineTo(q.x, q.y); else g.moveTo(q.x, q.y);
+        }
+        g.stroke();
+        // droplets breaking off it
+        for (let i = 2; i <= 22; i++) {
+          const k = i / 22;
+          const q = pt(k);
+          g.globalAlpha = 0.9 * (1 - k * 0.4);
+          g.fillStyle = i % 3 ? '#bfe8ff' : '#ffffff';
+          g.beginPath();
+          g.arc(q.x + Math.sin(t * 11 + i * 1.7) * 3, q.y + Math.cos(t * 9 + i) * 2, 3.6 - k * 1.6, 0, Math.PI * 2);
+          g.fill();
+        }
+        // splash rings where it lands
+        const land = pt(1);
+        const ph = (t * 3 + jet) % 1;
+        g.globalAlpha = 0.7 * (1 - ph);
+        g.strokeStyle = '#d8f2ff';
+        g.lineWidth = 2;
+        g.beginPath();
+        g.ellipse(land.x, land.y, 6 + ph * 14, 3 + ph * 6, 0, 0, Math.PI * 2);
+        g.stroke();
+      }
+      // fine mist over the watered square
+      g.globalAlpha = 0.1;
+      g.fillStyle = '#d6efff';
+      g.beginPath();
+      g.ellipse(hx, hy + 34, R, R * 0.62, 0, 0, Math.PI * 2);
+      g.fill();
+      g.restore();
+    }
   }
 
   // Rain streaks with splashes, or drifting snow, over the visible world.
@@ -436,6 +497,22 @@ export class Renderer {
     for (const c of pl.check?.rects || []) {
       g.fillRect(c.x0, c.y0, c.x1 - c.x0, c.y1 - c.y0);
       g.strokeRect(c.x0, c.y0, c.x1 - c.x0, c.y1 - c.y0);
+    }
+    // a sprinkler shows the square it will water and the plots inside it
+    if (def?.range) {
+      const r = def.range, cx = pl.x, cy = pl.y - 0.15;
+      g.setLineDash([10, 6]);
+      g.strokeStyle = 'rgba(140,210,255,0.95)';
+      g.fillStyle = 'rgba(110,190,255,0.12)';
+      g.lineWidth = 2.5;
+      g.fillRect((cx - r) * TILE, (cy - r) * TILE, r * 2 * TILE, r * 2 * TILE);
+      g.strokeRect((cx - r) * TILE, (cy - r) * TILE, r * 2 * TILE, r * 2 * TILE);
+      g.setLineDash([]);
+      g.fillStyle = 'rgba(110,190,255,0.3)';
+      for (const id of plotsInRange(game.state, pl.x, pl.y)) {
+        const d = PLOTS_BY_ID[id];
+        g.fillRect(d.tx * TILE + 4, d.ty * TILE + 4, TILE - 8, TILE - 8);
+      }
     }
     if (img) {
       g.globalAlpha = 0.65;

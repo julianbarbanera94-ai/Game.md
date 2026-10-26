@@ -109,6 +109,10 @@ export class Game {
       this.vibrate([30, 40, 60]);
     });
     this.bus.on('constructionStarted', () => this.sfx.play('build'));
+    this.bus.on('sprinklerWatered', ({ uid }) => {
+      (this.sprayUntil ||= {})[uid] = this.clockSeconds + 6; // show the jets for a moment
+      if (this.running && !this.interior) this.sfx.play('water');
+    });
     this.bus.on('rainWatered', () => {
       const day = Math.floor(this.state.time / 1440);
       if (this.rainToastDay === day || !this.running) return;
@@ -1239,7 +1243,12 @@ export class Game {
       const text = clearable ? `A ${clearable.name} is in the way — cancel and clear it first` : 'Something is in the way — try another spot';
       return { ok: false, rects: hits, text };
     }
-    const zones = this.world.noBuild.filter((z) => overlaps(r, z));
+    const inGarden = DECORATIONS[this.placement?.type]?.inGarden;
+    if (inGarden) {
+      const plot = PLOTS.find((d) => overlaps(r, { x0: d.tx * TILE, y0: d.ty * TILE, x1: (d.tx + 1) * TILE, y1: (d.ty + 1) * TILE }));
+      if (plot) return { ok: false, rects: [{ x0: plot.tx * TILE, y0: plot.ty * TILE, x1: (plot.tx + 1) * TILE, y1: (plot.ty + 1) * TILE }], text: 'Not on a plot — put it on the path between the beds' };
+    }
+    const zones = this.world.noBuild.filter((z) => overlaps(r, z) && !(inGarden && z.name === 'the garden'));
     if (zones.length) return { ok: false, rects: [], text: `Can't build on ${zones[0].name} — try another spot` };
     const near = (x, y) => x > r.x0 - TILE * 0.7 && x < r.x1 + TILE * 0.7 && y > r.y0 - TILE * 0.5 && y < r.y1 + TILE * 0.9;
     if (this.world.interactables.some((it) => near(it.x, it.y))) {

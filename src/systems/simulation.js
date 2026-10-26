@@ -8,6 +8,7 @@ import { checkUnlocks } from './progress.js';
 import { rollover as rolloverShops } from './shops.js';
 import { NULL_BUS } from '../core/events.js';
 import { rainTick } from './weather.js';
+import { sprinklerTick } from './sprinklers.js';
 
 // Advance the shared world clock. Everything time-based hangs off this.
 // The advance is split at each 6:00 AM so morning events (auto-watering)
@@ -16,12 +17,14 @@ export function advanceTime(state, minutes, bus = NULL_BUS) {
   while (minutes > 0) {
     const toMorning = minutesUntilMorning(state.time);
     const step = Math.min(minutes, toMorning);
+    // rain and sprinklers water first, so crops grow through the whole step
+    rainTick(state, bus);
+    sprinklerTick(state, bus);
     tickGrowth(state, step);
     tickAnimals(state, step);
     state.time += step;
     minutes -= step;
     tickConstruction(state, bus);
-    rainTick(state, bus);
     if (step === toMorning) {
       morning(state, bus);
       rolloverShops(state);

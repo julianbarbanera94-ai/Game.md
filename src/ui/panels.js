@@ -230,7 +230,7 @@ export class Panels {
           const info = placeableInfo(s, type);
           const def = DECORATIONS[type] || BUILDINGS[type];
           const sprite = DECORATIONS[type] ? def.sprite : def.levels[0].sprite;
-          const desc = DECORATIONS[type] ? 'Decoration' : `${def.levels[0].effect} Takes ${def.levels[0].buildMinutes / 60} hours to build.`;
+          const desc = DECORATIONS[type] ? def.desc || 'Decoration' : `${def.levels[0].effect} Takes ${def.levels[0].buildMinutes / 60} hours to build.`;
           return el('div', { class: `row ${info.state === 'locked' ? 'locked' : ''}` }, img(sprite),
             el('div', { class: 'row-main' }, el('strong', {}, def.name), el('small', {}, desc),
               info.state === 'locked' ? el('small', { class: 'status locked' }, `Locked — requires: ${info.reason}`) : null),

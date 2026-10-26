@@ -74,7 +74,10 @@ export function startUpgrade(state, target, bus = NULL_BUS) {
 // Status of building something new from the planner.
 export function placeableInfo(state, type) {
   const deco = DECORATIONS[type];
-  if (deco) return { state: state.coins >= deco.cost ? 'available' : 'unaffordable', cost: deco.cost, def: deco, kind: 'decor', reason: `Needs ${deco.cost} coins` };
+  if (deco) {
+    if (!isRequirementMet(state, deco.requires)) return { state: 'locked', cost: deco.cost, def: deco, kind: 'decor', reason: requirementText(deco.requires) };
+    return { state: state.coins >= deco.cost ? 'available' : 'unaffordable', cost: deco.cost, def: deco, kind: 'decor', reason: `Needs ${deco.cost} coins` };
+  }
   const def = BUILDINGS[type];
   if (!def?.placeable) return { state: 'missing' };
   const first = def.levels[0];

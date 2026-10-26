@@ -106,6 +106,14 @@ export const DECORATIONS = {
   hay_bales: { id: 'hay_bales', name: 'Hay Bales', sprite: 'prop.hay_bales', w: 1.6, cost: 25, footprint: [1.4, 0.5] },
   lantern_post: { id: 'lantern_post', name: 'Lantern Post', sprite: 'prop.lantern_post', w: 0.7, cost: 50, footprint: [0.3, 0.25], light: true },
   trough: { id: 'trough', name: 'Water Trough', sprite: 'prop.trough', w: 1.6, cost: 40, footprint: [1.4, 0.5] },
+  // Waters every planted plot within `range` tiles each way (about a 5x5-tile square), all day.
+  // It may stand on the garden's walkways (never on a plot): one in the middle
+  // of the garden covers both beds.
+  sprinkler: {
+    id: 'sprinkler', name: 'Sprinkler', sprite: 'prop.sprinkler', w: 1.2, cost: 150, footprint: [0.4, 0.3],
+    requires: { level: 2 }, range: 2.4, inGarden: true,
+    desc: 'Waters every planted plot around it (about 2 tiles each way), all day. On the path between the garden beds, near the middle, it covers both beds.',
+  },
 };
 
 // Construction-stage sprites shown while a job is in progress (foundation,

@@ -43,3 +43,9 @@
 - Overhead tractors (small and large), facing east, ~92x58 and ~116x72 px drawn size (supply 2-3x), plus the plough, seeder, sprayer, reaper (header), and a crop trailer, ideally as separate transparent PNGs with a shared hitch/mount point.
 - A garage building (exterior, ~3.8 tiles wide).
 - Optional: wheel/dust effects, exhaust puffs, fuel and repair icons.
+
+## Sprinkler (new)
+
+`prop.sprinkler` is painted in code as a stand-in (brass rotary sprinkler on a ring of stones). Wanted: a
+hand-painted top-down sprite in the style of the other props, transparent PNG, about 300 x 340 px, anchored
+at the bottom centre, the spinning head about 60% up the image.
