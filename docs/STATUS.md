@@ -146,8 +146,29 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - The garden is fenced, so machine work happens in the **North Field**.
 - **Quests** (A Place for Machines, Horsepower, Take It for a Spin, Ploughing Day, Bringing in the Harvest) and achievements (Gearhead, Mechanised) from real events.
 - **Save v7**: vehicles, mounts, cargo, owned implements (validated; you always load standing outside).
-- Vehicle artwork is **painted in code as stand-ins** (`src/render/vehicleArt.js`); sprites for tractors, implements and trailers are needed (see `docs/ART_REQUESTS.md`).
+- Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
+
+## Phase 9: core gameplay integration
+
+Checked the whole loop against the Phase 9 hand-off and filled the gaps:
+
+- **World map** (M key or the Map button): the real painted world drawn small, with labels, you, villagers, vehicles, placed buildings and padlocks on the road, North Field and South bed until they open. Small screens show only the main labels.
+- **Bag** has category tabs (All, Seeds, Produce, Animal goods) with sell values, and a **Farmer** tab: farm level and XP, equipment (can, bag, vehicles, implements), records (harvests, sales, deliveries, quests, gifts) and friendship with each villager.
+- **Gifts**: "Here's a gift for you." in villager dialogue. Produce and animal goods only, one per villager per day; each villager has two favourites (+8 friendship, others +3). Saved; counts toward a records counter.
+- **Settings** (pause menu): sound on/off, volume, camera distance (Close / Normal / Far) and large touch controls. Saved with the game and validated on load.
+- **Load last save** in the pause menu (asks first). **Backup save**: the previous save is kept; if the latest one is damaged (a cut-off write), Continue loads the backup and says so on the title screen and in game.
+- Phone layout: the four HUD buttons stack in a column on narrow portrait screens.
+- Shared state: inventory, coins, plots, animals, vehicles, buildings, quests, unlocks, friendships, requests, time and settings all live in the one `state` object; every system reads and writes it, and the save is that object.
+- No duplicates: unit tests prove quest and achievement rewards, deliveries, land unlocks, implements, clearing, animal collection and gifts can only happen once, and refused purchases change nothing. Panel buttons also ignore a second tap within 350 ms.
+- Tests: `tests/unit/integration.test.mjs` (8), `npm run test:integration` (45 checks). One fresh save goes through every loop step: move and collide, till/plant/water/grow/harvest by hand, sell and buy, unlock land, build a coop and a garage, buy, feed and collect from a hen, buy a tractor and plough and plough the North Field, open the road, take a request, deliver it, give a gift, and use the map, farmer sheet and settings. Then it saves, reloads and checks that all of it comes back, tests Load last save, and checks recovery from a damaged save.
+
+Known gaps (not built in this phase):
+- **Crafting** (fences, gates, hay bales on the reference board) is not implemented. There are no wood, stone or nail resources and no art for crafted goods. The design says to add crafting only where it enriches progression, and decorations are already bought in the planner.
+- No health or energy bars: the design has no stamina system, so the reference board's 100/100 bars were left out.
+- Equipment is shown, not swapped: tools upgrade through buildings (workshop = bigger can) rather than gear slots.
+- Villager portraits are letter badges and villagers are recoloured farmer sprites until NPC art exists.
+- The integration test sets up a mid-game purse and some quest states to reach the later systems quickly. Each system's requirements are walked through step by step in its own suite (playthrough, village, progression, vehicles).
 
 ## Placing and moving buildings
 

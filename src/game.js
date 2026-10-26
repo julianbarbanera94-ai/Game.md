@@ -8,7 +8,7 @@ import * as Economy from './systems/economy.js';
 import * as Quests from './systems/quests.js';
 import { advanceTime, sleep } from './systems/simulation.js';
 import { clock, formatClock } from './systems/time.js';
-import { saveGame } from './systems/save.js';
+import { saveGame, loadGame } from './systems/save.js';
 import { CollisionWorld, overlaps } from './world/collision.js';
 import { buildInterior, placedColliders } from './world/layout.js';
 import * as Buildings from './systems/buildings.js';
@@ -42,6 +42,7 @@ const FACING = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 const PLOT_AT = new Map(PLOTS.map((p) => [`${p.tx},${p.ty}`, p]));
 const FEET = { w: 13, h: 7 }; // half-size of the player's collision box (px)
 const ACTION_TIME = 0.38;
+const ZOOM_FACTORS = { near: 0.82, normal: 1, far: 1.25 }; // Settings > Camera
 const AUTOSAVE_SECONDS = 60;
 const ROAD_CLEARING_COST = 150;
 const ANIMAL_REACH = 58; // px from the player's feet to an animal's feet
@@ -145,7 +146,7 @@ export class Game {
 
   start(state, { isNew }) {
     this.state = state;
-    this.sfx.muted = state.settings.muted;
+    this.applySettings();
     this.running = true;
     this.placement = null;
     this.lastEvent = activeEvent(state.time)?.id || null; // do not announce a festival that was already on
@@ -278,6 +279,7 @@ export class Game {
       else if (code === 'KeyE' || code === 'Space' || code === 'Action') this.toggleEngage();
       else if (code === 'KeyJ') this.panels.journal();
       else if (code === 'KeyB' || code === 'KeyI') this.panels.bag();
+      else if (code === 'KeyM') this.panels.map();
       return;
     }
     if (this.placement && (code === 'KeyE' || code === 'Space' || code === 'Action')) this.confirmPlacement();
@@ -286,6 +288,7 @@ export class Game {
     }
     else if (code === 'KeyB' || code === 'KeyI') this.panels.bag();
     else if (code === 'KeyJ') this.panels.journal();
+    else if (code === 'KeyM') this.panels.map();
     else if (code === 'Enter') {
       const done = Quests.trackedQuests(this.state).find((q) => q.state.status === 'complete');
       if (done) this.claimQuest(done.def.id);
@@ -812,6 +815,21 @@ export class Game {
     return r;
   }
 
+  giveGift(npcId, itemId) {
+    const r = Relations.gift(this.state, npcId, itemId, this.bus);
+    if (r.ok) {
+      this.sfx.play('quest');
+      const name = NPCS[npcId].name;
+      this.hud.toast(`${name} ${r.liked ? 'loves' : 'thanks you for'} the ${getItem(itemId).name}! +${r.gained} friendship`, 'good');
+      if (r.levelUp) this.hud.toast(`${name} now counts you as: ${r.levelUp}`, 'quest');
+      this.autosave('gift');
+    } else {
+      this.hud.toast(r.reason, 'warn');
+      this.sfx.play('error');
+    }
+    return r;
+  }
+
   clearScenery(index) {
     const r = Clearing.clear(this.state, index, this.bus);
     if (!r.ok) {
@@ -1324,7 +1342,40 @@ export class Game {
 
   toggleMute() {
     this.state.settings.muted = !this.state.settings.muted;
-    this.sfx.muted = this.state.settings.muted;
+    this.applySettings();
+  }
+
+  // Sound, camera distance and touch-control size from state.settings.
+  applySettings() {
+    const st = this.state.settings;
+    this.sfx.muted = st.muted;
+    this.sfx.volume = st.volume;
+    const zoom = ZOOM_FACTORS[st.zoom] || 1;
+    document.body.classList.toggle('big-controls', !!st.bigControls);
+    if (this.camera.zoom !== zoom) {
+      this.camera.zoom = zoom;
+      this.renderer.resize(window.innerWidth, window.innerHeight, this.camera);
+      if (this.running) this.camera.follow(this.state.player.x, this.state.player.y - 40, 0, true);
+    }
+  }
+
+  changeSetting(key, value) {
+    this.state.settings[key] = value;
+    this.applySettings();
+    this.autosave('settings');
+  }
+
+  // Go back to the last save (or its backup). Progress since then is lost.
+  loadLastSave() {
+    const r = loadGame(this.storage);
+    if (!r.ok) {
+      this.hud.toast(r.reason, 'warn');
+      return r;
+    }
+    this.stop();
+    this.start(r.state, { isNew: false });
+    if (r.recovered) this.hud.toast('The latest save was damaged, so the backup was loaded', 'warn');
+    return r;
   }
 
   quitToTitle() {

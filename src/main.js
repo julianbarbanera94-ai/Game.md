@@ -90,6 +90,7 @@ async function boot() {
   actionBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); input.press('Action'); });
   document.getElementById('btn-bag').addEventListener('click', () => game.running && !game.uiOpen && game.panels.bag());
   document.getElementById('btn-journal').addEventListener('click', () => game.running && !game.uiOpen && game.panels.journal());
+  document.getElementById('btn-map').addEventListener('click', () => game.running && !game.uiOpen && game.panels.map());
   document.getElementById('btn-menu').addEventListener('click', () => game.running && game.panels.menu());
   document.getElementById('btn-cancel').addEventListener('click', () => game.cancelPlacement());
   document.getElementById('btn-exit-vehicle').addEventListener('click', () => game.exitVehicle());
@@ -107,7 +108,7 @@ async function boot() {
     title.hidden = false;
     const prev = savePreview(storage);
     btnContinue.disabled = !prev;
-    info.textContent = prev ? `Saved game: Day ${clock(prev.time).day} · ${prev.coins} coins` : 'No saved game yet.';
+    info.textContent = prev ? `Saved game: Day ${clock(prev.time).day} · ${prev.coins} coins${prev.recovered ? ' (backup — the latest save is damaged)' : ''}` : 'No saved game yet.';
     // show the farm behind the title
     if (!game.state) game.state = createNewState();
   }
@@ -117,8 +118,12 @@ async function boot() {
   }
   btnContinue.addEventListener('click', () => {
     const r = loadGame(storage);
-    if (r.ok) begin(r.state, false);
-    else info.textContent = r.reason;
+    if (!r.ok) {
+      info.textContent = r.reason;
+      return;
+    }
+    begin(r.state, false);
+    if (r.recovered) game.hud.toast('Your latest save was damaged, so the backup save was loaded', 'warn');
   });
   btnNew.addEventListener('click', () => {
     // In-game dialog: window.confirm() is suppressed inside Android WebViews.

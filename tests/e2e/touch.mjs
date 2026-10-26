@@ -39,7 +39,7 @@ async function main() {
   await page.waitForSelector('#title:not([hidden])');
   const cdp = await ctx.newCDPSession(page);
   const touch = (type, pts) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: pts });
-  const center = (sel) => page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; }, sel);
+  const center = (sel) => page.evaluate((s) => { const el = document.querySelector(s); el.scrollIntoView({ block: 'nearest' }); const r = el.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; }, sel);
   let nextId = 10;
   async function tap(sel, held = [], ms = 50) {
     const c = await center(sel);
@@ -78,10 +78,14 @@ async function main() {
   await tap('[data-action="save"]', held);
   await page.waitForTimeout(250);
   check(await page.evaluate(() => !!localStorage.getItem('farmstead.save')), 'Save game works while the stick is held');
-  await tap('[data-action="sound"]', held);
+  await tap('[data-action="settings"]', held);
   await page.waitForTimeout(250);
-  check(await page.evaluate(() => window.farmstead.state.settings.muted === true), 'Sound toggle works while the stick is held');
-  await tap('[data-action="sound"]', held);
+  await tap('[data-setting="muted"][data-value="true"]', held);
+  await page.waitForTimeout(250);
+  check(await page.evaluate(() => window.farmstead.state.settings.muted === true), 'Sound toggle (Settings) works while the stick is held');
+  await tap('[data-setting="muted"][data-value="false"]', held);
+  await page.waitForTimeout(250);
+  await tap('.settings .actions button', held);
   await page.waitForTimeout(250);
   await tap('.modal button.primary', held);
   await page.waitForTimeout(250);

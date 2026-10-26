@@ -12,6 +12,7 @@ export class Camera {
     this.cssW = 0;
     this.cssH = 0;
     this.fit = null; // { w, h } of a room to show whole, instead of the follow zoom
+    this.zoom = 1; // Settings: >1 shows more of the world (smaller, sharper art), <1 less
   }
 
   // Show a whole room (interior) inside the window, or null to go back to the
@@ -37,9 +38,9 @@ export class Camera {
       return;
     }
     // ~20% wider view than before: the art is shown smaller, so it reads sharper
-    const tilesAcross = Math.min(25, Math.max(10, cssW / 55));
+    const tilesAcross = Math.min(25, Math.max(10, cssW / 55)) * this.zoom;
     let scale = cssW / (tilesAcross * 64);
-    scale = Math.min(scale, cssH / (10.2 * 64));
+    scale = Math.min(scale, cssH / (10.2 * this.zoom * 64));
     this.scale = scale;
     this.viewW = cssW / scale;
     this.viewH = cssH / scale;

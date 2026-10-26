@@ -7,6 +7,9 @@ import { createBuildingState } from './buildings.js';
 import { rollover as rolloverOrders } from './orders.js';
 import { seedSeenUnlocks } from './progress.js';
 
+// Camera distances offered in Settings (see world/camera.js).
+export const ZOOMS = ['near', 'normal', 'far'];
+
 // The complete persistent game state. Rendering-only data never lives here.
 export function createNewState() {
   const state = {
@@ -37,7 +40,7 @@ export function createNewState() {
     quests: createQuestState(),
     stats: { earned: 0 },
     flags: { introSeen: false, roadOpen: false, visitedVillage: false },
-    settings: { muted: false },
+    settings: { muted: false, volume: 0.55, zoom: 'normal', bigControls: false },
   };
   refreshAvailability(state);
   rolloverOrders(state);

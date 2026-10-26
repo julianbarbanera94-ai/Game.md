@@ -5,7 +5,7 @@ import { VILLAGE_X0 } from '../data/village.js';
 import { SPAWN } from '../data/world.js';
 import { CROPS } from '../data/crops.js';
 import { getItem } from '../data/items.js';
-import { createNewState } from './state.js';
+import { createNewState, ZOOMS } from './state.js';
 import { rollover as rolloverOrders } from './orders.js';
 import { rollover as rolloverShops } from './shops.js';
 import { refreshAvailability } from './quests.js';
@@ -248,7 +248,7 @@ export function deserialize(json) {
   if (data.relations && typeof data.relations === 'object') {
     for (const id of Object.keys(NPCS)) {
       const r = data.relations[id];
-      if (r && typeof r === 'object') s.relations[id] = { points: Math.floor(num(r.points, 0, 0, 999)), lastTalkDay: Math.floor(num(r.lastTalkDay, 0)) };
+      if (r && typeof r === 'object') s.relations[id] = { points: Math.floor(num(r.points, 0, 0, 999)), lastTalkDay: Math.floor(num(r.lastTalkDay, 0)), lastGiftDay: Math.floor(num(r.lastGiftDay, 0)) };
     }
   }
   if (data.orders && typeof data.orders === 'object') {
@@ -282,6 +282,9 @@ export function deserialize(json) {
     s.player.y = SPAWN.y * TILE;
   }
   s.settings.muted = !!data.settings?.muted;
+  s.settings.volume = num(data.settings?.volume, s.settings.volume, 0, 1);
+  if (ZOOMS.includes(data.settings?.zoom)) s.settings.zoom = data.settings.zoom;
+  s.settings.bigControls = !!data.settings?.bigControls;
   refreshAvailability(s);
   if (Array.isArray(data.seenUnlocks)) s.seenUnlocks = data.seenUnlocks.filter((id) => UNLOCKS.some((u) => u.id === id));
   else seedSeenUnlocks(s);
@@ -292,17 +295,33 @@ export function deserialize(json) {
   return s;
 }
 
-export function hasSave(storage) {
+// The save before the latest one is kept as a backup. If the latest save is
+// ever damaged (a write cut short, a corrupted file), loading falls back to it.
+export const BACKUP_KEY = `${SAVE_KEY}.backup`;
+
+const read = (storage, key) => {
   try {
-    return !!storage.getItem(SAVE_KEY);
+    return storage.getItem(key);
   } catch {
-    return false;
+    return null;
   }
+};
+
+export function hasSave(storage) {
+  return !!(read(storage, SAVE_KEY) || read(storage, BACKUP_KEY));
 }
 
 export function saveGame(storage, state) {
   try {
     const json = serialize(state);
+    // keep the previous save (if it is readable) as the backup before overwriting it
+    const prev = read(storage, SAVE_KEY);
+    if (prev && prev !== json) {
+      try {
+        deserialize(prev);
+        storage.setItem(BACKUP_KEY, prev);
+      } catch { /* the old save was damaged: keep the older backup */ }
+    }
     storage.setItem(SAVE_KEY, json);
     // Read it back: some storages accept writes and silently drop them.
     if (storage.getItem(SAVE_KEY) !== json) return { ok: false, reason: 'Could not save: the device did not keep the data' };
@@ -312,10 +331,10 @@ export function saveGame(storage, state) {
   }
 }
 
-export function loadGame(storage) {
+function loadKey(storage, key) {
   let raw;
   try {
-    raw = storage.getItem(SAVE_KEY);
+    raw = storage.getItem(key);
   } catch (err) {
     return { ok: false, reason: `Storage unavailable: ${err.message}` };
   }
@@ -327,8 +346,18 @@ export function loadGame(storage) {
   }
 }
 
+// Loads the latest save, or the backup when the latest one is damaged or
+// missing ({ recovered: true, reason } tells the player what happened).
+export function loadGame(storage) {
+  const main = loadKey(storage, SAVE_KEY);
+  if (main.ok) return main;
+  const backup = loadKey(storage, BACKUP_KEY);
+  if (backup.ok) return { ...backup, recovered: true, reason: main.reason };
+  return main;
+}
+
 export function savePreview(storage) {
   const r = loadGame(storage);
   if (!r.ok) return null;
-  return { time: r.state.time, coins: r.state.coins, savedAt: r.savedAt };
+  return { time: r.state.time, coins: r.state.coins, savedAt: r.savedAt, recovered: !!r.recovered };
 }

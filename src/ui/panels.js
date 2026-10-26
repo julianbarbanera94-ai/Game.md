@@ -1,9 +1,14 @@
 import { getItem } from '../data/items.js';
 import { QUESTS } from '../data/quests.js';
 import { sellPrice, shopEntries, upgradeStatus } from '../systems/economy.js';
+import { levelInfo } from '../systems/level.js';
+import { levelName } from '../systems/relations.js';
+import { NPC_LIST } from '../data/npcs.js';
+import { VEHICLES, IMPLEMENTS } from '../data/vehicles.js';
 import { BUILDINGS, DECORATIONS } from '../data/buildings.js';
 import { jobProgress, placeableInfo, storageSlots, upgradeInfo, FIXED_BUILDINGS } from '../systems/buildings.js';
-import { formatClock } from '../systems/time.js';
+import { clock, formatClock } from '../systems/time.js';
+import { savePreview } from '../systems/save.js';
 import { slotsUsed } from '../systems/inventory.js';
 import { SPECIES, productLabel } from '../data/animals.js';
 import { animalsAt, capacity, hoursFed, isHungry, moodText, readyCount, sellValue } from '../systems/animals.js';
@@ -13,6 +18,7 @@ import { guarded } from './guard.js';
 import { installVillagePanels } from './villagePanels.js';
 import { installJournalPanels } from './journalPanels.js';
 import { installVehiclePanels } from './vehiclePanels.js';
+import { installMapPanel } from './mapPanel.js';
 
 // Full-screen / modal interfaces. Every panel closes with Esc, the close
 // button or a click on the backdrop, and returns control to gameplay.
@@ -21,6 +27,40 @@ import { installVehiclePanels } from './vehiclePanels.js';
 export function moveRow(game, uid) {
   return el('div', { class: 'move-row' }, el('button', { 'data-move': uid, onclick: guarded(() => game.startMove(uid)) }, 'Move this building'),
     el('small', {}, 'Free. Pick it up and put it somewhere else.'));
+}
+
+const BAG_TABS = [
+  ['all', 'All', null], ['seed', 'Seeds', ['seed']], ['crop', 'Produce', ['crop']], ['animal', 'Animal goods', ['animal', 'feed']], ['farmer', 'Farmer', null],
+];
+const CATEGORY_LABEL = { seed: 'Seeds', crop: 'Produce', animal: 'Animal goods', feed: 'Feed' };
+
+// The character sheet: level, tools, machines and what the farmer has done.
+function farmerSheet(game) {
+  const s = game.state;
+  const lv = levelInfo(s);
+  const c = s.counters;
+  const stat = (label, value) => el('div', { class: 'stat' }, el('small', {}, label), el('strong', {}, String(value)));
+  const friends = NPC_LIST.map((n) => el('div', { class: 'friend' }, el('strong', {}, n.name), el('small', {}, levelName(s, n.id))));
+  const vehicles = s.vehicles.map((v) => VEHICLES[v.type]?.name).filter(Boolean);
+  const imps = s.owned.implements.map((id) => IMPLEMENTS[id]?.name).filter(Boolean);
+  return el('div', { class: 'farmer' },
+    el('div', { class: 'farmer-top' },
+      el('div', { class: 'portrait-big' }, el('img', { src: game.assets.url('player.idle_front'), alt: '' })),
+      el('div', { class: 'farmer-level' },
+        el('strong', {}, `Farm level ${lv.level}`),
+        el('div', { class: 'xpbar' }, el('span', { style: `width:${lv.next ? Math.round((lv.into / lv.span) * 100) : 100}%` })),
+        el('small', {}, lv.next ? `${lv.xp} XP · ${lv.next - lv.xp} to level ${lv.level + 1}` : `${lv.xp} XP · top level`),
+        el('small', {}, `Day ${clock(s.time).day} · ${s.coins.toLocaleString()} coins · ${s.stats.earned.toLocaleString()} earned in total`))),
+    el('h3', {}, 'Equipment'),
+    el('div', { class: 'stats' },
+      stat('Hoe', 'Basic'), stat('Watering can', `${s.can.capacity} water`), stat('Bag', `${game.bagSlots()} slots`),
+      stat('Vehicles', vehicles.length ? vehicles.join(', ') : 'none'), stat('Implements', imps.length ? imps.join(', ') : 'none')),
+    el('h3', {}, 'Records'),
+    el('div', { class: 'stats' },
+      stat('Crops harvested', c.harvest || 0), stat('Items sold', c.sell || 0), stat('Animal goods', c.collect || 0),
+      stat('Deliveries', c.deliver || 0), stat('Quests done', c.questsClaimed || 0), stat('Gifts given', c.gifts || 0)),
+    el('h3', {}, 'Villagers'),
+    el('div', { class: 'friends' }, friends));
 }
 
 export class Panels {
@@ -34,10 +74,10 @@ export class Panels {
     return !!this.current;
   }
 
-  show(title, body, { wide = false, onClose } = {}) {
+  show(title, body, { wide = false, xwide = false, onClose } = {}) {
     this.close(true);
     const close = el('button', { class: 'close', 'aria-label': 'Close', onclick: () => this.close() }, '✕');
-    const panel = el('div', { class: `modal${wide ? ' wide' : ''}`, role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
+    const panel = el('div', { class: `modal${wide ? ' wide' : ''}${xwide ? ' xwide' : ''}`, role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
       el('div', { class: 'modal-head' }, el('h2', {}, title), close), body);
     const backdrop = el('div', { class: 'backdrop', onclick: (e) => { if (e.target === backdrop) this.close(); } }, panel);
     this.root.replaceChildren(backdrop);
@@ -305,20 +345,39 @@ export class Panels {
     draw();
   }
 
-  // ---- inventory
-  bag() {
-    const s = this.game.state;
-    const entries = Object.entries(s.inventory);
-    const grid = el('div', { class: 'bag-grid', 'aria-label': `${slotsUsed(s.inventory)} of ${this.game.bagSlots()} slots used` },
-      entries.length
-        ? entries.map(([id, qty]) => {
-          const item = getItem(id);
-          return el('div', { class: 'bag-slot', title: item.name },
-            el('img', { src: this.game.assets.url(item.icon), alt: '' }), el('span', { class: 'slot-count' }, qty), el('small', {}, item.name));
-        })
-        : [el('p', { class: 'empty' }, 'Your bag is empty.')]);
-    const tools = el('p', { class: 'muted' }, `Tools: Hoe · Watering can (${s.can.water}/${s.can.capacity})`);
-    this.show('Bag', el('div', {}, grid, tools));
+  // ---- inventory: items by category, plus the farmer's tools and stats
+  bag(tab = 'all') {
+    const game = this.game;
+    const content = el('div', { class: 'bag' });
+    const render = () => {
+      const s = game.state;
+      const tabs = el('div', { class: 'tabs bag-tabs' }, BAG_TABS.map(([id, label]) => el('button', {
+        class: `tab${tab === id ? ' active' : ''}`, 'data-bag-tab': id, onclick: () => { tab = id; render(); } }, label)));
+      if (tab === 'farmer') {
+        content.replaceChildren(tabs, farmerSheet(game));
+        return;
+      }
+      const cats = BAG_TABS.find(([id]) => id === tab)[2];
+      const entries = Object.entries(s.inventory).filter(([id, q]) => q > 0 && (!cats || cats.includes(getItem(id)?.category)));
+      const grid = el('div', { class: 'bag-grid', 'aria-label': `${slotsUsed(s.inventory)} of ${game.bagSlots()} slots used` },
+        entries.length
+          ? entries.map(([id, qty]) => {
+            const item = getItem(id);
+            const price = sellPrice(s, id);
+            return el('div', { class: 'bag-slot', title: item.name, 'data-item': id },
+              el('img', { src: game.assets.url(item.icon), alt: '' }), el('span', { class: 'slot-count' }, qty), el('small', {}, item.name),
+              el('small', { class: 'worth' }, price ? `${price} each` : CATEGORY_LABEL[item.category] || ''));
+          })
+          : [el('p', { class: 'empty' }, tab === 'all' ? 'Your bag is empty.' : 'Nothing of this kind in your bag.')]);
+      const tools = el('div', { class: 'bag-tools' },
+        el('div', { class: 'tool' }, el('img', { src: game.assets.url('icon.tool_hoe'), alt: '' }), el('small', {}, 'Hoe')),
+        el('div', { class: 'tool' }, el('img', { src: game.assets.url('icon.tool_watering_can'), alt: '' }), el('small', {}, `Watering can ${s.can.water}/${s.can.capacity}`)));
+      content.replaceChildren(tabs, grid,
+        el('p', { class: 'muted bag-foot' }, `${slotsUsed(s.inventory)} of ${game.bagSlots()} slots used · `, el('span', { class: 'coin' }), ` ${s.coins.toLocaleString()} coins`),
+        tab === 'all' ? tools : null);
+    };
+    this.show('Bag', content, { wide: true }).render = render;
+    render();
   }
 
   // ---- quest log
@@ -329,10 +388,47 @@ export class Panels {
       status ? el('p', { class: `save-status ${status.ok ? 'ok' : 'bad'}`, role: 'status' }, status.text) : null,
       el('button', { class: 'primary', onclick: () => this.close() }, 'Resume'),
       el('button', { 'data-action': 'save', onclick: guarded(() => g.manualSave()) }, 'Save game'),
-      el('button', { 'data-action': 'sound', onclick: () => { g.toggleMute(); this.menu(); } }, g.state.settings.muted ? 'Sound: off' : 'Sound: on'),
+      el('button', { 'data-action': 'load', onclick: () => this.confirmLoad() }, 'Load last save'),
+      el('button', { 'data-action': 'settings', onclick: () => this.settings() }, 'Settings'),
       el('button', { onclick: () => this.controls() }, 'Controls'),
       el('button', { onclick: () => g.quitToTitle() }, 'Save & quit to title'));
     this.show('Paused', content);
+  }
+
+  confirmLoad() {
+    const prev = savePreview(this.game.storage);
+    if (!prev) {
+      this.dialog('Load last save', 'There is no saved game to go back to yet.', [{ label: 'Back', action: () => this.menu() }]);
+      return;
+    }
+    this.dialog('Load last save?',
+      `Go back to your save from Day ${clock(prev.time).day}, ${formatClock(prev.time)} (${prev.coins.toLocaleString()} coins)? ` +
+      'Anything you did since then will be lost.' + (prev.recovered ? '\n\nThe latest save is damaged; this is the backup.' : ''),
+      [{ label: 'Cancel', action: () => this.menu() }, { label: 'Load', primary: true, action: () => this.game.loadLastSave() }]);
+  }
+
+  // ---- settings (saved with the game)
+  settings() {
+    const g = this.game;
+    const content = el('div', { class: 'settings' });
+    const render = () => {
+      const st = g.state.settings;
+      const choice = (key, options) => el('div', { class: 'seg', role: 'group' },
+        options.map(([value, label]) => el('button', { class: st[key] === value ? 'active' : '', 'data-setting': key, 'data-value': String(value),
+          'aria-pressed': String(st[key] === value), onclick: () => { g.changeSetting(key, value); render(); } }, label)));
+      const vol = el('input', { type: 'range', min: '0', max: '100', step: '5', value: String(Math.round(st.volume * 100)), 'data-setting': 'volume',
+        'aria-label': 'Sound volume', oninput: (e) => { g.changeSetting('volume', Number(e.target.value) / 100); volLabel.textContent = `${e.target.value}%`; } });
+      const volLabel = el('span', { class: 'muted' }, `${Math.round(st.volume * 100)}%`);
+      content.replaceChildren(
+        el('div', { class: 'set-row' }, el('strong', {}, 'Sound'), choice('muted', [[false, 'On'], [true, 'Off']])),
+        el('div', { class: 'set-row' }, el('strong', {}, 'Volume'), el('div', { class: 'range' }, vol, volLabel)),
+        el('div', { class: 'set-row' }, el('strong', {}, 'Camera'), choice('zoom', [['near', 'Close'], ['normal', 'Normal'], ['far', 'Far']])),
+        el('div', { class: 'set-row' }, el('strong', {}, 'Touch controls'), choice('bigControls', [[false, 'Normal'], [true, 'Large']])),
+        el('p', { class: 'muted' }, 'Settings are saved with your game. The game also saves itself every minute, when you sleep and when you leave.'),
+        el('div', { class: 'actions' }, el('button', { onclick: () => this.menu() }, 'Back')));
+    };
+    this.show('Settings', content).render = render;
+    render();
   }
 
   controls() {
@@ -340,7 +436,7 @@ export class Panels {
       'Move: WASD / arrow keys, or the on-screen stick.\n\n' +
       'Act / interact: E or Space, or the action button. The action adapts to what you face: till, plant, water, harvest, or use buildings.\n\n' +
       'Hotbar: 1–9 or tap a slot to choose which seeds to plant.\n\n' +
-      'B: bag · J: journal · Esc: pause menu · Enter: claim a completed quest.',
+      'B: bag · J: journal · M: map · Esc: pause menu · Enter: claim a completed quest.',
       [{ label: 'Back', action: () => this.menu() }]);
   }
 }
@@ -348,3 +444,4 @@ export class Panels {
 installVillagePanels(Panels);
 installJournalPanels(Panels);
 installVehiclePanels(Panels);
+installMapPanel(Panels);

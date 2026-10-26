@@ -8,6 +8,7 @@ const h = (hour, min = 0) => hour * 60 + min;
 export const NPCS = {
   mara: {
     id: 'mara', name: 'Mara', role: 'Shopkeeper', place: 'General Store',
+    likes: ['strawberry', 'egg'], // favourite gifts
     tint: { shirt: 135, pants: 40, hair: 1.7 }, scale: 0.97, accent: '#6fae5a',
     door: [43.4, 8.4], shop: 'general',
     schedule: [{ from: h(7), to: h(19), at: [43.4, 8.95], facing: 'down' }],
@@ -26,6 +27,7 @@ export const NPCS = {
   },
   bram: {
     id: 'bram', name: 'Bram', role: 'Blacksmith', place: 'Smithy',
+    likes: ['potato', 'milk'], // favourite gifts
     tint: { shirt: 28, pants: 205, hair: 0.55 }, scale: 1.08, accent: '#c0653a',
     door: [48.8, 8.2],
     schedule: [{ from: h(8), to: h(17), at: [47.5, 8.9], facing: 'down' }],
@@ -44,6 +46,7 @@ export const NPCS = {
   },
   odette: {
     id: 'odette', name: 'Odette', role: 'Innkeeper', place: 'Willow Inn',
+    likes: ['tomato', 'pumpkin'], // favourite gifts
     tint: { shirt: 320, pants: 280, hair: 2.1 }, scale: 0.96, accent: '#b0507a',
     door: [55.4, 17.0],
     schedule: [{ from: h(10), to: h(22), at: [55.4, 17.75], facing: 'down' }],
@@ -62,6 +65,7 @@ export const NPCS = {
   },
   tobias: {
     id: 'tobias', name: 'Tobias', role: 'Trader', place: 'Market stall',
+    likes: ['wool', 'corn'], // favourite gifts
     tint: { shirt: 50, pants: 18, hair: 0.8 }, scale: 1.0, accent: '#d6a13a', shop: 'trader',
     door: [45.2, 15.1],
     schedule: [{ from: h(8), to: h(16), at: [46.5, 15.55], facing: 'left' }],
@@ -80,6 +84,7 @@ export const NPCS = {
   },
   wren: {
     id: 'wren', name: 'Wren', role: 'Village resident', place: 'Village square',
+    likes: ['carrot', 'strawberry'], // favourite gifts
     tint: { shirt: 175, pants: 330, hair: 1.4 }, scale: 0.86, accent: '#4aa6b0',
     door: [49.0, 15.4],
     wander: { from: h(7, 30), to: h(20), every: 90, points: [[47.6, 11.0], [50.6, 11.3], [49.0, 14.2], [51.8, 13.0], [46.2, 12.6]] },

@@ -101,6 +101,34 @@ export class Renderer {
     this.drawLighting(g, game, cam);
   }
 
+  // The whole world, small, for the map screen: the painted ground, plots and
+  // every building and vehicle, at `pxW` device pixels across. No people.
+  renderMap(game, pxW) {
+    const k = pxW / WORLD_W;
+    const c = document.createElement('canvas');
+    c.width = Math.round(WORLD_W * k);
+    c.height = Math.round(WORLD_H * k);
+    const g = c.getContext('2d');
+    g.imageSmoothingEnabled = true;
+    g.imageSmoothingQuality = 'high';
+    g.setTransform(k, 0, 0, k, 0, 0);
+    if (this.ground) g.drawImage(this.ground, 0, 0, WORLD_W, WORLD_H);
+    this.drawPlots(g, game);
+    this.drawPastures(g, game);
+    const items = [];
+    for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state)]) {
+      const d = d0.building ? this.resolveBuilding(game.state, d0) : d0;
+      if (d) items.push(d);
+    }
+    for (const v of game.state.vehicles) items.push({ vehicle: v, sortY: v.y + 14 });
+    items.sort((a, b) => a.sortY - b.sortY);
+    for (const d of items) {
+      if (d.vehicle) this.drawVehicleItem(g, game, d.vehicle);
+      else this.drawSprite(g, { ...d, progress: null });
+    }
+    return c;
+  }
+
   // Building drawable with its current level / construction-stage sprite.
   resolveBuilding(state, d) {
     const rec = d.uid ? state.placed.find((p) => p.uid === d.uid) : state.buildings[d.building];

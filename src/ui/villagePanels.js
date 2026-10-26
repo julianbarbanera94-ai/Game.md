@@ -73,12 +73,36 @@ export function installVillagePanels(Panels) {
           }, { primary: true });
         }
         choice(mine.length ? `Any work for me? (${mine.length} request${mine.length === 1 ? '' : 's'})` : 'Any work for me?', () => { view = 'work'; said = mine.length ? 'As a matter of fact, yes.' : "Nothing from me just now — check the notice board in the square."; render(); });
+        choice(Relations.canGift(s, npcId) ? "Here's a gift for you." : 'Here\'s a gift for you. (given today)', () => { view = 'gift'; said = Relations.canGift(s, npcId) ? 'Oh! For me?' : 'You already gave me something lovely today. Come back tomorrow!'; render(); });
         choice('How are you?', () => {
           const lines = def.chat[Relations.level(s, npcId)];
           said = lines[(day + chatCount++) % lines.length];
           render();
         });
         choice('Goodbye.', () => game.panels.close());
+      } else if (view === 'gift') {
+        choice('Back.', () => { view = 'main'; said = greetings[day % greetings.length]; render(); });
+        content.dataset.view = 'gift';
+        const can = Relations.canGift(s, npcId);
+        const items = Object.entries(s.inventory).filter(([id, q]) => q > 0 && Relations.giftable(getItem(id)));
+        const rows = !can ? []
+          : items.length ? items.map(([id, q]) => {
+            const item = getItem(id);
+            const liked = def.likes?.includes(id);
+            return el('div', { class: 'row' },
+              el('img', { src: game.assets.url(item.icon), alt: '' }),
+              el('div', { class: 'row-main' }, el('strong', {}, `${item.name}${liked ? ' ♥' : ''}`),
+                el('small', {}, `You have ${q}${liked ? ` · ${def.name}'s favourite (+${Relations.GIFT_POINTS.liked})` : ` · +${Relations.GIFT_POINTS.other} friendship`}`)),
+              el('div', { class: 'row-actions' }, el('button', { class: liked ? 'primary' : '', 'data-gift': id, onclick: guarded(() => {
+                const r = game.giveGift(npcId, id);
+                if (r.ok) { view = 'main'; said = r.liked ? 'This is my favourite! Thank you so much!' : 'How thoughtful of you. Thank you!'; }
+                render();
+              }) }, 'Give')));
+          })
+            : [el('p', { class: 'empty' }, 'You have nothing to give. Villagers like crops, eggs, milk and wool.')];
+        content.replaceChildren(head, bubble, el('div', { class: 'rows' }, rows),
+          el('div', { class: 'choices' }, choices.map((c, i) => el('button', { 'data-choice': i + 1, onclick: guarded(c.fn) }, `${i + 1}. ${c.label}`))));
+        return;
       } else {
         const mine = Orders.offersFor(s, npcId);
         choice('Back.', () => { view = 'main'; said = greetings[day % greetings.length]; render(); });

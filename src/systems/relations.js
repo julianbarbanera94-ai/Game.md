@@ -1,4 +1,6 @@
 import { NPCS } from '../data/npcs.js';
+import { getItem } from '../data/items.js';
+import * as Inv from './inventory.js';
 import { clock } from './time.js';
 import { NULL_BUS } from '../core/events.js';
 
@@ -13,9 +15,10 @@ export const LEVELS = [
   { name: 'Close friend', min: 80, discount: 0.1 },
 ];
 export const TALK_POINTS = 3;
+export const GIFT_POINTS = { liked: 8, other: 3 }; // one gift per villager per day
 
 export function rec(state, id) {
-  return (state.relations[id] ||= { points: 0, lastTalkDay: 0 });
+  return (state.relations[id] ||= { points: 0, lastTalkDay: 0, lastGiftDay: 0 });
 }
 
 export function levelIndex(points) {
@@ -61,4 +64,32 @@ export function talk(state, id, bus = NULL_BUS) {
 // Total village reputation = every villager's friendship points.
 export function reputation(state) {
   return Object.values(state.relations).reduce((n, r) => n + (r.points || 0), 0);
+}
+
+// Things a villager would accept as a present: produce and animal goods.
+export const giftable = (item) => !!item && (item.category === 'crop' || item.category === 'animal');
+
+export function canGift(state, id) {
+  return !!NPCS[id] && (state.relations[id]?.lastGiftDay || 0) !== clock(state.time).day;
+}
+
+// Give one item from the bag. Favourite gifts are worth more. The item leaves
+// the bag only if the gift is accepted (one per villager per day).
+export function gift(state, id, itemId, bus = NULL_BUS) {
+  const def = NPCS[id];
+  const item = getItem(itemId);
+  if (!def) return { ok: false, reason: 'Nobody to give it to' };
+  if (!giftable(item)) return { ok: false, reason: 'That is not something to give as a present' };
+  if (!canGift(state, id)) return { ok: false, reason: `You already gave ${def.name} a present today` };
+  if (!((state.inventory[itemId] || 0) >= 1)) return { ok: false, reason: `You have no ${item.name}` };
+  const r = rec(state, id);
+  const before = levelIndex(r.points);
+  Inv.remove(state.inventory, itemId, 1);
+  r.lastGiftDay = clock(state.time).day;
+  const liked = (def.likes || []).includes(itemId);
+  const gained = addPoints(state, id, liked ? GIFT_POINTS.liked : GIFT_POINTS.other);
+  const after = levelIndex(r.points);
+  bus.emit('gift', { id, item: itemId, liked });
+  if (after > before) bus.emit('friendshipLevel', { id, level: LEVELS[after].name, levelIndex: after });
+  return { ok: true, liked, gained, levelUp: after > before ? LEVELS[after].name : null };
 }
