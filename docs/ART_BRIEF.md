@@ -61,3 +61,16 @@ same building "upgraded", keeping the same viewing angle.
 4. Decorations, trees
 5. Crops, soil and ground textures
 6. Cottage furniture
+
+## Delivering the files
+
+Send a folder or zip of PNGs named exactly as in `ART_SIZES.csv` (for example
+`building4.house_l2.png`). Then run:
+
+    python3 -I tools/import_redrawn.py <folder> --dry-run   # check only
+    python3 -I tools/import_redrawn.py <folder>             # import what passes
+
+The tool removes a flat magenta background, trims, and checks each file is big
+enough and not an enlargement of something smaller. Failures are listed with the
+reason and the old sprite stays in use. Passing files go to `assets/redrawn/` and
+the game picks them up through the manifest. Nothing is enlarged or sharpened.

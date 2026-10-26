@@ -359,6 +359,9 @@ def main():
         phase5(args.phase5)
     if args.interior:
         interior_props()
+    redrawn = os.path.join(OUT, "redrawn", "redrawn.json")
+    if os.path.exists(redrawn):  # sprites imported by tools/import_redrawn.py win over derived ones
+        manifest["assets"].update(json.load(open(redrawn)))
     ensure(OUT)
     manifest["assets"] = dict(sorted(manifest["assets"].items()))
     with open(mpath, "w") as f:
