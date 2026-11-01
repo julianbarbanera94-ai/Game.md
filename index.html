@@ -3706,14 +3706,14 @@ function updateHunt(dt) {
   if (!hunt.cur) { if (time >= hunt.spawnAt && !room) nextFind(); return; }
   if (room) return;
   hunt.t += dt; if (hunt.hint > 0) hunt.hint -= dt;
-  if (hunt.t > 30 && hunt.hint <= 0 && Math.floor(hunt.t) % 25 === 5) hunt.hint = 4;
+  if (hunt.t > 20 && hunt.hint <= 0 && Math.floor(hunt.t) % 20 === 5) hunt.hint = 6;
   const [ax, ay] = hunt.cur.at;
   if (Math.hypot(ax - P.x, ay - P.y) < 1.9) foundIt();
 }
-function drawHuntArrow() { if (hunt.cur) drawArrowTo(hunt.cur.at[0], hunt.cur.at[1] - .6, '#ffd23f', hunt.hint); }
+function drawHuntArrow() { if (hunt.cur) drawArrowTo(hunt.cur.at[0], hunt.cur.at[1] - .6, '#ffd23f', hunt.hint, guideThumbs[hunt.cur.id] || (guideThumbs[hunt.cur.id] = findThumb(hunt.cur, 72))); }
 $('#findCard').addEventListener('pointerdown', e => {
-  e.preventDefault(); e.stopPropagation(); if (mode !== 'play' || !hunt.cur) return; ac(); hunt.hint = 6; SFX.hi();
-  say(room ? `🔍 The ${hunt.cur.name} is outside! Let’s go look!` : `🔍 Find the ${hunt.cur.name}! Follow the yellow arrow!`);
+  e.preventDefault(); e.stopPropagation(); if (mode !== 'play' || !hunt.cur) return; ac(); hunt.hint = 10; SFX.hi();
+  say(room ? `🔍 The ${hunt.cur.name} is outside! Let’s go look!` : `🔍 Find the ${hunt.cur.name}! Follow the big yellow arrow!`);
 });
 
 /* ------------------------------------------------------------------ *
@@ -3890,7 +3890,7 @@ function finishQuest() {
 function updateQuest(dt) {
   if (!quest || room) return;
   quest.t += dt; if (quest.hint > 0) quest.hint -= dt;
-  if (quest.t > 20 && quest.hint <= 0 && Math.floor(quest.t) % 18 === 3) quest.hint = 4;
+  if (quest.t > 15 && quest.hint <= 0 && Math.floor(quest.t) % 15 === 3) quest.hint = 6;
   if (Math.hypot(quest.x - P.x, quest.y - (P.y - .3)) < .8) finishQuest();
 }
 function followFriend(n, dt) { // the helping friend trots after the player
@@ -3906,16 +3906,38 @@ function drawQuestItem(c) {
   c.globalAlpha = .4 + Math.sin(time * 4) * .2; ell(c, quest.x, quest.y - .32 + b, .45, .45, '#ffe0f0'); c.globalAlpha = 1;
   emoji(c, quest.e, quest.x, quest.y - .32 + b, .6);
 }
-$('#cQuest').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!quest) return; ac(); quest.hint = 5; SFX.hi(); say(`🤝 Let’s find ${CHARS[quest.who].name}’s ${quest.name}! ${quest.e} Follow the pink arrow!`); });
-function drawArrowTo(x, y, col, hint) {
+$('#cQuest').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!quest) return; ac(); quest.hint = 10; SFX.hi(); say(`🤝 Let’s find ${CHARS[quest.who].name}’s ${quest.name}! ${quest.e} Follow the big pink arrow!`); });
+// a chunky arrow (shaft + head) pointing along +x, drawn with a white halo so it reads on any ground
+function arrowShape(c, col, k = 1) {
+  c.beginPath(); c.moveTo(-34 * k, -11 * k); c.lineTo(6 * k, -11 * k); c.lineTo(6 * k, -27 * k); c.lineTo(44 * k, 0); c.lineTo(6 * k, 27 * k); c.lineTo(6 * k, 11 * k); c.lineTo(-34 * k, 11 * k); c.closePath();
+  c.lineJoin = 'round'; c.strokeStyle = '#fff'; c.lineWidth = 15 * k; c.stroke();
+  c.strokeStyle = '#2b2f55'; c.lineWidth = 7 * k; c.stroke(); c.fillStyle = col; c.fill();
+  c.beginPath(); c.moveTo(-30 * k, -5 * k); c.lineTo(4 * k, -5 * k); c.strokeStyle = 'rgba(255,255,255,.55)'; c.lineWidth = 4 * k; c.lineCap = 'round'; c.stroke(); c.lineCap = 'butt';
+}
+const guideThumbs = {};
+function drawGuideIcon(x, y, r, col, icon) {
+  ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = col; ctx.stroke();
+  ctx.beginPath(); ctx.arc(x, y, r + 3.5, 0, TAU); ctx.lineWidth = 2.5; ctx.strokeStyle = '#2b2f55'; ctx.stroke();
+  if (typeof icon === 'string') { ctx.font = `${r * 1.2}px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(icon, x, y + r * .06); }
+  else if (icon) ctx.drawImage(icon, x - r * .82, y - r * .82, r * 1.64, r * 1.64);
+}
+// shows where to go: off screen it is a big arrow at the screen edge (with a picture of what you are looking for behind it);
+// on screen it is a bouncing arrow right above the thing
+function drawArrowTo(x, y, col, hint, icon) {
   if (hint <= 0 || room || mode !== 'play') return;
-  const sx = (x - cam.x) * tp, sy = (y - .3 - cam.y) * tp, cx = W / 2, cy = H / 2;
-  ctx.save();
-  if (sx > 30 && sx < W - 30 && sy > 70 && sy < H - 30) { const p = (time * 1.5) % 1; ctx.globalAlpha = 1 - p; ctx.beginPath(); ctx.arc(sx, sy, 20 + p * 30, 0, TAU); ctx.strokeStyle = col; ctx.lineWidth = 6; ctx.stroke(); }
-  else {
-    const a = Math.atan2(sy - cy, sx - cx), r = Math.min(W, H) * .36;
-    ctx.translate(cx + Math.cos(a) * r, cy + Math.sin(a) * r); ctx.rotate(a); ctx.globalAlpha = .6 + Math.sin(time * 8) * .3;
-    ctx.beginPath(); ctx.moveTo(30, 0); ctx.lineTo(-10, -22); ctx.lineTo(-10, 22); ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.strokeStyle = '#2b2f55'; ctx.lineWidth = 4; ctx.stroke();
+  const sx = (x - cam.x) * tp, sy = (y - .3 - cam.y) * tp, a = Math.min(1, hint * 2.5), bob = Math.sin(time * 7) * 6;
+  const land = W > H * 1.2, rx0 = land ? 150 : 72, rx1 = W - (land ? 150 : 72), ry0 = land ? 80 : 140, ry1 = land ? H * .58 : H - 60;   // keeps clear of the top bar and the on-screen buttons
+  const cx = (rx0 + rx1) / 2, cy = (ry0 + ry1) / 2, dx = sx - cx, dy = sy - cy, d = Math.hypot(dx, dy) || 1, ux = dx / d, uy = dy / d;
+  const onScreen = sx > rx0 - 30 && sx < rx1 + 30 && sy > ry0 - 20 && sy < ry1 + 20;
+  ctx.save(); ctx.globalAlpha = a;
+  if (onScreen) {
+    const p = (time * 1.5) % 1; ctx.globalAlpha = a * (1 - p); ctx.beginPath(); ctx.ellipse(sx, sy + 8, 24 + p * 36, 12 + p * 18, 0, 0, TAU); ctx.strokeStyle = col; ctx.lineWidth = 6; ctx.stroke(); ctx.globalAlpha = a;
+    ctx.translate(sx, sy - 56 + bob); ctx.rotate(Math.PI / 2); arrowShape(ctx, col, 1.15);
+  } else {
+    const ex = (rx1 - rx0) / 2, ey = (ry1 - ry0) / 2, dist = Math.min(ex / Math.max(.001, Math.abs(ux)), ey / Math.max(.001, Math.abs(uy)));
+    const ax = cx + ux * dist + ux * bob, ay = cy + uy * dist + uy * bob, r = Math.max(26, Math.min(W, H) * .075);
+    drawGuideIcon(ax - ux * (r * 2.3), ay - uy * (r * 2.3), r, col, icon);
+    ctx.translate(ax, ay); ctx.rotate(Math.atan2(uy, ux)); arrowShape(ctx, col, Math.max(1, r / 28));
   }
   ctx.restore();
 }
@@ -4716,7 +4738,7 @@ function render() {
   }
   const g = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .45, W / 2, H / 2, Math.max(W, H) * .75);
   g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,20,10,.22)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  drawHuntArrow(); if (quest) drawArrowTo(quest.x, quest.y, '#ff7ac2', quest.hint);
+  drawHuntArrow(); if (quest) drawArrowTo(quest.x, quest.y, '#ff7ac2', quest.hint, quest.e);
   if (fade.a > 0) { ctx.fillStyle = `rgba(15,12,35,${fade.a})`; ctx.fillRect(0, 0, W, H); }
 }
 
@@ -4813,7 +4835,7 @@ function frame(now) {
   if (mg.on) { try { updateMini(dt); renderMini(); } catch (e) { report(e); for (let i = 0; i < 10; i++) mgx.restore(); } }
 }
 load(); resize(); requestAnimationFrame(frame);
-window.__park = { STATIC_TARGETS, ROOMS, DOORS, get flowers() { return flowers; }, get items() { return items; }, MINI, get buddy() { return buddy; }, ANIMALS, drawAnimalAt, enterRoom, exitRoom, get pets() { return pets; }, PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
+window.__park = { hunt, STATIC_TARGETS, ROOMS, DOORS, get flowers() { return flowers; }, get items() { return items; }, MINI, get buddy() { return buddy; }, ANIMALS, drawAnimalAt, enterRoom, exitRoom, get pets() { return pets; }, PROPS, FIND_TARGETS, foundIt, gAt, solidAt: (x, y) => solid[key(x, y)], decorAt: (x,y)=>decor.some(d=>d.x===x&&d.y===y),  get quest() { return quest; }, startQuest, stickers, SETTINGS, get songName() { return songName; }, hunt, OUTFITS, act, get room() { return room; }, get lvOpen() { return lvOpen; }, levelsDone, drawChar, ORDER, openMini, mg, openStation, get gsOpen() { return gsOpen; }, get P() { return P; }, counts, friends, get mode() { return mode; }, startGame, pressA, pressB, encounter, findTarget };
 })();
 </script>
 </body>

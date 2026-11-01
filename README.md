@@ -47,3 +47,10 @@ All art and sound are drawn/generated in code, with no external files.
 `android/build.sh` packages `index.html` into a WebView app using Apktool and uber-apk-signer
 (downloaded automatically; no Android SDK needed). It needs Java and writes `ParkPals.apk`.
 The APK is signed with a debug key, which is fine for installing on your own devices.
+
+## v3.9
+
+- Every animal is now drawn art (no emoji): farm animals, critters, crabs, penguins, fish and the feed-game animals, plus drawn sticker thumbnails.
+- **Pet buddy** – pick a puppy, kitty, duckling or bunny from the ☰ menu. It follows you everywhere; tap it to feed, bath, play fetch, cuddle or try on hats.
+- **Four new buildings to go inside** – the Big Red Barn (baby animals), Daisy's Bakery (with a cake-decorating game), the Sunny Aquarium and Goofy's Cabin.
+- **Clearer search arrows** – a big arrow with a picture of what you are looking for points the way; once the item is on screen a bouncing arrow sits right above it.
