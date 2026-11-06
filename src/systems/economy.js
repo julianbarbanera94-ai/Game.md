@@ -6,6 +6,7 @@ import * as Inv from './inventory.js';
 import { BUILDINGS } from '../data/buildings.js';
 import { bagSlots, buildingLevel, sellMultiplier } from './buildings.js';
 import { levelOf } from './level.js';
+import { paddockBlocker } from './paddock.js';
 
 // Transactions validate everything first, then apply atomically.
 
@@ -85,6 +86,10 @@ export function upgradeStatus(state, id) {
   const up = UPGRADES[id];
   if (state.unlocks[id]) return { state: 'owned', up };
   if (!isRequirementMet(state, up.requires)) return { state: 'locked', up, reason: requirementText(up.requires) };
+  if (id === 'eastPaddock') {
+    const blocked = paddockBlocker(state);
+    if (blocked) return { state: 'blocked', up, reason: blocked };
+  }
   if (state.coins < up.cost) return { state: 'unaffordable', up, reason: `Needs ${up.cost} coins` };
   return { state: 'available', up };
 }

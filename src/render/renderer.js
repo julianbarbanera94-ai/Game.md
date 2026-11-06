@@ -639,11 +639,21 @@ export class Renderer {
 
   drawPlots(g, game) {
     const { state } = game;
+    if (!isPlotAvailable(state, 'paddock_23_14')) {
+      // the unbought East Paddock: a signpost in the meadow, nothing else
+      const sign = this.assets.get('building.signpost');
+      if (sign) {
+        const w = TILE * 1.2;
+        g.drawImage(sign, 27 * TILE - w / 2, 15.2 * TILE - (w * sign.height) / sign.width, w, (w * sign.height) / sign.width);
+      }
+    }
     for (const def of PLOTS) {
       const plot = state.plots[def.id];
       const cx = (def.tx + 0.5) * TILE;
       const cy = (def.ty + 0.5) * TILE;
       const available = isPlotAvailable(state, def.id);
+      // unbought paddock: it is still meadow; only a signpost marks it
+      if (!available && def.group === 'paddock') continue;
       const key = available ? plotSpriteKey(plot) : 'plot.soil_dry';
       let img = this.assets.get(key);
       if (!img) continue;

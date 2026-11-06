@@ -14,6 +14,8 @@ export const SHOP_STOCK = [
   { item: 'seed_pumpkin', requires: { unlock: 'gardenExpansion' } },
   { item: 'chicken_feed', requires: { placed: 'chicken_coop' } },
   { item: 'hay', requires: { placed: 'barn' } },
+  { item: 'seed_corn', requires: { unlock: 'eastPaddock' } },
+  { item: 'seed_wheat', requires: { unlock: 'eastPaddock' } },
 ];
 
 export const UPGRADES = {
@@ -23,6 +25,14 @@ export const UPGRADES = {
     description: 'Clear the old pasture beside the road: +8 crop plots north of the garden.',
     cost: 600,
     requires: { unlock: 'gardenExpansion' },
+    kind: 'land',
+  },
+  eastPaddock: {
+    id: 'eastPaddock',
+    name: 'East Paddock',
+    description: 'A long meadow east of the road: +40 crop plots that tractors can plough, seed and harvest in passes.',
+    cost: 1200,
+    requires: { unlock: 'northField', placed: 'garage' },
     kind: 'land',
   },
   gardenExpansion: {

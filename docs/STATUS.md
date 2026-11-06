@@ -149,6 +149,20 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
 
+## East Paddock (land for tractors)
+
+- **Buy:** walk up to the sign on any locked paddock plot and press E. 1200 coins, once the North Field is
+  owned and a garage is built. Shown in the Progress tree.
+- **Land:** 8 x 5 = 40 plots in the open meadow east of the central path (x 23-31, y 14-19). Until bought it is
+  meadow with a signpost; no soil squares.
+- **Blocked purchase:** if a building or a parked tractor stands inside, the purchase says what to move
+  (`systems/paddock.js`). Placement is not blocked, so saves made earlier still load.
+- **Seeds:** corn and wheat are sold at the market once the paddock is bought; a Buy 10 button was added.
+- **Tractor:** plough, seeder, sprayer and reaper work the whole paddock in passes; the test drives from the
+  garage into the paddock with the keys and ploughs it.
+- Tests: `tests/unit/paddock.test.mjs` (7), `npm run test:paddock` (10 checks).
+- Not yet: fences around the paddock, a paddock quest, and placement that avoids the paddock.
+
 ## Fishing
 
 - Buy a **Fishing Rod** at the market stall (40 coins). It joins the hotbar; select it, stand on either

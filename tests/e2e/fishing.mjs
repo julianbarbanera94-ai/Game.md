@@ -81,6 +81,7 @@ async function main() {
   // wait for a bite (3 to 9 seconds), then hook it
   await page.waitForFunction(() => window.farmstead.fishing?.phase === 'bite', null, { timeout: 15000 });
   check((await page.textContent('#toasts')).includes('bite'), 'a bite is announced');
+  await page.waitForFunction(() => document.getElementById('prompt').textContent.includes('Hook it'), null, { timeout: 3000 }).catch(() => {});
   check((await prompt()).includes('Hook it'), `the prompt asks for the hook ("${await prompt()}")`);
   await shot('bite');
   await act();

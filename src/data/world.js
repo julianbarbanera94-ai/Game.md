@@ -28,14 +28,17 @@ export const PLOT_GROUPS = {
   starter: { unlock: null },
   south: { unlock: 'gardenExpansion' },
   north: { unlock: 'northField' },
+  paddock: { unlock: 'eastPaddock' }, // the long meadow east of the road, worked by tractors
 };
+// The East Paddock (tiles): 8 x 5 plots in open meadow, clear of the road and the garden.
+export const PADDOCK = { x0: 22.9, y0: 13.9, x1: 31.1, y1: 19.1 };
 // The north field (tiles) beside the road, north of the garden.
 export const NORTH_FIELD = { x0: 4.8, y0: 6.6, x1: 9.2, y1: 9.4 };
 
 export const PLOTS = [];
-for (const [group, rows] of [['starter', [14, 15]], ['south', [17, 18]], ['north', [7, 8]]]) {
+for (const [group, rows, cols] of [['starter', [14, 15], [5, 6, 7, 8]], ['south', [17, 18], [5, 6, 7, 8]], ['north', [7, 8], [5, 6, 7, 8]], ['paddock', [14, 15, 16, 17, 18], [23, 24, 25, 26, 27, 28, 29, 30]]]) {
   for (const row of rows) {
-    for (let col = 5; col <= 8; col++) {
+    for (const col of cols) {
       PLOTS.push({ id: `${group}_${col}_${row}`, group, tx: col, ty: row });
     }
   }

@@ -92,8 +92,8 @@ export class Hud {
         el('div', { class: 'v-title' }, def.name, el('small', {}, `${kmh} km/h`)),
         gauge('Fuel', fuel, fuel < 15 ? 'low' : ''),
         gauge('Condition', cond, cond < 30 ? 'low' : ''),
-        v.mount.front ? el('div', { class: `v-imp${v.engaged ? ' on' : ''}` }, `${IMPLEMENTS[v.mount.front].name}: ${v.engaged ? 'working' : 'stopped'}`) : null,
-        cap ? el('div', { class: 'v-imp' }, `Trailer ${used}/${cap}`) : null);
+        v.mount.front ? el('div', { class: `v-imp${v.engaged ? ' on' : ''}` }, `${IMPLEMENTS[v.mount.front].name}: ${v.engaged ? 'working' : 'stopped'}`) : '',
+        cap ? el('div', { class: 'v-imp' }, `Trailer ${used}/${cap}`) : '');
     });
   }
 

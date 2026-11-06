@@ -27,4 +27,5 @@ export const UNLOCKS = [
   { id: 'level5', track: 'Community', name: 'Farm level 5', requires: { level: 5 } },
   { id: 'garage', track: 'Buildings', name: 'Garage (farm level 3)', requires: { placed: 'garage' } },
   { id: 'machinery', track: 'Farming', name: 'Tractor and machinery', requires: { vehicle: true } },
+  { id: 'paddock', track: 'Farming', name: 'East Paddock (+40 plots for tractors)', requires: { unlock: 'northField' } },
 ];

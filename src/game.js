@@ -370,10 +370,16 @@ export class Game {
       [p.x + fx * TILE * 0.62, p.y - 8 + fy * TILE * 0.62 - (p.facing === 'up' ? 10 : 0)],
       [p.x, p.y - 6],
     ];
+    // an unbought paddock offers "buy the land" only when nothing else is in reach
+    let lockedPaddock = null;
     for (const [x, y] of probes) {
       const def = PLOT_AT.get(`${Math.floor(x / TILE)},${Math.floor(y / TILE)}`);
       if (def) {
         const a = Farming.getPlotAction(this.state, def.id);
+        if (a.action === 'locked' && def.group === 'paddock') {
+          lockedPaddock = { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
+          continue;
+        }
         if (a.action === 'locked') return { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
         return { kind: 'plot', id: def.id, tx: def.tx, ty: def.ty, label: a.label, ok: a.ok, action: a.action };
       }
@@ -398,7 +404,7 @@ export class Game {
     const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables(), ...wheels]);
     const animal = this.nearestAnimal();
     if (animal && (!object || animal.dist <= object.dist)) return animal;
-    return object;
+    return object || lockedPaddock;
   }
 
   // '?' = they are waiting for goods you carry, '!' = a quest asks you to talk to them.
