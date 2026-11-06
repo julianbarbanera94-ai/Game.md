@@ -2652,6 +2652,14 @@
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Test asset for the updated art direction: form shading, cast and contact shadows, ambient occlusion, painterly strokes."
+    },
+    "prop.silo_v3": {
+      "file": "assets/derived/props/silo_v3.png",
+      "width": 919,
+      "height": 883,
+      "source": "tools/paint_structures.py",
+      "status": "painted-in-code",
+      "notes": "Silo in the barrel and crate style: near-overhead view, lit planks, steel hoops, slate roof seen from above, bold outline."
     }
   }
 }

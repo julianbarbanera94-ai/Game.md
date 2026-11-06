@@ -486,6 +486,141 @@ def silo_v2():
     EDGE = old_edge
     return sc.save("silo_v2", "prop.silo_v2", "Test asset for the updated art direction: form shading, cast and contact shadows, ambient occlusion, painterly strokes.")
 
+
+# ---- barrel-style rendering: bold dark outline, chunky boards with a lit left edge, steel hoops
+OUT_DARK = (38, 20, 12)
+def lerp(a, b, t):
+    return tuple(int(a[i] + (b[i] - a[i]) * max(0.0, min(1.0, t))) for i in range(3))
+
+def silo_v3():
+    """The silo drawn like the game's own barrel and crate: near-overhead view, each plank an
+    individually lit shape, steel hoops with rivets, roof seen from above, thick outline."""
+    sc = Scene(460, 500)
+    cx, R, ry = 220, 104, 66                           # wall radius and how much of the top/bottom curve shows
+    ytop, ybot = 150, 384                              # centres of the wall's top and bottom ellipses
+    sc.skirt(cx, 440, 196, 40)
+    cast_shadow(sc, [(cx - 40, 446), (cx + 130, 430), (cx + 232, 454), (cx + 60, 474)], 125, 6)
+    im = Image.new("RGBA", (sc.w, sc.h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    P = lambda x, y: (x * S, y * S)
+    rng = np.random.default_rng(9)
+    base_light, base_dark = (232, 84, 56), (122, 30, 24)
+    N = 15
+    th = [math.radians(-90 + 180 * i / N) for i in range(N + 1)]
+    xs = [cx + R * math.sin(t) for t in th]
+    yt = [ytop + ry * math.cos(t) for t in th]
+    yb = [ybot + ry * math.cos(t) for t in th]
+    # planks: each is its own lit shape
+    for i in range(N):
+        mid = (th[i] + th[i + 1]) / 2
+        f = 0.5 + 0.55 * math.cos(mid + 0.75) - 0.12     # light from the top-left
+        f += (rng.random() - 0.5) * 0.14
+        col = lerp(base_dark, base_light, f)
+        quad = [P(xs[i], yt[i]), P(xs[i + 1], yt[i + 1]), P(xs[i + 1], yb[i + 1]), P(xs[i], yb[i])]
+        d.polygon(quad, fill=col)
+        w = xs[i + 1] - xs[i]
+        # lit left edge and top, shaded right edge and bottom, like the barrel's boards
+        hl = [P(xs[i] + w * 0.04, yt[i] + 3), P(xs[i] + w * 0.30, yt[i + 1] + 3), P(xs[i] + w * 0.30, yb[i + 1] - 4), P(xs[i] + w * 0.04, yb[i] - 4)]
+        d.polygon(hl, fill=lerp(col, (255, 170, 110), 0.40))
+        sh = [P(xs[i] + w * 0.78, yt[i + 1]), P(xs[i + 1], yt[i + 1]), P(xs[i + 1], yb[i + 1]), P(xs[i] + w * 0.78, yb[i + 1])]
+        d.polygon(sh, fill=lerp(col, (50, 14, 12), 0.45))
+        for _ in range(3):                                  # grain
+            gx = xs[i] + w * rng.uniform(0.35, 0.75)
+            y0 = yt[i] + rng.uniform(10, 60); y1 = y0 + rng.uniform(26, 80)
+            d.line([P(gx, y0), P(gx + rng.uniform(-1, 1), y1)], fill=lerp(col, (60, 16, 12), 0.45) + (255,), width=max(1, S // 2))
+        d.line([P(xs[i], yt[i]), P(xs[i], yb[i])], fill=OUT_DARK + (255,), width=int(S * 2.2))
+    d.line([P(xs[-1], yt[-1]), P(xs[-1], yb[-1])], fill=OUT_DARK + (255,), width=int(S * 2.2))
+    # a shadow band under the roof, and darkening toward the ground
+    shade = Image.new("L", (sc.w, sc.h), 0)
+    ImageDraw.Draw(shade).ellipse([P(cx - R - 20, ytop - 70), P(cx + R + 26, ytop + ry + 78)], fill=170)
+    shade = np.asarray(shade.filter(ImageFilter.GaussianBlur(S * 8)), np.float32) / 255
+    wallA = np.asarray(im)[..., 3].astype(np.float32) / 255
+    yy_, xx_ = np.mgrid[0:sc.h, 0:sc.w].astype(np.float32)
+    gl = np.zeros((sc.h, sc.w, 4), np.uint8); gl[..., 0], gl[..., 1], gl[..., 2] = 26, 8, 20
+    gl[..., 3] = (np.clip(shade * 0.75 + np.clip((yy_ / S - (ybot + ry - 90)) / 90, 0, 1) * 0.35, 0, 0.85) * wallA * 255).astype(np.uint8)
+    im.alpha_composite(Image.fromarray(gl))
+    d = ImageDraw.Draw(im)
+    # steel hoops with rivets (the barrel's blue-grey bands)
+    def hoop(h, half=9):
+        top, bot = [], []
+        for k in range(61):
+            t = math.radians(-90 + 180 * k / 60)
+            x = cx + R * math.sin(t)
+            y = ybot - h + ry * math.cos(t)
+            top.append(P(x, y - half)); bot.append(P(x, y + half))
+        d.polygon(top + bot[::-1], fill=(58, 98, 138))
+        d.polygon(top + [P(cx + R * math.sin(math.radians(-90 + 180 * k / 60)), ybot - h + ry * math.cos(math.radians(-90 + 180 * k / 60)) - half + 5) for k in range(60, -1, -1)], fill=(116, 160, 202))
+        d.line(top, fill=OUT_DARK + (255,), width=int(S * 2.2)); d.line(bot, fill=OUT_DARK + (255,), width=int(S * 2.2))
+        for k in range(1, N):
+            t = th[k]; x = cx + R * math.sin(t); y = ybot - h + ry * math.cos(t)
+            d.ellipse([P(x - 3.2, y - 3.2), P(x + 3.2, y + 3.2)], fill=(206, 214, 222), outline=OUT_DARK)
+            d.ellipse([P(x - 1.8, y - 2.4), P(x - 0.2, y - 0.8)], fill=(255, 255, 255))
+    hoop(34); hoop(108); hoop(182)
+    # stone footing along the base curve
+    for k in range(27):
+        t = math.radians(-88 + 176 * k / 26)
+        x = cx + R * 1.02 * math.sin(t); y = ybot + ry * math.cos(t) - 2
+        wd = 5 + 6 * math.cos(t)
+        d.rounded_rectangle([P(x - wd, y - 10), P(x + wd, y + 9)], radius=6 * S, fill=lerp((120, 112, 100), (190, 180, 164), 0.5 + 0.4 * math.cos(t + 0.7) - 0.2 * (k % 2)), outline=OUT_DARK, width=int(S * 2))
+        d.rounded_rectangle([P(x - wd + 3, y - 14), P(x + wd - 3, y - 7)], radius=3 * S, fill=(214, 206, 190))
+    # arched door facing the viewer
+    dx0, dx1, dy1 = cx - 34, cx + 34, yb[N // 2] - 2
+    dy0 = dy1 - 104
+    d.rounded_rectangle([P(dx0 - 6, dy0 - 6), P(dx1 + 6, dy1 + 2)], radius=26 * S, fill=(120, 74, 40), outline=OUT_DARK, width=int(S * 2.6))
+    d.rounded_rectangle([P(dx0, dy0), P(dx1, dy1)], radius=22 * S, fill=(176, 104, 56), outline=OUT_DARK, width=int(S * 2))
+    for k in range(1, 4):
+        d.line([P(dx0 + k * 17, dy0 + 8), P(dx0 + k * 17, dy1)], fill=OUT_DARK + (255,), width=int(S * 1.6))
+    d.rounded_rectangle([P(dx0 + 2, dy0 + 3), P(dx0 + 15, dy1 - 2)], radius=6 * S, fill=(232, 160, 96))
+    for yy_ in (dy0 + 30, dy1 - 24):
+        d.rectangle([P(dx0, yy_), P(dx1, yy_ + 9)], fill=(58, 98, 138), outline=OUT_DARK, width=int(S * 1.6))
+        d.rectangle([P(dx0, yy_), P(dx1, yy_ + 3)], fill=(116, 160, 202))
+        for rx_ in (dx0 + 8, dx1 - 8):
+            d.ellipse([P(rx_ - 2.4, yy_ + 2), P(rx_ + 2.4, yy_ + 7)], fill=(206, 214, 222), outline=OUT_DARK)
+    d.ellipse([P(dx1 - 14, dy0 + 62), P(dx1 - 7, dy0 + 69)], fill=(206, 214, 222), outline=OUT_DARK, width=int(S * 1.4))
+    struct = im
+    # roof from above: radial slate wedges with a rim, like the barrel's boarded lid
+    rim_rx, rim_ry, rcx, rcy = R + 14, 92, cx, 156
+    roof = Image.new("RGBA", (sc.w, sc.h), (0, 0, 0, 0))
+    rd = ImageDraw.Draw(roof)
+    rd.ellipse([P(rcx - rim_rx - 7, rcy - rim_ry - 6), P(rcx + rim_rx + 7, rcy + rim_ry + 8)], fill=(178, 112, 56), outline=OUT_DARK, width=int(S * 3))
+    rd.ellipse([P(rcx - rim_rx - 3, rcy - rim_ry - 3), P(rcx + rim_rx + 3, rcy + rim_ry + 4)], outline=(236, 176, 104), width=int(S * 1.6))
+    apx, apy = rcx - 6, rcy - 8
+    NW = 22
+    for i in range(NW):
+        a0, a1 = math.tau * i / NW, math.tau * (i + 1) / NW
+        am = (a0 + a1) / 2
+        lite = 0.5 + 0.5 * math.cos(am - math.radians(225))           # facing the top-left light
+        col = lerp((44, 62, 128), (132, 168, 226), lite) if True else None
+        col = lerp(col, (214, 232, 255), 0.10 * (i % 2))
+        pts = [P(apx, apy), P(rcx + rim_rx * math.cos(a0), rcy + rim_ry * math.sin(a0)), P(rcx + rim_rx * math.cos((a0 + a1) / 2), rcy + rim_ry * math.sin((a0 + a1) / 2)), P(rcx + rim_rx * math.cos(a1), rcy + rim_ry * math.sin(a1))]
+        rd.polygon(pts, fill=col)
+        edge = lerp(col, (22, 30, 78), 0.6)
+        rd.line([P(apx, apy), P(rcx + rim_rx * math.cos(a0), rcy + rim_ry * math.sin(a0))], fill=edge, width=int(S * 1.8))
+        for rr in (0.38, 0.62, 0.82):                                  # slate courses
+            px, py = apx + (rcx + rim_rx * math.cos(am) - apx) * rr, apy + (rcy + rim_ry * math.sin(am) - apy) * rr
+            wdt = rim_rx * rr * math.tau / NW * 0.5
+            rd.arc([P(px - wdt, py - wdt * 0.8), P(px + wdt, py + wdt * 0.8)], 0, 180, fill=edge, width=int(S * 1.3))
+    rd.ellipse([P(rcx - rim_rx, rcy - rim_ry), P(rcx + rim_rx, rcy + rim_ry)], outline=OUT_DARK, width=int(S * 3))
+    spec = Image.new("RGBA", (sc.w, sc.h), (0, 0, 0, 0))
+    ImageDraw.Draw(spec).ellipse([P(rcx - 70, rcy - 60), P(rcx - 8, rcy - 24)], fill=(255, 255, 255, 120))
+    roof.alpha_composite(spec.filter(ImageFilter.GaussianBlur(S * 6)))
+    rd = ImageDraw.Draw(roof)
+    rd.ellipse([P(apx - 15, apy - 14), P(apx + 15, apy + 12)], fill=(222, 170, 66), outline=OUT_DARK, width=int(S * 2.4))
+    rd.ellipse([P(apx - 9, apy - 9), P(apx - 1, apy - 2)], fill=(255, 238, 170))
+    struct.alpha_composite(roof)
+    sa = np.asarray(struct)[..., 3]
+    sil = Image.fromarray(((sa > 40) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(2 * S + 1))
+    ol = Image.new("RGBA", (sc.w, sc.h), OUT_DARK + (255,)); ol.putalpha(sil)
+    sc.im.alpha_composite(ol)
+    sc.im.alpha_composite(struct)
+    # a lantern, a barrel and a crate (the game's own) at the foot, grass fringe like theirs
+    lantern(sc, cx - 62, 372, -1)
+    sc.sprite("terrain2.barrel", cx - 130, 470, 64)
+    sc.sprite("terrain2.wooden_crate", cx + 130, 472, 64)
+    for gx, w_, fl in ((cx - 66, 70, False), (cx + 8, 84, True), (cx + 82, 70, False), (cx - 172, 60, True), (cx + 178, 60, False)):
+        sc.sprite("foliage.grass_tall", gx, 478, w_, fl, shadow=False)
+    return sc.save("silo_v3", "prop.silo_v3", "Silo in the barrel and crate style: near-overhead view, lit planks, steel hoops, slate roof seen from above, bold outline.")
+
 # ------------------------------------------------------------------ clock tower
 def clock_tower():
     sc = Scene(300, 640)
@@ -1018,7 +1153,7 @@ def waterfalls():
     A["prop.waterfall"] = dict(A["prop.waterfall_f0"])
     return None
 
-JOBS = {"silo": silo, "silo_v2": silo_v2, "clock": clock_tower, "windmill": windmill, "greenhouse": lambda: (greenhouse(False), greenhouse(True)),
+JOBS = {"silo": silo, "silo_v2": silo_v2, "silo_v3": silo_v3, "clock": clock_tower, "windmill": windmill, "greenhouse": lambda: (greenhouse(False), greenhouse(True)),
         "trees": lambda: [fruit_tree(n) for n in FRUITS], "waterfall": waterfalls}
 
 if __name__ == "__main__":
