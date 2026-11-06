@@ -31,7 +31,7 @@ export function buildWorld(assets) {
   for (const o of OBJECTS) {
     const { w, h } = spriteSize(assets, o.sprite, o.w);
     // Buildings with levels resolve their sprite every frame from game state.
-    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE, light: o.light };
+    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE, light: o.light, frames: o.frames, fps: o.fps };
     (o.ground ? groundDrawables : drawables).push(d);
     const col = o.collider ? rectFrom(o.x, o.y, o.collider) : null;
     if (col) colliders.push(col);
@@ -226,6 +226,7 @@ export function buildInterior(id) {
 export function worldSpriteKeys() {
   return [
     ...OBJECTS.map((o) => o.sprite),
+    ...OBJECTS.flatMap((o) => o.frames || []),
     ...SCENERY.map((s) => s[0]),
     ...Object.values(BUILDINGS).flatMap((b) => b.levels.map((l) => l.sprite)),
     ...CONSTRUCTION_STAGES,

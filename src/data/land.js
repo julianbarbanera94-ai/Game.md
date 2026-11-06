@@ -118,3 +118,17 @@ export function forestScenery(worldCols, worldRows) {
   }
   return out;
 }
+
+// Landmarks and the orchard, placed on the bought land and in the village.
+// Same shape as the objects in world.js: sprite anchored bottom-centre, w in tiles,
+// collider [x0, y0, x1, y1] in tiles from the anchor. frames/fps animate a sprite.
+export const LANDMARKS = [
+  { id: 'lm_windmill', sprite: 'prop.windmill_f0', frames: ['prop.windmill_f0', 'prop.windmill_f1', 'prop.windmill_f2', 'prop.windmill_f3'], fps: 3, x: 72.2, y: 13.0, w: 6.0, collider: [-1.3, -1.4, 1.3, -0.2] },
+  { id: 'lm_greenhouse', sprite: 'prop.greenhouse_planted', x: 82.0, y: 21.6, w: 5.0, collider: [-2.3, -1.1, 2.3, -0.2] },
+  { id: 'lm_waterfall', sprite: 'prop.waterfall_f0', frames: ['prop.waterfall_f0', 'prop.waterfall_f1', 'prop.waterfall_f2', 'prop.waterfall_f3'], fps: 6, x: 125.4, y: 7.0, w: 6.0 },
+  { id: 'lm_silo', sprite: 'prop.silo', x: 44.5, y: 46.4, w: 2.5, collider: [-0.9, -1.0, 0.9, -0.1] },
+  { id: 'lm_apple', sprite: 'foliage.tree_apple', x: 113.0, y: 34.6, w: 2.9, collider: [-0.35, -0.3, 0.35, 0] },
+  { id: 'lm_pear', sprite: 'foliage.tree_pear', x: 115.6, y: 34.6, w: 2.9, collider: [-0.35, -0.3, 0.35, 0] },
+  { id: 'lm_orange', sprite: 'foliage.tree_orange', x: 118.2, y: 34.6, w: 2.9, collider: [-0.35, -0.3, 0.35, 0] },
+  { id: 'lm_cherry', sprite: 'foliage.tree_cherry', x: 120.8, y: 34.6, w: 2.9, collider: [-0.35, -0.3, 0.35, 0] },
+];

@@ -119,8 +119,33 @@ for _ in range(60):
     x = cx + rng.normal(0, 70); y = OY - 300 + abs(rng.normal(0, 60)) + rng.random() * 150
     r = rng.integers(2, 5)
     dr.ellipse((x - r, y - r, x + r, y + r), fill=(235, 250, 255, 190))
+# ---- detail: lily pads and coins in the basin, moss on the stone, carved spouts
+rng2 = np.random.default_rng(12)
+ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+od = ImageDraw.Draw(ov)
+for lx, ly in ((250, OY + 150), (610, OY + 158), (330, OY + 178), (560, OY + 184)):
+    od.ellipse([lx - 30, ly - 12, lx + 30, ly + 12], fill=(72, 150, 62, 255), outline=(30, 80, 30, 255), width=3)
+    od.polygon([(lx, ly), (lx + 32, ly - 8), (lx + 32, ly + 5)], fill=(60, 120, 150, 255))
+    od.ellipse([lx - 6, ly - 12, lx + 6, ly - 2], fill=(250, 244, 232, 255))
+for _ in range(14):
+    cx_, cy_ = 300 + rng2.integers(0, 280), OY + 150 + rng2.integers(0, 50)
+    od.ellipse([cx_ - 5, cy_ - 3, cx_ + 5, cy_ + 3], fill=(222, 178, 70, 255), outline=(120, 84, 30, 255))
+for gx in (cx - 150, cx, cx + 150):                                     # lion-head spouts on the lower bowl
+    od.ellipse([gx - 22, OY + 78, gx + 22, OY + 116], fill=(176, 164, 144, 255), outline=(70, 56, 44, 255), width=3)
+    od.ellipse([gx - 8, OY + 92, gx + 8, OY + 106], fill=(36, 30, 28, 255))
+    od.line([(gx, OY + 104), (gx, OY + 150)], fill=(150, 215, 240, 210), width=7)
+mossl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+md = ImageDraw.Draw(mossl)
+for _ in range(110):
+    mx, my = rng2.integers(110, 790), OY + 300 + int(rng2.random() ** 0.6 * 160)
+    rr = int(rng2.integers(5, 12))
+    for col, dd in (((52, 100, 40, 235), 0), ((92, 152, 58, 235), -2), ((142, 196, 90, 235), -4)):
+        md.ellipse([mx + dd - rr, my + dd - rr * 0.7, mx + dd + rr, my + dd + rr * 0.7], fill=col)
+ma = np.asarray(mossl).copy(); ma[..., 3] = np.minimum(ma[..., 3], np.asarray(canvas)[..., 3])
+canvas.alpha_composite(ov)
+canvas.alpha_composite(Image.fromarray(ma))
 out = canvas.crop(canvas.getbbox())
-out = out.resize((out.width // 3, out.height // 3), Image.LANCZOS)
+out = out.resize((int(out.width / 1.5), int(out.height / 1.5)), Image.LANCZOS)
 dest = os.path.join(ROOT, "assets", "derived", "props", "fountain.png")
 os.makedirs(os.path.dirname(dest), exist_ok=True)
 out.save(dest, optimize=True)

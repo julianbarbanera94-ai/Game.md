@@ -82,8 +82,9 @@ export class Renderer {
     // y-sorted sprites
     const items = [];
     for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state, game.placement?.moveUid)]) {
-      const d = d0.building ? this.resolveBuilding(game.state, d0) : d0;
+      let d = d0.building ? this.resolveBuilding(game.state, d0) : d0;
       if (!d) continue;
+      if (d.frames) d = { ...d, sprite: d.frames[Math.floor(game.clockSeconds * d.fps) % d.frames.length] };
       if (d.x + d.w / 2 < view.x0 || d.x - d.w / 2 > view.x1 || d.y < view.y0 || d.y - d.h > view.y1) continue;
       items.push(d);
     }

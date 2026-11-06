@@ -1,4 +1,4 @@
-import { forestScenery, PARCELS } from './land.js';
+import { forestScenery, LANDMARKS, PARCELS } from './land.js';
 import { VILLAGE_PATHS, VILLAGE_OBJECTS, VILLAGE_SCENERY, VILLAGE_DECOR } from './village.js';
 
 // Starter farm layout. All coordinates are in tiles (see config.TILE).
@@ -138,6 +138,7 @@ for (const p of PARCELS) {
   for (let i = 0; i < p.road.line.length - 1; i++) PATHS.push({ from: p.road.line[i], to: p.road.line[i + 1], width: p.road.width });
 }
 OBJECTS.push(...VILLAGE_OBJECTS);
+OBJECTS.push(...LANDMARKS);
 SCENERY.push(...VILLAGE_SCENERY);
 GROUND_DECOR.push(...VILLAGE_DECOR);
 SCENERY.push(...forestScenery(128, 56)); // the wild forest around the farm (appended last)

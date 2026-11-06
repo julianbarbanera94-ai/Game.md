@@ -30,6 +30,8 @@ export const VILLAGE_OBJECTS = [
   { id: 'v_lantern_4', sprite: 'prop.lantern_post', x: 51.0, y: 13.6, w: 0.7, collider: [-0.15, -0.2, 0.15, 0], light: true },
   { id: 'v_bench', sprite: 'prop.bench', x: 50.8, y: 10.3, w: 1.4, collider: [-0.6, -0.4, 0.6, 0] },
   { id: 'v_barrel', sprite: 'terrain2.barrel', x: 41.0, y: 8.2, w: 0.9, collider: [-0.3, -0.3, 0.3, 0] },
+  { id: 'v_fountain', sprite: 'prop.fountain', x: 48.8, y: 15.5, w: 2.8, collider: [-1.1, -0.8, 1.1, -0.1] },
+  { id: 'v_clock_tower', sprite: 'prop.clock_tower', x: 59.3, y: 10.3, w: 2.6, collider: [-1.0, -1.0, 1.0, -0.2] },
   { id: 'v_hay', sprite: 'prop.hay_bales', x: 50.8, y: 8.1, w: 1.5, collider: [-0.6, -0.4, 0.6, 0] },
 ];
 

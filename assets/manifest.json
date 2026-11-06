@@ -2495,8 +2495,8 @@
     },
     "prop.fountain": {
       "file": "assets/derived/props/fountain.png",
-      "width": 232,
-      "height": 290,
+      "width": 464,
+      "height": 580,
       "source": "tools/paint_fountain.py",
       "status": "painted-in-code",
       "notes": "Basin cut from the game's painted well, pond water texture, stone tiers rebuilt from the well's blocks, jets painted in code. No fountain art was supplied."
@@ -2504,7 +2504,7 @@
     "prop.silo": {
       "file": "assets/derived/props/silo.png",
       "width": 600,
-      "height": 968,
+      "height": 1032,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Red plank silo with stone footing, iron hoops and slate dome, cut from the barn, well and roof art."
@@ -2512,7 +2512,7 @@
     "prop.clock_tower": {
       "file": "assets/derived/props/clock_tower.png",
       "width": 600,
-      "height": 1256,
+      "height": 1280,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Stone clock tower with timber belts, painted clock face and clay-tile pyramid roof, cut from the well, barn and cottage art."
@@ -2527,7 +2527,7 @@
     },
     "prop.windmill_f1": {
       "file": "assets/derived/props/windmill_f1.png",
-      "width": 764,
+      "width": 864,
       "height": 1108,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
@@ -2535,7 +2535,7 @@
     },
     "prop.windmill_f2": {
       "file": "assets/derived/props/windmill_f2.png",
-      "width": 765,
+      "width": 864,
       "height": 1108,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
@@ -2543,7 +2543,7 @@
     },
     "prop.windmill_f3": {
       "file": "assets/derived/props/windmill_f3.png",
-      "width": 846,
+      "width": 864,
       "height": 1108,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
@@ -2579,7 +2579,7 @@
       "height": 596,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
-      "notes": "The game's oak with apples painted among the leaves."
+      "notes": "The game's oak with apples painted among the leaves, fallen fruit and a crate."
     },
     "foliage.tree_pear": {
       "file": "assets/derived/props/tree_pear.png",
@@ -2587,7 +2587,7 @@
       "height": 596,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
-      "notes": "The game's oak with pears painted among the leaves."
+      "notes": "The game's oak with pears painted among the leaves, fallen fruit and a crate."
     },
     "foliage.tree_orange": {
       "file": "assets/derived/props/tree_orange.png",
@@ -2595,7 +2595,7 @@
       "height": 596,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
-      "notes": "The game's oak with oranges painted among the leaves."
+      "notes": "The game's oak with oranges painted among the leaves, fallen fruit and a crate."
     },
     "foliage.tree_cherry": {
       "file": "assets/derived/props/tree_cherry.png",
@@ -2603,44 +2603,44 @@
       "height": 596,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
-      "notes": "The game's oak with cherrys painted among the leaves."
+      "notes": "The game's oak with cherrys painted among the leaves, fallen fruit and a crate."
     },
     "prop.waterfall_f0": {
       "file": "assets/derived/props/waterfall_f0.png",
-      "width": 1009,
-      "height": 940,
+      "width": 1081,
+      "height": 968,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 1 of 4), made from the game's stone, grass and pond water."
     },
     "prop.waterfall_f1": {
       "file": "assets/derived/props/waterfall_f1.png",
-      "width": 1009,
-      "height": 940,
+      "width": 1081,
+      "height": 968,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 2 of 4), made from the game's stone, grass and pond water."
     },
     "prop.waterfall_f2": {
       "file": "assets/derived/props/waterfall_f2.png",
-      "width": 1009,
-      "height": 940,
+      "width": 1081,
+      "height": 968,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 3 of 4), made from the game's stone, grass and pond water."
     },
     "prop.waterfall_f3": {
       "file": "assets/derived/props/waterfall_f3.png",
-      "width": 1009,
-      "height": 940,
+      "width": 1081,
+      "height": 968,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 4 of 4), made from the game's stone, grass and pond water."
     },
     "prop.waterfall": {
       "file": "assets/derived/props/waterfall_f0.png",
-      "width": 1009,
-      "height": 940,
+      "width": 1081,
+      "height": 968,
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 1 of 4), made from the game's stone, grass and pond water."
