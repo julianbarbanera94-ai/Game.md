@@ -1,4 +1,4 @@
-import { forestScenery } from './land.js';
+import { forestScenery, PARCELS } from './land.js';
 import { VILLAGE_PATHS, VILLAGE_OBJECTS, VILLAGE_SCENERY, VILLAGE_DECOR } from './village.js';
 
 // Starter farm layout. All coordinates are in tiles (see config.TILE).
@@ -9,7 +9,9 @@ import { VILLAGE_PATHS, VILLAGE_OBJECTS, VILLAGE_SCENERY, VILLAGE_DECOR } from '
 export const SPAWN = { x: 17.6, y: 9.4 };
 
 // Walkable area (tiles). Outside this the forest edge / creek bank blocks.
-export const BOUNDS = { x0: 1.6, y0: 3.0, x1: 62.3, y1: 26.4 };
+export const CORE_BOUNDS = { x0: 1.6, y0: 3.0, x1: 62.3, y1: 26.4 };
+// The outer limit of the whole 128 x 56 world; where you may actually walk depends on the land you own.
+export const BOUNDS = { x0: 1.6, y0: 3.0, x1: 126.4, y1: 53.0 };
 
 // Ground features used by the terrain painter and collision.
 export const PATHS = [
@@ -29,18 +31,25 @@ export const PLOT_GROUPS = {
   starter: { unlock: null },
   south: { unlock: 'gardenExpansion' },
   north: { unlock: 'northField' },
-  paddock: { unlock: 'eastPaddock' }, // the long meadow east of the road, worked by tractors
 };
+for (const p of PARCELS) PLOT_GROUPS[p.group] = { unlock: p.id }; // every parcel's plots unlock with its purchase
 // The East Paddock (tiles): 8 x 5 plots in open meadow, clear of the road and the garden.
-export const PADDOCK = { x0: 22.9, y0: 13.9, x1: 31.1, y1: 19.1 };
+export const PADDOCK = { x0: 22.9, y0: 13.9, x1: 31.1, y1: 19.1 }; // kept for the East Paddock checks
 // The north field (tiles) beside the road, north of the garden.
 export const NORTH_FIELD = { x0: 4.8, y0: 6.6, x1: 9.2, y1: 9.4 };
 
 export const PLOTS = [];
-for (const [group, rows, cols] of [['starter', [14, 15], [5, 6, 7, 8]], ['south', [17, 18], [5, 6, 7, 8]], ['north', [7, 8], [5, 6, 7, 8]], ['paddock', [14, 15, 16, 17, 18], [23, 24, 25, 26, 27, 28, 29, 30]]]) {
+for (const [group, rows, cols] of [['starter', [14, 15], [5, 6, 7, 8]], ['south', [17, 18], [5, 6, 7, 8]], ['north', [7, 8], [5, 6, 7, 8]]]) {
   for (const row of rows) {
     for (const col of cols) {
       PLOTS.push({ id: `${group}_${col}_${row}`, group, tx: col, ty: row });
+    }
+  }
+}
+for (const p of PARCELS) {
+  for (let row = p.field.y0; row < p.field.y0 + p.field.rows; row++) {
+    for (let col = p.field.x0; col < p.field.x0 + p.field.cols; col++) {
+      PLOTS.push({ id: `${p.group}_${col}_${row}`, group: p.group, tx: col, ty: row });
     }
   }
 }
@@ -123,6 +132,11 @@ export const GROUND_DECOR = [
 // The village (east of the farm) extends the same lists; scenery is appended so
 // indices stored in saves (state.cleared) stay valid.
 PATHS.push(...VILLAGE_PATHS);
+// the tracks into each bought parcel, as dirt path segments
+for (const p of PARCELS) {
+  if (!p.road) continue;
+  for (let i = 0; i < p.road.line.length - 1; i++) PATHS.push({ from: p.road.line[i], to: p.road.line[i + 1], width: p.road.width });
+}
 OBJECTS.push(...VILLAGE_OBJECTS);
 SCENERY.push(...VILLAGE_SCENERY);
 GROUND_DECOR.push(...VILLAGE_DECOR);

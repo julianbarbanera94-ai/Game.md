@@ -11,7 +11,7 @@ import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
 import { GroundLayer, CHUNK } from './terrain.js';
-import { CREEK_END_X } from '../data/land.js';
+import { CREEK_END_X, PARCELS, PARCEL_BY_GROUP } from '../data/land.js';
 import { drawVehicle } from './vehicleArt.js';
 import { calendar, activeEvent } from '../systems/seasons.js';
 import { SEASON_TINT } from '../data/seasons.js';
@@ -270,7 +270,7 @@ export class Renderer {
       if (k <= this.ground.ovScale * 1.3) this.ground.drawOverview(g, rect);
       else this.ground.draw(g, rect);
     }
-    this.drawPlots(g, game);
+    this.drawPlots(g, game, true);
     this.drawPastures(g, game);
     const items = [];
     for (const d0 of [...this.world.drawables, ...this.placedDrawables(game.state)]) {
@@ -637,23 +637,26 @@ export class Renderer {
     g.restore();
   }
 
-  drawPlots(g, game) {
+  drawPlots(g, game, all = false) {
     const { state } = game;
-    if (!isPlotAvailable(state, 'paddock_23_14')) {
-      // the unbought East Paddock: a signpost in the meadow, nothing else
-      const sign = this.assets.get('building.signpost');
-      if (sign) {
-        const w = TILE * 1.2;
-        g.drawImage(sign, 27 * TILE - w / 2, 15.2 * TILE - (w * sign.height) / sign.width, w, (w * sign.height) / sign.width);
+    const cam = game.camera;
+    // a for-sale signpost for every parcel not yet bought
+    const sign = this.assets.get('building.signpost');
+    if (sign) {
+      for (const p of PARCELS) {
+        if (state.unlocks[p.id]) continue;
+        const w = TILE * 1.2, h = (w * sign.height) / sign.width;
+        g.drawImage(sign, p.sign[0] * TILE - w / 2, p.sign[1] * TILE - h, w, h);
       }
     }
     for (const def of PLOTS) {
+      if (!all && (def.tx * TILE > cam.x + cam.viewW + TILE || (def.tx + 1) * TILE < cam.x - TILE || def.ty * TILE > cam.y + cam.viewH + TILE || (def.ty + 1) * TILE < cam.y - TILE)) continue;
       const plot = state.plots[def.id];
       const cx = (def.tx + 0.5) * TILE;
       const cy = (def.ty + 0.5) * TILE;
       const available = isPlotAvailable(state, def.id);
       // unbought paddock: it is still meadow; only a signpost marks it
-      if (!available && def.group === 'paddock') continue;
+      if (!available && PARCEL_BY_GROUP[def.group]) continue;
       const key = available ? plotSpriteKey(plot) : 'plot.soil_dry';
       let img = this.assets.get(key);
       if (!img) continue;

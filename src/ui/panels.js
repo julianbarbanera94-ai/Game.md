@@ -167,6 +167,7 @@ export class Panels {
         owned: 'Already purchased.',
         locked: `Locked — requires: ${st.reason}`,
         unaffordable: `You need ${st.up.cost} coins (you have ${game.state.coins}).`,
+        blocked: st.reason,
         available: 'Ready to purchase.',
       }[st.state];
       content.replaceChildren(

@@ -1,7 +1,7 @@
 import { TILE, WORLD_W, WORLD_H } from '../config.js';
 import { CREEK, GROUND_DECOR, PATHS } from '../data/world.js';
 import { PLAZA } from '../data/village.js';
-import { RIVER, CREEK_END_X } from '../data/land.js';
+import { RIVER, CREEK_END_X, PARCELS, distToLine } from '../data/land.js';
 import { mulberry32 } from '../core/rng.js';
 
 // Paints the static ground layer.
@@ -19,7 +19,8 @@ import { mulberry32 } from '../core/rng.js';
 export const TERRAIN_KEYS = [
   'terrain.grass_detailed', 'terrain2.grass_flower', 'terrain.dirt_detailed', 'terrain2.dirt_path',
   'terrain2.pond_water', 'terrain.water_pond_detailed', 'terrain.cobblestone_detailed', 'terrain2.cobblestone_path', 'foliage.rock_small', 'foliage.rock_cluster',
-  'foliage.grass_tall', 'foliage.fern', ...GROUND_DECOR.map((d) => d[0]),
+  'foliage.grass_tall', 'foliage.fern', 'terrain.fence_horizontal_detailed', 'terrain.fence_vertical_detailed', 'terrain.fence_gate_detailed', 'building.signpost',
+  ...GROUND_DECOR.map((d) => d[0]),
 ];
 
 function canvas(w, h) {
@@ -110,6 +111,9 @@ function creekPath(rand, grow = 0) {
 
 export const CHUNK = 1024; // world px per chunk side
 const PAD = 8; // each chunk is painted a little wider so seams never show
+
+// keep a fence's rotation within a quarter turn either way, so it never draws upside down
+const fold = (a) => (a > Math.PI / 2 ? a - Math.PI : a < -Math.PI / 2 ? a + Math.PI : a);
 
 // ---------------------------------------------------------------- the plan
 // Everything random is decided here, once, in the same order the old
@@ -222,6 +226,33 @@ function makePlan(assets, groundDrawables) {
       }
     }
     plan.river = { pts, stamps, splats, color: averageColor(waterImgs[0]) };
+  }
+
+  // 3b2. bridges over the river, laid at their crossing angle
+  plan.bridges = [];
+  const bridgeImg = assets.get('building.wooden_bridge');
+  for (const p of PARCELS) if (p.bridge && bridgeImg) plan.bridges.push({ img: bridgeImg, ...p.bridge });
+
+  // 3c. fences around each bought-land meadow, with a gap where its track comes in
+  plan.fences = [];
+  const fenceH = assets.get('terrain.fence_horizontal_detailed'), fenceV = assets.get('terrain.fence_vertical_detailed');
+  for (const p of PARCELS) {
+    if (p.core || !fenceH || !fenceV) continue;
+    const poly = p.poly;
+    for (let i = 0; i < poly.length; i++) {
+      const [ax, ay] = poly[i], [bx, by] = poly[(i + 1) % poly.length];
+      const len = Math.hypot(bx - ax, by - ay);
+      const n = Math.max(1, Math.round(len / 2.1));
+      const ang = Math.atan2(by - ay, bx - ax);
+      const vertical = Math.abs(by - ay) > Math.abs(bx - ax);
+      for (let k = 0; k < n; k++) {
+        const t = (k + 0.5) / n;
+        const x = ax + (bx - ax) * t, y = ay + (by - ay) * t;
+        if (p.road && distToLine(x, y, p.road.line) < p.road.width / 2 + 0.3) continue;
+        if (p.gate && Math.hypot(x - p.gate[0], y - p.gate[1]) < 2.2) continue;
+        plan.fences.push({ img: vertical ? fenceV : fenceH, x, y, w: (len / n) * 1.12, rot: fold(vertical ? ang - (Math.PI / 2) * Math.sign(by - ay || 1) : ang) });
+      }
+    }
   }
 
   // 4. low decoration
@@ -372,6 +403,26 @@ function paintPlan(plan, g, rx, ry, rw, rh, res) {
     g.strokeStyle = 'rgba(10,40,60,0.18)'; // darker middle of the channel
     g.lineWidth = RIVER.width * TILE * 0.5;
     trace(); g.stroke();
+    g.restore();
+  }
+
+  for (const br of plan.bridges) {
+    if (!vis(br.at[0] * TILE, br.at[1] * TILE, 320)) continue;
+    const w = br.w * TILE, h = (w * br.img.height) / br.img.width;
+    g.save();
+    g.translate(br.at[0] * TILE, br.at[1] * TILE);
+    g.rotate(br.rot);
+    g.drawImage(br.img, -w / 2, -h / 2, w, h);
+    g.restore();
+  }
+  // fences (drawn at the meadow edge; the rotation follows the edge)
+  for (const f of plan.fences) {
+    if (!vis(f.x * TILE, f.y * TILE, 200)) continue;
+    const w = f.w * TILE, h = (w * f.img.height) / f.img.width;
+    g.save();
+    g.translate(f.x * TILE, f.y * TILE);
+    g.rotate(f.rot);
+    g.drawImage(f.img, -w / 2, -h * 0.75, w, h);
     g.restore();
   }
 

@@ -16,14 +16,51 @@ export const RIVER = {
   line: [[128, 0], [122, 8], [119, 14], [112, 20], [107, 25], [104, 34], [99, 40], [92, 44], [84, 48], [76, 52], [70, 56]],
 };
 
-// Open meadows inside the forest: the land a player can buy. Different sizes and shapes,
-// following the river and the forest edge.
-export const PARCEL_SHAPES = {
-  riverside_paddock: { name: 'Riverside Paddock', poly: [[70, 4], [88, 6], [96, 16], [90, 23], [74, 21], [68, 14]] },
-  northern_meadow: { name: 'Northern Meadow', poly: [[98, 5], [121, 5], [123, 16], [116, 22], [102, 20]] },
-  hillside_pasture: { name: 'Hillside Pasture', poly: [[6, 31], [30, 33], [58, 38], [68, 46], [60, 51], [30, 52], [9, 51], [4, 42]] },
-  orchard_woods: { name: 'Orchard Woods', poly: [[112, 31], [123, 31], [124, 50], [112, 51], [106, 44]] },
-};
+// Land you can buy, one entry per parcel: adding a parcel is one entry here.
+//   poly     the fenced meadow (tiles)           field  the plot grid inside it (tiles)
+//   requires what must be true before it can be bought
+//   sign     where its for-sale signpost stands (in land you already own)
+//   road     { line, width } the track in from owned land; the gate stands at gate
+// The starter-map East Paddock (core: true) has no road or fence: it is open meadow.
+export const PARCELS = [
+  {
+    id: 'eastPaddock', group: 'paddock', name: 'East Paddock', price: 1200, core: true,
+    requires: { unlock: 'northField', placed: 'garage' },
+    blurb: 'A long meadow east of the road: 40 crop plots that tractors can plough, seed and harvest in passes.',
+    poly: [[22.9, 13.9], [31.1, 13.9], [31.1, 19.1], [22.9, 19.1]], field: { x0: 23, y0: 14, cols: 8, rows: 5 }, sign: [22.3, 16.4],
+  },
+  {
+    id: 'riversidePaddock', group: 'riversidePaddock', name: 'Riverside Paddock', price: 900,
+    requires: { flag: 'roadOpen' },
+    blurb: 'A small paddock past the village: 60 plots in a meadow by the river.',
+    poly: [[70, 4], [88, 6], [96, 16], [90, 23], [74, 21], [68, 14]], field: { x0: 73, y0: 9, cols: 10, rows: 6 },
+    sign: [60.6, 12.9], gate: [61.7, 11.9], road: { line: [[61.2, 11.6], [66, 12.4], [70.5, 13.2]], width: 3.4 },
+  },
+  {
+    id: 'northernMeadow', group: 'northernMeadow', name: 'Northern Meadow', price: 4800,
+    requires: { unlock: 'riversidePaddock' },
+    blurb: 'A broad meadow beside the river: 32 plots and room for animals.',
+    poly: [[98, 5], [121, 5], [123, 16], [116, 22], [102, 20]], field: { x0: 102, y0: 8, cols: 8, rows: 4 },
+    sign: [93.4, 15.6], gate: [95.0, 15.0], road: { line: [[94.5, 15], [99, 14], [101.5, 13]], width: 3.4 },
+  },
+  {
+    id: 'woodlandGlade', group: 'woodlandGlade', name: 'Woodland Glade', price: 2100,
+    requires: { unlock: 'northernMeadow' },
+    blurb: 'A sheltered clearing in the eastern woods: 24 plots.',
+    poly: [[112, 31], [123, 31], [124, 50], [112, 51], [106, 44]], field: { x0: 112, y0: 36, cols: 6, rows: 4 },
+    sign: [108.2, 17.3], gate: [117.0, 24.0], bridge: { at: [112, 20.1], rot: -Math.PI / 4, w: 3.2 },
+    road: { line: [[107.6, 18.2], [110.2, 19.2], [112, 20.1], [116, 21.6], [117, 24], [116.5, 31.5]], width: 3.4 },
+  },
+  {
+    id: 'hillsidePasture', group: 'hillsidePasture', name: 'Hillside Pasture', price: 3600,
+    requires: { unlock: 'northField' },
+    blurb: 'A large pasture south of the creek, past the bridge: 72 plots and plenty of room to graze.',
+    poly: [[6, 31], [30, 33], [58, 38], [68, 46], [60, 51], [30, 52], [9, 51], [4, 42]], field: { x0: 14, y0: 38, cols: 12, rows: 6 },
+    sign: [19.7, 26.1], gate: [17.9, 26.7], road: { line: [[17.9, 25.6], [17.9, 31.5], [17.5, 35]], width: 3.4 },
+  },
+];
+export const PARCEL_BY_ID = Object.fromEntries(PARCELS.map((p) => [p.id, p]));
+export const PARCEL_BY_GROUP = Object.fromEntries(PARCELS.map((p) => [p.group, p]));
 
 export function pointInPoly(x, y, poly) {
   let inside = false;
@@ -58,7 +95,8 @@ const TREES = [
 export function forestScenery(worldCols, worldRows) {
   const rand = mulberry32(20260726);
   const out = [];
-  const polys = Object.values(PARCEL_SHAPES).map((p) => p.poly);
+  const polys = PARCELS.filter((p) => !p.core).map((p) => p.poly);
+  const roads = PARCELS.filter((p) => p.road).map((p) => p.road);
   for (let y = 0.8; y < worldRows; y += 1.5) {
     for (let x = 0.8; x < worldCols; x += 1.5) {
       const px = x + (rand() - 0.5) * 1.3, py = y + (rand() - 0.5) * 1.3;
@@ -67,6 +105,7 @@ export function forestScenery(worldCols, worldRows) {
       if (px < CORE.cols + 0.5 && py < CORE.rows + 0.5) continue; // the starter map has its own scenery
       if (distToLine(px, py, RIVER.line) < RIVER.width / 2 + 1.4) continue;
       if (px > CORE.cols && px < CREEK_END_X && py > 21.4 && py < 26.8) continue; // the creek running east
+      if (roads.some((r) => distToLine(px, py, r.line) < r.width / 2 + 1.3)) continue; // keep the tracks open
       let inMeadow = false;
       for (const poly of polys) {
         if (pointInPoly(px, py, poly)) { inMeadow = true; break; }

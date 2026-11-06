@@ -1,5 +1,6 @@
 import { TILE, WORLD_W, CORE_COLS, CORE_ROWS } from '../config.js';
 import { FOREST_WALL_X, ROAD_GATE, ROAD_Y, VILLAGE_X0 } from '../data/village.js';
+import { PARCELS, RIVER, distToLine } from '../data/land.js';
 import { BOUNDS, BRIDGE, CREEK, GARDEN, NORTH_FIELD, OBJECTS, PATHS, SCENERY } from '../data/world.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
 import { INTERIORS } from '../data/interiors.js';
@@ -41,8 +42,10 @@ export function buildWorld(assets) {
     }
   }
 
+  const roads = PARCELS.filter((p) => p.road).map((p) => p.road);
   const scenery = new Map(); // SCENERY index -> { drawable, collider }, so clearing can remove them
   SCENERY.forEach(([sprite, x, y, wt, r], i) => {
+    if (roads.some((rd) => distToLine(x, y, rd.line) < rd.width / 2 + 0.2)) return; // tracks into bought land stay open
     const { w, h } = spriteSize(assets, sprite, wt);
     const drawable = { sprite, x: x * TILE, y: y * TILE, w, h, sortY: y * TILE, flip: i % 3 === 1 };
     drawables.push(drawable);
@@ -69,6 +72,25 @@ export function buildWorld(assets) {
   const cy1 = (CREEK.y1 - 0.05) * TILE;
   colliders.push({ x0: 0, y0: cy0, x1: BRIDGE.x0 * TILE + 8, y1: cy1 });
   colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: CORE_COLS * TILE, y1: cy1 });
+
+  const bridges = PARCELS.filter((p) => p.bridge).map((p) => p.bridge);
+  // the river blocks movement: small squares along its length
+  const rl = RIVER.line;
+  for (let i = 0; i < rl.length - 1; i++) {
+    const [ax, ay] = rl[i], [bx, by] = rl[i + 1];
+    const n = Math.ceil(Math.hypot(bx - ax, by - ay) / 0.7);
+    for (let k = 0; k <= n; k++) {
+      const x = (ax + ((bx - ax) * k) / n) * TILE, y = (ay + ((by - ay) * k) / n) * TILE, h = (RIVER.width / 2 - 0.15) * TILE;
+      if (bridges.some((br) => Math.hypot(x / TILE - br.at[0], y / TILE - br.at[1]) < br.w / 2 + 1.8)) continue; // a clear way across, wide enough for a tractor
+      colliders.push({ x0: x - h, y0: y - h, x1: x + h, y1: y + h });
+    }
+  }
+  // a wooden gate where each track leaves the land you own
+  for (const p of PARCELS) {
+    if (!p.gate) continue;
+    const { w, h } = spriteSize(assets, 'terrain.fence_gate_detailed', 3.2);
+    drawables.push({ sprite: 'terrain.fence_gate_detailed', x: p.gate[0] * TILE, y: p.gate[1] * TILE, w, h, sortY: p.gate[1] * TILE });
+  }
 
   const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
   return { drawables, groundDrawables, colliders, interactables, bounds, scenery, roadBlock, noBuild: noBuildZones() };

@@ -1,5 +1,5 @@
 import { TILE, GAME_MINUTES_PER_SECOND, PLAYER_SPEED, INTERACT_RANGE, WORLD_W, WORLD_H } from './config.js';
-import { PLOTS } from './data/world.js';
+import { PLOTS, CORE_BOUNDS } from './data/world.js';
 import { CROPS } from './data/crops.js';
 import { getItem } from './data/items.js';
 import { EventBus } from './core/events.js';
@@ -38,6 +38,7 @@ import { ROAD_Y, VILLAGE_X0 } from './data/village.js';
 import { BUILDINGS, DECORATIONS } from './data/buildings.js';
 import { UPGRADES } from './data/progression.js';
 import { Camera } from './world/camera.js';
+import { PARCELS, PARCEL_BY_GROUP, pointInPoly, distToLine } from './data/land.js';
 import { padMenu } from './input/gamepad.js';
 import { Effects } from './render/effects.js';
 import { Hud } from './ui/hud.js';
@@ -162,7 +163,22 @@ export class Game {
 
   // Static colliders plus everything the player has placed.
   refreshColliders() {
-    this.farmCollision = new CollisionWorld(this.world.bounds, [...this.world.colliders, ...placedColliders(this.state, this.placement?.moveUid)]);
+    this.farmCollision = new CollisionWorld(this.world.bounds, [...this.world.colliders, ...placedColliders(this.state, this.placement?.moveUid)], this.walkableRegion());
+  }
+
+  // Where you may stand: the starter map, every parcel you have bought, and the track into each.
+  walkableRegion() {
+    const owned = PARCELS.filter((p) => !p.core && this.state?.unlocks[p.id]);
+    const core = CORE_BOUNDS;
+    return (px, py) => {
+      const x = px / TILE, y = py / TILE;
+      if (x >= core.x0 && x <= core.x1 && y >= core.y0 && y <= core.y1) return true;
+      for (const p of owned) {
+        if (pointInPoly(x, y, p.poly)) return true;
+        if (p.road && distToLine(x, y, p.road.line) <= p.road.width / 2) return true;
+      }
+      return false;
+    };
   }
 
   get activeCollision() {
@@ -184,7 +200,7 @@ export class Game {
     this.running = true;
     this.placement = null;
     this.lastEvent = activeEvent(state.time)?.id || null; // do not announce a festival that was already on
-    this.applyCleared();
+    this.applyCleared(); // also rebuilds the colliders for the land owned in this save
     this.applyWorldFlags();
     this.setCameraWorld();
     this.camera.follow(state.player.x, state.player.y - 40, 0, true);
@@ -370,16 +386,11 @@ export class Game {
       [p.x + fx * TILE * 0.62, p.y - 8 + fy * TILE * 0.62 - (p.facing === 'up' ? 10 : 0)],
       [p.x, p.y - 6],
     ];
-    // an unbought paddock offers "buy the land" only when nothing else is in reach
-    let lockedPaddock = null;
     for (const [x, y] of probes) {
       const def = PLOT_AT.get(`${Math.floor(x / TILE)},${Math.floor(y / TILE)}`);
       if (def) {
         const a = Farming.getPlotAction(this.state, def.id);
-        if (a.action === 'locked' && def.group === 'paddock') {
-          lockedPaddock = { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
-          continue;
-        }
+        if (a.action === 'locked' && PARCEL_BY_GROUP[def.group]) continue; // bought land is offered at its signpost
         if (a.action === 'locked') return { kind: 'object', uid: `unlock:${a.unlock}`, ...this.objectTarget('garden_sign', (def.tx + 0.5) * TILE, (def.ty + 0.9) * TILE, `unlock:${a.unlock}`) };
         return { kind: 'plot', id: def.id, tx: def.tx, ty: def.ty, label: a.label, ok: a.ok, action: a.action };
       }
@@ -401,10 +412,11 @@ export class Game {
         : { id: r.uid, uid: r.uid, kind: 'livestock', x: r.x * TILE, y: (r.y + 0.75) * TILE }));
     const clearable = Clearing.clearables(this.state).map((c) => ({ kind: 'clear', uid: `scn${c.index}`, x: c.x * TILE, y: c.y * TILE + 6 }));
     const wheels = this.state.vehicles.filter((v) => v.uid !== this.state.driving).map((v) => ({ kind: 'vehicle', uid: `veh:${v.uid}`, x: v.x, y: v.y + 10 }));
-    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables(), ...wheels]);
+    const signs = PARCELS.filter((p) => !this.state.unlocks[p.id]).map((p) => ({ kind: 'garden_sign', uid: `unlock:${p.id}`, x: p.sign[0] * TILE, y: p.sign[1] * TILE }));
+    const object = this.nearestInteractable([...this.world.interactables, ...placed, ...clearable, ...this.npcInteractables(), ...wheels, ...signs]);
     const animal = this.nearestAnimal();
     if (animal && (!object || animal.dist <= object.dist)) return animal;
-    return object || lockedPaddock;
+    return object;
   }
 
   // '?' = they are waiting for goods you carry, '!' = a quest asks you to talk to them.
@@ -1066,6 +1078,7 @@ export class Game {
   purchaseUpgrade(id) {
     const r = Economy.purchaseUpgrade(this.state, id, this.bus);
     if (r.ok) {
+      this.refreshColliders(); // the new land and its track are now walkable
       this.sfx.play('quest');
       this.hud.toast(id === 'gardenExpansion' ? 'The south garden bed is cleared — 8 new plots!' : 'Upgrade purchased!', 'good');
       this.autosave('upgrade');
@@ -1318,6 +1331,7 @@ export class Game {
     if (r.x0 < b.x0 || r.y0 < b.y0 || r.x1 > b.x1 || r.y1 > b.y1) {
       return { ok: false, rects: [], text: 'That would hang over the edge of the map — move the other way' };
     }
+    if (!this.farmCollision.regionOk(r)) return { ok: false, rects: [], text: 'That land is not yours yet — buy it from its signpost' };
     const hits = this.farmCollision.rects.filter((c) => overlaps(pad, c));
     if (hits.length) {
       const owner = (c) => [...this.world.scenery.entries()].find(([, sc]) => !sc.gone && sc.collider === c);

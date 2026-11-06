@@ -6,14 +6,23 @@ export function overlaps(a, b) {
 }
 
 export class CollisionWorld {
-  constructor(bounds, rects) {
+  // region(x, y) optionally says which points of the world may be stood on (bought land)
+  constructor(bounds, rects, region = null) {
     this.bounds = bounds;
     this.rects = rects;
+    this.region = region;
+  }
+
+  // true when every corner of the box is on land that may be walked on
+  regionOk(box) {
+    const r = this.region;
+    return !r || (r(box.x0, box.y0) && r(box.x1, box.y0) && r(box.x0, box.y1) && r(box.x1, box.y1));
   }
 
   blocked(box) {
     const b = this.bounds;
     if (box.x0 < b.x0 || box.y0 < b.y0 || box.x1 > b.x1 || box.y1 > b.y1) return true;
+    if (!this.regionOk(box)) return true;
     for (const r of this.rects) if (overlaps(box, r)) return true;
     return false;
   }

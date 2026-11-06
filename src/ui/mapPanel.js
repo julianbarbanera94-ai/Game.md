@@ -4,6 +4,7 @@ import { NPCS } from '../data/npcs.js';
 import { VEHICLES } from '../data/vehicles.js';
 import { NORTH_FIELD } from '../data/world.js';
 import { ROAD_GATE } from '../data/village.js';
+import { PARCELS } from '../data/land.js';
 import { el } from './hud.js';
 
 // World map: the real painted world shrunk to fit, with labels, the player,
@@ -42,7 +43,11 @@ export function mapMarkers(state, npcs = []) {
   if (!state.flags.roadOpen) out.push({ kind: 'lock', label: 'Fallen tree blocks the road', x: (ROAD_GATE.x0 + ROAD_GATE.x1) / 2, y: (ROAD_GATE.y0 + ROAD_GATE.y1) / 2 });
   if (!state.unlocks.northField) out.push({ kind: 'lock', label: 'North field (locked)', x: (NORTH_FIELD.x0 + NORTH_FIELD.x1) / 2, y: (NORTH_FIELD.y0 + NORTH_FIELD.y1) / 2 });
   if (!state.unlocks.gardenExpansion) out.push({ kind: 'lock', label: 'South bed (locked)', x: 7.0, y: 18.0 });
-  if (!state.unlocks.eastPaddock) out.push({ kind: 'lock', label: 'East paddock (locked)', x: 27.0, y: 16.5 });
+  for (const p of PARCELS) {
+    const cx = p.poly.reduce((n, q) => n + q[0], 0) / p.poly.length, cy = p.poly.reduce((n, q) => n + q[1], 0) / p.poly.length;
+    if (!state.unlocks[p.id]) out.push({ kind: 'lock', label: `${p.name} (${p.price.toLocaleString()} coins)`, x: cx, y: cy });
+    else if (!p.core) out.push({ kind: 'place', label: p.name, x: cx, y: cy });
+  }
   for (const v of state.vehicles) {
     if (state.driving === v.uid) continue;
     out.push({ kind: 'vehicle', label: VEHICLES[v.type]?.name || 'Tractor', x: v.x / TILE, y: v.y / TILE });

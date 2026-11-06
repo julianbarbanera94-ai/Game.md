@@ -4,6 +4,8 @@
 // requires: { quest: id } -> quest must be claimed
 //           { unlock: id } -> unlock flag must be set
 
+import { PARCELS } from './land.js';
+
 export const SHOP_STOCK = [
   { item: 'fishing_rod', requires: null },
   { item: 'seed_carrot', requires: null },
@@ -19,20 +21,13 @@ export const SHOP_STOCK = [
 ];
 
 export const UPGRADES = {
+  ...Object.fromEntries(PARCELS.map((p) => [p.id, { id: p.id, name: p.name, description: p.blurb, cost: p.price, requires: p.requires, kind: 'land' }])),
   northField: {
     id: 'northField',
     name: 'North Field',
     description: 'Clear the old pasture beside the road: +8 crop plots north of the garden.',
     cost: 600,
     requires: { unlock: 'gardenExpansion' },
-    kind: 'land',
-  },
-  eastPaddock: {
-    id: 'eastPaddock',
-    name: 'East Paddock',
-    description: 'A long meadow east of the road: +40 crop plots that tractors can plough, seed and harvest in passes.',
-    cost: 1200,
-    requires: { unlock: 'northField', placed: 'garage' },
     kind: 'land',
   },
   gardenExpansion: {

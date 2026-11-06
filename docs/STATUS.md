@@ -149,6 +149,17 @@ Trees, bushes, boulders, stumps, logs and old barrels/crates inside the map bord
 - Vehicle artwork: tractors, plough, seeder and crop trailer use the supplied **Vehicle Angles Pack** (south view, rotated to the heading; low-res crops enlarged 2x, so soft). Sprayer and reaper are still painted in code (`src/render/vehicleArt.js`).
 - Tests: `tests/unit/vehicles.test.mjs` (16), `npm run test:vehicles` (48 checks).
 
+## The wider farm: land to buy
+
+- The world is 128 x 56 tiles. The starter farm and village are unchanged (top-left); the rest is forest, a river and
+  meadows. Each meadow is a **parcel**, one entry in `src/data/land.js` (polygon, plot field, price, requirement, sign,
+  track, gate). The East Paddock is the first entry; a new parcel is one more entry.
+- Buy at the for-sale signpost (press E). You can only walk on land you own and the track into it; a gate marks where the
+  track starts. Order: East Paddock (1200), Riverside Paddock (900, after the road opens), Hillside Pasture (3600, past the
+  bridge), Northern Meadow (4800), Woodland Glade (2100, over a river bridge).
+- Fences, tracks, gates and the bridge are painted into the ground; the river blocks movement except at the bridge.
+- Left out because there is no art: greenhouses, silo, windmill, waterfall, horses, fountain, clock tower, fruit trees.
+
 ## East Paddock (land for tractors)
 
 - **Buy:** walk up to the sign on any locked paddock plot and press E. 1200 coins, once the North Field is
