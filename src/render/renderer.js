@@ -10,7 +10,7 @@ import { pastureOf } from '../systems/pasture.js';
 import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
-import { buildGround } from './terrain.js';
+import { GroundLayer, CHUNK } from './terrain.js';
 import { drawVehicle } from './vehicleArt.js';
 import { calendar, activeEvent } from '../systems/seasons.js';
 import { SEASON_TINT } from '../data/seasons.js';
@@ -45,10 +45,11 @@ export class Renderer {
   }
 
   buildStatic(camera) {
-    // the ground is one big canvas: keep it under ~12M pixels so phones stay happy
-    const maxRes = Math.sqrt(12e6 / (WORLD_W * WORLD_H));
+    // ground chunks stay under ~12M live pixels so phones stay happy
+    const maxLive = 8;
+    const maxRes = Math.sqrt(12e6 / (maxLive * CHUNK * CHUNK));
     this.groundRes = Math.min(1.5, maxRes, Math.max(1, camera.scale * this.dpr));
-    this.ground = buildGround(this.assets, this.groundRes, this.world.groundDrawables);
+    this.ground = new GroundLayer(this.assets, this.groundRes, this.world.groundDrawables, { maxLive });
   }
 
   render(game) {
@@ -69,12 +70,9 @@ export class Renderer {
     const view = { x0: cam.x - TILE * 3, y0: cam.y - TILE * 2, x1: cam.x + cam.viewW + TILE * 3, y1: cam.y + cam.viewH + TILE * 6 };
 
     if (this.ground) {
-      // The ground canvas is built near screen resolution, so plain bilinear
-      // filtering looks the same as 'high' and costs far less every frame.
-      const r = this.groundRes;
-      g.imageSmoothingQuality = 'low';
-      g.drawImage(this.ground, cam.x * r, cam.y * r, cam.viewW * r, cam.viewH * r, cam.x, cam.y, cam.viewW, cam.viewH);
-      g.imageSmoothingQuality = 'high';
+      const v = { x0: cam.x, y0: cam.y, x1: cam.x + cam.viewW, y1: cam.y + cam.viewH };
+      this.ground.draw(g, v);
+      this.ground.prefetch(v);
     }
     this.drawWater(g, game.clockSeconds);
     this.drawPlots(g, game);
@@ -267,8 +265,9 @@ export class Renderer {
     g.imageSmoothingQuality = 'high';
     g.setTransform(k, 0, 0, k, -rect.x0 * k, -rect.y0 * k);
     if (this.ground) {
-      const r = this.groundRes;
-      g.drawImage(this.ground, rect.x0 * r, rect.y0 * r, rw * r, rh * r, rect.x0, rect.y0, rw, rh);
+      // a zoomed-out map uses the whole-world overview; a close crop paints real chunks
+      if (k <= this.ground.ovScale * 1.3) this.ground.drawOverview(g, rect);
+      else this.ground.draw(g, rect);
     }
     this.drawPlots(g, game);
     this.drawPastures(g, game);

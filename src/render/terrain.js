@@ -3,7 +3,12 @@ import { CREEK, GROUND_DECOR, PATHS } from '../data/world.js';
 import { PLAZA } from '../data/village.js';
 import { mulberry32 } from '../core/rng.js';
 
-// Paints the static ground layer once at load.
+// Paints the static ground layer.
+//
+// The ground is not one big canvas. A "plan" of every stamp, flower, path,
+// rock and decoration is worked out once (in a fixed random order, so the world
+// always looks the same), and square chunks of it are painted on demand and
+// kept in a small cache. Memory stays flat however large the world is.
 //
 // The supplied terrain "tiles" are illustrated vignettes with ragged edges,
 // not seamless tiles, so the ground is built by stamping feather-masked
@@ -101,68 +106,54 @@ function creekPath(rand, grow = 0) {
   return p;
 }
 
-export function buildGround(assets, res, groundDrawables) {
+export const CHUNK = 1024; // world px per chunk side
+const PAD = 8; // each chunk is painted a little wider so seams never show
+
+// ---------------------------------------------------------------- the plan
+// Everything random is decided here, once, in the same order the old
+// single-canvas builder used, so chunking does not change how the ground looks.
+function makePlan(assets, groundDrawables) {
   const rand = mulberry32(1337);
-  const out = canvas(WORLD_W * res, WORLD_H * res);
-  const g = out.getContext('2d');
-  g.scale(res, res);
-  g.imageSmoothingQuality = 'high';
+  const plan = { groundDrawables };
+  const collect = (x0, y0, x1, y1, count, size, spacing, jitter) => {
+    const out = [];
+    for (let y = y0 - size / 2; y < y1 + size / 2; y += spacing) {
+      for (let x = x0 - size / 2; x < x1 + size / 2; x += spacing) {
+        const si = Math.floor(rand() * count);
+        const px = x + (rand() - 0.5) * jitter;
+        const py = y + (rand() - 0.5) * jitter;
+        out.push({ si, x: px, y: py, flip: rand() < 0.5, size });
+      }
+    }
+    return out;
+  };
 
   // 1. grass
   const grassImg = assets.get('terrain.grass_detailed');
-  g.fillStyle = grassImg ? averageColor(grassImg) : '#6fa83c';
-  g.fillRect(0, 0, WORLD_W, WORLD_H);
-  const grassStamps = [];
-  if (grassImg) grassStamps.push(makeStamp(grassImg, 0.12, 180, 0.45), makeStamp(grassImg, 0.2, 180, 0.45));
+  plan.grassColor = grassImg ? averageColor(grassImg) : '#6fa83c';
+  plan.grassStamps = grassImg ? [makeStamp(grassImg, 0.12, 180, 0.45), makeStamp(grassImg, 0.2, 180, 0.45)] : [];
   const flowerImg = assets.get('terrain2.grass_flower');
-  const flowerStamps = flowerImg ? [makeStamp(flowerImg, 0.15, 170, 0.4)] : [];
-  if (grassStamps.length) splat(g, grassStamps, rand, 0, 0, WORLD_W, WORLD_H, 170, 100, 50);
-  if (flowerStamps.length) {
-    for (let i = 0; i < 46; i++) {
-      g.save();
-      g.globalAlpha = 0.85;
-      g.drawImage(flowerStamps[0], rand() * WORLD_W - 85, rand() * WORLD_H - 85, 170, 170);
-      g.restore();
-    }
-  }
-  // gentle large-scale light/dark variation so the meadow doesn't look uniform
+  plan.flowerStamp = flowerImg ? makeStamp(flowerImg, 0.15, 170, 0.4) : null;
+  plan.grass = plan.grassStamps.length ? collect(0, 0, WORLD_W, WORLD_H, plan.grassStamps.length, 170, 100, 50) : [];
+  plan.flowers = [];
+  if (plan.flowerStamp) for (let i = 0; i < 46; i++) plan.flowers.push({ x: rand() * WORLD_W - 85, y: rand() * WORLD_H - 85 });
+  plan.blobs = [];
   for (let i = 0; i < 40; i++) {
     const x = rand() * WORLD_W, y = rand() * WORLD_H, r = 120 + rand() * 260;
-    const grad = g.createRadialGradient(x, y, 0, x, y, r);
-    const light = rand() < 0.5;
-    grad.addColorStop(0, light ? 'rgba(255,240,150,0.10)' : 'rgba(20,60,10,0.12)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    g.fillStyle = grad;
-    g.fillRect(x - r, y - r, r * 2, r * 2);
+    plan.blobs.push({ x, y, r, light: rand() < 0.5 });
   }
 
-  // 2. dirt paths: splatted dirt texture masked by soft path strokes
+  // 2. dirt paths
   const dirtImgs = [assets.get('terrain2.dirt_path'), assets.get('terrain.dirt_detailed')].filter(Boolean);
+  plan.dirt = null;
   if (dirtImgs.length) {
-    const dirt = canvas(WORLD_W, WORLD_H);
-    const dg = dirt.getContext('2d');
-    dg.fillStyle = averageColor(dirtImgs[0]);
-    dg.fillRect(0, 0, WORLD_W, WORLD_H);
-    splat(dg, dirtImgs.map((im) => makeStamp(im, 0.14, 150, 0.5)), rand, 0, 0, WORLD_W, WORLD_H, 150, 90, 40);
-    const mask = canvas(WORLD_W, WORLD_H);
-    const mg = mask.getContext('2d');
-    for (const [extra, alpha] of [[0.5, 0.25], [0.3, 0.5], [0.12, 0.8], [0, 1]]) {
-      mg.strokeStyle = `rgba(0,0,0,${alpha})`;
-      strokePaths(mg, extra);
-    }
-    dg.globalCompositeOperation = 'destination-in';
-    dg.drawImage(mask, 0, 0);
-    // darker worn edge under the path
-    g.save();
-    g.globalAlpha = 0.28;
-    g.strokeStyle = '#4a3a17';
-    strokePaths(g, 0.55);
-    g.restore();
-    g.drawImage(dirt, 0, 0);
+    const stamps = dirtImgs.map((im) => makeStamp(im, 0.14, 150, 0.5));
+    plan.dirt = { color: averageColor(dirtImgs[0]), stamps, splats: collect(0, 0, WORLD_W, WORLD_H, stamps.length, 150, 90, 40) };
   }
 
-  // 2b. village square: cobbles, feathered at the edge, with a worn dark rim
+  // 2b. village square: painted once into its own small canvas
   const cobbles = ['terrain2.cobblestone_path', 'terrain.cobblestone_detailed'].map((k) => assets.get(k)).filter(Boolean);
+  plan.plaza = null;
   if (cobbles.length) {
     const px = PLAZA.x0 * TILE, py = PLAZA.y0 * TILE, pw = (PLAZA.x1 - PLAZA.x0) * TILE, ph = (PLAZA.y1 - PLAZA.y0) * TILE;
     const pad = 40;
@@ -170,7 +161,14 @@ export function buildGround(assets, res, groundDrawables) {
     const sg = sq.getContext('2d');
     sg.fillStyle = averageColor(cobbles[0]);
     sg.fillRect(0, 0, sq.width, sq.height);
-    splat(sg, cobbles.map((im) => makeStamp(im, 0.12, 150, 0.6)), rand, 0, 0, sq.width, sq.height, 150, 80, 30);
+    const cstamps = cobbles.map((im) => makeStamp(im, 0.12, 150, 0.6));
+    for (const e of collect(0, 0, sq.width, sq.height, cstamps.length, 150, 80, 30)) {
+      sg.save();
+      sg.translate(e.x, e.y);
+      if (e.flip) sg.scale(-1, 1);
+      sg.drawImage(cstamps[e.si], -e.size / 2, -e.size / 2, e.size, e.size);
+      sg.restore();
+    }
     const edge = canvas(sq.width, sq.height);
     const eg = edge.getContext('2d');
     for (const [grow, alpha] of [[34, 0.2], [26, 0.4], [18, 0.7], [8, 1]]) { // outermost first, fully opaque in the middle
@@ -181,66 +179,242 @@ export function buildGround(assets, res, groundDrawables) {
     }
     sg.globalCompositeOperation = 'destination-in';
     sg.drawImage(edge, 0, 0);
-    g.save();
-    g.globalAlpha = 0.3;
-    g.fillStyle = '#4a3a17';
-    g.beginPath();
-    g.roundRect(px - 10, py - 10, pw + 20, ph + 20, 30);
-    g.fill();
-    g.restore();
-    g.drawImage(sq, px - pad, py - pad);
+    plan.plaza = { px, py, pw, ph, pad, canvas: sq };
   }
 
   // 3. creek: muddy bank, splatted water, rocks on both banks
   const waterImgs = [assets.get('terrain2.pond_water'), assets.get('terrain.water_pond_detailed')].filter(Boolean);
-  const bank = creekPath(mulberry32(7), 0.22);
-  g.fillStyle = '#5d4a2a';
-  g.fill(bank);
+  plan.bank = creekPath(mulberry32(7), 0.22);
+  plan.creekClip = creekPath(mulberry32(7), 0);
+  plan.water = null;
   if (waterImgs.length) {
-    const water = canvas(WORLD_W, (CREEK.y1 - CREEK.y0 + 1) * TILE);
-    const wg = water.getContext('2d');
-    wg.fillStyle = averageColor(waterImgs[0]);
-    wg.fillRect(0, 0, water.width, water.height);
-    splat(wg, waterImgs.map((im) => makeStamp(im, 0.24, 160, 0.45)), rand, 0, 0, water.width, water.height, 160, 95, 40);
-    g.save();
-    g.clip(creekPath(mulberry32(7), 0));
-    g.drawImage(water, 0, (CREEK.y0 - 0.5) * TILE);
-    // soft shade along the banks
-    const sh = g.createLinearGradient(0, CREEK.y0 * TILE, 0, CREEK.y1 * TILE);
-    sh.addColorStop(0, 'rgba(10,40,60,0.35)');
-    sh.addColorStop(0.25, 'rgba(10,40,60,0)');
-    sh.addColorStop(0.8, 'rgba(10,40,60,0)');
-    sh.addColorStop(1, 'rgba(10,40,60,0.25)');
-    g.fillStyle = sh;
-    g.fillRect(0, CREEK.y0 * TILE - 20, WORLD_W, (CREEK.y1 - CREEK.y0) * TILE + 40);
-    g.restore();
+    const stamps = waterImgs.map((im) => makeStamp(im, 0.24, 160, 0.45));
+    const h = (CREEK.y1 - CREEK.y0 + 1) * TILE;
+    plan.water = { color: averageColor(waterImgs[0]), stamps, offsetY: (CREEK.y0 - 0.5) * TILE, h, splats: collect(0, 0, WORLD_W, h, stamps.length, 160, 95, 40) };
   }
   const rocks = ['foliage.rock_small', 'foliage.rock_cluster'].map((k) => assets.get(k)).filter(Boolean);
+  plan.rocks = [];
   if (rocks.length) {
     for (let x = 0.4; x < WORLD_W / TILE; x += 0.9 + rand() * 1.4) {
       if (x > 16.2 && x < 19.6) continue; // keep the bridge approach clear
       const top = rand() < 0.5;
       const y = top ? CREEK.y0 + 0.3 : CREEK.y1 + 0.35;
-      drawSprite(g, rocks[Math.floor(rand() * rocks.length)], x, y, 0.7 + rand() * 0.5, rand() < 0.5);
+      const img = rocks[Math.floor(rand() * rocks.length)];
+      plan.rocks.push({ img, x, y, w: 0.7 + rand() * 0.5, flip: rand() < 0.5 });
     }
   }
 
   // 4. low decoration
+  plan.decor = [];
   for (const [key, x, y, w] of GROUND_DECOR) {
     const img = assets.get(key);
-    if (img) drawSprite(g, img, x, y, w, rand() < 0.5);
+    if (img) plan.decor.push({ img, x, y, w, flip: rand() < 0.5 });
   }
   const tufts = ['foliage.grass_tall', 'foliage.fern'].map((k) => assets.get(k)).filter(Boolean);
   for (let i = 0; i < 26 && tufts.length; i++) {
     const x = 2 + rand() * 32, y = 3 + rand() * 20;
     if (Math.abs(x - 17.9) < 1.5 || Math.abs(y - 11.6) < 1.3 || (x > 3.5 && x < 10.5 && y > 12.5 && y < 20.5)) continue;
-    drawSprite(g, tufts[Math.floor(rand() * tufts.length)], x, y, 0.55 + rand() * 0.3, rand() < 0.5);
+    const img = tufts[Math.floor(rand() * tufts.length)];
+    plan.decor.push({ img, x, y, w: 0.55 + rand() * 0.3, flip: rand() < 0.5 });
+  }
+  return plan;
+}
+
+// ---------------------------------------------------------------- painting
+// A canvas that covers world rect (rx, ry, rw, rh) at `res` px per world px,
+// with its context set up to take world coordinates.
+function layer(rx, ry, rw, rh, res) {
+  const c = canvas(rw * res, rh * res);
+  const g = c.getContext('2d');
+  g.scale(res, res);
+  g.translate(-rx, -ry);
+  g.imageSmoothingQuality = 'high';
+  return { c, g };
+}
+
+// Paints the part of the plan inside world rect (rx, ry, rw, rh) onto `g`
+// (already set up for world coordinates, see layer()).
+function paintPlan(plan, g, rx, ry, rw, rh, res) {
+  const vis = (x, y, r) => x + r > rx && x - r < rx + rw && y + r > ry && y - r < ry + rh;
+  const stamp = (gg, stamps, e) => {
+    gg.save();
+    gg.translate(e.x, e.y);
+    if (e.flip) gg.scale(-1, 1);
+    gg.drawImage(stamps[e.si], -e.size / 2, -e.size / 2, e.size, e.size);
+    gg.restore();
+  };
+  g.imageSmoothingQuality = 'high';
+
+  // 1. grass, flowers and the slow light/dark drift of the meadow
+  g.fillStyle = plan.grassColor;
+  g.fillRect(rx, ry, rw, rh);
+  for (const e of plan.grass) if (vis(e.x, e.y, e.size)) stamp(g, plan.grassStamps, e);
+  for (const f of plan.flowers) {
+    if (!vis(f.x + 85, f.y + 85, 90)) continue;
+    g.save();
+    g.globalAlpha = 0.85;
+    g.drawImage(plan.flowerStamp, f.x, f.y, 170, 170);
+    g.restore();
+  }
+  for (const b of plan.blobs) {
+    if (!vis(b.x, b.y, b.r)) continue;
+    const grad = g.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+    grad.addColorStop(0, b.light ? 'rgba(255,240,150,0.10)' : 'rgba(20,60,10,0.12)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = grad;
+    g.fillRect(b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
   }
 
-  // 5. flat world objects (bridge)
-  for (const d of groundDrawables) {
-    const img = assets.get(d.sprite);
-    if (img) g.drawImage(img, d.x - d.w / 2, d.y - d.h, d.w, d.h);
+  // 2. dirt paths: splatted dirt texture masked by soft path strokes
+  if (plan.dirt) {
+    const dirt = layer(rx, ry, rw, rh, res);
+    dirt.g.fillStyle = plan.dirt.color;
+    dirt.g.fillRect(rx, ry, rw, rh);
+    for (const e of plan.dirt.splats) if (vis(e.x, e.y, e.size)) stamp(dirt.g, plan.dirt.stamps, e);
+    const mask = layer(rx, ry, rw, rh, res);
+    for (const [extra, alpha] of [[0.5, 0.25], [0.3, 0.5], [0.12, 0.8], [0, 1]]) {
+      mask.g.strokeStyle = `rgba(0,0,0,${alpha})`;
+      strokePaths(mask.g, extra);
+    }
+    dirt.g.save();
+    dirt.g.setTransform(1, 0, 0, 1, 0, 0);
+    dirt.g.globalCompositeOperation = 'destination-in';
+    dirt.g.drawImage(mask.c, 0, 0);
+    dirt.g.restore();
+    g.save(); // darker worn edge under the path
+    g.globalAlpha = 0.28;
+    g.strokeStyle = '#4a3a17';
+    strokePaths(g, 0.55);
+    g.restore();
+    g.drawImage(dirt.c, rx, ry, rw, rh);
   }
-  return out;
+
+  // 2b. village square
+  const pz = plan.plaza;
+  if (pz && vis(pz.px + pz.pw / 2, pz.py + pz.ph / 2, Math.max(pz.pw, pz.ph) / 2 + pz.pad + 20)) {
+    g.save();
+    g.globalAlpha = 0.3;
+    g.fillStyle = '#4a3a17';
+    g.beginPath();
+    g.roundRect(pz.px - 10, pz.py - 10, pz.pw + 20, pz.ph + 20, 30);
+    g.fill();
+    g.restore();
+    g.drawImage(pz.canvas, pz.px - pz.pad, pz.py - pz.pad);
+  }
+
+  // 3. creek
+  g.fillStyle = '#5d4a2a';
+  g.fill(plan.bank);
+  const w = plan.water;
+  if (w) {
+    g.save();
+    g.clip(plan.creekClip);
+    g.fillStyle = w.color;
+    g.fillRect(rx, w.offsetY, rw, w.h);
+    for (const e of w.splats) {
+      if (!vis(e.x, e.y + w.offsetY, e.size)) continue;
+      stamp(g, w.stamps, { ...e, y: e.y + w.offsetY });
+    }
+    const sh = g.createLinearGradient(0, CREEK.y0 * TILE, 0, CREEK.y1 * TILE); // soft shade along the banks
+    sh.addColorStop(0, 'rgba(10,40,60,0.35)');
+    sh.addColorStop(0.25, 'rgba(10,40,60,0)');
+    sh.addColorStop(0.8, 'rgba(10,40,60,0)');
+    sh.addColorStop(1, 'rgba(10,40,60,0.25)');
+    g.fillStyle = sh;
+    g.fillRect(rx, CREEK.y0 * TILE - 20, rw, (CREEK.y1 - CREEK.y0) * TILE + 40);
+    g.restore();
+  }
+  for (const r of plan.rocks) if (vis(r.x * TILE, r.y * TILE, 160)) drawSprite(g, r.img, r.x, r.y, r.w, r.flip);
+
+  // 4. low decoration
+  for (const d of plan.decor) if (vis(d.x * TILE, d.y * TILE, d.w * TILE * 1.6 + 80)) drawSprite(g, d.img, d.x, d.y, d.w, d.flip);
+
+  // 5. flat world objects (bridge)
+  for (const d of plan.groundDrawables) {
+    if (!vis(d.x, d.y - d.h / 2, Math.max(d.w, d.h))) continue;
+    g.drawImage(d.__img, d.x - d.w / 2, d.y - d.h, d.w, d.h);
+  }
+}
+
+// ---------------------------------------------------------------- the layer
+// Square chunks painted on demand and kept in a small cache, plus a small
+// whole-world overview for the map screen and for chunks still being built.
+export class GroundLayer {
+  constructor(assets, res, groundDrawables, { maxLive = 8 } = {}) {
+    for (const d of groundDrawables) d.__img = assets.get(d.sprite);
+    this.plan = makePlan(assets, groundDrawables.filter((d) => d.__img));
+    this.res = res;
+    this.maxLive = maxLive;
+    this.cols = Math.ceil(WORLD_W / CHUNK);
+    this.rows = Math.ceil(WORLD_H / CHUNK);
+    this.cache = new Map();
+    this.frame = 0;
+    this.ovScale = Math.min(0.5, 3000 / WORLD_W);
+    const ov = layer(0, 0, WORLD_W, WORLD_H, this.ovScale);
+    paintPlan(this.plan, ov.g, 0, 0, WORLD_W, WORLD_H, this.ovScale);
+    this.overview = ov.c;
+  }
+
+  chunkRect(cx, cy) {
+    const x0 = cx * CHUNK, y0 = cy * CHUNK;
+    return { x0: x0 - PAD, y0: y0 - PAD, w: Math.min(CHUNK, WORLD_W - x0) + PAD * 2, h: Math.min(CHUNK, WORLD_H - y0) + PAD * 2 };
+  }
+
+  get(cx, cy, used = this.frame) {
+    const key = cy * this.cols + cx;
+    let e = this.cache.get(key);
+    if (e) {
+      e.used = Math.max(e.used, used);
+      return e;
+    }
+    const r = this.chunkRect(cx, cy);
+    const L = layer(r.x0, r.y0, r.w, r.h, this.res);
+    paintPlan(this.plan, L.g, r.x0, r.y0, r.w, r.h, this.res);
+    e = { c: L.c, r, used };
+    this.cache.set(key, e);
+    while (this.cache.size > this.maxLive) {
+      let oldest = null;
+      for (const [k, v] of this.cache) if (v.used < this.frame && (!oldest || v.used < oldest[1].used)) oldest = [k, v];
+      if (!oldest) break; // everything is in view: keep it
+      this.cache.delete(oldest[0]);
+    }
+    return e;
+  }
+
+  range(v) {
+    return {
+      c0: Math.max(0, Math.floor(v.x0 / CHUNK)), c1: Math.min(this.cols - 1, Math.floor(v.x1 / CHUNK)),
+      r0: Math.max(0, Math.floor(v.y0 / CHUNK)), r1: Math.min(this.rows - 1, Math.floor(v.y1 / CHUNK)),
+    };
+  }
+
+  // Draw what lies in world rect `v` onto g (already in world coordinates).
+  draw(g, v) {
+    this.frame++;
+    const { c0, c1, r0, r1 } = this.range(v);
+    for (let cy = r0; cy <= r1; cy++) {
+      for (let cx = c0; cx <= c1; cx++) {
+        const e = this.get(cx, cy);
+        g.drawImage(e.c, e.r.x0, e.r.y0, e.r.w, e.r.h);
+      }
+    }
+  }
+
+  // Build one missing chunk next to the view per call, so walking never waits.
+  prefetch(v) {
+    const { c0, c1, r0, r1 } = this.range({ x0: v.x0 - CHUNK * 0.6, y0: v.y0 - CHUNK * 0.6, x1: v.x1 + CHUNK * 0.6, y1: v.y1 + CHUNK * 0.6 });
+    for (let cy = r0; cy <= r1; cy++) {
+      for (let cx = c0; cx <= c1; cx++) {
+        if (this.cache.has(cy * this.cols + cx)) continue;
+        this.get(cx, cy, this.frame - 1);
+        return;
+      }
+    }
+  }
+
+  // Draw the low-resolution whole-world overview (map screen).
+  drawOverview(g, rect) {
+    const s = this.ovScale;
+    g.drawImage(this.overview, rect.x0 * s, rect.y0 * s, (rect.x1 - rect.x0) * s, (rect.y1 - rect.y0) * s, rect.x0, rect.y0, rect.x1 - rect.x0, rect.y1 - rect.y0);
+  }
 }
