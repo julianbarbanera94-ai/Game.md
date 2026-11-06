@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { PARCELS, PARCEL_BY_ID, pointInPoly, distToLine } from '../../src/data/land.js';
+import { PARCELS, PARCEL_BY_ID, RIVER, pointInPoly, distToLine } from '../../src/data/land.js';
 import { PLOTS, PLOT_GROUPS } from '../../src/data/world.js';
 import { UPGRADES } from '../../src/data/progression.js';
 import { createNewState } from '../../src/systems/state.js';
@@ -41,4 +41,16 @@ test('buying a parcel needs its requirement and the coins, and saves', () => {
   const back = deserialize(serialize(s));
   assert.equal(back.unlocks.riversidePaddock, true);
   assert.equal(back.unlocks.northernMeadow, false);
+});
+
+test('no plot sits in the river or on a track', () => {
+  for (const p of PARCELS) {
+    for (const pl of PLOTS.filter((x) => x.group === p.group)) {
+      for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+        const x = pl.tx + dx, y = pl.ty + dy;
+        assert.ok(distToLine(x, y, RIVER.line) > RIVER.width / 2 + 0.5, `${p.id} plot ${pl.id} in the river`);
+        if (p.road) assert.ok(distToLine(x, y, p.road.line) > p.road.width / 2, `${p.id} plot ${pl.id} on the track`);
+      }
+    }
+  }
 });
