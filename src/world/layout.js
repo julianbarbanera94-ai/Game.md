@@ -1,0 +1,238 @@
+import { TILE, WORLD_W, CORE_COLS, CORE_ROWS } from '../config.js';
+import { FOREST_WALL_X, ROAD_GATE, ROAD_Y, VILLAGE_X0 } from '../data/village.js';
+import { PARCELS, RIVER, distToLine } from '../data/land.js';
+import { BOUNDS, BRIDGE, CREEK, GARDEN, NORTH_FIELD, OBJECTS, PATHS, SCENERY } from '../data/world.js';
+import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
+import { INTERIORS } from '../data/interiors.js';
+import { interiorSpriteKeys } from '../render/interiorArt.js';
+import { footprintRect } from '../systems/buildings.js';
+import { pastureColliders, pastureOf } from '../systems/pasture.js';
+
+// Converts tile-space world data into runtime drawables + colliders.
+// A drawable: { sprite, x, y, w, h, src?, flip?, sortY }  (x,y = bottom-centre anchor, px)
+
+function spriteSize(assets, key, wTiles) {
+  const e = assets.entry(key);
+  const w = wTiles * TILE;
+  return { w, h: e ? (w * e.height) / e.width : w };
+}
+
+function rectFrom(x, y, c) {
+  return { x0: (x + c[0]) * TILE, y0: (y + c[1]) * TILE, x1: (x + c[2]) * TILE, y1: (y + c[3]) * TILE };
+}
+
+export function buildWorld(assets) {
+  const drawables = [];
+  const groundDrawables = [];
+  const colliders = [];
+  const interactables = [];
+  let roadBlock = null;
+
+  for (const o of OBJECTS) {
+    const { w, h } = spriteSize(assets, o.sprite, o.w);
+    // Buildings with levels resolve their sprite every frame from game state.
+    const d = { id: o.id, building: o.building, sprite: o.sprite, x: o.x * TILE, y: o.y * TILE, w, h, sortY: o.y * TILE, light: o.light, frames: o.frames, fps: o.fps };
+    (o.ground ? groundDrawables : drawables).push(d);
+    const col = o.collider ? rectFrom(o.x, o.y, o.collider) : null;
+    if (col) colliders.push(col);
+    if (o.id === 'road_block') roadBlock = { drawable: d, collider: col };
+    if (o.interact) {
+      const p = o.interactPoint || [o.x, o.y + 0.1];
+      interactables.push({ id: o.id, kind: o.interact, x: p[0] * TILE, y: p[1] * TILE });
+    }
+  }
+
+  const roads = PARCELS.filter((p) => p.road).map((p) => p.road);
+  const scenery = new Map(); // SCENERY index -> { drawable, collider }, so clearing can remove them
+  SCENERY.forEach(([sprite, x, y, wt, r], i) => {
+    if (roads.some((rd) => distToLine(x, y, rd.line) < rd.width / 2 + 0.2)) return; // tracks into bought land stay open
+    const { w, h } = spriteSize(assets, sprite, wt);
+    const drawable = { sprite, x: x * TILE, y: y * TILE, w, h, sortY: y * TILE, flip: i % 3 === 1 };
+    drawables.push(drawable);
+    let collider = null;
+    if (r > 0) {
+      collider = rectFrom(x, y, [-r, -r * 0.9, r, 0]);
+      colliders.push(collider);
+    }
+    scenery.set(i, { drawable, collider });
+  });
+
+  buildFence(assets, drawables, colliders);
+
+  // The forest between farm and village is walled off except for the road, which
+  // stays shut until the fallen tree is cleared (see Game.applyWorldFlags).
+  const wallRect = (y0, y1) => ({ x0: FOREST_WALL_X[0] * TILE, y0: y0 * TILE, x1: FOREST_WALL_X[1] * TILE, y1: y1 * TILE });
+  colliders.push(wallRect(0, ROAD_Y[0]), wallRect(ROAD_Y[1], 28));
+  const gate = { x0: ROAD_GATE.x0 * TILE, y0: ROAD_GATE.y0 * TILE, x1: ROAD_GATE.x1 * TILE, y1: ROAD_GATE.y1 * TILE };
+  colliders.push(gate);
+  roadBlock = { ...roadBlock, gate, open: false };
+
+  // Creek blocks movement except across the bridge.
+  const cy0 = (CREEK.y0 + 0.15) * TILE;
+  const cy1 = (CREEK.y1 - 0.05) * TILE;
+  colliders.push({ x0: 0, y0: cy0, x1: BRIDGE.x0 * TILE + 8, y1: cy1 });
+  colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: CORE_COLS * TILE, y1: cy1 });
+
+  const bridges = PARCELS.filter((p) => p.bridge).map((p) => p.bridge);
+  // the river blocks movement: small squares along its length
+  const rl = RIVER.line;
+  for (let i = 0; i < rl.length - 1; i++) {
+    const [ax, ay] = rl[i], [bx, by] = rl[i + 1];
+    const n = Math.ceil(Math.hypot(bx - ax, by - ay) / 0.7);
+    for (let k = 0; k <= n; k++) {
+      const x = (ax + ((bx - ax) * k) / n) * TILE, y = (ay + ((by - ay) * k) / n) * TILE, h = (RIVER.width / 2 - 0.15) * TILE;
+      if (bridges.some((br) => Math.hypot(x / TILE - br.at[0], y / TILE - br.at[1]) < br.w / 2 + 1.8)) continue; // a clear way across, wide enough for a tractor
+      colliders.push({ x0: x - h, y0: y - h, x1: x + h, y1: y + h });
+    }
+  }
+  // a wooden gate where each track leaves the land you own
+  for (const p of PARCELS) {
+    if (!p.gate) continue;
+    const { w, h } = spriteSize(assets, 'terrain.fence_gate_detailed', 3.2);
+    drawables.push({ sprite: 'terrain.fence_gate_detailed', x: p.gate[0] * TILE, y: p.gate[1] * TILE, w, h, sortY: p.gate[1] * TILE });
+  }
+
+  const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
+  return { drawables, groundDrawables, colliders, interactables, bounds, scenery, roadBlock, noBuild: noBuildZones() };
+}
+
+// Garden fence: horizontal rail pieces on top/bottom, post runs on the sides.
+function buildFence(assets, drawables, colliders) {
+  const H = 'terrain.fence_horizontal_detailed';
+  const POST = 'building.fence_segment';
+  const g = GARDEN;
+  const count = Math.round(g.x1 - g.x0);
+  const step = (g.x1 - g.x0) / count;
+  const rail = spriteSize(assets, H, step * 1.1);
+  const addRail = (cx, y) => drawables.push({ sprite: H, x: cx * TILE, y: y * TILE, w: rail.w, h: rail.h, sortY: y * TILE });
+  for (let i = 0; i < count; i++) {
+    const cx = g.x0 + step * (i + 0.5);
+    if (!(cx > g.gate[0] && cx < g.gate[1])) addRail(cx, g.y0 + 0.2);
+    addRail(cx, g.y1 + 0.2);
+  }
+  // Side posts are cropped from the left post of the Phase 1 fence segment.
+  const seg = assets.entry(POST);
+  if (seg) {
+    const src = [0, 0, seg.width * 0.12, seg.height];
+    const pw = 0.36 * TILE;
+    const ph = (pw * src[3]) / src[2];
+    for (const x of [g.x0, g.x1]) {
+      for (let y = g.y0 + 0.65; y <= g.y1 + 0.2; y += 0.55) {
+        drawables.push({ sprite: POST, src, x: x * TILE, y: y * TILE, w: pw, h: ph, sortY: y * TILE });
+      }
+    }
+  }
+  const t = 0.16;
+  colliders.push(
+    { x0: g.x0 * TILE, y0: (g.y0 - t) * TILE, x1: g.gate[0] * TILE, y1: (g.y0 + t) * TILE },
+    { x0: g.gate[1] * TILE, y0: (g.y0 - t) * TILE, x1: g.x1 * TILE, y1: (g.y0 + t) * TILE },
+    { x0: g.x0 * TILE, y0: (g.y1 - t) * TILE, x1: g.x1 * TILE, y1: (g.y1 + t) * TILE },
+    { x0: (g.x0 - t) * TILE, y0: g.y0 * TILE, x1: (g.x0 + t) * TILE, y1: g.y1 * TILE },
+    { x0: (g.x1 - t) * TILE, y0: g.y0 * TILE, x1: (g.x1 + t) * TILE, y1: g.y1 * TILE },
+  );
+}
+
+// Fence pieces (y-sorted drawables, px) around a livestock building's pasture:
+// rails along the bottom edge either side of the gate, posts up both sides and
+// at the gate. The top edge is the building itself.
+export function pastureFence(assets, type, x, y) {
+  const g = pastureOf(type, x, y);
+  if (!g) return [];
+  const H = 'terrain.fence_horizontal_detailed';
+  const POST = 'building.fence_segment';
+  const out = [];
+  const { rect, gate } = g;
+  const railY = rect.y1 + 0.2;
+  const addRuns = (x0, x1) => {
+    const n = Math.max(1, Math.round(x1 - x0));
+    const step = (x1 - x0) / n;
+    const rail = spriteSize(assets, H, step * 1.1);
+    for (let i = 0; i < n; i++) {
+      out.push({ sprite: H, x: (x0 + step * (i + 0.5)) * TILE, y: railY * TILE, w: rail.w, h: rail.h, sortY: railY * TILE });
+    }
+  };
+  addRuns(rect.x0, gate[0]);
+  addRuns(gate[1], rect.x1);
+  const seg = assets.entry(POST);
+  if (seg) {
+    const src = [0, 0, seg.width * 0.12, seg.height];
+    const pw = 0.36 * TILE;
+    const ph = (pw * src[3]) / src[2];
+    const post = (px, py) => out.push({ sprite: POST, src, x: px * TILE, y: py * TILE, w: pw, h: ph, sortY: py * TILE });
+    for (let py = rect.y0 + 0.65; py <= rect.y1 + 0.2; py += 0.55) {
+      post(rect.x0, py);
+      post(rect.x1, py);
+    }
+    post(gate[0], railY);
+    post(gate[1], railY);
+  }
+  return out;
+}
+
+// Areas where nothing may be built: garden, creek/bridge, paths (px rects).
+function noBuildZones() {
+  const z = [
+    { name: 'the garden', x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
+    { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: CORE_COLS * TILE, y1: (CREEK.y1 + 0.4) * TILE },
+  ];
+  z.push({ name: 'the north field', x0: NORTH_FIELD.x0 * TILE, y0: NORTH_FIELD.y0 * TILE, x1: NORTH_FIELD.x1 * TILE, y1: NORTH_FIELD.y1 * TILE });
+  z.push({ name: 'the village', x0: VILLAGE_X0 * TILE, y0: 0, x1: CORE_COLS * TILE, y1: CORE_ROWS * TILE });
+  for (const p of PATHS) {
+    const hw = (p.width / 2) * TILE;
+    z.push({
+      name: 'the path',
+      x0: Math.min(p.from[0], p.to[0]) * TILE - hw, y0: Math.min(p.from[1], p.to[1]) * TILE - hw,
+      x1: Math.max(p.from[0], p.to[0]) * TILE + hw, y1: Math.max(p.from[1], p.to[1]) * TILE + hw,
+    });
+  }
+  return z;
+}
+
+// Colliders for player-placed objects (px rects).
+export function placedColliders(state, excludeUid = null) {
+  const px = (r) => ({ x0: r.x0 * TILE, y0: r.y0 * TILE, x1: r.x1 * TILE, y1: r.y1 * TILE });
+  const out = [];
+  for (const p of state.placed) {
+    if (p.uid === excludeUid) continue;
+    out.push(px(footprintRect(p.type, p.x, p.y, p.level || 1)));
+    // pasture fences appear once the building is finished
+    if (p.kind === 'building' && p.level >= 1) out.push(...pastureColliders(p.type, p.x, p.y).map(px));
+  }
+  return out;
+}
+
+// Runtime data for an interior scene (px, in the interior's own space).
+export function buildInterior(id) {
+  const def = INTERIORS[id];
+  const w = def.widthTiles * TILE;
+  const h = def.heightTiles * TILE;
+  const px = ([x, y]) => [x * TILE, y * TILE];
+  const rect = (r) => ({ x0: r[0] * TILE, y0: r[1] * TILE, x1: r[2] * TILE, y1: r[3] * TILE });
+  const { back, side, front } = def.wall;
+  return {
+    id, def, w, h,
+    // feet stay just below the back wall and above the front wall
+    bounds: rect([side + 0.15, back + 0.35, def.widthTiles - side - 0.15, def.heightTiles - front + 0.05]),
+    colliders: def.pieces.map((p) => rect(p.foot)),
+    interactables: def.interactables.map((it) => {
+      const [x, y] = px(it.at);
+      return { id: `${id}_${it.kind}`, kind: it.kind, x, y };
+    }),
+    spawn: px(def.spawn),
+  };
+}
+
+// Every sprite key the world needs, for preloading.
+export function worldSpriteKeys() {
+  return [
+    ...OBJECTS.map((o) => o.sprite),
+    ...OBJECTS.flatMap((o) => o.frames || []),
+    ...SCENERY.map((s) => s[0]),
+    ...Object.values(BUILDINGS).flatMap((b) => b.levels.map((l) => l.sprite)),
+    ...CONSTRUCTION_STAGES,
+    ...Object.values(DECORATIONS).map((d) => d.sprite),
+    ...Object.values(INTERIORS).flatMap(interiorSpriteKeys),
+    'terrain.fence_horizontal_detailed',
+    'building.fence_segment',
+  ];
+}

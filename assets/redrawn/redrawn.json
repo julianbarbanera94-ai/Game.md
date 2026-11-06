@@ -1,0 +1,1610 @@
+{
+ "terrain.cobblestone_detailed": {
+  "file": "assets/redrawn/terrain.cobblestone_detailed.png",
+  "width": 469,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.dirt_detailed": {
+  "file": "assets/redrawn/terrain.dirt_detailed.png",
+  "width": 439,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.grass_detailed": {
+  "file": "assets/redrawn/terrain.grass_detailed.png",
+  "width": 441,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.grass_tuft_tile": {
+  "file": "assets/redrawn/terrain.grass_tuft_tile.png",
+  "width": 451,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.sand_path_detailed": {
+  "file": "assets/redrawn/terrain.sand_path_detailed.png",
+  "width": 396,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.shoreline": {
+  "file": "assets/redrawn/terrain.shoreline.png",
+  "width": 475,
+  "height": 453,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.tilled_soil_detailed": {
+  "file": "assets/redrawn/terrain.tilled_soil_detailed.png",
+  "width": 475,
+  "height": 429,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain.water_pond_detailed": {
+  "file": "assets/redrawn/terrain.water_pond_detailed.png",
+  "width": 475,
+  "height": 418,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.cliff_grass_edge": {
+  "file": "assets/redrawn/terrain2.cliff_grass_edge.png",
+  "width": 437,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.cobblestone_path": {
+  "file": "assets/redrawn/terrain2.cobblestone_path.png",
+  "width": 475,
+  "height": 438,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.dirt_path": {
+  "file": "assets/redrawn/terrain2.dirt_path.png",
+  "width": 475,
+  "height": 433,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.grass_flower": {
+  "file": "assets/redrawn/terrain2.grass_flower.png",
+  "width": 441,
+  "height": 475,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.pond_water": {
+  "file": "assets/redrawn/terrain2.pond_water.png",
+  "width": 475,
+  "height": 446,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.sand_path": {
+  "file": "assets/redrawn/terrain2.sand_path.png",
+  "width": 475,
+  "height": 452,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.shoreline_water": {
+  "file": "assets/redrawn/terrain2.shoreline_water.png",
+  "width": 475,
+  "height": 438,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.tall_grass": {
+  "file": "assets/redrawn/terrain2.tall_grass.png",
+  "width": 475,
+  "height": 421,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "terrain2.tilled_soil_sprouts": {
+  "file": "assets/redrawn/terrain2.tilled_soil_sprouts.png",
+  "width": 475,
+  "height": 454,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_d0": {
+  "file": "assets/redrawn/animal.chicken_d0.png",
+  "width": 77,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_d1": {
+  "file": "assets/redrawn/animal.chicken_d1.png",
+  "width": 75,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_d2": {
+  "file": "assets/redrawn/animal.chicken_d2.png",
+  "width": 79,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_d3": {
+  "file": "assets/redrawn/animal.chicken_d3.png",
+  "width": 76,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_d4": {
+  "file": "assets/redrawn/animal.chicken_d4.png",
+  "width": 75,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_u0": {
+  "file": "assets/redrawn/animal.chicken_u0.png",
+  "width": 72,
+  "height": 119,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_u1": {
+  "file": "assets/redrawn/animal.chicken_u1.png",
+  "width": 82,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_u2": {
+  "file": "assets/redrawn/animal.chicken_u2.png",
+  "width": 82,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.chicken_u3": {
+  "file": "assets/redrawn/animal.chicken_u3.png",
+  "width": 81,
+  "height": 119,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_d0": {
+  "file": "assets/redrawn/animal.cow_d0.png",
+  "width": 146,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_d1": {
+  "file": "assets/redrawn/animal.cow_d1.png",
+  "width": 129,
+  "height": 235,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_d2": {
+  "file": "assets/redrawn/animal.cow_d2.png",
+  "width": 132,
+  "height": 237,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_d3": {
+  "file": "assets/redrawn/animal.cow_d3.png",
+  "width": 128,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_d4": {
+  "file": "assets/redrawn/animal.cow_d4.png",
+  "width": 131,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_u0": {
+  "file": "assets/redrawn/animal.cow_u0.png",
+  "width": 120,
+  "height": 235,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_u1": {
+  "file": "assets/redrawn/animal.cow_u1.png",
+  "width": 130,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_u2": {
+  "file": "assets/redrawn/animal.cow_u2.png",
+  "width": 133,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.cow_u3": {
+  "file": "assets/redrawn/animal.cow_u3.png",
+  "width": 120,
+  "height": 235,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_d0": {
+  "file": "assets/redrawn/animal.duck_d0.png",
+  "width": 70,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_d1": {
+  "file": "assets/redrawn/animal.duck_d1.png",
+  "width": 74,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_d2": {
+  "file": "assets/redrawn/animal.duck_d2.png",
+  "width": 70,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_d3": {
+  "file": "assets/redrawn/animal.duck_d3.png",
+  "width": 70,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_d4": {
+  "file": "assets/redrawn/animal.duck_d4.png",
+  "width": 67,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_u0": {
+  "file": "assets/redrawn/animal.duck_u0.png",
+  "width": 65,
+  "height": 119,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_u1": {
+  "file": "assets/redrawn/animal.duck_u1.png",
+  "width": 65,
+  "height": 119,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_u2": {
+  "file": "assets/redrawn/animal.duck_u2.png",
+  "width": 65,
+  "height": 119,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.duck_u3": {
+  "file": "assets/redrawn/animal.duck_u3.png",
+  "width": 62,
+  "height": 120,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_d0": {
+  "file": "assets/redrawn/animal.horse_d0.png",
+  "width": 115,
+  "height": 293,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_d1": {
+  "file": "assets/redrawn/animal.horse_d1.png",
+  "width": 117,
+  "height": 294,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_d2": {
+  "file": "assets/redrawn/animal.horse_d2.png",
+  "width": 117,
+  "height": 296,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_d3": {
+  "file": "assets/redrawn/animal.horse_d3.png",
+  "width": 110,
+  "height": 294,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_d4": {
+  "file": "assets/redrawn/animal.horse_d4.png",
+  "width": 107,
+  "height": 294,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_u0": {
+  "file": "assets/redrawn/animal.horse_u0.png",
+  "width": 116,
+  "height": 296,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_u1": {
+  "file": "assets/redrawn/animal.horse_u1.png",
+  "width": 135,
+  "height": 297,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_u2": {
+  "file": "assets/redrawn/animal.horse_u2.png",
+  "width": 173,
+  "height": 297,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.horse_u3": {
+  "file": "assets/redrawn/animal.horse_u3.png",
+  "width": 132,
+  "height": 298,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_d0": {
+  "file": "assets/redrawn/animal.pig_d0.png",
+  "width": 110,
+  "height": 177,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_d1": {
+  "file": "assets/redrawn/animal.pig_d1.png",
+  "width": 101,
+  "height": 178,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_d2": {
+  "file": "assets/redrawn/animal.pig_d2.png",
+  "width": 97,
+  "height": 179,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_d3": {
+  "file": "assets/redrawn/animal.pig_d3.png",
+  "width": 116,
+  "height": 178,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_d4": {
+  "file": "assets/redrawn/animal.pig_d4.png",
+  "width": 104,
+  "height": 177,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_u0": {
+  "file": "assets/redrawn/animal.pig_u0.png",
+  "width": 104,
+  "height": 176,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_u1": {
+  "file": "assets/redrawn/animal.pig_u1.png",
+  "width": 99,
+  "height": 177,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_u2": {
+  "file": "assets/redrawn/animal.pig_u2.png",
+  "width": 103,
+  "height": 176,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.pig_u3": {
+  "file": "assets/redrawn/animal.pig_u3.png",
+  "width": 101,
+  "height": 176,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_d0": {
+  "file": "assets/redrawn/animal.sheep_d0.png",
+  "width": 137,
+  "height": 177,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_d1": {
+  "file": "assets/redrawn/animal.sheep_d1.png",
+  "width": 129,
+  "height": 181,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_d2": {
+  "file": "assets/redrawn/animal.sheep_d2.png",
+  "width": 140,
+  "height": 176,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_d3": {
+  "file": "assets/redrawn/animal.sheep_d3.png",
+  "width": 123,
+  "height": 179,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_d4": {
+  "file": "assets/redrawn/animal.sheep_d4.png",
+  "width": 128,
+  "height": 179,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_u0": {
+  "file": "assets/redrawn/animal.sheep_u0.png",
+  "width": 105,
+  "height": 180,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_u1": {
+  "file": "assets/redrawn/animal.sheep_u1.png",
+  "width": 124,
+  "height": 177,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_u2": {
+  "file": "assets/redrawn/animal.sheep_u2.png",
+  "width": 111,
+  "height": 181,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "animal.sheep_u3": {
+  "file": "assets/redrawn/animal.sheep_u3.png",
+  "width": 122,
+  "height": 179,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building.market_stall": {
+  "file": "assets/redrawn/building.market_stall.png",
+  "width": 768,
+  "height": 561,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building.starter_house": {
+  "file": "assets/redrawn/building.starter_house.png",
+  "width": 768,
+  "height": 731,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building.tool_shed": {
+  "file": "assets/redrawn/building.tool_shed.png",
+  "width": 593,
+  "height": 636,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building.well_building": {
+  "file": "assets/redrawn/building.well_building.png",
+  "width": 412,
+  "height": 406,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.barn_l1": {
+  "file": "assets/redrawn/building4.barn_l1.png",
+  "width": 534,
+  "height": 624,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.barn_l2": {
+  "file": "assets/redrawn/building4.barn_l2.png",
+  "width": 710,
+  "height": 765,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.barn_l3": {
+  "file": "assets/redrawn/building4.barn_l3.png",
+  "width": 768,
+  "height": 604,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.chicken_coop_l1": {
+  "file": "assets/redrawn/building4.chicken_coop_l1.png",
+  "width": 471,
+  "height": 652,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.chicken_coop_l2": {
+  "file": "assets/redrawn/building4.chicken_coop_l2.png",
+  "width": 708,
+  "height": 722,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.chicken_coop_l3": {
+  "file": "assets/redrawn/building4.chicken_coop_l3.png",
+  "width": 768,
+  "height": 619,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.construction_stage1": {
+  "file": "assets/redrawn/building4.construction_stage1.png",
+  "width": 636,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.construction_stage2": {
+  "file": "assets/redrawn/building4.construction_stage2.png",
+  "width": 611,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.construction_stage3": {
+  "file": "assets/redrawn/building4.construction_stage3.png",
+  "width": 618,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.construction_stage4": {
+  "file": "assets/redrawn/building4.construction_stage4.png",
+  "width": 590,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.house_l2": {
+  "file": "assets/redrawn/building4.house_l2.png",
+  "width": 742,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.house_l3": {
+  "file": "assets/redrawn/building4.house_l3.png",
+  "width": 768,
+  "height": 594,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.market_stall_l2": {
+  "file": "assets/redrawn/building4.market_stall_l2.png",
+  "width": 702,
+  "height": 768,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.market_stall_l3": {
+  "file": "assets/redrawn/building4.market_stall_l3.png",
+  "width": 768,
+  "height": 651,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.storage_shed_l1": {
+  "file": "assets/redrawn/building4.storage_shed_l1.png",
+  "width": 531,
+  "height": 559,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.storage_shed_l2": {
+  "file": "assets/redrawn/building4.storage_shed_l2.png",
+  "width": 534,
+  "height": 629,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.storage_shed_l3": {
+  "file": "assets/redrawn/building4.storage_shed_l3.png",
+  "width": 650,
+  "height": 566,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.tool_shed_l2": {
+  "file": "assets/redrawn/building4.tool_shed_l2.png",
+  "width": 590,
+  "height": 603,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.tool_shed_l3": {
+  "file": "assets/redrawn/building4.tool_shed_l3.png",
+  "width": 708,
+  "height": 569,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.well_l2": {
+  "file": "assets/redrawn/building4.well_l2.png",
+  "width": 414,
+  "height": 523,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "building4.well_l3": {
+  "file": "assets/redrawn/building4.well_l3.png",
+  "width": 532,
+  "height": 534,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_cattle": {
+  "file": "assets/redrawn/icon.feed_cattle.png",
+  "width": 229,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_chicken": {
+  "file": "assets/redrawn/icon.feed_chicken.png",
+  "width": 240,
+  "height": 236,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_hay": {
+  "file": "assets/redrawn/icon.feed_hay.png",
+  "width": 219,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_pig": {
+  "file": "assets/redrawn/icon.feed_pig.png",
+  "width": 217,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_salt": {
+  "file": "assets/redrawn/icon.feed_salt.png",
+  "width": 240,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.feed_trough": {
+  "file": "assets/redrawn/icon.feed_trough.png",
+  "width": 238,
+  "height": 188,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_carrot": {
+  "file": "assets/redrawn/icon.produce_carrot.png",
+  "width": 238,
+  "height": 184,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_corn": {
+  "file": "assets/redrawn/icon.produce_corn.png",
+  "width": 227,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_lettuce": {
+  "file": "assets/redrawn/icon.produce_lettuce.png",
+  "width": 240,
+  "height": 231,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_potato": {
+  "file": "assets/redrawn/icon.produce_potato.png",
+  "width": 240,
+  "height": 192,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_pumpkin": {
+  "file": "assets/redrawn/icon.produce_pumpkin.png",
+  "width": 240,
+  "height": 199,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_strawberry": {
+  "file": "assets/redrawn/icon.produce_strawberry.png",
+  "width": 210,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_tomato": {
+  "file": "assets/redrawn/icon.produce_tomato.png",
+  "width": 240,
+  "height": 230,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.produce_wheat": {
+  "file": "assets/redrawn/icon.produce_wheat.png",
+  "width": 205,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_duck_egg": {
+  "file": "assets/redrawn/icon.product_duck_egg.png",
+  "width": 169,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_egg": {
+  "file": "assets/redrawn/icon.product_egg.png",
+  "width": 176,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_feather": {
+  "file": "assets/redrawn/icon.product_feather.png",
+  "width": 167,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_leather": {
+  "file": "assets/redrawn/icon.product_leather.png",
+  "width": 217,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_manure": {
+  "file": "assets/redrawn/icon.product_manure.png",
+  "width": 191,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_milk": {
+  "file": "assets/redrawn/icon.product_milk.png",
+  "width": 140,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_pork": {
+  "file": "assets/redrawn/icon.product_pork.png",
+  "width": 222,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.product_wool": {
+  "file": "assets/redrawn/icon.product_wool.png",
+  "width": 180,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_carrot": {
+  "file": "assets/redrawn/icon.seed_carrot.png",
+  "width": 194,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_corn": {
+  "file": "assets/redrawn/icon.seed_corn.png",
+  "width": 192,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_lettuce": {
+  "file": "assets/redrawn/icon.seed_lettuce.png",
+  "width": 198,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_potato": {
+  "file": "assets/redrawn/icon.seed_potato.png",
+  "width": 193,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_pumpkin": {
+  "file": "assets/redrawn/icon.seed_pumpkin.png",
+  "width": 199,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_strawberry": {
+  "file": "assets/redrawn/icon.seed_strawberry.png",
+  "width": 195,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_tomato": {
+  "file": "assets/redrawn/icon.seed_tomato.png",
+  "width": 193,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.seed_wheat": {
+  "file": "assets/redrawn/icon.seed_wheat.png",
+  "width": 195,
+  "height": 239,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.tool_basket": {
+  "file": "assets/redrawn/icon.tool_basket.png",
+  "width": 221,
+  "height": 240,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.tool_hoe": {
+  "file": "assets/redrawn/icon.tool_hoe.png",
+  "width": 197,
+  "height": 238,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "icon.tool_watering_can": {
+  "file": "assets/redrawn/icon.tool_watering_can.png",
+  "width": 240,
+  "height": 231,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_autumn": {
+  "file": "assets/redrawn/foliage.tree_autumn.png",
+  "width": 534,
+  "height": 629,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_birch": {
+  "file": "assets/redrawn/foliage.tree_birch.png",
+  "width": 475,
+  "height": 575,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_blossom": {
+  "file": "assets/redrawn/foliage.tree_blossom.png",
+  "width": 475,
+  "height": 538,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_oak": {
+  "file": "assets/redrawn/foliage.tree_oak.png",
+  "width": 593,
+  "height": 596,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_pine": {
+  "file": "assets/redrawn/foliage.tree_pine.png",
+  "width": 475,
+  "height": 639,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "foliage.tree_stump": {
+  "file": "assets/redrawn/foliage.tree_stump.png",
+  "width": 238,
+  "height": 180,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.bench": {
+  "file": "assets/redrawn/prop.bench.png",
+  "width": 298,
+  "height": 212,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.berry_crate": {
+  "file": "assets/redrawn/prop.berry_crate.png",
+  "width": 181,
+  "height": 188,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.flower_crate": {
+  "file": "assets/redrawn/prop.flower_crate.png",
+  "width": 181,
+  "height": 188,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.hay_bales": {
+  "file": "assets/redrawn/prop.hay_bales.png",
+  "width": 297,
+  "height": 171,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.lantern_post": {
+  "file": "assets/redrawn/prop.lantern_post.png",
+  "width": 158,
+  "height": 286,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.scarecrow": {
+  "file": "assets/redrawn/prop.scarecrow.png",
+  "width": 229,
+  "height": 361,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "prop.trough": {
+  "file": "assets/redrawn/prop.trough.png",
+  "width": 288,
+  "height": 155,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_growing1": {
+  "file": "assets/redrawn/plot.carrot_growing1.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_growing2": {
+  "file": "assets/redrawn/plot.carrot_growing2.png",
+  "width": 181,
+  "height": 166,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_mature": {
+  "file": "assets/redrawn/plot.carrot_mature.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_planted": {
+  "file": "assets/redrawn/plot.carrot_planted.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_ready": {
+  "file": "assets/redrawn/plot.carrot_ready.png",
+  "width": 181,
+  "height": 154,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_ready_alt": {
+  "file": "assets/redrawn/plot.carrot_ready_alt.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.carrot_sprout": {
+  "file": "assets/redrawn/plot.carrot_sprout.png",
+  "width": 181,
+  "height": 167,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_growing1": {
+  "file": "assets/redrawn/plot.corn_growing1.png",
+  "width": 181,
+  "height": 168,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_growing2": {
+  "file": "assets/redrawn/plot.corn_growing2.png",
+  "width": 181,
+  "height": 168,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_mature": {
+  "file": "assets/redrawn/plot.corn_mature.png",
+  "width": 181,
+  "height": 162,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_planted": {
+  "file": "assets/redrawn/plot.corn_planted.png",
+  "width": 181,
+  "height": 172,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_ready": {
+  "file": "assets/redrawn/plot.corn_ready.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_ready_alt": {
+  "file": "assets/redrawn/plot.corn_ready_alt.png",
+  "width": 181,
+  "height": 158,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.corn_sprout": {
+  "file": "assets/redrawn/plot.corn_sprout.png",
+  "width": 181,
+  "height": 170,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_growing1": {
+  "file": "assets/redrawn/plot.lettuce_growing1.png",
+  "width": 181,
+  "height": 163,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_growing2": {
+  "file": "assets/redrawn/plot.lettuce_growing2.png",
+  "width": 181,
+  "height": 164,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_mature": {
+  "file": "assets/redrawn/plot.lettuce_mature.png",
+  "width": 181,
+  "height": 159,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_planted": {
+  "file": "assets/redrawn/plot.lettuce_planted.png",
+  "width": 181,
+  "height": 168,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_ready": {
+  "file": "assets/redrawn/plot.lettuce_ready.png",
+  "width": 181,
+  "height": 167,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_ready_alt": {
+  "file": "assets/redrawn/plot.lettuce_ready_alt.png",
+  "width": 181,
+  "height": 156,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.lettuce_sprout": {
+  "file": "assets/redrawn/plot.lettuce_sprout.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_growing1": {
+  "file": "assets/redrawn/plot.potato_growing1.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_growing2": {
+  "file": "assets/redrawn/plot.potato_growing2.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_mature": {
+  "file": "assets/redrawn/plot.potato_mature.png",
+  "width": 181,
+  "height": 154,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_planted": {
+  "file": "assets/redrawn/plot.potato_planted.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_ready": {
+  "file": "assets/redrawn/plot.potato_ready.png",
+  "width": 181,
+  "height": 154,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_ready_alt": {
+  "file": "assets/redrawn/plot.potato_ready_alt.png",
+  "width": 181,
+  "height": 158,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.potato_sprout": {
+  "file": "assets/redrawn/plot.potato_sprout.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_growing1": {
+  "file": "assets/redrawn/plot.pumpkin_growing1.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_growing2": {
+  "file": "assets/redrawn/plot.pumpkin_growing2.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_mature": {
+  "file": "assets/redrawn/plot.pumpkin_mature.png",
+  "width": 181,
+  "height": 156,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_planted": {
+  "file": "assets/redrawn/plot.pumpkin_planted.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_ready": {
+  "file": "assets/redrawn/plot.pumpkin_ready.png",
+  "width": 181,
+  "height": 158,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_ready_alt": {
+  "file": "assets/redrawn/plot.pumpkin_ready_alt.png",
+  "width": 181,
+  "height": 158,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.pumpkin_sprout": {
+  "file": "assets/redrawn/plot.pumpkin_sprout.png",
+  "width": 181,
+  "height": 167,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.soil_dry": {
+  "file": "assets/redrawn/plot.soil_dry.png",
+  "width": 181,
+  "height": 170,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.soil_harvested": {
+  "file": "assets/redrawn/plot.soil_harvested.png",
+  "width": 181,
+  "height": 156,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.soil_tilled": {
+  "file": "assets/redrawn/plot.soil_tilled.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_growing1": {
+  "file": "assets/redrawn/plot.strawberry_growing1.png",
+  "width": 181,
+  "height": 168,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_growing2": {
+  "file": "assets/redrawn/plot.strawberry_growing2.png",
+  "width": 181,
+  "height": 164,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_mature": {
+  "file": "assets/redrawn/plot.strawberry_mature.png",
+  "width": 181,
+  "height": 166,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_planted": {
+  "file": "assets/redrawn/plot.strawberry_planted.png",
+  "width": 181,
+  "height": 168,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_ready": {
+  "file": "assets/redrawn/plot.strawberry_ready.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_ready_alt": {
+  "file": "assets/redrawn/plot.strawberry_ready_alt.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.strawberry_sprout": {
+  "file": "assets/redrawn/plot.strawberry_sprout.png",
+  "width": 181,
+  "height": 167,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_growing1": {
+  "file": "assets/redrawn/plot.tomato_growing1.png",
+  "width": 181,
+  "height": 159,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_growing2": {
+  "file": "assets/redrawn/plot.tomato_growing2.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_mature": {
+  "file": "assets/redrawn/plot.tomato_mature.png",
+  "width": 181,
+  "height": 152,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_planted": {
+  "file": "assets/redrawn/plot.tomato_planted.png",
+  "width": 181,
+  "height": 165,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_ready": {
+  "file": "assets/redrawn/plot.tomato_ready.png",
+  "width": 181,
+  "height": 152,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_ready_alt": {
+  "file": "assets/redrawn/plot.tomato_ready_alt.png",
+  "width": 181,
+  "height": 151,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.tomato_sprout": {
+  "file": "assets/redrawn/plot.tomato_sprout.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_growing1": {
+  "file": "assets/redrawn/plot.wheat_growing1.png",
+  "width": 181,
+  "height": 161,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_growing2": {
+  "file": "assets/redrawn/plot.wheat_growing2.png",
+  "width": 181,
+  "height": 166,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_mature": {
+  "file": "assets/redrawn/plot.wheat_mature.png",
+  "width": 181,
+  "height": 156,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_planted": {
+  "file": "assets/redrawn/plot.wheat_planted.png",
+  "width": 181,
+  "height": 163,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_ready": {
+  "file": "assets/redrawn/plot.wheat_ready.png",
+  "width": 181,
+  "height": 158,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_ready_alt": {
+  "file": "assets/redrawn/plot.wheat_ready_alt.png",
+  "width": 181,
+  "height": 160,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ },
+ "plot.wheat_sprout": {
+  "file": "assets/redrawn/plot.wheat_sprout.png",
+  "width": 181,
+  "height": 163,
+  "source": "hires-export",
+  "status": "hires-upscaled",
+  "notes": "High-resolution export of the previous sprite (supplied by the project owner; an upscale, not new detail); margins trimmed, downsized only if larger than needed."
+ }
+}
