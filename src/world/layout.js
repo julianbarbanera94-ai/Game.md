@@ -1,4 +1,4 @@
-import { TILE, WORLD_W } from '../config.js';
+import { TILE, WORLD_W, CORE_COLS, CORE_ROWS } from '../config.js';
 import { FOREST_WALL_X, ROAD_GATE, ROAD_Y, VILLAGE_X0 } from '../data/village.js';
 import { BOUNDS, BRIDGE, CREEK, GARDEN, NORTH_FIELD, OBJECTS, PATHS, SCENERY } from '../data/world.js';
 import { BUILDINGS, CONSTRUCTION_STAGES, DECORATIONS } from '../data/buildings.js';
@@ -68,7 +68,7 @@ export function buildWorld(assets) {
   const cy0 = (CREEK.y0 + 0.15) * TILE;
   const cy1 = (CREEK.y1 - 0.05) * TILE;
   colliders.push({ x0: 0, y0: cy0, x1: BRIDGE.x0 * TILE + 8, y1: cy1 });
-  colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: WORLD_W, y1: cy1 });
+  colliders.push({ x0: BRIDGE.x1 * TILE - 8, y0: cy0, x1: CORE_COLS * TILE, y1: cy1 });
 
   const bounds = { x0: BOUNDS.x0 * TILE, y0: BOUNDS.y0 * TILE, x1: BOUNDS.x1 * TILE, y1: BOUNDS.y1 * TILE };
   return { drawables, groundDrawables, colliders, interactables, bounds, scenery, roadBlock, noBuild: noBuildZones() };
@@ -151,10 +151,10 @@ export function pastureFence(assets, type, x, y) {
 function noBuildZones() {
   const z = [
     { name: 'the garden', x0: (GARDEN.x0 - 0.3) * TILE, y0: (GARDEN.y0 - 0.3) * TILE, x1: (GARDEN.x1 + 0.3) * TILE, y1: (GARDEN.y1 + 0.3) * TILE },
-    { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: WORLD_W, y1: (CREEK.y1 + 0.4) * TILE },
+    { name: 'the creek', x0: 0, y0: (CREEK.y0 - 0.3) * TILE, x1: CORE_COLS * TILE, y1: (CREEK.y1 + 0.4) * TILE },
   ];
   z.push({ name: 'the north field', x0: NORTH_FIELD.x0 * TILE, y0: NORTH_FIELD.y0 * TILE, x1: NORTH_FIELD.x1 * TILE, y1: NORTH_FIELD.y1 * TILE });
-  z.push({ name: 'the village', x0: VILLAGE_X0 * TILE, y0: 0, x1: WORLD_W, y1: 28 * TILE });
+  z.push({ name: 'the village', x0: VILLAGE_X0 * TILE, y0: 0, x1: CORE_COLS * TILE, y1: CORE_ROWS * TILE });
   for (const p of PATHS) {
     const hw = (p.width / 2) * TILE;
     z.push({

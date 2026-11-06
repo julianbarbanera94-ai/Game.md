@@ -11,6 +11,7 @@ import { SPECIES } from '../data/animals.js';
 import { isHungry } from '../systems/animals.js';
 import { animalFrame } from './animals.js';
 import { GroundLayer, CHUNK } from './terrain.js';
+import { CREEK_END_X } from '../data/land.js';
 import { drawVehicle } from './vehicleArt.js';
 import { calendar, activeEvent } from '../systems/seasons.js';
 import { SEASON_TINT } from '../data/seasons.js';
@@ -626,7 +627,7 @@ export class Renderer {
     g.globalAlpha = 0.18;
     g.fillStyle = '#e8fbff';
     for (let i = 0; i < 40; i++) {
-      const x = ((i * 157 + t * 18 * (1 + (i % 3) * 0.3)) % (WORLD_W + 80)) - 40;
+      const x = ((i * 157 + t * 18 * (1 + (i % 3) * 0.3)) % (CREEK_END_X * TILE + 80)) - 40;
       const y = (CREEK.y0 + 0.35 + ((i * 37) % 100) / 100 * (CREEK.y1 - CREEK.y0 - 0.6)) * TILE;
       const w = 10 + (i % 4) * 4 + Math.sin(t * 2 + i) * 3;
       g.beginPath();

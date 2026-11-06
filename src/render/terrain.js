@@ -1,6 +1,7 @@
 import { TILE, WORLD_W, WORLD_H } from '../config.js';
 import { CREEK, GROUND_DECOR, PATHS } from '../data/world.js';
 import { PLAZA } from '../data/village.js';
+import { RIVER, CREEK_END_X } from '../data/land.js';
 import { mulberry32 } from '../core/rng.js';
 
 // Paints the static ground layer.
@@ -100,8 +101,9 @@ function creekPath(rand, grow = 0) {
   const top = (x) => (CREEK.y0 - grow) * TILE + Math.sin(x / 140 + ph1) * 7 + Math.sin(x / 47 + ph2) * 3;
   const bot = (x) => (CREEK.y1 + grow) * TILE + Math.sin(x / 120 + ph2) * 7 + Math.sin(x / 53 + ph1) * 3;
   p.moveTo(-10, top(0));
-  for (let x = 0; x <= WORLD_W + step; x += step) p.lineTo(x, top(x));
-  for (let x = WORLD_W + step; x >= -step; x -= step) p.lineTo(x, bot(x));
+  const end = CREEK_END_X * TILE;
+  for (let x = 0; x <= end + step; x += step) p.lineTo(x, top(x));
+  for (let x = end + step; x >= -step; x -= step) p.lineTo(x, bot(x));
   p.closePath();
   return p;
 }
@@ -190,18 +192,36 @@ function makePlan(assets, groundDrawables) {
   if (waterImgs.length) {
     const stamps = waterImgs.map((im) => makeStamp(im, 0.24, 160, 0.45));
     const h = (CREEK.y1 - CREEK.y0 + 1) * TILE;
-    plan.water = { color: averageColor(waterImgs[0]), stamps, offsetY: (CREEK.y0 - 0.5) * TILE, h, splats: collect(0, 0, WORLD_W, h, stamps.length, 160, 95, 40) };
+    plan.water = { color: averageColor(waterImgs[0]), stamps, offsetY: (CREEK.y0 - 0.5) * TILE, h, splats: collect(0, 0, CREEK_END_X * TILE, h, stamps.length, 160, 95, 40) };
   }
   const rocks = ['foliage.rock_small', 'foliage.rock_cluster'].map((k) => assets.get(k)).filter(Boolean);
   plan.rocks = [];
   if (rocks.length) {
-    for (let x = 0.4; x < WORLD_W / TILE; x += 0.9 + rand() * 1.4) {
+    for (let x = 0.4; x < CREEK_END_X; x += 0.9 + rand() * 1.4) {
       if (x > 16.2 && x < 19.6) continue; // keep the bridge approach clear
       const top = rand() < 0.5;
       const y = top ? CREEK.y0 + 0.3 : CREEK.y1 + 0.35;
       const img = rocks[Math.floor(rand() * rocks.length)];
       plan.rocks.push({ img, x, y, w: 0.7 + rand() * 0.5, flip: rand() < 0.5 });
     }
+  }
+
+  // 3b. the east river: bank, water stamped from the pond water, a soft edge
+  plan.river = null;
+  if (waterImgs.length) {
+    const rr = mulberry32(99);
+    const stamps = waterImgs.map((im) => makeStamp(im, 0.24, 160, 0.45));
+    const pts = RIVER.line.map(([x, y]) => [x * TILE, y * TILE]);
+    const splats = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [ax, ay] = pts[i], [bx, by] = pts[i + 1];
+      const n = Math.max(1, Math.ceil(Math.hypot(bx - ax, by - ay) / 70));
+      for (let k = 0; k <= n; k++) {
+        const t = k / n;
+        splats.push({ si: Math.floor(rr() * stamps.length), x: ax + (bx - ax) * t + (rr() - 0.5) * 40, y: ay + (by - ay) * t + (rr() - 0.5) * 40, flip: rr() < 0.5, size: 190 });
+      }
+    }
+    plan.river = { pts, stamps, splats, color: averageColor(waterImgs[0]) };
   }
 
   // 4. low decoration
@@ -325,6 +345,35 @@ function paintPlan(plan, g, rx, ry, rw, rh, res) {
     g.restore();
   }
   for (const r of plan.rocks) if (vis(r.x * TILE, r.y * TILE, 160)) drawSprite(g, r.img, r.x, r.y, r.w, r.flip);
+  const rv = plan.river;
+  if (rv) {
+    const trace = () => {
+      g.beginPath();
+      rv.pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
+    };
+    g.save();
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    g.strokeStyle = '#5d4a2a'; // muddy bank
+    g.lineWidth = (RIVER.width + 0.9) * TILE;
+    trace(); g.stroke();
+    g.strokeStyle = rv.color; // base water colour, then the stamped texture clipped to the channel
+    g.lineWidth = RIVER.width * TILE;
+    trace(); g.stroke();
+    // clip to the channel by drawing stamps into a mask-limited layer
+    const ch = layer(rx, ry, rw, rh, res);
+    for (const e of rv.splats) if (vis(e.x, e.y, e.size)) stamp(ch.g, rv.stamps, e);
+    const cm = layer(rx, ry, rw, rh, res);
+    cm.g.lineCap = 'round'; cm.g.lineJoin = 'round';
+    cm.g.strokeStyle = '#000'; cm.g.lineWidth = RIVER.width * TILE;
+    cm.g.beginPath(); rv.pts.forEach(([x, y], i) => (i ? cm.g.lineTo(x, y) : cm.g.moveTo(x, y))); cm.g.stroke();
+    ch.g.save(); ch.g.setTransform(1, 0, 0, 1, 0, 0); ch.g.globalCompositeOperation = 'destination-in'; ch.g.drawImage(cm.c, 0, 0); ch.g.restore();
+    g.drawImage(ch.c, rx, ry, rw, rh);
+    g.strokeStyle = 'rgba(10,40,60,0.18)'; // darker middle of the channel
+    g.lineWidth = RIVER.width * TILE * 0.5;
+    trace(); g.stroke();
+    g.restore();
+  }
 
   // 4. low decoration
   for (const d of plan.decor) if (vis(d.x * TILE, d.y * TILE, d.w * TILE * 1.6 + 80)) drawSprite(g, d.img, d.x, d.y, d.w, d.flip);

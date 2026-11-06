@@ -9,7 +9,7 @@ import { groundFactor, onRoad } from '../../src/systems/ground.js';
 import { placedColliders } from '../../src/world/layout.js';
 import { attachQuests } from '../../src/systems/quests.js';
 import { attachProgress } from '../../src/systems/progress.js';
-import { TILE } from '../../src/config.js';
+import { TILE, WORLD_H } from '../../src/config.js';
 import { VEHICLES, IMPLEMENTS } from '../../src/data/vehicles.js';
 
 function farm({ level = 3, garage = true } = {}) {
@@ -349,7 +349,7 @@ test('save v7: vehicles round-trip; v6 saves have none; bad vehicle data is sani
   const clean = deserialize(data);
   assert.deepEqual(clean.vehicles.map((x) => x.uid), ['b', 'c', 'd']);
   const [vb, vc, vd] = clean.vehicles;
-  assert.ok(vb.x >= 0 && vb.y <= 28 * 64 + 1);
+  assert.ok(vb.x >= 0 && vb.y <= WORLD_H + 1);
   assert.ok(vb.fuel <= V.tankSize(vb) && vb.condition <= 100 && vb.upgrade <= 2);
   assert.equal(vb.mount.front, null, 'not owned');
   assert.equal(vb.mount.rear, null, 'wrong slot');

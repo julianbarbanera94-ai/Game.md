@@ -1,3 +1,4 @@
+import { forestScenery } from './land.js';
 import { VILLAGE_PATHS, VILLAGE_OBJECTS, VILLAGE_SCENERY, VILLAGE_DECOR } from './village.js';
 
 // Starter farm layout. All coordinates are in tiles (see config.TILE).
@@ -125,3 +126,4 @@ PATHS.push(...VILLAGE_PATHS);
 OBJECTS.push(...VILLAGE_OBJECTS);
 SCENERY.push(...VILLAGE_SCENERY);
 GROUND_DECOR.push(...VILLAGE_DECOR);
+SCENERY.push(...forestScenery(128, 56)); // the wild forest around the farm (appended last)

@@ -1,8 +1,11 @@
 // Global tuning constants. Gameplay numbers that designers tune live in
 // src/data/*; this file holds engine/world constants.
 export const TILE = 64;
-export const MAP_COLS = 64;
-export const MAP_ROWS = 28;
+export const MAP_COLS = 128;
+export const MAP_ROWS = 56;
+// The original starter map sits in the top-left of the larger world.
+export const CORE_COLS = 64;
+export const CORE_ROWS = 28;
 export const WORLD_W = TILE * MAP_COLS;
 export const WORLD_H = TILE * MAP_ROWS;
 
