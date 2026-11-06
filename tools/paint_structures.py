@@ -76,8 +76,8 @@ def _jit(c, r, amt):
 def _mix(a, b, t):
     return tuple(int(a[i] * (1 - t) + b[i] * t) for i in range(3))
 _matcache = {}
-def mat(kind, w, h, k=1.0, seed=3):
-    key = (kind, w, h, k, seed)
+def mat(kind, w, h, k=1.0, seed=3, joints=True):
+    key = (kind, w, h, k, seed, joints)
     if key in _matcache:
         return _matcache[key]
     base, light, dark, line = PAL[kind]
@@ -112,7 +112,7 @@ def mat(kind, w, h, k=1.0, seed=3):
                 ky = r.random() * h; kx = x + pw / 2
                 d.ellipse([kx - S * 3, ky - S * 4, kx + S * 3, ky + S * 4], fill=_mix(c, dark, 0.55))
             x += pw
-        for yb in range(0, h, int(95 * S * k)):  # butt joints
+        for yb in (range(0, h, int(95 * S * k)) if joints else ()):  # butt joints
             d.line([(0, yb), (w, yb)], fill=line, width=S)
     else:  # roof tiles, overlapping rows
         th = int(15 * S * k); tw = int(20 * S * k); y = 0; row = 0
@@ -168,8 +168,14 @@ class Scene:
         self.im.alpha_composite(part)
     def solid(self, m, rgb, shade=None, edge=True):
         self.part(m, Image.new("RGBA", (self.w, self.h), rgb + (255,)), shade, edge)
-    def sprite(self, key, cx, by, width, flip=False):
+    def sprite(self, key, cx, by, width, flip=False, shadow=True):
         s = img(key)
+        if shadow:   # soft contact shadow, light from the top-left so it falls right and down
+            sh = Image.new("L", (self.w, self.h), 0)
+            ImageDraw.Draw(sh).ellipse([(cx - width * 0.42 + width * 0.08) * S, (by - 7) * S, (cx + width * 0.5 + width * 0.12) * S, (by + 9) * S], fill=120)
+            sh = sh.filter(ImageFilter.GaussianBlur(S * 3.5))
+            shim = Image.new("RGBA", (self.w, self.h), (26, 34, 18, 255)); shim.putalpha(sh)
+            self.im.alpha_composite(shim)
         h = int(s.height * width * S / s.width)
         s = s.resize((int(width * S), h), Image.LANCZOS)
         if flip: s = s.transpose(Image.FLIP_LEFT_RIGHT)
@@ -220,6 +226,41 @@ def bushes(sc, items):
     for key, cx, by, w, flip in items:
         sc.sprite(key, cx, by, w, flip)
 
+
+
+def overlay(sc, mask, rgb, alpha):
+    """Tint a region: alpha is a 0..1 array over the canvas, clipped to mask."""
+    a = np.clip(np.asarray(alpha, np.float32), 0, 1) * (np.asarray(mask, np.float32) / 255)
+    layer = np.zeros((sc.h, sc.w, 4), np.uint8)
+    layer[..., 0], layer[..., 1], layer[..., 2] = rgb
+    layer[..., 3] = (a * 255).astype(np.uint8)
+    sc.im.alpha_composite(Image.fromarray(layer))
+
+def strokes(sc, mask, n, vertical=True, seed=1, light=(255, 178, 112), dark=(58, 20, 12), length=(10, 30), width=(1.6, 3.6)):
+    """Short brush strokes over a surface so it reads as painted, not flat-filled."""
+    r = np.random.default_rng(seed)
+    m = np.asarray(mask)
+    ys, xs = np.nonzero(m > 128)
+    layer = Image.new("RGBA", (sc.w, sc.h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    for i in r.choice(len(xs), size=min(n, len(xs)), replace=False):
+        x, y = xs[i], ys[i]
+        ln = r.uniform(*length) * S
+        col = light if r.random() < 0.5 else dark
+        al = int(r.uniform(14, 34))
+        dx, dy = (r.uniform(-0.12, 0.12), 1) if vertical else (1, r.uniform(-0.12, 0.12))
+        d.line([(x, y), (x + dx * ln, y + dy * ln)], fill=col + (al,), width=max(2, int(r.uniform(*width) * S)))
+    la = np.asarray(layer).copy()
+    la[..., 3] = np.minimum(la[..., 3], m)
+    sc.im.alpha_composite(Image.fromarray(la))
+
+def cast_shadow(sc, pts, alpha=100, blur=7):
+    """Ground shadow projected away from the key light (top-left): falls right and down."""
+    sh = Image.new("L", (sc.w, sc.h), 0)
+    ImageDraw.Draw(sh).polygon([(x * S, y * S) for x, y in pts], fill=alpha)
+    sh = sh.filter(ImageFilter.GaussianBlur(S * blur))
+    shim = Image.new("RGBA", (sc.w, sc.h), (24, 32, 18, 255)); shim.putalpha(sh)
+    sc.im.alpha_composite(shim)
 
 # ---- detail helpers: everything is clipped to the structure's own silhouette
 def clipped(sc, fn):
@@ -366,6 +407,84 @@ def silo():
     extras_silo(sc)
     bushes(sc, [("foliage.bush_green", 52, 470, 90, False), ("foliage.bush_flowering", 252, 474, 92, True), ("foliage.grass_tall", 150, 486, 80, False)])
     return sc.save("silo", "prop.silo", "Red plank silo with stone footing, iron hoops and slate dome, cut from the barn, well and roof art.")
+
+
+def silo_v2():
+    """Test asset for the updated art direction: same silo, with form shading, cast
+    shadows, ambient occlusion, painterly strokes and a darker hand-drawn outline."""
+    global EDGE
+    old_edge, EDGE = EDGE, (40, 22, 12, 255)
+    sc = Scene(360, 520)
+    ox = 30                                              # canvas margin for the long cast shadow
+    x0, x1, top, bot = 70 + ox, 230 + ox, 130, 450
+    sc.skirt(150 + ox, 470, 140, 34)
+    cast_shadow(sc, [(x0 + 8, bot - 4), (x1 - 4, bot - 4), (x1 + 160, bot + 40), (x0 + 120, bot + 44)], 135, 7)   # trunk of the shadow
+    cast_shadow(sc, [(x1 + 70, bot + 6), (x1 + 160, bot + 28), (x1 + 70, bot + 48)], 70, 9)                       # dome end of it
+    body = sc.mask(lambda d, P: (d.rectangle([*P([(x0, top)])[0], *P([(x1, bot)])[0]], fill=255), d.ellipse([*P([(x0, bot - 22)])[0], *P([(x1, bot + 22)])[0]], fill=255)))
+    sh = hshade(sc.w, sc.h, x0, x1, 0.5, 1.15) * vgrad(sc.w, sc.h, top, bot, 1.04, 0.88)
+    sc.part(body, mat("plank", sc.w, sc.h, 1.0, joints=False), sh)
+    yy, xx = np.mgrid[0:sc.h, 0:sc.w].astype(np.float32)
+    X0, X1, T, B = x0 * S, x1 * S, top * S, bot * S
+    strokes(sc, body, 900, True, 3)
+    # form: lit left edge, warm bounce on the right edge, dark core shadow before it
+    overlay(sc, body, (255, 232, 176), 0.6 * np.clip(1 - (xx - X0) / (22 * S), 0, 1) ** 1.0)
+    overlay(sc, body, (40, 18, 52), 0.86 * np.clip((xx - (X1 - 104 * S)) / (96 * S), 0, 1) ** 1.25)
+    overlay(sc, body, (255, 150, 70), 0.38 * np.clip(1 - np.abs(xx - (X1 - 5 * S)) / (7 * S), 0, 1))
+    # the dome's overhang shades the top of the wall; ambient occlusion where it meets the ground
+    overlay(sc, body, (30, 14, 10), 0.8 * np.clip(1 - (yy - T) / (52 * S), 0, 1) ** 1.3)
+    overlay(sc, body, (30, 14, 10), 0.5 * np.clip((yy - (B - 90 * S)) / (90 * S), 0, 1) ** 1.5)
+    # stone footing
+    foot = sc.mask(lambda d, P: (d.rectangle([*P([(x0 - 4, bot - 42)])[0], *P([(x1 + 4, bot)])[0]], fill=255), d.ellipse([*P([(x0 - 4, bot - 20)])[0], *P([(x1 + 4, bot + 24)])[0]], fill=255)))
+    sc.part(foot, mat("stone", sc.w, sc.h, 1.0), hshade(sc.w, sc.h, x0, x1, 0.5, 1.1))
+    overlay(sc, foot, (36, 18, 48), 0.45 * np.clip((xx - (X1 - 50 * S)) / (50 * S), 0, 1))
+    overlay(sc, foot, (20, 24, 12), 0.35 * np.clip((yy - (B - 6 * S)) / (26 * S), 0, 1))
+    # iron hoops with a shadow band under and a highlight above
+    for y in (top + 70, top + 150, top + 230):
+        sb = sc.mask(lambda d, P, y=y: d.rectangle([*P([(x0, y + 7)])[0], *P([(x1, y + 22)])[0]], fill=255))
+        overlay(sc, sb & body if False else sb, (28, 12, 8), 0.55 * np.clip(1 - (yy - (y + 7) * S) / (15 * S), 0, 1) ** 1.3)
+        hoop = sc.mask(lambda d, P, y=y: d.rectangle([*P([(x0 - 1, y)])[0], *P([(x1 + 1, y + 7)])[0]], fill=255))
+        sc.solid(hoop, (66, 62, 66), hshade(sc.w, sc.h, x0, x1, 0.5, 1.35), edge=False)
+        overlay(sc, hoop, (255, 240, 220), 0.35 * np.clip(1 - (yy - y * S) / (3 * S), 0, 1) * np.clip(1 - (xx - X0) / (90 * S), 0.2, 1))
+    # slate dome: crest highlight, dark lower-right, soft specular
+    dome = sc.mask(lambda d, P: d.pieslice([*P([(x0 - 8, top - 70)])[0], *P([(x1 + 8, top + 60)])[0]], 180, 360, fill=255))
+    sc.part(dome, mat("bluslate", sc.w, sc.h, 1.0), hshade(sc.w, sc.h, x0 - 8, x1 + 8, 0.5, 1.2) * vgrad(sc.w, sc.h, top - 70, top, 1.12, 0.82))
+    overlay(sc, dome, (20, 18, 60), 0.5 * np.clip((xx - (x0 + 70) * S) / (100 * S), 0, 1) ** 1.3)
+    spec = Image.new("RGBA", (sc.w, sc.h), (0, 0, 0, 0))
+    ImageDraw.Draw(spec).ellipse([(x0 + 24) * S, (top - 50) * S, (x0 + 74) * S, (top - 30) * S], fill=(255, 255, 255, 120))
+    spec = spec.filter(ImageFilter.GaussianBlur(S * 5)); sc.im.alpha_composite(spec)
+    strokes(sc, dome, 220, False, 5, light=(210, 226, 255), dark=(14, 18, 58), length=(8, 20))
+    rim = sc.mask(lambda d, P: d.rectangle([*P([(x0 - 10, top - 4)])[0], *P([(x1 + 10, top + 8)])[0]], fill=255))
+    sc.solid(rim, (112, 70, 36), hshade(sc.w, sc.h, x0 - 10, x1 + 10, 0.55, 1.2))
+    cap = sc.mask(lambda d, P: d.ellipse([*P([(140 + ox, top - 92)])[0], *P([(160 + ox, top - 72)])[0]], fill=255))
+    sc.solid(cap, (206, 196, 176), None)
+    # arched door: deep inner shadow, frame, and the frame's own shadow on the wall
+    door = sc.mask(lambda d, P: d.rounded_rectangle([*P([(124 + ox, bot - 100)])[0], *P([(176 + ox, bot - 4)])[0]], radius=18 * S, fill=255))
+    cast_shadow(sc, [(176 + ox, bot - 98), (186 + ox, bot - 90), (186 + ox, bot - 2), (176 + ox, bot - 2)], 90, 3)
+    sc.part(door, mat("plank", sc.w, sc.h, 0.8), vgrad(sc.w, sc.h, bot - 100, bot, 0.9, 0.6) * 0.62)
+    overlay(sc, door, (10, 6, 6), 0.7 * np.clip(1 - (yy - (bot - 100) * S) / (46 * S), 0, 1))
+    fr = sc.mask(lambda d, P: (d.rounded_rectangle([*P([(120 + ox, bot - 106)])[0], *P([(180 + ox, bot)])[0]], radius=20 * S, fill=255), d.rounded_rectangle([*P([(125 + ox, bot - 100)])[0], *P([(175 + ox, bot - 4)])[0]], radius=17 * S, fill=0)))
+    sc.solid(fr, (214, 196, 160), 0.95 - 0.35 * np.clip((xx - (150 + ox) * S) / (30 * S), 0, 1))
+    # ladder with its own shadow thrown on the wall (right and down)
+    def ladder(d, off=0, col=(104, 66, 34, 255), rung=(138, 90, 46, 255), edge=(52, 30, 14, 255)):
+        for xr in (206 + ox + off, 222 + ox + off):
+            d.rectangle([xr * S, (top + 34 + off) * S, (xr + 4) * S, (bot - 46 + off) * S], fill=col, outline=edge)
+        for y in range(top + 44, bot - 52, 15):
+            d.rectangle([(206 + ox + off) * S, (y + off) * S, (226 + ox + off) * S, (y + 4 + off) * S], fill=rung, outline=edge)
+    clipped(sc, lambda d: ladder(d, 5, (20, 8, 6, 120), (20, 8, 6, 120), (20, 8, 6, 0)))
+    free(sc, ladder)
+    ivy(sc, x0 + 4, top + 50, bot - 6, 7, 8, 1.1)
+    moss(sc, x0, bot - 44, x1, bot + 8, 70, 6)
+    nails(sc, [(x0 + 10 + i * 14, y + 3.5) for y in (top + 70, top + 150, top + 230) for i in range(11)], 1.4)
+    lantern(sc, 112 + ox, bot - 62, -1)
+    vane(sc, 150 + ox, top - 80, 46)
+    sc.sprite("terrain2.barrel", 100 + ox, bot + 20, 46)
+    sc.sprite("terrain2.wooden_crate", 202 + ox, bot + 22, 48)
+    sack(sc, 176 + ox, bot + 20, 28, 2)
+    sc.sprite("foliage.bush_green", 52 + ox, 470, 90, False)
+    sc.sprite("foliage.bush_flowering", 252 + ox, 474, 92, True)
+    sc.sprite("foliage.grass_tall", 150 + ox, 486, 80, False)
+    EDGE = old_edge
+    return sc.save("silo_v2", "prop.silo_v2", "Test asset for the updated art direction: form shading, cast and contact shadows, ambient occlusion, painterly strokes.")
 
 # ------------------------------------------------------------------ clock tower
 def clock_tower():
@@ -899,7 +1018,7 @@ def waterfalls():
     A["prop.waterfall"] = dict(A["prop.waterfall_f0"])
     return None
 
-JOBS = {"silo": silo, "clock": clock_tower, "windmill": windmill, "greenhouse": lambda: (greenhouse(False), greenhouse(True)),
+JOBS = {"silo": silo, "silo_v2": silo_v2, "clock": clock_tower, "windmill": windmill, "greenhouse": lambda: (greenhouse(False), greenhouse(True)),
         "trees": lambda: [fruit_tree(n) for n in FRUITS], "waterfall": waterfalls}
 
 if __name__ == "__main__":

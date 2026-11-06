@@ -2644,6 +2644,14 @@
       "source": "tools/paint_structures.py",
       "status": "painted-in-code",
       "notes": "Waterfall over a stone cliff with a grass cap (frame 1 of 4), made from the game's stone, grass and pond water."
+    },
+    "prop.silo_v2": {
+      "file": "assets/derived/props/silo_v2.png",
+      "width": 681,
+      "height": 1032,
+      "source": "tools/paint_structures.py",
+      "status": "painted-in-code",
+      "notes": "Test asset for the updated art direction: form shading, cast and contact shadows, ambient occlusion, painterly strokes."
     }
   }
 }
