@@ -106,10 +106,14 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .modal.xwide { width: min(1140px, 100%); }
 /* world map */
 .map { padding: 12px 14px 14px; }
-.map-wrap { margin: 0 auto; position: relative; border-radius: 12px; overflow: hidden; border: 3px solid #7b5530; box-shadow: 0 2px 8px rgba(0,0,0,0.3); line-height: 0; }
-.map-canvas { width: 100%; height: auto; display: block; }
-.map-layer { position: absolute; inset: 0; pointer-events: none; line-height: 1.2; }
-.map-mark { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; white-space: nowrap; }
+.map-frame { position: relative; width: max-content; max-width: 100%; margin: 0 auto; }
+.map-view { position: relative; overflow: hidden; border-radius: 12px; border: 3px solid #7b5530; box-shadow: 0 2px 8px rgba(0,0,0,0.3); background: #4d7a30; cursor: grab; touch-action: none; line-height: 0; outline: none; --inv: 1; }
+.map-view.drag { cursor: grabbing; }
+.map-view:focus-visible { box-shadow: 0 0 0 3px #f2c14e; }
+.map-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.map-canvas { display: block; }
+.map-layer { position: absolute; left: 0; top: 0; pointer-events: none; line-height: 1.2; }
+.map-mark { position: absolute; transform: translate(-50%, -50%) scale(var(--inv)); display: flex; flex-direction: column; align-items: center; white-space: nowrap; }
 .map-mark .lbl { font-size: 12px; font-weight: 800; color: #fff7e2; background: rgba(60,38,18,0.72); padding: 1px 6px; border-radius: 7px; }
 .map-mark.title .lbl { font-size: 16px; background: rgba(60,38,18,0.82); letter-spacing: 0.04em; }
 .map-mark.soft .lbl { background: rgba(30,70,100,0.6); }
@@ -122,16 +126,18 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .map-mark.you { z-index: 2; }
 .map-mark.you .dot, .map-legend .key.you { background: #f2c14e; width: 16px; height: 16px; animation: map-pulse 1.2s ease-in-out infinite; }
 @keyframes map-pulse { 50% { box-shadow: 0 0 0 6px rgba(242,193,78,0.35); } }
+/* fewer labels when zoomed out so they do not pile up */
+.map-view[data-zoom="far"] .map-mark.place .lbl, .map-view[data-zoom="far"] .map-mark.soft .lbl, .map-view[data-zoom="far"] .map-mark.vehicle .lbl { display: none; }
+.map-view[data-zoom="mid"] .map-mark.minor .lbl { display: none; }
+.map-controls { position: absolute; right: 8px; top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.map-btn { width: 40px; height: 40px; border-radius: 10px; font-size: 20px; line-height: 1; padding: 0; }
 .map-legend { margin: 8px 0 0; font-size: 13px; text-align: center; }
-.map-mark.edge-l { transform: translate(-10px, -50%); align-items: flex-start; }
-.map-mark.edge-r { transform: translate(calc(-100% + 10px), -50%); align-items: flex-end; }
 .map-legend .key { vertical-align: middle; }
 .map.compact { padding: 8px; }
 .map.compact .map-mark .lbl { font-size: 10px; padding: 0 4px; }
 .map.compact .map-mark.title .lbl { font-size: 13px; }
-.map.compact .map-mark.minor .lbl, .map.compact .map-mark.lock .lbl, .map.compact .map-mark.soft .lbl, .map.compact .map-mark.vehicle .lbl { display: none; }
-.map.compact .map-mark.lock .pin { font-size: 13px; }
-@media (max-width: 480px) { .map.compact .map-mark.place .lbl { display: none; } }
+.map.compact .map-mark.lock .lbl { font-size: 10px; }
+.map.compact .map-btn { width: 44px; height: 44px; }
 /* narrow portrait phones: the four HUD buttons stack under the purse instead of covering the quests */
 @media (max-width: 520px) { .hud-buttons { flex-direction: column; } }
 .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: linear-gradient(#8a5f34, #6c4826); color: #fff3d6; border-radius: 14px 14px 0 0; }
