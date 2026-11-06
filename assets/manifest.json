@@ -2492,6 +2492,14 @@
       "source": "tools/paint_fishing.py",
       "status": "painted-in-code",
       "notes": "Painted in code to match the game's icons (no fishing art was supplied); replace with hand-painted art when available."
+    },
+    "prop.fountain": {
+      "file": "assets/derived/props/fountain.png",
+      "width": 232,
+      "height": 290,
+      "source": "tools/paint_fountain.py",
+      "status": "painted-in-code",
+      "notes": "Basin cut from the game's painted well, pond water texture, stone tiers rebuilt from the well's blocks, jets painted in code. No fountain art was supplied."
     }
   }
 }
